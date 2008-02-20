@@ -10,12 +10,13 @@
   <classpathentry kind="var" path="M2_REPO/com/nextapp/echo2-extras-webcontainer/0.4/echo2-extras-webcontainer-0.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/nextapp/echo2-webcontainer/2.1.0/echo2-webcontainer-2.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/nextapp/echo2-webrender/2.1.0/echo2-webrender-2.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.3/commons-lang-2.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/echopointng/echopointng/2.1.0rc5/echopointng-2.1.0rc5.jar"/>
   <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.9/log4j-1.2.9.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/openinsula/vulcano-orm/1.0/vulcano-orm-1.0.jar" sourcepath="M2_REPO/org/openinsula/vulcano-orm/1.0/vulcano-orm-1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring/2.5.1/spring-2.5.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-aspects/2.5.1/spring-aspects-2.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjrt/1.5.4/aspectjrt-1.5.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjweaver/1.5.4/aspectjweaver-1.5.4.jar"/>
@@ -23,6 +24,7 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/2.5.1/spring-core-2.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-agent/2.5.1/spring-agent-2.5.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/openinsula/vulcano-core/1.0/vulcano-core-1.0.jar" sourcepath="M2_REPO/org/openinsula/vulcano-core/1.0/vulcano-core-1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/openinsula/arena-reflection/1.0/arena-reflection-1.0.jar" sourcepath="M2_REPO/org/openinsula/arena-reflection/1.0/arena-reflection-1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate/3.2.5.ga/hibernate-3.2.5.ga.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/2.1.1/commons-collections-2.1.1.jar"/>

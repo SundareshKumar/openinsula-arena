@@ -26,6 +26,8 @@ public class OrderedLayout extends AbstractLayout {
 	
 	private Set<LayoutStyle> componentStyles = new HashSet<LayoutStyle>();
 	
+	private boolean captionVisibility = true;
+	
 	public OrderedLayout() {
 	}
 	
@@ -39,16 +41,22 @@ public class OrderedLayout extends AbstractLayout {
 		
 		Component main = null;
 		
+		int lineNumber = 2;
+		
+		if (!isCaptionVisibility()) {
+			lineNumber = 1;
+		}
+		
 		switch (orientation) {
 			case ORIENTATION_FORM:
 				main = new Column();
 				break;
 			case ORIENTATION_HORIZONTAL: 
-				main = new Grid(2);
+				main = new Grid(lineNumber);
 				((Grid)main).setOrientation(Grid.ORIENTATION_HORIZONTAL);
 				break;
 			case ORIENTATION_VERTICAL:
-				main = new Grid(2);
+				main = new Grid(lineNumber);
 				((Grid)main).setOrientation(Grid.ORIENTATION_VERTICAL);
 				break;
 		}
@@ -126,6 +134,14 @@ public class OrderedLayout extends AbstractLayout {
 		div.add(component);
 		
 		return div;
+	}
+
+	public boolean isCaptionVisibility() {
+		return captionVisibility;
+	}
+
+	public void setCaptionVisibility(boolean captionVisibility) {
+		this.captionVisibility = captionVisibility;
 	}
 	
 }

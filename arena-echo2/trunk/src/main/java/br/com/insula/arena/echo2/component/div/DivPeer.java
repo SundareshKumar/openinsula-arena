@@ -140,7 +140,7 @@ public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, Imag
 		}
 
 		{ // margin
-			// left
+			// top
 			Extent marginTop = div.getMarginTop();
 			if (marginTop != null)
 				builder.addProperty("margin-top: ", marginTop);

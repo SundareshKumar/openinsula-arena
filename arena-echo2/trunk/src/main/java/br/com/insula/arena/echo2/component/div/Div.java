@@ -3,7 +3,6 @@ package br.com.insula.arena.echo2.component.div;
 import nextapp.echo2.app.Border;
 import nextapp.echo2.app.Component;
 import nextapp.echo2.app.Extent;
-import nextapp.echo2.app.Font;
 import nextapp.echo2.app.ImageReference;
 import nextapp.echo2.app.ResourceImageReference;
 
@@ -59,7 +58,7 @@ public class Div extends Component {
 				this.setBorder((Border) newValue);
 			} else
 			if (propertyName.equals(PROPERTY_FONT)) {
-				this.setFont((Font) newValue);
+				super.setProperty(propertyName, newValue);
 			} else
 			if (propertyName.equals(PROPERTY_FOREGROUND)) {
 				super.setProperty(propertyName, newValue);

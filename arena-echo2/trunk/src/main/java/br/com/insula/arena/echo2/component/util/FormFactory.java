@@ -7,6 +7,7 @@ import nextapp.echo2.app.Column;
 import nextapp.echo2.app.Extent;
 import nextapp.echo2.app.ImageReference;
 import nextapp.echo2.app.Label;
+import nextapp.echo2.app.PasswordField;
 import nextapp.echo2.app.Row;
 import nextapp.echo2.app.SelectField;
 import nextapp.echo2.app.Style;
@@ -33,7 +34,7 @@ public class FormFactory {
      *
      * @return a linha inserida.
      */
-    public Row newLine() {
+    public static Row newLine() {
         RowLayoutData layout = new RowLayoutData();
         layout.setWidth(new Extent(100, Extent.PERCENT));
 
@@ -43,7 +44,7 @@ public class FormFactory {
         return row;
     }
 
-    public Column widthSpace(final int widthCell) {
+    public static Column widthSpace(final int widthCell) {
     	Column columnComponent = new Column();
 
         Row rowLD = new Row();
@@ -58,7 +59,7 @@ public class FormFactory {
         return columnComponent;
     }
 
-    public Column heightSpace(final int heightCell) {
+    public static Column heightSpace(final int heightCell) {
         Column columnComponent = new Column();
 
         ColumnLayoutData columnLayoutData = new ColumnLayoutData();
@@ -122,7 +123,8 @@ public class FormFactory {
     }
 
     public static TextField textField(final int size, final Style style) {
-        TextField textField = textField(size);
+        TextField textField = new TextField();
+        textField.setWidth(new Extent(size, Extent.PX));
         if (style != null) {
         	textField.setStyle(style);
         }
@@ -136,7 +138,14 @@ public class FormFactory {
     public static TextField textField(final ComponentSize size, final Style style) {
     	return textField(size.getSize(), style);
     }
-
+    
+    public static PasswordField passwordField(final ComponentSize size) {
+        PasswordField passwordField = new PasswordField();
+        passwordField.setWidth(new Extent(size.getSize(), Extent.PX));
+        passwordField.setStyle(styles.getTextField());
+        return passwordField;
+    }
+    
     public static TextArea textArea(final int width, final int height) {
     	if (styles != null) {
     		return textArea(width, height, styles.getTextArea());
@@ -191,7 +200,7 @@ public class FormFactory {
     }
 
     public static Button button(final String label, final ImageReference icon, final Style style) {
-        Button button = button(label, icon);
+        Button button = new Button(label, icon);
         button.setStyle(style);
         return button;
     }

@@ -1,5 +1,6 @@
 package br.com.insula.arena.echo2.component.util;
 
+import nextapp.echo2.app.ImageReference;
 import nextapp.echo2.app.Style;
 
 public interface Styles {
@@ -24,5 +25,14 @@ public interface Styles {
 	Style getSelect();
 
 	Style getTable();
+	
+	ImageReference getAddIcon();
+	
+	ImageReference getEditIcon();
+	
+	ImageReference getDeleteIcon();
 
+	ImageReference getIconOrderAsc();
+	ImageReference getIconOrderDesc();
+	
 }
