@@ -1,4 +1,4 @@
-package br.com.insula.arena.report.command;
+package org.openinsula.arena.report.command;
 
 import java.io.InputStream;
 import java.util.HashMap;

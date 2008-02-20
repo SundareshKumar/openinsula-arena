@@ -1,26 +1,30 @@
-package br.com.insula.arena.report.controller;
+package org.openinsula.arena.report.controller;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openinsula.vulcano.core.command.CommandInvoker;
-import br.com.insula.arena.report.command.AbstractReportCommand;
+import org.openinsula.arena.report.command.AbstractReportCommand;
+import org.openinsula.vulcano.orm.command.transaction.DaoCommandTransactionFacade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * @author utiumi
  *
  */
+@Component
 public abstract class ReportController {
 	protected final Log logger = LogFactory.getLog(getClass());
-
-	protected CommandInvoker commandInvoker;
+	
+	@Autowired
+	protected DaoCommandTransactionFacade transactionFacade;
 	
 	public boolean visualizarPdf(AbstractReportCommand reportCommand) {
 		try {
-			JasperPrint jasperPrint = commandInvoker.invoke(reportCommand);
+			JasperPrint jasperPrint = transactionFacade.invoke(reportCommand);
 			
 			if(jasperPrint == null) {
 				return false;
@@ -40,7 +44,7 @@ public abstract class ReportController {
 	
 	public boolean visualizarCsv(AbstractReportCommand reportCommand) {
 		try {
-			JasperPrint jasperPrint = commandInvoker.invoke(reportCommand);
+			JasperPrint jasperPrint = transactionFacade.invoke(reportCommand);
 			
 			if(jasperPrint == null) {
 				return false;
@@ -61,8 +65,4 @@ public abstract class ReportController {
 	public abstract void downloadPdf(JasperPrint jasperPrint) throws JRException;
 	
 	public abstract void downloadCsv(JasperPrint jasperPrint) throws JRException;
-	
-	public void setCommandInvoker(CommandInvoker commandInvoker) {
-		this.commandInvoker = commandInvoker;
-	}
 }

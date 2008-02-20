@@ -1,4 +1,4 @@
-package br.com.insula.arena.report.command;
+package org.openinsula.arena.report.command;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -14,7 +14,6 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.openinsula.vulcano.core.command.Command;
-
 
 public abstract class HibernateAbstractReportCommand implements Command<JasperPrint> {
 	private static Map<String, JasperReport> jasperReportCache = new ConcurrentHashMap<String, JasperReport>();
