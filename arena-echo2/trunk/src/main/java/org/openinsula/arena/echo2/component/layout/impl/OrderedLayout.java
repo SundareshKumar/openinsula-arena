@@ -78,7 +78,7 @@ public class OrderedLayout extends AbstractLayout {
 				} else {
 					main.add(buildAndConfigureDiv(new Label(layoutComponent.getField().getId())));
 				}
-				
+				configureComponent(layoutComponent.getCaption());
 				configureComponent(layoutComponent.getField());
 				
 				main.add(buildAndConfigureDiv(layoutComponent.getField()));
