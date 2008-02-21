@@ -32,7 +32,7 @@ public class HibernateTableModelTemplate<T> {
 		public void initialize(T obj) {
 		}
 	};
-	
+
 	private HibernateDao dao;
 	
 	private DaoQuery daoQuery;
@@ -54,12 +54,12 @@ public class HibernateTableModelTemplate<T> {
 			}
 			
 			TransactionTemplate transactionTemplate = createTransactionTemplate();
-			
+
 			rowCount = ((Number)transactionTemplate.execute(new TransactionCallback() {
 				public Object doInTransaction(TransactionStatus status) {
 					DaoQuery countDaoQuery = new DaoQueryBuilder().select().count()
-						.from(daoQuery.getQueryClass())
-						.where(daoQuery.getSpec()).getDaoQuery();
+					.from(daoQuery.getQueryClass())
+					.where(daoQuery.getSpec()).getDaoQuery();
 					
 					return dao.findUnique(countDaoQuery);
 				}

@@ -5,9 +5,9 @@ import nextapp.echo2.app.table.AbstractTableModel;
 import org.openinsula.vulcano.orm.dao.hibernate.HibernateDao;
 import org.openinsula.vulcano.orm.dao.query.DaoQuery;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Transactional(readOnly=true)
 public abstract class AbstractHibernateTableModel<T> extends AbstractTableModel implements HibernateTableModel<T>, InitializingBean {
@@ -15,12 +15,14 @@ public abstract class AbstractHibernateTableModel<T> extends AbstractTableModel 
 	
 	private static final int DEFAULT_PAGE_SIZE = 20;
 	
+	@Autowired
 	private PlatformTransactionManager transactionManager;
 	
 	private int pageSize = DEFAULT_PAGE_SIZE;
 	
 	private int currentPage = 0;
 	
+	@Autowired
 	private HibernateDao dao;
 
 	private HibernateTableModelTemplate<T> template;
