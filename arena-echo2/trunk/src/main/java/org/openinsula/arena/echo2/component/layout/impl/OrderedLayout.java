@@ -43,7 +43,7 @@ public class OrderedLayout extends AbstractLayout {
 	/**
 	 * @return
 	 */
-	public Component buildFormLayout() {
+	private Component buildFormLayout() {
 		List<LayoutEntry> properties = getProperties();
 		
 		Component main = new Column();
@@ -98,10 +98,10 @@ public class OrderedLayout extends AbstractLayout {
 	/**
 	 * @return
 	 */
-	public Component buildHorizontalLayout() {
+	private Component buildHorizontalLayout() {
 		List<LayoutEntry> properties = getProperties();
 		
-		Component main = new Column();
+		Column main = new Column();
 
 		for (LayoutEntry entry : properties) {
 			switch (entry.getLayoutPropertyType()) {
@@ -165,7 +165,7 @@ public class OrderedLayout extends AbstractLayout {
 	/**
 	 * @return
 	 */
-	public Component buildVerticalLayout() {
+	private Component buildVerticalLayout() {
 		List<LayoutEntry> properties = getProperties();
 		
 		Row main = new Row();
@@ -184,11 +184,13 @@ public class OrderedLayout extends AbstractLayout {
 				Column column = new Column();
 				
 				if (layoutComponent.getCaption() != null) {
+					configureComponent(layoutComponent.getCaption());
 					column.add(buildAndConfigureDiv(layoutComponent.getCaption()));
 				} else {
-					column.add(buildAndConfigureDiv(new Label(layoutComponent.getField().getId())));
+					Label label = new Label(layoutComponent.getField().getId());
+					configureComponent(label);
+					column.add(buildAndConfigureDiv(label));
 				}
-				configureComponent(layoutComponent.getCaption());
 				configureComponent(layoutComponent.getField());
 				
 				column.add(buildAndConfigureDiv(layoutComponent.getField()));
