@@ -54,4 +54,10 @@ public abstract class Entry<T> implements Iterable<T> {
 	public Iterator<T> iterator() {
 		return values.iterator();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public T[] toArray() {
+		return (T[]) values.toArray();
+	}
+	
 }

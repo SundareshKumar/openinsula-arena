@@ -22,7 +22,13 @@ public class DefaultCounterDelegate implements CounterDelegate {
 	
 	@Override
 	public boolean hasNext(final Integer[] counter) {
-		return !(counter[0] == maxValue && counter[0] == counter[counter.length - 1]);
+		for (Integer integer : counter) {
+			if (integer != maxValue) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	@Override

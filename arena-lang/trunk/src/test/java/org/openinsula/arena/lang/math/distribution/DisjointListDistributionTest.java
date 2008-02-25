@@ -41,8 +41,8 @@ public class DisjointListDistributionTest {
 		
 		int i = 0;
 		for (List<Integer>[] distro : listDistribution) {
-			if (logger.isDebugEnabled()) {
-				logger.debug(Arrays.toString(distro));
+			if (logger.isInfoEnabled()) {
+				logger.info(Arrays.toString(distro));
 			}
 			
 			int j = 0;
