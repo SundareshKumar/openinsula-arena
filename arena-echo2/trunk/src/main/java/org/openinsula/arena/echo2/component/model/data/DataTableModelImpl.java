@@ -20,6 +20,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.openinsula.arena.echo2.component.div.Div;
 import org.openinsula.arena.echo2.component.util.FormFactory;
 import org.openinsula.arena.echo2.component.util.Styles;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class DataTableModelImpl extends DefaultTableModel implements DataTableModel {
 	private static final long serialVersionUID = 1L;
@@ -40,6 +41,7 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 
 	private List<Extent> widthColumns = new ArrayList<Extent>();
 
+	@Autowired(required = false)
 	private Styles styles;
 
 	public void setTableColumnModel(TableColumnModel tableColumnModel) {
@@ -158,7 +160,7 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 		}
 		return -1;
 	}
-
+	
 	/*
 	 * Método que recebe o nome e o valor da propriedade para ser formatado em
 	 * sub-classes
