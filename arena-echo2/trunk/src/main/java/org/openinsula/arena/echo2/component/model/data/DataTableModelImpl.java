@@ -108,16 +108,8 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 			}
 		}
 
-		long beanId = -1;
-		try {
-			beanId = (Long) PropertyUtils.getProperty(bean, "id");
-		}
-		catch (IllegalAccessException e) {
-		}
-		catch (InvocationTargetException e) {
-		}
-		catch (NoSuchMethodException e) {
-		}
+		long beanId = getBeanId(bean);
+
 		Button button = null;
 		if (isEditColumn()) {
 			if (styles != null) {
@@ -152,6 +144,19 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 			super.addRow(row.toArray());
 			beanList.add(bean);
 		}
+	}
+
+	protected long getBeanId(Object bean) {
+		try {
+			return (Long) PropertyUtils.getProperty(bean, "id");
+		}
+		catch (IllegalAccessException e) {
+		}
+		catch (InvocationTargetException e) {
+		}
+		catch (NoSuchMethodException e) {
+		}
+		return -1;
 	}
 
 	/*
