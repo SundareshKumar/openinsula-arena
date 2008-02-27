@@ -16,7 +16,7 @@ public class ListDistributionTest {
 		List<Integer> itens = Arrays.asList(1,2,3,4,5);
 		
 		ListDistribution<Integer> distr1 = new ListDistribution<Integer>(itens);
-		List<List<Integer>> list1 = distr1.distribute(1);
+		List<List<Integer>> list1 = distr1.distribute(5);
 		
 		ListDistribution<Integer> distr2 = new ListDistribution<Integer>(itens);
 		List<List<Integer>> list2 = distr2.distribute(4);

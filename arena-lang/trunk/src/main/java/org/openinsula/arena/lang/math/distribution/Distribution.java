@@ -30,7 +30,7 @@ public class Distribution implements Iterable<Entry<Integer>>{
 	}
 	
 	private CounterIterator createCounterIterator(final int digits) {
-		Counter c = Counter.createDefaultCounter(digits, 1, numberOfElements - 1);
+		Counter c = Counter.createDefaultCounter(digits, 1, numberOfElements);
 		
 		CounterIterator counterIterator = new CounterIterator(c) {
 

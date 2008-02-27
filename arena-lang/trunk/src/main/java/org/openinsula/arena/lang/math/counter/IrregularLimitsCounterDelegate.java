@@ -43,4 +43,9 @@ public class IrregularLimitsCounterDelegate implements CounterDelegate {
 		}
 	}
 
+	@Override
+	public int getMinimumValue(final int index) {
+		return minValues[index];
+	}
+
 }

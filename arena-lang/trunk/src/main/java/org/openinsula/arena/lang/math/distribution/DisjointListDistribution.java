@@ -51,40 +51,48 @@ public class DisjointListDistribution<T> implements Iterable<List<T>[]> {
 
 		distributionList.clear();
 
-		List<List<T>>[] distros = createListDistributions(samples);
+		if (samples.length == 1 && samples[0] == referenceList.size()) {
+			List<?>[] resultEntry = new ArrayList<?>[1];
+			resultEntry[0] = new ArrayList<T>(referenceList);
+			distributionList.add((List<T>[]) resultEntry);
 
-		Collection<Entry<Integer>> combinations = generateAllListCombinations(distros);
+		} else {
 
-		for (Entry<Integer> entry : combinations) {
-			List<?>[] resultEntry = new ArrayList<?>[samples.length];
-			int i = 0;
+			List<List<T>>[] distros = createListDistributions(samples);
 
-			for (Integer idx : entry) {
-				resultEntry[i] = distros[i].get(idx);
-				i++;
-			}
+			Collection<Entry<Integer>> combinations = generateAllListCombinations(distros);
 
-			if (MathFunctions.disjoint(resultEntry)) {
-				distributionList.add((List<T>[]) resultEntry);
+			for (Entry<Integer> entry : combinations) {
+				List<?>[] resultEntry = new ArrayList<?>[samples.length];
+				int i = 0;
+
+				for (Integer idx : entry) {
+					resultEntry[i] = distros[i].get(idx);
+					i++;
+				}
+
+				if (MathFunctions.disjoint(resultEntry)) {
+					distributionList.add((List<T>[]) resultEntry);
+				}
 			}
 		}
 	}
 
 	private boolean isSame(final int... samples) {
-		
+
 		if (!distributionList.isEmpty()) {
 			List<T>[] singleDistro = distributionList.get(0);
 
 			if (singleDistro.length == samples.length) {
-				
+
 				for (int i = 0; i < samples.length; i++) {
-					
+
 					if (samples[i] != singleDistro[i].size()) {
 						return false;
 					}
 				}
 				return true;
-				
+
 			} else {
 				return false;
 			}
@@ -109,7 +117,7 @@ public class DisjointListDistribution<T> implements Iterable<List<T>[]> {
 	private Collection<Entry<Integer>> generateAllListCombinations(final List<?>[] distros) {
 		Counter counter = createCounter(distros);
 		CounterIterator counterIterator = new SequencialCounterIterator(counter);
-		
+
 		return counterIterator.getEntryCollection();
 	}
 

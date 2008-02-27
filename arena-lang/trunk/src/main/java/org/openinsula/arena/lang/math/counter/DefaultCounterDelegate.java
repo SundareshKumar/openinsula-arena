@@ -41,4 +41,9 @@ public class DefaultCounterDelegate implements CounterDelegate {
 		Arrays.fill(counter, minValue);		
 	}
 
+	@Override
+	public int getMinimumValue(final int index) {
+		return minValue;
+	}
+
 }

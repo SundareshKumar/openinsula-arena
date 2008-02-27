@@ -8,4 +8,6 @@ public interface CounterDelegate {
 	
 	boolean isMaximumValue(int value, int index);
 	
+	int getMinimumValue(int index);
+	
 }

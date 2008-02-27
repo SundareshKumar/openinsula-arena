@@ -33,7 +33,7 @@ public class Counter implements Iterable<Integer[]> {
 						break;
 
 					} else {
-						counter[i] = 0;
+						counter[i] = delegate.getMinimumValue(i);
 					}
 				}
 

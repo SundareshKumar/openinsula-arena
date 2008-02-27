@@ -37,26 +37,32 @@ public class ListDistribution<T> {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Distribution size: " + sampleSize + " itens per list");
 		}
-		
+
 		List<List<T>> distributionList = new ArrayList<List<T>>();
 
-		CounterIterator counterIterator = createCounterIterator(sampleSize);
-		Collection<Entry<Integer>> entries = counterIterator.getEntryCollection();
-		
-		for (Entry<Integer> entry : entries) {
-			List<T> distribution = new ArrayList<T>();
+		if (sampleSize == referenceList.size()) {
+			distributionList.add(new ArrayList<T>(referenceList));
 
-			for (Integer idx : entry) {
-				T item = referenceList.get(idx);
-				distribution.add(item);
+		} else {
+
+			CounterIterator counterIterator = createCounterIterator(sampleSize);
+			Collection<Entry<Integer>> entries = counterIterator.getEntryCollection();
+
+			for (Entry<Integer> entry : entries) {
+				List<T> distribution = new ArrayList<T>();
+
+				for (Integer idx : entry) {
+					T item = referenceList.get(idx);
+					distribution.add(item);
+				}
+
+				distributionList.add(distribution);
 			}
-
-			distributionList.add(distribution);
 		}
-
+		
 		return distributionList;
 	}
-	
+
 	private CounterIterator createCounterIterator(final int sampleSize) {
 		Counter counter = Counter.createDefaultCounter(sampleSize, referenceList.size() - 1);
 		CounterIterator counterIterator = new CounterIterator(counter) {
@@ -83,9 +89,9 @@ public class ListDistribution<T> {
 			protected Collection<Entry<Integer>> prepareEntryCollection() {
 				return new LinkedHashSet<Entry<Integer>>();
 			}
-			
+
 		};
-		
+
 		return counterIterator;
 	}
 
