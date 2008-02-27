@@ -6,10 +6,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openinsula.arena.echo2.component.layout.LayoutElement;
 
-
 public class LayoutComponent implements LayoutElement {
 	private Component caption;
-	
+
 	private Component field;
 
 	public LayoutComponent(Component caption, Component field) {
@@ -21,23 +20,17 @@ public class LayoutComponent implements LayoutElement {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof LayoutComponent) {
-			LayoutComponent other = (LayoutComponent)obj;
-			
-			return new EqualsBuilder()
-				.append(caption, other.caption)
-				.append(field, other.field)
-				.isEquals();
+			LayoutComponent other = (LayoutComponent) obj;
+
+			return new EqualsBuilder().append(caption, other.caption).append(field, other.field).isEquals();
 		}
-		
+
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder()
-			.append(caption)
-			.append(field)
-			.toHashCode();
+		return new HashCodeBuilder().append(caption).append(field).toHashCode();
 	}
 
 	public Component getCaption() {

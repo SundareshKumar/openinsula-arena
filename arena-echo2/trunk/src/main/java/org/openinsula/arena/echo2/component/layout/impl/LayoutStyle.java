@@ -6,13 +6,12 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openinsula.arena.echo2.component.layout.LayoutElement;
 
-
 public class LayoutStyle implements LayoutElement {
 
 	private Class<? extends Component> klazz;
-	
+
 	private String name;
-	
+
 	private Object value;
 
 	public LayoutStyle(String name, Object value) {
@@ -21,8 +20,7 @@ public class LayoutStyle implements LayoutElement {
 		this.value = value;
 	}
 
-	public LayoutStyle(Class<? extends Component> klazz, String name,
-			Object value) {
+	public LayoutStyle(Class<? extends Component> klazz, String name, Object value) {
 		super();
 		this.klazz = klazz;
 		this.name = name;
@@ -40,20 +38,16 @@ public class LayoutStyle implements LayoutElement {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof LayoutStyle) {
-			LayoutStyle other = (LayoutStyle)obj;
-			
-			return new EqualsBuilder()
-				.append(this.name, other.name)
-				.isEquals();
+			LayoutStyle other = (LayoutStyle) obj;
+
+			return new EqualsBuilder().append(this.name, other.name).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder()
-			.append(this.name)
-			.toHashCode();
+		return new HashCodeBuilder().append(this.name).toHashCode();
 	}
 
 	public String getName() {
@@ -71,5 +65,5 @@ public class LayoutStyle implements LayoutElement {
 	public void setValue(Object value) {
 		this.value = value;
 	}
-	
+
 }

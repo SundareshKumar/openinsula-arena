@@ -21,50 +21,49 @@ import org.openinsula.arena.echo2.component.div.Div;
 import org.openinsula.arena.echo2.component.util.FormFactory;
 import org.openinsula.arena.echo2.component.util.Styles;
 
-
 public class DataTableModelImpl extends DefaultTableModel implements DataTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private Map<String, String> columnMap = new LinkedHashMap<String, String>();
 
 	private List<Object> beanList = new ArrayList<Object>();
-	
+
 	private boolean editColumn = true;
-	
+
 	private boolean deleteColumn = true;
-	
+
 	private ActionListener editButtonActionListener;
 
 	private ActionListener deleteButtonActionListener;
-	
+
 	private TableColumnModel tableColumnModel;
-	
+
 	private List<Extent> widthColumns = new ArrayList<Extent>();
-	
+
 	private Styles styles;
-	
+
 	public void setTableColumnModel(TableColumnModel tableColumnModel) {
 		this.tableColumnModel = tableColumnModel;
 	}
-	
+
 	public void addColumn(String label, String beanField) {
 		addColumn(label, beanField, 0);
 	}
-	
+
 	public void addColumn(String label, String beanField, int width) {
 		columnMap.put(beanField, label);
 		widthColumns.add(new Extent(width, Extent.PX));
 		buildColumns();
 	}
-	
+
 	public void clear() {
 		while (getRowCount() > 0) {
 			deleteRow(0);
 		}
-		
+
 		beanList.clear();
 	}
-	
+
 	public void setRows(Collection beans) {
 		clear();
 		for (Object bean : beans) {
@@ -74,52 +73,60 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 
 	public void addRow(Object bean) {
 		List<Object> row = new ArrayList<Object>();
-		
+
 		int columnIndex = 0;
 		for (String field : columnMap.keySet()) {
 			try {
 				String valorCampo = formatProperty(field, PropertyUtils.getProperty(bean, field)).toString();
-				
+
 				Div columnDiv = new Div();
 				columnDiv.setOverflow(Div.OVERFLOW_HIDDEN);
 				columnDiv.setToolTipText(valorCampo);
-				
-				if(tableColumnModel != null && widthColumns.get(columnIndex) != null) {
+
+				if (tableColumnModel != null && widthColumns.get(columnIndex) != null) {
 					tableColumnModel.getColumn(columnIndex).setWidth(widthColumns.get(columnIndex));
 				}
-					
+
 				Label valorDescricaoLabel = new Label();
 				valorDescricaoLabel.setText(valorCampo);
 				valorDescricaoLabel.setLineWrap(false);
 				valorDescricaoLabel.setFont(new Font(Font.VERDANA, Font.PLAIN, new Extent(10, Extent.PX)));
-				
+
 				columnDiv.add(valorDescricaoLabel);
-				
+
 				row.add(columnDiv);
 				columnIndex++;
-			} catch (IllegalAccessException e) {
+			}
+			catch (IllegalAccessException e) {
 				e.printStackTrace();
-			} catch (InvocationTargetException e) {
+			}
+			catch (InvocationTargetException e) {
 				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
+			}
+			catch (NoSuchMethodException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		long beanId = -1;
 		try {
 			beanId = (Long) PropertyUtils.getProperty(bean, "id");
-		} catch (IllegalAccessException e) {
-		} catch (InvocationTargetException e) {
-		} catch (NoSuchMethodException e) {	}
+		}
+		catch (IllegalAccessException e) {
+		}
+		catch (InvocationTargetException e) {
+		}
+		catch (NoSuchMethodException e) {
+		}
 		Button button = null;
 		if (isEditColumn()) {
 			if (styles != null) {
 				button = FormFactory.iconButton("Alterar", styles.getEditIcon());
-			} else {
+			}
+			else {
 				button = FormFactory.button("Alterar");
 			}
-			
+
 			if ((editButtonActionListener != null) && (beanId != -1)) {
 				button.setActionCommand(Long.toString(beanId));
 				button.addActionListener(editButtonActionListener);
@@ -127,27 +134,29 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 			row.add(button);
 		}
 		if (isDeleteColumn()) {
-			if (styles != null ) {
+			if (styles != null) {
 				button = FormFactory.iconButton("Excluir", styles.getDeleteIcon());
-			} else {
+			}
+			else {
 				button = FormFactory.button("Excluir");
 			}
 
 			if ((deleteButtonActionListener != null) && (beanId != -1)) {
-				button.setActionCommand(""+beanId);
+				button.setActionCommand("" + beanId);
 				button.addActionListener(deleteButtonActionListener);
 			}
 			row.add(button);
 		}
-		
-		if(!beanList.contains(bean)) {
+
+		if (!beanList.contains(bean)) {
 			super.addRow(row.toArray());
 			beanList.add(bean);
 		}
 	}
-	
+
 	/*
-	 * Método que recebe o nome e o valor da propriedade para ser formatado em sub-classes
+	 * Método que recebe o nome e o valor da propriedade para ser formatado em
+	 * sub-classes
 	 */
 	protected Object formatProperty(String property, Object value) {
 		return value;
@@ -156,16 +165,17 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 	public long getSelectedBeanId(ActionEvent ae) {
 		return Long.parseLong(ae.getActionCommand());
 	}
-	
+
 	public void deleteRow(Object bean) {
 		int index = -1;
 		int counter = 0;
-		
+
 		for (Object item : beanList) {
 			if (item.equals(bean)) {
 				index = counter;
 				break;
-			} else {
+			}
+			else {
 				counter++;
 			}
 		}
@@ -174,19 +184,21 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 			beanList.remove(bean);
 		}
 	}
-	
+
 	private void buildColumns() {
 		int columnCount = columnMap.size();
-		if (isEditColumn()) columnCount++;
-		if (isDeleteColumn()) columnCount++;
+		if (isEditColumn())
+			columnCount++;
+		if (isDeleteColumn())
+			columnCount++;
 		setColumnCount(columnCount);
-		
+
 		int columnIndex = 0;
 		for (String column : columnMap.values()) {
 			setColumnName(columnIndex, column);
 			columnIndex++;
 		}
-		
+
 		if (isEditColumn()) {
 			setColumnName(columnIndex, "");
 			columnIndex++;
@@ -196,11 +208,11 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 			columnIndex++;
 		}
 	}
-	
+
 	public List getBeanList() {
 		return beanList;
-	}	
-	
+	}
+
 	public boolean isDeleteColumn() {
 		return deleteColumn;
 	}

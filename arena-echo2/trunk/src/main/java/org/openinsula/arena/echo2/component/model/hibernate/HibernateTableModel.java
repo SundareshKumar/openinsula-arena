@@ -6,7 +6,7 @@ import org.openinsula.vulcano.orm.dao.query.DaoQuery;
 public interface HibernateTableModel<T> extends PageableTableModel {
 
 	public T getValue(int index);
-	
+
 	public void setDaoQuery(DaoQuery query);
-	
+
 }

@@ -30,13 +30,13 @@ public interface Layout extends LayoutElement {
 	 * @param value
 	 */
 	public void addStyle(String name, Object value);
-	
+
 	/**
 	 * Adiciona um layout dentro de outro
 	 * @param layout
 	 */
 	public void addLayout(Layout layout);
-	
+
 	/**
 	 * Adiciona uma propriedade de um Style para ser adicionado a um componente
 	 * @param klazz
@@ -44,7 +44,7 @@ public interface Layout extends LayoutElement {
 	 * @param value
 	 */
 	public void addComponentStyle(Class<? extends Component> klazz, String name, Object value);
-	
+
 	/**
 	 * Renderiza o layout.
 	 * @return Component renderizado como layout.

@@ -24,68 +24,60 @@ import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-
 public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, ImageRenderSupport {
 	private static final String IMAGE_ID_BACKGROUND = "background";
-	
+
 	public String getContainerId(Component child) {
 		return ContainerInstance.getElementId(child.getParent());
 	}
 
-	public void renderAdd(RenderContext rc, ServerComponentUpdate update,
-			String targetId, Component component) {
+	public void renderAdd(RenderContext rc, ServerComponentUpdate update, String targetId, Component component) {
 		Element domAddElement = DomUpdate.renderElementAdd(rc.getServerMessage());
-		DocumentFragment htmlFragment = rc.getServerMessage().getDocument()
-				.createDocumentFragment();
+		DocumentFragment htmlFragment = rc.getServerMessage().getDocument().createDocumentFragment();
 		renderHtml(rc, update, htmlFragment, component);
-		DomUpdate.renderElementAddContent(rc.getServerMessage(), domAddElement,
-				targetId, htmlFragment);
+		DomUpdate.renderElementAddContent(rc.getServerMessage(), domAddElement, targetId, htmlFragment);
 	}
 
-	public void renderDispose(RenderContext rc, ServerComponentUpdate update,
-			Component component) {
+	public void renderDispose(RenderContext rc, ServerComponentUpdate update, Component component) {
 	}
 
-	public boolean renderUpdate(RenderContext rc, ServerComponentUpdate update,
-			String targetId) {
-		DomUpdate.renderElementRemove(rc.getServerMessage(), ContainerInstance
-				.getElementId(update.getParent()));
+	public boolean renderUpdate(RenderContext rc, ServerComponentUpdate update, String targetId) {
+		DomUpdate.renderElementRemove(rc.getServerMessage(), ContainerInstance.getElementId(update.getParent()));
 		renderAdd(rc, update, targetId, update.getParent());
 		return false;
 	}
 
-	public void renderHtml(RenderContext rc, ServerComponentUpdate update,
-			Node parentNode, Component component) {
+	public void renderHtml(RenderContext rc, ServerComponentUpdate update, Node parentNode, Component component) {
 		Document doc = rc.getServerMessage().getDocument();
 		Element divE = doc.createElement("div");
 		divE.setAttribute("id", ContainerInstance.getElementId(component));
-		
+
 		StyleBuilder builder = new StyleBuilder();
 
 		Div div = (Div) component;
-		
+
 		{ // text alignment
 			TextAlignment textAlignment = div.getTextAlignment();
 			if (textAlignment != null) {
 				builder.addProperty("text-align: ", textAlignment.getName());
 			}
 		}
-		
+
 		{ // background color
 			Color backgroundColor = div.getBackground();
 			if (backgroundColor != null && !"".equals(backgroundColor)) {
 				builder.addProperty("background: ", backgroundColor);
 			}
 		}
-		
+
 		{ // background image
 			ImageReference image = div.getBackgroundImage();
-			if(image != null) {
+			if (image != null) {
 				FillImage backgroundImage = new FillImage(image);
-				
+
 				CssStyle cssStyle = new CssStyle();
-				FillImageRender.renderToStyle(cssStyle, rc, this, div, IMAGE_ID_BACKGROUND, backgroundImage, 0); 
-				
+				FillImageRender.renderToStyle(cssStyle, rc, this, div, IMAGE_ID_BACKGROUND, backgroundImage, 0);
+
 				builder.addProperty("", cssStyle.renderInline());
 			}
 		}
@@ -96,7 +88,7 @@ public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, Imag
 				builder.addProperty("width: ", width);
 			}
 		}
-		
+
 		{ // heigth
 			Extent height = div.getHeight();
 			if (height != null) {
@@ -112,10 +104,10 @@ public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, Imag
 				builder.addProperty("border-color: ", border.getColor());
 			}
 		}
-		
+
 		{ // Border Radius
 			Extent border = div.getBorderRadius();
-			if(border != null) {
+			if (border != null) {
 				builder.addProperty("-moz-border-radius: ", border);
 			}
 		}
@@ -179,19 +171,16 @@ public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, Imag
 		parentNode.appendChild(divE);
 	}
 
-
-	private void renderChild(RenderContext rc, ServerComponentUpdate update,
-			Component child) {
-		ComponentSynchronizePeer syncPeer = SynchronizePeerFactory
-				.getPeerForComponent(child.getClass());
+	private void renderChild(RenderContext rc, ServerComponentUpdate update, Component child) {
+		ComponentSynchronizePeer syncPeer = SynchronizePeerFactory.getPeerForComponent(child.getClass());
 		syncPeer.renderAdd(rc, update, getContainerId(child), child);
 	}
 
 	public ImageReference getImage(Component component, String imageId) {
-		if(IMAGE_ID_BACKGROUND.equals(imageId)) {
-			return ((Div)component).getBackgroundImage(); 
+		if (IMAGE_ID_BACKGROUND.equals(imageId)) {
+			return ((Div) component).getBackgroundImage();
 		}
-		
+
 		return null;
 	}
 }

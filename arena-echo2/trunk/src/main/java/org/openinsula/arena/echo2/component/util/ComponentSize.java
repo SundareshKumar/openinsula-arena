@@ -2,7 +2,7 @@ package org.openinsula.arena.echo2.component.util;
 
 /**
  * Enum responsável por definir o tamanho dos componentes (px).
- *
+ * 
  * @author utiumi
  */
 public enum ComponentSize {
@@ -27,7 +27,7 @@ public enum ComponentSize {
 
 	/**
 	 * Constrói um novo <code>ComponentSize</code>.
-	 *
+	 * 
 	 * @param paramSize tamanho do componente.
 	 */
 	private ComponentSize(final Integer paramSize) {
@@ -36,7 +36,7 @@ public enum ComponentSize {
 
 	/**
 	 * Getter para o atributo <code>size</code>.
-	 *
+	 * 
 	 * @return tamanho do componente.
 	 */
 	public Integer getSize() {

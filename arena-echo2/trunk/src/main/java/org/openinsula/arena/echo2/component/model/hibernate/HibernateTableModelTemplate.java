@@ -15,17 +15,16 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-
 @SuppressWarnings("unchecked")
 public class HibernateTableModelTemplate<T> {
 	protected final Log logger = LogFactory.getLog(getClass());
-	
+
 	private int fetchSize = 50;
-	
+
 	private Map<Integer, T> cachedValueMap = new LRUMap(fetchSize * 3);
-	
+
 	private int rowCount = -1;
-	
+
 	private PlatformTransactionManager transactionManager;
 
 	private InitializeCallback<T> initializeCallback = new InitializeCallback<T>() {
@@ -34,53 +33,52 @@ public class HibernateTableModelTemplate<T> {
 	};
 
 	private HibernateDao dao;
-	
+
 	private DaoQuery daoQuery;
-	
+
 	protected TransactionTemplate createTransactionTemplate() {
 		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
 		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		transactionTemplate.setReadOnly(true);
-		
+
 		return transactionTemplate;
 	}
-	
+
 	public int getRowCount() {
 		if (daoQuery == null) {
 			rowCount = 0;
-		} else if (rowCount == -1) {
+		}
+		else if (rowCount == -1) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Executing count(*) to get the result size.");
 			}
-			
+
 			TransactionTemplate transactionTemplate = createTransactionTemplate();
 
-			rowCount = ((Number)transactionTemplate.execute(new TransactionCallback() {
+			rowCount = ((Number) transactionTemplate.execute(new TransactionCallback() {
 				public Object doInTransaction(TransactionStatus status) {
-					DaoQuery countDaoQuery = new DaoQueryBuilder().select().count()
-					.from(daoQuery.getQueryClass())
-					.where(daoQuery.getSpec()).getDaoQuery();
-					
+					DaoQuery countDaoQuery = new DaoQueryBuilder().select().count().from(daoQuery.getQueryClass())
+							.where(daoQuery.getSpec()).getDaoQuery();
+
 					return dao.findUnique(countDaoQuery);
 				}
 			})).intValue();
 		}
-		
+
 		return rowCount;
 	}
-	
+
 	protected void fetchValues(int index) {
 		final int offset = calculateOffset(index);
-		
+
 		TransactionTemplate transactionTemplate = createTransactionTemplate();
 		transactionTemplate.execute(new TransactionCallback() {
 			public Object doInTransaction(TransactionStatus status) {
-				
+
 				daoQuery.setLimit(fetchSize);
 				daoQuery.setFirstResult(offset);
-				
-				List<? extends T> fetchedValues = 
-					dao.find(daoQuery);
+
+				List<? extends T> fetchedValues = dao.find(daoQuery);
 
 				for (int i = 0; i < fetchedValues.size(); i++) {
 					T value = fetchedValues.get(i);
@@ -93,11 +91,11 @@ public class HibernateTableModelTemplate<T> {
 	}
 
 	protected int calculateOffset(int index) {
-		int offset = index - fetchSize/2;
+		int offset = index - fetchSize / 2;
 		if (offset < 0) {
 			offset = 0;
 		}
-		
+
 		return offset;
 	}
 
@@ -112,22 +110,22 @@ public class HibernateTableModelTemplate<T> {
 				logger.debug("Row " + rowIndex + " not found.");
 			}
 			fetchValues(rowIndex);
-			row = (T) cachedValueMap.get(rowIndex); 
+			row = (T) cachedValueMap.get(rowIndex);
 		}
-		
+
 		return row;
 	}
-	
+
 	public void setFetchSize(int fetchSize) {
 		this.fetchSize = fetchSize;
-		((LRUMap)cachedValueMap).setMaximumSize(fetchSize * 3);
+		((LRUMap) cachedValueMap).setMaximumSize(fetchSize * 3);
 	}
-	
+
 	public void setDaoQuery(DaoQuery daoQuery) {
 		this.daoQuery = daoQuery;
 		this.rowCount = -1;
 		cachedValueMap.clear();
-		
+
 		Runtime.getRuntime().gc();
 	}
 

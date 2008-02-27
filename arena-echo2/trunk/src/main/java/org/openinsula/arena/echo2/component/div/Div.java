@@ -9,32 +9,48 @@ import nextapp.echo2.app.ResourceImageReference;
 import org.apache.log4j.Logger;
 import org.openinsula.arena.echo2.component.util.TextAlignment;
 
-
 public class Div extends Component {
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final Logger logger = Logger.getLogger(Div.class);
-	
+
 	/* constantes para usar no Styles */
 	public static final String PROPERTY_TEXT_ALIGNMENT = "text-alignment";
+
 	public static final String PROPERTY_BORDER = "border";
+
 	public static final String PROPERTY_WIDTH = "width";
+
 	public static final String PROPERTY_HEIGHT = "height";
+
 	public static final String PROPERTY_BACKGROUND_IMAGE = "backgroundImage";
+
 	public static final String PROPERTY_OVERFLOW = "overflow";
+
 	public static final String PROPERTY_PADDING_TOP = "paddingTop";
+
 	public static final String PROPERTY_PADDING_BOTTOM = "paddingBottom";
+
 	public static final String PROPERTY_PADDING_LEFT = "paddingLeft";
+
 	public static final String PROPERTY_PADDING_RIGHT = "paddingRight";
+
 	public static final String PROPERTY_MARGIN_TOP = "marginTop";
+
 	public static final String PROPERTY_MARGIN_BOTTOM = "marginBottom";
+
 	public static final String PROPERTY_MARGIN_LEFT = "marginLeft";
+
 	public static final String PROPERTY_MARGIN_RIGHT = "marginRight";
 
 	public static final String OVERFLOW_HIDDEN = "hidden";
+
 	public static final String OVERFLOW_VISIBLE = "visible";
+
 	public static final String OVERFLOW_SCROLL = "scroll";
+
 	public static final String OVERFLOW_AUTO = "auto";
+
 	public static final String OVERFLOW_INHERIT = "inherit";
 
 	@Override
@@ -42,77 +58,80 @@ public class Div extends Component {
 		if (propertyName == null) {
 			return;
 		}
-		
+
 		try {
-			if (propertyName.equals(PROPERTY_BACKGROUND)) { 
+			if (propertyName.equals(PROPERTY_BACKGROUND)) {
 				super.setProperty(propertyName, newValue);
-			} else
-			if (propertyName.equals(PROPERTY_BACKGROUND_IMAGE)) {
+			}
+			else if (propertyName.equals(PROPERTY_BACKGROUND_IMAGE)) {
 				if (newValue instanceof String) {
-					this.setBackgroundImage((String)newValue);
-				} else if (newValue instanceof ImageReference) {
-					this.setBackgroundImage((ImageReference)newValue);
+					this.setBackgroundImage((String) newValue);
 				}
-			} else
-			if (propertyName.equals(PROPERTY_BORDER)) {
+				else if (newValue instanceof ImageReference) {
+					this.setBackgroundImage((ImageReference) newValue);
+				}
+			}
+			else if (propertyName.equals(PROPERTY_BORDER)) {
 				this.setBorder((Border) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_FONT)) {
+			}
+			else if (propertyName.equals(PROPERTY_FONT)) {
 				super.setProperty(propertyName, newValue);
-			} else
-			if (propertyName.equals(PROPERTY_FOREGROUND)) {
+			}
+			else if (propertyName.equals(PROPERTY_FOREGROUND)) {
 				super.setProperty(propertyName, newValue);
-			} else
-			if (propertyName.equals(PROPERTY_HEIGHT)) {
+			}
+			else if (propertyName.equals(PROPERTY_HEIGHT)) {
 				this.setHeight((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_LAYOUT_DATA)) {
+			}
+			else if (propertyName.equals(PROPERTY_LAYOUT_DATA)) {
 				super.setProperty(propertyName, newValue);
-			} else
-			if (propertyName.equals(PROPERTY_MARGIN_BOTTOM)) {
+			}
+			else if (propertyName.equals(PROPERTY_MARGIN_BOTTOM)) {
 				this.setMarginBottom((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_MARGIN_LEFT)) {
+			}
+			else if (propertyName.equals(PROPERTY_MARGIN_LEFT)) {
 				this.setMarginLeft((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_MARGIN_RIGHT)) {
+			}
+			else if (propertyName.equals(PROPERTY_MARGIN_RIGHT)) {
 				this.setMarginRight((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_MARGIN_TOP)) {
+			}
+			else if (propertyName.equals(PROPERTY_MARGIN_TOP)) {
 				this.setMarginTop((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_OVERFLOW)) {
+			}
+			else if (propertyName.equals(PROPERTY_OVERFLOW)) {
 				this.setOverflow((String) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_PADDING_BOTTOM)) {
+			}
+			else if (propertyName.equals(PROPERTY_PADDING_BOTTOM)) {
 				this.setPaddingBottom((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_PADDING_LEFT)) {
+			}
+			else if (propertyName.equals(PROPERTY_PADDING_LEFT)) {
 				this.setPaddingLeft((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_PADDING_RIGHT)) {
+			}
+			else if (propertyName.equals(PROPERTY_PADDING_RIGHT)) {
 				this.setPaddingRight((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_PADDING_TOP)) {
+			}
+			else if (propertyName.equals(PROPERTY_PADDING_TOP)) {
 				this.setPaddingTop((Extent) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_TEXT_ALIGNMENT)) {
+			}
+			else if (propertyName.equals(PROPERTY_TEXT_ALIGNMENT)) {
 				this.setTextAlignment((TextAlignment) newValue);
-			} else
-			if (propertyName.equals(PROPERTY_WIDTH)) {
+			}
+			else if (propertyName.equals(PROPERTY_WIDTH)) {
 				this.setWidth((Extent) newValue);
 			}
-		} catch (Exception e) {
-			logger.warn("Propriedade de tipo ("+newValue.getClass().getName()+") incorreta para o atributo: "+propertyName);
+		}
+		catch (Exception e) {
+			logger.warn("Propriedade de tipo (" + newValue.getClass().getName() + ") incorreta para o atributo: "
+					+ propertyName);
 			logger.error(e.getMessage());
 		}
-		
+
 	}
-	
+
 	private ImageReference backgroundImage;
-	
+
 	private Extent width;
-	
+
 	private Extent height;
 
 	private Border border;
@@ -136,9 +155,9 @@ public class Div extends Component {
 	private Extent marginBottom;
 
 	private Extent marginRight;
-	
+
 	private Extent borderRadius;
-	
+
 	private TextAlignment textAlignment;
 
 	public Div() {
@@ -305,5 +324,5 @@ public class Div extends Component {
 	public void setTextAlignment(TextAlignment textAlignment) {
 		this.textAlignment = textAlignment;
 	}
-	
+
 }

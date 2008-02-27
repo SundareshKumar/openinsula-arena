@@ -2,11 +2,8 @@ package org.openinsula.arena.echo2.component.util;
 
 public enum TextAlignment {
 
-	RIGHT("right"),
-	LEFT("left"),
-	CENTER("center"),
-	JUSTIFY("justify");
-	
+	RIGHT("right"), LEFT("left"), CENTER("center"), JUSTIFY("justify");
+
 	private String name;
 
 	private TextAlignment(String name) {
@@ -16,5 +13,5 @@ public enum TextAlignment {
 	public String getName() {
 		return name;
 	}
-	
+
 }
