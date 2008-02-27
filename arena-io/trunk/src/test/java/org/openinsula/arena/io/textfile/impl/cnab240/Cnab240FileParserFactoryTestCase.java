@@ -1,3 +1,21 @@
+/*
+ *  (C) Copyright 2006 Insula Tecnologia da Informacao Ltda.
+ * 
+ *  This file is part of Arena I/O.
+ *
+ *  Arena I/O is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Arena I/O is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with Arena I/O.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.openinsula.arena.io.textfile.impl.cnab240;
 
 import static org.junit.Assert.assertEquals;
@@ -8,15 +26,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openinsula.arena.io.textfile.FileParser;
 import org.openinsula.arena.io.textfile.FileParserFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.HeaderArquivoLineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.HeaderLoteLineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.SegmentoPLineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.SegmentoQLineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.SegmentoRLineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.SegmentoTLineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.SegmentoULineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.TrailerDeArquivoLineFactory;
-import org.openinsula.arena.io.textfile.impl.cnab240.TrailerDeLoteLineFactory;
 import org.openinsula.arena.io.textfile.line.Line;
 import org.openinsula.arena.io.textfile.parser.LineParser;
 

@@ -10,10 +10,31 @@
 	<packaging>jar</packaging>
 	<name>Project arena-io</name>
 	<description>
-		Commons I/O utilities for exchanging text files between
-		directories and servers.
+		Common classes used to read and produce text files with a predefined format.
 	</description>
 	<url>http://www.openinsula.org/arena/arena-io</url>
+	<licenses>
+		<license>
+			<name>The GNU Lesser General Public License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<connection>
+			scm:svn:https://svn.openinsula.org/arena/arena-io/trunk
+		</connection>
+		<developerConnection>
+			scm:svn:https://svn.openinsula.org/arena/arena-io/trunk
+		</developerConnection>
+		<url>
+			https://svn.openinsula.org/arena/arena-io/trunk
+		</url>
+	</scm>
+	<organization>
+		<name>OpenInsula</name>
+		<url>http://www.openinsula.org</url>
+	</organization>
 	<repositories>
 		<repository>
 			<id>openinsula.org</id>
