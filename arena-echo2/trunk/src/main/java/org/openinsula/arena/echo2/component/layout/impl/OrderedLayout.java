@@ -32,6 +32,8 @@ public class OrderedLayout extends AbstractLayout {
 
 	private int captionWidth = -1;
 
+	private int traversalIndex = 0;
+	
 	public OrderedLayout() {
 	}
 
@@ -41,6 +43,7 @@ public class OrderedLayout extends AbstractLayout {
 	}
 
 	/**
+	 * Constrói o layout no modelo FORM
 	 * @return
 	 */
 	private Component buildFormLayout() {
@@ -101,6 +104,7 @@ public class OrderedLayout extends AbstractLayout {
 	}
 
 	/**
+	 * Constrói o layout no modelo HORIZONTAL
 	 * @return
 	 */
 	private Component buildHorizontalLayout() {
@@ -173,6 +177,7 @@ public class OrderedLayout extends AbstractLayout {
 	}
 
 	/**
+	 * Constrói o layout no modelo VERTICAL
 	 * @return
 	 */
 	private Component buildVerticalLayout() {
@@ -263,6 +268,7 @@ public class OrderedLayout extends AbstractLayout {
 			}
 		}
 
+		field.setFocusTraversalIndex(traversalIndex++);
 	}
 
 	public Div buildAndConfigureDiv(Component component) {
@@ -291,6 +297,14 @@ public class OrderedLayout extends AbstractLayout {
 
 	public void setCaptionWidth(int captionWidth) {
 		this.captionWidth = captionWidth;
+	}
+
+	public int getTraversalIndex() {
+		return traversalIndex;
+	}
+
+	public void setTraversalIndex(int traversalIndex) {
+		this.traversalIndex = traversalIndex;
 	}
 
 }
