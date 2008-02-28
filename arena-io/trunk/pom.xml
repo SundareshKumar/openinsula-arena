@@ -6,13 +6,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-io</artifactId>
-	<version>1.0</version>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Project arena-io</name>
 	<description>
 		Common classes used to read and produce text files with a predefined format.
 	</description>
 	<url>http://www.openinsula.org/arena/arena-io</url>
+	<inceptionYear>2006</inceptionYear>
 	<licenses>
 		<license>
 			<name>The GNU Lesser General Public License, Version 3.0</name>
@@ -31,6 +32,23 @@
 			https://svn.openinsula.org/arena/arena-io/trunk
 		</url>
 	</scm>
+	<issueManagement>
+		<system>jira</system>
+		<url>http://jira.insula.com.br/browse/ARENAIO</url>
+	</issueManagement>
+	<developers>
+		<developer>
+			<id>yanaga</id>
+			<name>Edson Yanaga</name>
+			<email>yanaga@insula.com.br</email>
+			<organization>Insula Tecnologia da Informacao</organization>
+			<timezone>-3</timezone>
+			<roles>
+				<role>Project Leader</role>
+				<role>Java Developer</role>
+			</roles>
+		</developer>
+	</developers>
 	<organization>
 		<name>OpenInsula</name>
 		<url>http://www.openinsula.org</url>
@@ -104,6 +122,15 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<goals>
+						source:jar javadoc:jar deploy
+					</goals>
+				</configuration>
+			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
@@ -113,4 +140,32 @@
 			</extension>
 		</extensions>
 	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
