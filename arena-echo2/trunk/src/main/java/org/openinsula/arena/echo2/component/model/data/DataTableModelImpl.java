@@ -136,7 +136,7 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 			}
 
 			if ((deleteButtonActionListener != null) && (beanId != -1)) {
-				button.setActionCommand("" + beanId);
+				button.setActionCommand(Long.toString(beanId));
 				button.addActionListener(deleteButtonActionListener);
 			}
 			row.add(button);
@@ -148,6 +148,11 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 		}
 	}
 
+	/**
+	 * Este método pode ser sobre-escrito para retornar o id desejado.
+	 * @param bean
+	 * @return
+	 */
 	protected long getBeanId(Object bean) {
 		try {
 			return (Long) PropertyUtils.getProperty(bean, "id");
@@ -169,6 +174,9 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 		return value;
 	}
 
+	/**
+	 * Retorna o id passado no actionCommand do actionEvent.
+	 */
 	public long getSelectedBeanId(ActionEvent ae) {
 		return Long.parseLong(ae.getActionCommand());
 	}
