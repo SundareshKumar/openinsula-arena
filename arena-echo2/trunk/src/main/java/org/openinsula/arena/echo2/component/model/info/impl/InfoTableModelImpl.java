@@ -351,4 +351,12 @@ public class InfoTableModelImpl<T> extends DefaultTableModel implements InfoTabl
 	public int getPageSize() {
 		return pageSize;
 	}
+
+	public Styles getStyles() {
+		return styles;
+	}
+
+	public void setStyles(Styles styles) {
+		this.styles = styles;
+	}
 }
