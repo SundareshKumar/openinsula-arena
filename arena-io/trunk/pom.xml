@@ -1,8 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-io</artifactId>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Project arena-io</name>
 	<description>
@@ -18,9 +18,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:https://svn.openinsula.org/arena/arena-io/tags/arena-io-1.0</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-io/tags/arena-io-1.0</developerConnection>
-		<url>https://svn.openinsula.org/arena/arena-io/tags/arena-io-1.0</url>
+		<connection>scm:svn:https://svn.openinsula.org/arena/arena-io/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-io/trunk</developerConnection>
+		<url>https://svn.openinsula.org/arena/arena-io/trunk</url>
 	</scm>
 	<issueManagement>
 		<system>jira</system>
