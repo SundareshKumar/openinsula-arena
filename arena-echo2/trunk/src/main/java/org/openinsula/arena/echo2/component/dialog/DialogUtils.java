@@ -11,7 +11,6 @@ import nextapp.echo2.app.Extent;
 import nextapp.echo2.app.Insets;
 import nextapp.echo2.app.Row;
 import nextapp.echo2.app.SplitPane;
-import nextapp.echo2.app.Style;
 import nextapp.echo2.app.TextArea;
 import nextapp.echo2.app.WindowPane;
 import nextapp.echo2.app.event.ActionEvent;
@@ -45,7 +44,7 @@ public final class DialogUtils extends AbstractEchoWindow {
         }
     };
 
-    @Autowired(required = false)
+    @Autowired
     private Styles styles;
     
     private TextArea messageTextArea;
@@ -77,8 +76,6 @@ public final class DialogUtils extends AbstractEchoWindow {
         messageTextArea = FormFactory.textArea(385, 100);
         FormFactory.disableField(messageTextArea, true);
 
-        Style dialogButtonStyle = null;
-        
         okButton = FormFactory.button("Ok");
         yesButton = FormFactory.button("Sim");
         noButton = FormFactory.button("Não");
@@ -92,10 +89,10 @@ public final class DialogUtils extends AbstractEchoWindow {
         buttonRow.setAlignment(new Alignment(Alignment.CENTER, Alignment.CENTER));
         buttonRow.setCellSpacing(new Extent(10, Extent.PX));
 
-        mainSplitPane = new SplitPane();
+        mainSplitPane = new SplitPane(SplitPane.ORIENTATION_VERTICAL_BOTTOM_TOP);
 
-        mainSplitPane.add(column);
         mainSplitPane.add(buttonRow);
+        mainSplitPane.add(column);
 
         add(mainSplitPane);
         
@@ -105,6 +102,9 @@ public final class DialogUtils extends AbstractEchoWindow {
     }
 
     public void setStyles(Styles styles) {
+    	if (logger.isDebugEnabled()) {
+    		logger.debug("Setando styles: "+styles);
+    	}
 		this.styles = styles;
 		
 		try {
@@ -127,7 +127,7 @@ public final class DialogUtils extends AbstractEchoWindow {
         setClosable(false);
         setDefaultCloseOperation(WindowPane.HIDE_ON_CLOSE);
         if (styles != null) {
-        	setStyle(styles.getDialogWindow());
+        	this.setStyles(styles);
         }
         setProperty(WindowPanePeer.PROPERTY_IE_ALPHA_RENDER_BORDER, Boolean.TRUE);
         setWidth(new Extent(440, Extent.PX));
@@ -212,5 +212,9 @@ public final class DialogUtils extends AbstractEchoWindow {
         	hide();
         }
     }
+
+	public Styles getStyles() {
+		return styles;
+	}
 
 }
