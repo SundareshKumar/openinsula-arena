@@ -38,5 +38,13 @@ public interface Styles {
 	ImageReference getIconOrderAsc();
 
 	ImageReference getIconOrderDesc();
+	
+	Style getDialogWindow();
+
+	Style getDialogButton();
+
+	Style getDialogButtonRow();
+
+	Style getDialogSplitPane();
 
 }

@@ -10,11 +10,17 @@ public class LayoutComponent implements LayoutElement {
 	private Component caption;
 
 	private Component field;
+	
+	private boolean visibleCaption = true;
 
 	public LayoutComponent(Component caption, Component field) {
-		super();
 		this.caption = caption;
 		this.field = field;
+	}
+
+	public LayoutComponent(Component caption, Component field, boolean visibleCaption) {
+		this(caption, field);
+		this.visibleCaption = visibleCaption;
 	}
 
 	@Override
@@ -47,5 +53,13 @@ public class LayoutComponent implements LayoutElement {
 
 	public void setField(Component field) {
 		this.field = field;
+	}
+
+	public boolean isVisibleCaption() {
+		return visibleCaption;
+	}
+
+	public void setVisibleCaption(boolean visibleCaption) {
+		this.visibleCaption = visibleCaption;
 	}
 }
