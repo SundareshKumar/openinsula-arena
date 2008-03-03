@@ -11,6 +11,32 @@ public class DistributionTest {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Test
+	public void testCorrectMinimalSingleDistribution() {
+		Distribution distribution = new Distribution(1, 1);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug(distribution);
+		}
+
+		Integer[] expected = new Integer[] { 1 };
+		int i = 0;
+		boolean correct = true;
+		
+		
+		for (Entry<Integer> entry : distribution) {
+			
+			for (Integer entryValue : entry) {
+				correct &= expected[i++] == entryValue;
+			}
+			
+		}
+		
+		assertTrue(i > 0);
+		assertTrue(correct);
+		
+	}
+	
+	@Test
 	public void testCorrectSingleDistribution() {
 		Distribution distribution = new Distribution(6, 1);
 

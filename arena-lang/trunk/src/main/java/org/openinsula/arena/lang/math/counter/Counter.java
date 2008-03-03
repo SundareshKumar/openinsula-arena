@@ -12,8 +12,6 @@ public class Counter implements Iterable<Integer[]> {
 
 	private final Integer[] counter;
 
-	private boolean isFirst = true;
-
 	private CounterDelegate delegate;
 
 	private final Iterator<Integer[]> iterator = new Iterator<Integer[]>() {
@@ -25,26 +23,22 @@ public class Counter implements Iterable<Integer[]> {
 
 		@Override
 		public Integer[] next() {
-			if (!isFirst) {
 
-				for (int i = counter.length - 1; i >= 0; i--) {
-					if (!delegate.isMaximumValue(counter[i], i)) {
-						counter[i]++;
-						break;
+			for (int i = counter.length - 1; i >= 0; i--) {
+				if (!delegate.isMaximumValue(counter[i], i)) {
+					counter[i]++;
+					break;
 
-					} else {
-						counter[i] = delegate.getMinimumValue(i);
-					}
 				}
-
-			} else {
-				isFirst = false;
+				else {
+					counter[i] = delegate.getMinimumValue(i);
+				}
 			}
 
 			if (logger.isDebugEnabled()) {
 				logger.debug(Arrays.toString(counter));
 			}
-			
+
 			return counter;
 		}
 
@@ -83,6 +77,7 @@ public class Counter implements Iterable<Integer[]> {
 
 	public void reset() {
 		delegate.reset(counter);
+		counter[counter.length - 1]--;
 	}
 
 	public void setDelegate(final CounterDelegate validator) {
