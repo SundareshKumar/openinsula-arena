@@ -65,7 +65,7 @@ public class OrderedLayout extends AbstractLayout {
 				if (layoutComponent.getCaption() != null) {
 					main.add(buildAndConfigureDiv(layoutComponent.getCaption()));
 				}
-				else {
+				else if (layoutComponent.isVisibleCaption()) {
 					main.add(buildAndConfigureDiv(new Label(layoutComponent.getField().getId())));
 				}
 				configureComponent(layoutComponent.getCaption());
@@ -132,7 +132,7 @@ public class OrderedLayout extends AbstractLayout {
 					}
 					row.add(buildAndConfigureDiv);
 				}
-				else {
+				else if (layoutComponent.isVisibleCaption()) {
 					Div buildAndConfigureDiv = buildAndConfigureDiv(new Label(layoutComponent.getField().getId()));
 					if (getCaptionWidth() != -1) {
 						buildAndConfigureDiv.setWidth(new Extent(getCaptionWidth()));
@@ -202,7 +202,7 @@ public class OrderedLayout extends AbstractLayout {
 					configureComponent(layoutComponent.getCaption());
 					column.add(buildAndConfigureDiv(layoutComponent.getCaption()));
 				}
-				else {
+				else if (layoutComponent.isVisibleCaption()) {
 					Label label = new Label(layoutComponent.getField().getId());
 					configureComponent(label);
 					column.add(buildAndConfigureDiv(label));
@@ -260,7 +260,7 @@ public class OrderedLayout extends AbstractLayout {
 			return;
 		}
 
-		Class klazz = field.getClass();
+		Class<? extends Component> klazz = field.getClass();
 
 		for (LayoutStyle layoutStyle : componentStyles) {
 			if (klazz.equals(layoutStyle.getKlazz())) {

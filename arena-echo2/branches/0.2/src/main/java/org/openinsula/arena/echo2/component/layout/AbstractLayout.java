@@ -23,6 +23,10 @@ public abstract class AbstractLayout implements Layout {
 		properties.add(new LayoutEntry(LayoutPropertyType.COMPONENT, new LayoutComponent(null, component)));
 	}
 
+	public void addComponent(Component component, boolean visibleCaption) {
+		properties.add(new LayoutEntry(LayoutPropertyType.COMPONENT, new LayoutComponent(null, component, visibleCaption)));
+	}
+
 	public void addComponent(String caption, Component component) {
 		properties
 				.add(new LayoutEntry(LayoutPropertyType.COMPONENT, new LayoutComponent(new Label(caption), component)));

@@ -11,6 +11,12 @@ public interface Layout extends LayoutElement {
 	void addComponent(Component component);
 
 	/**
+	 * Adiciona um component e configura se haverá caption.
+	 * @param component
+	 */
+	void addComponent(Component component, boolean visibleCaption);
+
+	/**
 	 * Adiciona um component com o caption como string.
 	 * @param caption
 	 * @param component
