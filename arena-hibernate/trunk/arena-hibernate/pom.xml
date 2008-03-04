@@ -12,8 +12,25 @@
 	<description>A collection of custom types and other extensions</description>
 	<url>http://openinsula.org/arena/arena-hibernate</url>
 
-	<dependencies>
+	<repositories>
+		<repository>
+			<id>openinsula.org</id>
+			<url>http://maven.openinsula.org</url>
+		</repository>
+	</repositories>
 	
+	<distributionManagement>
+		<repository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencies>
 		<dependency>
 			<groupId>${groupId}</groupId>
 			<artifactId>arena-lang</artifactId>
@@ -120,16 +137,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<distributionManagement>
-		<repository>
-			<id>insula</id>
-			<name>Insula TI Repository</name>
-			<url>ftp://maven.insula.com.br</url>
-		</repository>
-		<snapshotRepository>
-			<id>insula</id>
-			<name>Insula TI Repository</name>
-			<url>ftp://maven.insula.com.br</url>
-		</snapshotRepository>
-	</distributionManagement>
+	
 </project>
