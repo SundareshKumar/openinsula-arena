@@ -25,9 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DataTableModelImpl extends DefaultTableModel implements DataTableModel {
 	private static final long serialVersionUID = 1L;
 
-	private Map<String, String> columnMap = new LinkedHashMap<String, String>();
+	private final Map<String, String> columnMap = new LinkedHashMap<String, String>();
 
-	private List<Object> beanList = new ArrayList<Object>();
+	private final List<Object> beanList = new ArrayList<Object>();
 
 	private boolean editColumn = true;
 
@@ -39,7 +39,7 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 
 	private TableColumnModel tableColumnModel;
 
-	private List<Extent> widthColumns = new ArrayList<Extent>();
+	private final List<Extent> widthColumns = new ArrayList<Extent>();
 
 	@Autowired(required = false)
 	private Styles styles;
@@ -66,22 +66,22 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 		beanList.clear();
 	}
 
-	public void setRows(Collection beans) {
+	public void setRows(Collection<?> beans) {
 		clear();
-		for (Object bean : beans) {
+		for (final Object bean : beans) {
 			addRow(bean);
 		}
 	}
 
 	public void addRow(Object bean) {
-		List<Object> row = new ArrayList<Object>();
+		final List<Object> row = new ArrayList<Object>();
 
 		int columnIndex = 0;
-		for (String field : columnMap.keySet()) {
+		for (final String field : columnMap.keySet()) {
 			try {
-				String valorCampo = formatProperty(field, PropertyUtils.getProperty(bean, field)).toString();
+				final String valorCampo = formatProperty(field, PropertyUtils.getProperty(bean, field)).toString();
 
-				Div columnDiv = new Div();
+				final Div columnDiv = new Div();
 				columnDiv.setOverflow(Div.OVERFLOW_HIDDEN);
 				columnDiv.setToolTipText(valorCampo);
 
@@ -89,7 +89,7 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 					tableColumnModel.getColumn(columnIndex).setWidth(widthColumns.get(columnIndex));
 				}
 
-				Label valorDescricaoLabel = new Label();
+				final Label valorDescricaoLabel = new Label();
 				valorDescricaoLabel.setText(valorCampo);
 				valorDescricaoLabel.setLineWrap(false);
 				valorDescricaoLabel.setFont(new Font(Font.VERDANA, Font.PLAIN, new Extent(10, Extent.PX)));
@@ -99,18 +99,18 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 				row.add(columnDiv);
 				columnIndex++;
 			}
-			catch (IllegalAccessException e) {
+			catch (final IllegalAccessException e) {
 				e.printStackTrace();
 			}
-			catch (InvocationTargetException e) {
+			catch (final InvocationTargetException e) {
 				e.printStackTrace();
 			}
-			catch (NoSuchMethodException e) {
+			catch (final NoSuchMethodException e) {
 				e.printStackTrace();
 			}
 		}
 
-		long beanId = getBeanId(bean);
+		final long beanId = getBeanId(bean);
 
 		Button button = null;
 		if (isEditColumn()) {
@@ -157,15 +157,15 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 		try {
 			return (Long) PropertyUtils.getProperty(bean, "id");
 		}
-		catch (IllegalAccessException e) {
+		catch (final IllegalAccessException e) {
 		}
-		catch (InvocationTargetException e) {
+		catch (final InvocationTargetException e) {
 		}
-		catch (NoSuchMethodException e) {
+		catch (final NoSuchMethodException e) {
 		}
 		return -1;
 	}
-	
+
 	/*
 	 * Método que recebe o nome e o valor da propriedade para ser formatado em
 	 * sub-classes
@@ -185,7 +185,7 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 		int index = -1;
 		int counter = 0;
 
-		for (Object item : beanList) {
+		for (final Object item : beanList) {
 			if (item.equals(bean)) {
 				index = counter;
 				break;
@@ -202,14 +202,16 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 
 	private void buildColumns() {
 		int columnCount = columnMap.size();
-		if (isEditColumn())
+		if (isEditColumn()) {
 			columnCount++;
-		if (isDeleteColumn())
+		}
+		if (isDeleteColumn()) {
 			columnCount++;
+		}
 		setColumnCount(columnCount);
 
 		int columnIndex = 0;
-		for (String column : columnMap.values()) {
+		for (final String column : columnMap.values()) {
 			setColumnName(columnIndex, column);
 			columnIndex++;
 		}
@@ -224,7 +226,7 @@ public class DataTableModelImpl extends DefaultTableModel implements DataTableMo
 		}
 	}
 
-	public List getBeanList() {
+	public List<?> getBeanList() {
 		return beanList;
 	}
 

@@ -16,7 +16,7 @@ public interface DataTableModel {
 
 	public void clear();
 
-	public void setRows(Collection beans);
+	public void setRows(Collection<?> beans);
 
 	public void addRow(Object bean);
 
@@ -32,5 +32,5 @@ public interface DataTableModel {
 
 	public void setEditButtonActionListener(ActionListener editButtonActionListener);
 
-	public List getBeanList();
+	public List<?> getBeanList();
 }
