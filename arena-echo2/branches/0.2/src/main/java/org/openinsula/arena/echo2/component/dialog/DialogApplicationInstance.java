@@ -6,30 +6,43 @@ import nextapp.echo2.app.ApplicationInstance;
 import nextapp.echo2.app.Component;
 import nextapp.echo2.app.event.ActionListener;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public abstract class DialogApplicationInstance extends ApplicationInstance {
 
-	@Autowired
-	protected DialogUtils dialogUtils;
-	
+	private DialogUtils dialogUtils;
+
+	public DialogApplicationInstance() {
+	}
+
+	public DialogApplicationInstance(DialogUtils dialogUtils) {
+		this.dialogUtils = dialogUtils;
+	}
+
 	public void showMessageDialog(final String message) {
-        dialogUtils.showMessageDialog(message);
-    }
+		dialogUtils.showMessageDialog(message);
+	}
 
-    public void showMessageDialog(final String message, final ActionListener okListener) {
-        dialogUtils.showMessageDialog(message, okListener);
-    }
+	public void showMessageDialog(final String message, final ActionListener okListener) {
+		dialogUtils.showMessageDialog(message, okListener);
+	}
 
-    public void showConfirmDialog(final String message, final ActionListener confirmListener) {
-        dialogUtils.showConfirmDialog(message, confirmListener);
-    }
+	public void showConfirmDialog(final String message, final ActionListener confirmListener) {
+		dialogUtils.showConfirmDialog(message, confirmListener);
+	}
 
-    public void showOptionDialog(final String message, final Component ... components) {
-        dialogUtils.showOptionDialog(message, components);
-    }
+	public void showOptionDialog(final String message, final Component... components) {
+		dialogUtils.showOptionDialog(message, components);
+	}
 
-    public void showOptionDialog(final String message, final Collection<Component> components) {
-        dialogUtils.showOptionDialog(message, components.toArray(new Component[] {}));
-    }
+	public void showOptionDialog(final String message, final Collection<Component> components) {
+		dialogUtils.showOptionDialog(message, components.toArray(new Component[] {}));
+	}
+
+	public DialogUtils getDialogUtils() {
+		return dialogUtils;
+	}
+
+	public void setDialogUtils(DialogUtils dialogUtils) {
+		this.dialogUtils = dialogUtils;
+	}
+
 }
