@@ -3,6 +3,7 @@ package org.openinsula.arena.echo2.component.model.container.impl;
 import java.io.Serializable;
 
 import nextapp.echo2.app.Button;
+import nextapp.echo2.app.ImageReference;
 import nextapp.echo2.app.event.ActionListener;
 
 import org.openinsula.arena.echo2.component.model.container.impl.styles.ButtonContainerTableModelStyles;
@@ -73,6 +74,33 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 		return null;
 	}
     
+	/**
+	 * Builds a generic button with actionListener
+	 * @param bean
+	 * @param actionListener
+	 * @return
+	 */
+	protected Button buildGenericButton(String text, T bean, ActionListener actionListener, ImageReference icon) {
+		Button button = new Button();
+		
+		if (icon != null) {
+			button.setIcon(icon);
+		} else if (text != null) {
+			button.setText(text);
+		}
+		
+    	if (actionListener != null) {
+    		button.addActionListener(actionListener);
+    	}
+    	
+    	Serializable beanId = findIdFromBean(bean);
+    	if (beanId != null) {
+    		button.setActionCommand(beanId.toString());
+    	}
+		
+		return button;
+	}
+	
     /**
      * Builds the delete button
      * @param bean
