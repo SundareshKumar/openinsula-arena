@@ -31,12 +31,12 @@ public class SortableHeaderCellRenderer implements TableCellRenderer {
 	}
 	
 	public SortableHeaderCellRenderer(SortableTableModel sortableTableModel) {
-		this(null, sortableTableModel);
+		this(sortableTableModel, null);
 	}
 	
-	public SortableHeaderCellRenderer(SortableHeaderCellRendererStyles styles, SortableTableModel sortableTableModel) {
-		this.styles = styles;
+	public SortableHeaderCellRenderer(SortableTableModel sortableTableModel, SortableHeaderCellRendererStyles styles) {
 		this.sortableTableModel = sortableTableModel;
+		this.styles = styles;
 	}
 
 	
