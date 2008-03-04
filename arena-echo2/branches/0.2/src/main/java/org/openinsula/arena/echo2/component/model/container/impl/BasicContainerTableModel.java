@@ -74,7 +74,7 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 	}
 
 	/**
-	 * this method is called by the method getValueAt() that finds the bean of generic type T and
+	 * This method is called by the method getValueAt() that finds the bean of generic type T and
 	 * sends it here by parameter so that the value from the columnIndex can be returned by
 	 * the specification of the bean.
 	 * @param columnIndex The number of the column
@@ -84,7 +84,7 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 	public abstract Object getColumnValue(int columnIndex, T t);
 
 	
-	/** Métodos da interface ContainerTableModel */
+	/** Methods from the interface ContainerTableModel */
 	public void addItem(T bean) {
 		if (permitDuplicates) {
 			items.add(bean);
@@ -140,7 +140,7 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 		}
 		
 		try {
-			int index = ((Integer)itemId).intValue();
+			int index = new Integer(itemId.toString()).intValue();
 			return items.get(index);
 		} catch (Exception e) {
 			logger.warn("There was an error when trying to find an item by it's id: "+itemId.toString());
