@@ -10,46 +10,48 @@ import org.openinsula.arena.echo2.component.model.container.impl.styles.ButtonCo
 import org.openinsula.arena.echo2.component.util.FormFactory;
 
 /**
- * This table model have generic methods to build buttons to insert into the tableModel
+ * This table model have generic methods to build buttons to insert into the
+ * tableModel
  * @author realm
- *
+ * 
  * @param <T>
  */
 public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T> {
 	private static final long serialVersionUID = 1L;
 
-    private boolean editColumn = true;
+	private boolean editColumn = true;
 
-    private boolean deleteColumn = true;
+	private boolean deleteColumn = true;
 
-    private ActionListener editButtonActionListener;
+	private ActionListener editButtonActionListener;
 
-    private ActionListener deleteButtonActionListener;
-	
-    private ButtonContainerTableModelStyles styles;
+	private ActionListener deleteButtonActionListener;
+
+	private ButtonContainerTableModelStyles styles;
 
 	@Override
 	public int getColumnCount() {
 		String[] columns = getColumns();
-		
+
 		int columnCount = columns.length;
-		
+
 		if (editColumn) {
 			columnCount++;
 		}
-		
+
 		if (deleteColumn) {
 			columnCount++;
 		}
-		
-		return columnCount; 
+
+		return columnCount;
 	}
-	
+
 	@Override
 	public String getColumnName(int columnIndex) {
 		if (columnIndex < getColumns().length) {
 			return super.getColumnName(columnIndex);
-		} else {
+		}
+		else {
 			return "";
 		}
 	}
@@ -57,23 +59,23 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 	@Override
 	public Object getColumnValue(int columnIndex, T t) {
 		int columnsLength = getColumns().length;
-		
+
 		if (columnIndex < getColumns().length) {
 			return super.getColumnValue(columnIndex, t);
-		} else {
-			
-			if (editColumn
-					&& columnIndex == (columnsLength)) {
+		}
+		else {
+
+			if (editColumn && (columnIndex == columnsLength)) {
 				return buildEditButton(t);
-			} else 
-				if (deleteColumn) {
+			}
+			else if (deleteColumn) {
 				return buildDeleteButton(t);
 			}
 		}
-		
+
 		return null;
 	}
-    
+
 	/**
 	 * Builds a generic button with actionListener
 	 * @param bean
@@ -82,85 +84,86 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 	 */
 	protected Button buildGenericButton(String text, T bean, ActionListener actionListener, ImageReference icon) {
 		Button button = new Button();
-		
+
 		if (icon != null) {
 			button.setIcon(icon);
-		} else if (text != null) {
+		}
+		else if (text != null) {
 			button.setText(text);
 		}
-		
-    	if (actionListener != null) {
-    		button.addActionListener(actionListener);
-    	}
-    	
-    	Serializable beanId = findIdFromBean(bean);
-    	if (beanId != null) {
-    		button.setActionCommand(beanId.toString());
-    	}
-		
+
+		if (actionListener != null) {
+			button.addActionListener(actionListener);
+		}
+
+		Serializable beanId = findIdFromBean(bean);
+		if (beanId != null) {
+			button.setActionCommand(beanId.toString());
+		}
+
 		return button;
 	}
-	
-    /**
-     * Builds the delete button
-     * @param bean
-     * @param beanId
-     * @return
-     */
-    protected Button buildDeleteButton(T bean) {
-    	Serializable beanId = findIdFromBean(bean);
-    	if (logger.isDebugEnabled()) {
-	    	logger.debug("Bean passed: "+bean.toString());
-	    	logger.debug("Id found: "+beanId);
-    	}
-    	
-    	Button button = null;
-    	
-    	if (styles != null) {
-    		button = FormFactory.iconButton("Selecionar", styles.getEditImage());
-    	} else {
-    		button = FormFactory.button("Excluir");
-    	}
 
-    	if (deleteButtonActionListener != null) {
-    		button.addActionListener(deleteButtonActionListener);
-    	}
-    	
-    	if (beanId != null) {
-    		button.setActionCommand(beanId.toString());
-    	}
+	/**
+	 * Builds the delete button
+	 * @param bean
+	 * @param beanId
+	 * @return
+	 */
+	protected Button buildDeleteButton(T bean) {
+		Serializable beanId = findIdFromBean(bean);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Bean passed: " + bean.toString());
+			logger.debug("Id found: " + beanId);
+		}
 
-    	return button;
-    }
+		Button button = null;
 
-    /**
-     * Builds the edit button
-     * @param bean
-     * @return
-     */
-    protected Button buildEditButton(T bean) {
-    	Serializable beanId = findIdFromBean(bean);
-    	
-    	Button button = null;
-    	
-    	if (styles != null) {
-    		button = FormFactory.iconButton("Selecionar", styles.getEditImage());
-    	} else {
-    		button = FormFactory.button("Editar");
-    	}
-    	if (editButtonActionListener != null) {
-    		button.addActionListener(editButtonActionListener);
-    	}
-    	
-    	if (beanId != null) {
-    		button.setActionCommand(beanId.toString());
-    	}
-    	
-    	return button;
-    }
+		if (styles != null) {
+			button = FormFactory.iconButton("Selecionar", styles.getDeleteImage());
+		}
+		else {
+			button = FormFactory.button("Excluir");
+		}
 
-	
-	
+		if (deleteButtonActionListener != null) {
+			button.addActionListener(deleteButtonActionListener);
+		}
+
+		if (beanId != null) {
+			button.setActionCommand(beanId.toString());
+		}
+
+		return button;
+	}
+
+	/**
+	 * Builds the edit button
+	 * @param bean
+	 * @return
+	 */
+	protected Button buildEditButton(T bean) {
+		Serializable beanId = findIdFromBean(bean);
+
+		Button button = null;
+
+		if (styles != null) {
+			button = FormFactory.iconButton("Selecionar", styles.getEditImage());
+		}
+		else {
+			button = FormFactory.button("Editar");
+		}
+		if (editButtonActionListener != null) {
+			button.addActionListener(editButtonActionListener);
+		}
+
+		if (beanId != null) {
+			button.setActionCommand(beanId.toString());
+		}
+
+		return button;
+	}
+
 	public boolean isEditColumn() {
 		return editColumn;
 	}
@@ -200,5 +203,5 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 	public void setStyles(ButtonContainerTableModelStyles styles) {
 		this.styles = styles;
 	}
-	
+
 }
