@@ -40,4 +40,8 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 		this.pageSize = index;
 	}
 
+	public int getPageSize() {
+		return pageSize;
+	}
+
 }
