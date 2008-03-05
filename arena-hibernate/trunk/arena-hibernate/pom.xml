@@ -12,20 +12,13 @@
 	<description>A collection of custom types and other extensions</description>
 	<url>http://openinsula.org/arena/arena-hibernate</url>
 
-	<repositories>
-		<repository>
-			<id>openinsula.org</id>
-			<url>http://maven.openinsula.org</url>
-		</repository>
-	</repositories>
-	
 	<distributionManagement>
 		<repository>
-			<id>openinsula.org</id>
+			<id>openinsula</id>
 			<url>ftp://ftp.openinsula.org/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>openinsula.org</id>
+			<id>openinsula-snapshots</id>
 			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
