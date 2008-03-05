@@ -197,7 +197,6 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 	public void setItems(Collection<T> beans) {
 		this.clear();
 		this.addItems(beans);
-		fireTableDataChanged();
 	}
 
 	public List<T> getItems() {
@@ -206,10 +205,6 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 
 	public int size() {
 		return items.size();
-	}
-
-	public void setItems(List<T> items) {
-		this.items = items;
 	}
 
 }

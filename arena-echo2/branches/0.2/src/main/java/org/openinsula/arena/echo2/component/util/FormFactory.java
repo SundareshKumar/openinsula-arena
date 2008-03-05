@@ -19,6 +19,11 @@ import nextapp.echo2.app.layout.RowLayoutData;
 import nextapp.echo2.app.list.ListModel;
 import nextapp.echo2.app.text.TextComponent;
 
+import org.openinsula.arena.echo2.component.model.SortableTableModel;
+import org.openinsula.arena.echo2.component.model.cellrenderer.DataTableCellRenderer;
+import org.openinsula.arena.echo2.component.model.cellrenderer.SortableHeaderCellRenderer;
+import org.openinsula.arena.echo2.component.model.cellrenderer.SortableHeaderCellRendererStyles;
+
 /**
  * Classe que monta componentes dos formulários
  * 
@@ -251,9 +256,17 @@ public class FormFactory {
 		return table(null);
 	}
 
+	public static Table table(SortableTableModel sortableTableModel, SortableHeaderCellRendererStyles styles) {
+		Table table = new Table(sortableTableModel);
+		table.setDefaultHeaderRenderer(new SortableHeaderCellRenderer(sortableTableModel, styles));
+		table.setDefaultRenderer(Object.class, new DataTableCellRenderer());
+		return table;
+	}
+
 	public static Table table(final Style style) {
 		Table table = new Table();
 		table.setStyle(style);
+		table.setDefaultRenderer(Object.class, new DataTableCellRenderer());
 		return table;
 	}
 

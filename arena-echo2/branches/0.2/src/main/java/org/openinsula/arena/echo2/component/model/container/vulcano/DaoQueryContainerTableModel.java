@@ -14,13 +14,22 @@ public class DaoQueryContainerTableModel<T> extends TransactionInvokerContainerT
 
 	private boolean order;
 
+	/**
+	 * This method will run the daoQuery in the DaoCommandTransactionFacade specified
+	 * and update the tableModel items.
+	 */
 	@Override
 	public void updateTableItems() {
+		if (getDaoCommandTransactionFacade() == null) {
+			logger.warn("Cannot update a DaoQueryContainerTableModel with a null DaoCommandTransactionFacade.");
+			return;
+		}
+	
 		if (daoQuery == null) {
 			logger.warn("Cannot update a DaoQueryContainerTableModel with a null DaoQuery.");
 			return;
 		}
-
+		
 		if (this instanceof SortableTableModel && sortedProperty != null && sortedProperty.isEmpty()) {
 			StringBuilder parameter = new StringBuilder(sortedProperty);
 
@@ -42,13 +51,20 @@ public class DaoQueryContainerTableModel<T> extends TransactionInvokerContainerT
 		List<T> list = getDaoCommandTransactionFacade().<T> find(daoQuery);
 		this.setItems(list);
 	}
+	
+	/**
+	 * @param daoQuery
+	 * @param update If true runs the method updateTableItems()
+	 */
+	public void setDaoQuery(DaoQuery daoQuery, boolean update) {
+		this.daoQuery = daoQuery;
+		if (update) {
+			updateTableItems();
+		}
+	}
 
 	public DaoQuery getDaoQuery() {
 		return daoQuery;
-	}
-
-	public void setDaoQuery(DaoQuery daoQuery) {
-		this.daoQuery = daoQuery;
 	}
 
 	public String getSortedProperty() {
