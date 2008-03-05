@@ -19,9 +19,9 @@ import org.openinsula.arena.echo2.component.util.FormFactory;
 public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T> {
 	private static final long serialVersionUID = 1L;
 
-	private boolean editColumn = true;
+	private boolean editColumn = false;
 
-	private boolean deleteColumn = true;
+	private boolean deleteColumn = false;
 
 	private ActionListener editButtonActionListener;
 
