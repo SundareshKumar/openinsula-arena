@@ -19,7 +19,8 @@
 	
 		<property name="annotatedClasses">
 			<list>
-				<value>org.openinsula.arena.hibernate.types.SimpleEntity</value>
+				<value>org.openinsula.arena.hibernate.types.MoneySampleEntity</value>
+				<value>org.openinsula.arena.hibernate.types.DecimalSampleEntity</value>
 			</list>
 		</property>
 		
