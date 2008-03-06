@@ -4,6 +4,32 @@
   	<artifactId>arena-report</artifactId>
   	<version>0.0.1</version>
   	<description>Projeto com facilidades para utilização do JasperReports.</description>
+  	
+  	<dependencies>
+    	<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.13</version>
+		</dependency>
+	    <dependency>
+	      	<groupId>org.openinsula.vulcano</groupId>
+	      	<artifactId>vulcano-core</artifactId>
+	      	<version>1.0-SNAPSHOT</version>
+	      	<optional>true</optional>
+	    </dependency>
+	    <dependency>
+			<groupId>org.openinsula.vulcano</groupId>
+			<artifactId>vulcano-orm</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<optional>true</optional>
+		</dependency>
+	    <dependency>
+		  	<groupId>jasperreports</groupId>
+		  	<artifactId>jasperreports</artifactId>
+		  	<version>1.3.4</version>
+	    </dependency>
+  	</dependencies>
+  	
   	<build>
     	<extensions>
      		<extension>
@@ -29,40 +55,22 @@
       		</plugin>
     	</plugins>
   	</build>
-  	<dependencies>
-    	<dependency>
-	      	<groupId>log4j</groupId>
-	      	<artifactId>log4j</artifactId>
-	      	<version>1.2.9</version>
-	    	</dependency>
-	    <dependency>
-	      	<groupId>org.openinsula</groupId>
-	      	<artifactId>vulcano-core</artifactId>
-	      	<version>1.0</version>
-	      	<optional>true</optional>
-	    </dependency>
-	    <dependency>
-	      	<groupId>org.openinsula</groupId>
-	      	<artifactId>vulcano-orm</artifactId>
-	      	<version>1.0</version>
-	      	<optional>true</optional>
-	    </dependency>
-	    <dependency>
-		  	<groupId>jasperreports</groupId>
-		  	<artifactId>jasperreports</artifactId>
-		  	<version>1.3.4</version>
-	    </dependency>
-  	</dependencies>
+  	
+  	<repositories>
+		<repository>
+			<id>openinsula.org</id>
+			<url>http://maven.openinsula.org</url>
+		</repository>
+	</repositories>
+	
   	<distributionManagement>
-	   	<repository>
-	   		<id>insula</id>
-	  		<name>Insula TI Repository</name>
-	  		<url>ftp://maven.insula.com.br</url>
-	   	</repository>
-	   	<snapshotRepository>
-	   		<id>insula</id>
-	   		<name>Insula TI Repository</name>
-	   		<url>ftp://maven.insula.com.br</url>
-	   	</snapshotRepository>
-  	</distributionManagement>
+		<repository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
