@@ -4,140 +4,247 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openinsula.arena.lang.util.FailSafeOperation;
+
+/**
+ * @author Eduardo R Danielli
+ * 
+ * @param <T> AbstractDecimal Type for typesafe chained methods
+ */
 @SuppressWarnings("unchecked")
-public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number 
-	implements Serializable, Comparable<T> {
-	
+public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number implements Serializable, Comparable<T> {
+
+	protected static final Log logger = LogFactory.getLog(AbstractDecimal.class);
+
 	private static final long serialVersionUID = 1L;
+
+	private boolean ignoreNumberFormatException;
 
 	protected BigDecimal value;
 
 	public AbstractDecimal() {
+		this(false);
+	}
+
+	public AbstractDecimal(final boolean ignoreNumberFormatException) {
+		this.ignoreNumberFormatException = ignoreNumberFormatException;
+
 		amount(0.0);
 	}
 
 	public AbstractDecimal(final String amount) {
+		this(amount, false);
+	}
+
+	public AbstractDecimal(final String amount, final boolean ignoreNumberFormatException) {
+		this.ignoreNumberFormatException = ignoreNumberFormatException;
+
 		amount(amount);
 	}
 
 	public AbstractDecimal(final Number amount) {
+		this(amount, false);
+	}
+
+	public AbstractDecimal(final Number amount, final boolean ignoreNumberFormatException) {
+		this.ignoreNumberFormatException = ignoreNumberFormatException;
+
 		amount(amount);
 	}
 
 	public AbstractDecimal(final AbstractDecimal decimal) {
+		this(decimal, false);
+	}
+
+	public AbstractDecimal(final AbstractDecimal decimal, final boolean ignoreNumberFormatException) {
+		this.ignoreNumberFormatException = ignoreNumberFormatException;
+
 		amount(decimal);
 	}
 
-	private T create(final String value) {
-		try {
-			return (T) getClass().newInstance().amount(value);
-		}
+	public final T ignoreNumberFormatException(final boolean value) {
+		this.ignoreNumberFormatException = value;
+		return (T) this;
+	}
 
-		catch (Exception e) {
-			throw new IllegalArgumentException(e);
-		}
+	private T create(final String value) {
+		return createImpl(value, String.class);
 	}
 
 	private T create(final Number value) {
-		try {
-			return (T) getClass().newInstance().amount(value);
-		}
-
-		catch (Exception e) {
-			throw new IllegalArgumentException(e);
-		}
+		return createImpl(value, Number.class);
 	}
 
-	private T create(final AbstractDecimal value) {
-		try {
-			return (T) getClass().newInstance().amount(value);
-		}
+	private T createImpl(final Object value, final Class<?> desiredType) {
+		return new FailSafeOperation<T>(true) {
 
-		catch (Exception e) {
-			throw new IllegalArgumentException(e);
-		}
+			@Override
+			protected T tryBody() throws Throwable {
+				Class<? extends AbstractDecimal> tType = AbstractDecimal.this.getClass();
+				T tInstance = (T) tType.newInstance();
+				
+				return (T) tType.getMethod("amount", desiredType).invoke(tInstance, value);
+			}
+			
+		}.doTry();
 	}
 
 	public T amount(final String value) {
-		this.value = new BigDecimal(value);
-		return (T) this;
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = new BigDecimal(value);
+			}
+
+		}.doTry();
 	}
 
 	public T amount(final Number value) {
-		return amount(String.valueOf(value.doubleValue()));
+		return amount(new NumberToStringOperation(value).toString());
 	}
 
-	public T amount(final AbstractDecimal decimal) {
-		this.value = decimal.value;
-		return (T) this;
+	public T amount(final AbstractDecimal<?> decimal) {
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = decimal.value;
+				
+			}
+			
+		}.doTry();
 	}
 
 	public T add(final String value) {
-		this.value = this.value.add(new BigDecimal(value));
-		return (T) this;
+		
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.add(new BigDecimal(value));
+			}
+			
+		}.doTry();
+		
 	}
 
 	public T add(final Number amount) {
-		return add(String.valueOf(amount.doubleValue()));
+		return add(new NumberToStringOperation(amount).toString());
 	}
 
 	public T add(final AbstractDecimal decimal) {
-		this.value = this.value.add(decimal.value);
-		return (T) this;
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.add(decimal.value);
+			}
+
+		}.doTry();
 	}
 
 	public T subtract(final String value) {
-		this.value = this.value.subtract(new BigDecimal(value));
-		return (T) this;
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.subtract(new BigDecimal(value));
+			}
+			
+		}.doTry();
 	}
 
 	public T subtract(final Number amount) {
-		return subtract(String.valueOf(amount.doubleValue()));
+		return subtract(new NumberToStringOperation(amount).toString());
 	}
 
 	public T subtract(final AbstractDecimal decimal) {
-		this.value = this.value.subtract(decimal.value);
-		return (T) this;
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.subtract(decimal.value);
+			}
+			
+		}.doTry();
 	}
 
 	public T multiply(final String value) {
-		this.value = this.value.multiply(new BigDecimal(value));
-		return (T) this;
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.multiply(new BigDecimal(value));
+			}
+			
+		}.doTry();
 	}
 
 	public T multiply(final Number amount) {
-		return multiply(String.valueOf(amount.doubleValue()));
+		return multiply(new NumberToStringOperation(amount).toString());
 	}
 
 	public T multiply(final AbstractDecimal decimal) {
-		this.value = this.value.multiply(decimal.value);
-		return (T) this;
-	}
+		return new Operation() {
 
-	public T divide(final String value) {
-		this.value = this.value.divide(new BigDecimal(value));
-		return (T) this;
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.multiply(decimal.value);
+			}
+			
+		}.doTry();
 	}
 
 	public T divide(final Number amount) {
-		return divide(String.valueOf(amount.doubleValue()));
+		return divide(new NumberToStringOperation(amount).toString());
+	}
+	
+	public T divide(final String value) {
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.divide(new BigDecimal(value));
+			}
+			
+		}.doTry();
 	}
 
 	public T divide(final AbstractDecimal decimal) {
-		this.value = this.value.divide(decimal.value);
-		return (T) this;
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.divide(decimal.value);
+			}
+			
+		}.doTry();
 	}
 
 	public T getPercentage(final String percentage) {
-		return getPercentage(create(percentage));
+		return getPercentageImpl(percentage, String.class);
 	}
 
 	public T getPercentage(final Number percentage) {
-		return getPercentage(create(percentage));
+		return getPercentageImpl(percentage, Number.class);
 	}
 
 	public T getPercentage(final AbstractDecimal percentage) {
-		return (T) create(percentage).divide(100).multiply(this);
+		return getPercentageImpl(percentage, AbstractDecimal.class);
+	}
+	
+	private T getPercentageImpl(final Object value, final Class<?> desiredType) {
+		return new FailSafeOperation<T>(!ignoreNumberFormatException) {
+
+			@Override
+			protected T tryBody() throws Throwable {
+				return (T) createImpl(value, desiredType).divide(100).multiply(AbstractDecimal.this);
+			}
+			
+		}.doTry();
 	}
 
 	public T addPercentage(final String percentage) {
@@ -161,7 +268,14 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number
 	}
 
 	public boolean isGreaterThan(final AbstractDecimal value) {
-		return this.compareTo((T) value) > 0;
+		return new FailSafeOperation<Boolean>(true) {
+
+			@Override
+			protected Boolean tryBody() throws Throwable {
+				return AbstractDecimal.this.compareTo((T) value) > 0;
+			}
+			
+		}.doTry();
 	}
 
 	public boolean isGreaterOrEqualsThan(final String value) {
@@ -173,7 +287,14 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number
 	}
 
 	public boolean isGreaterOrEqualsThan(final AbstractDecimal value) {
-		return this.compareTo((T) value) >= 0;
+		return new FailSafeOperation<Boolean>(true) {
+
+			@Override
+			protected Boolean tryBody() throws Throwable {
+				return AbstractDecimal.this.compareTo((T) value) >= 0;
+			}
+			
+		}.doTry();
 	}
 
 	public boolean isSmallerThan(final String value) {
@@ -185,7 +306,14 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number
 	}
 
 	public boolean isSmallerThan(final AbstractDecimal value) {
-		return this.compareTo((T) value) < 0;
+		return new FailSafeOperation<Boolean>(true) {
+
+			@Override
+			protected Boolean tryBody() throws Throwable {
+				return AbstractDecimal.this.compareTo((T) value) < 0;
+			}
+			
+		}.doTry();
 	}
 
 	public boolean isSmallerOrEqualsThan(final String value) {
@@ -197,7 +325,14 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number
 	}
 
 	public boolean isSmallerOrEqualsThan(final AbstractDecimal value) {
-		return this.compareTo((T) value) <= 0;
+		return new FailSafeOperation<Boolean>(true) {
+
+			@Override
+			protected Boolean tryBody() throws Throwable {
+				return AbstractDecimal.this.compareTo((T) value) <= 0;
+			}
+			
+		}.doTry();
 	}
 
 	public boolean isNegative() {
@@ -223,78 +358,50 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number
 	}
 
 	public T maxBetween(final String... values) {
-		AbstractDecimal result = this;
-
-		for (String s : values) {
-			AbstractDecimal d = create(s);
-
-			if (d.isGreaterThan(result)) {
-				result = d;
-			}
-		}
-
-		return (T) result;
+		return maxBetweenImpl(values, String.class);
 	}
 
 	public T maxBetween(final Number... values) {
-		AbstractDecimal result = this;
-
-		for (Number n : values) {
-			AbstractDecimal d = create(n);
-
-			if (d.isGreaterThan(result)) {
-				result = d;
-			}
-		}
-
-		return (T) result;
+		return maxBetweenImpl(values, Number.class);
 	}
 
 	public T maxBetween(final AbstractDecimal... values) {
+		return maxBetweenImpl(values, AbstractDecimal.class);
+	}
+
+	private T maxBetweenImpl(final Object[] values, final Class<?> desiredType) {
 		AbstractDecimal result = this;
 
-		for (AbstractDecimal d : values) {
-			if (d.isGreaterThan(result)) {
+		for (Object s : values) {
+			AbstractDecimal d = createImpl(s, desiredType);
+
+			if (result.isSmallerThan(d)) {
 				result = d;
 			}
 		}
 
 		return (T) result;
 	}
-
+	
 	public T minBetween(final String... values) {
-		AbstractDecimal result = this;
-
-		for (String s : values) {
-			AbstractDecimal d = create(s);
-
-			if (d.isSmallerThan(result)) {
-				result = d;
-			}
-		}
-
-		return (T) result;
+		return minBetweenImpl(values, String.class);
 	}
 
 	public T minBetween(final Number... values) {
-		AbstractDecimal result = this;
-
-		for (Number n : values) {
-			AbstractDecimal d = create(n);
-
-			if (d.isSmallerThan(result)) {
-				result = d;
-			}
-		}
-
-		return (T) result;
+		return minBetweenImpl(values, Number.class);
 	}
 
 	public T minBetween(final AbstractDecimal... values) {
+		return minBetweenImpl(values, AbstractDecimal.class);
+	}
+	
+	private T minBetweenImpl(final Object[] values, final Class<?> desiredType) {
 		AbstractDecimal result = this;
 
-		for (AbstractDecimal d : values) {
-			if (d.isSmallerThan(result)) {
+		for (Object s : values) {
+			AbstractDecimal d = createImpl(s, desiredType);
+
+			if (result.isGreaterThan(d)) {
 				result = d;
 			}
 		}
@@ -370,4 +477,60 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number
 		return value.longValue();
 	}
 
+	private abstract class Operation extends FailSafeOperation<T> {
+
+		protected T instance;
+		
+		public Operation() {
+			instance = (T) AbstractDecimal.this;
+		}
+		
+		public Operation(final T instance) {
+			this.instance = instance;
+		}
+		
+		@Override
+		protected final T tryBody() throws Throwable {
+			doTryBody(); 
+			
+			return instance;
+		}
+		
+		protected abstract void doTryBody() throws Throwable;
+		
+		@Override
+		protected T doCatch(final Throwable throwable) {
+			if (!ignoreNumberFormatException) {
+				throw (RuntimeException) throwable;
+			}
+			
+			if (logger.isWarnEnabled()) {
+				logger.warn("Invalid value! Operation ignored!", throwable);
+			}
+
+			return instance;
+		}
+	}
+
+	private class NumberToStringOperation extends FailSafeOperation<String> {
+		private final Number number;
+		
+		public NumberToStringOperation(final Number number) {
+			super(!ignoreNumberFormatException);
+			
+			this.number = number;
+		}
+		
+		@Override
+		protected String tryBody() throws Throwable {
+			return String.valueOf(number.doubleValue());
+		}
+		
+		@Override
+		public String toString() {
+			return doTry();
+		}
+		
+	}
+	
 }

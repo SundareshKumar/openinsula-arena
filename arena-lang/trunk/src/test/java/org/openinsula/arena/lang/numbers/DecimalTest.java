@@ -27,11 +27,18 @@ public class DecimalTest {
 
 		try {
 			new Decimal((String) null);
-			fail("NullPointerException expected");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
 
+		try {
+			new Decimal((String) null, true);
 		}
-		catch (NullPointerException exc) {
+		catch (RuntimeException exc) {
+			fail("Unexpected RuntimeException");
 		}
+
 	}
 
 	@Test
@@ -49,6 +56,24 @@ public class DecimalTest {
 	}
 
 	@Test
+	public void testInvalidAmount() {
+		Decimal a = new Decimal(10);
+
+		BigDecimal bd = null;
+
+		try {
+			a.amount(bd);
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(10, true);
+		a.amount("abc");
+		assertEquals(new Decimal(10), a);
+	}
+
+	@Test
 	public void testAdd() {
 		Decimal a = new Decimal();
 		Decimal b = new Decimal(1);
@@ -59,6 +84,22 @@ public class DecimalTest {
 
 		a.add("50.5");
 		assertEquals(new Decimal(51.5), a);
+	}
+
+	@Test
+	public void testInvalidAdd() {
+		Decimal a = new Decimal(10);
+
+		try {
+			a.add((BigDecimal) null);
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(10, true);
+		a.add("10x");
+		assertEquals(new Decimal(10), a);
 	}
 
 	@Test
@@ -75,6 +116,22 @@ public class DecimalTest {
 	}
 
 	@Test
+	public void testInvalidSubtract() {
+		Decimal a = new Decimal(10);
+
+		try {
+			a.subtract((BigDecimal) null);
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(10, true);
+		a.subtract("");
+		assertEquals(new Decimal(10), a);
+	}
+
+	@Test
 	public void testMultiply() {
 		Decimal a = new Decimal(1);
 		Decimal b = new Decimal(1.00000);
@@ -82,6 +139,22 @@ public class DecimalTest {
 		Decimal c = a.multiply(b);
 		assertSame(c, a);
 		assertEquals(new Decimal(1), a);
+	}
+
+	@Test
+	public void testInvalidMultiply() {
+		Decimal a = new Decimal(10);
+
+		try {
+			a.multiply((Decimal) null);
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(10, true);
+		a.multiply("123,00");
+		assertEquals(new Decimal(10), a);
 	}
 
 	@Test
@@ -98,6 +171,22 @@ public class DecimalTest {
 	}
 
 	@Test
+	public void testInvalidDivide() {
+		Decimal a = new Decimal(10);
+
+		try {
+			a.divide((Decimal) null);
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(10, true);
+		a.divide("1,234.00");
+		assertEquals(new Decimal(10), a);
+	}
+
+	@Test
 	public void testIsGreaterThan() {
 		Decimal a = new Decimal(1.00000);
 
@@ -105,8 +194,29 @@ public class DecimalTest {
 		assertTrue(a.isGreaterThan(-1));
 		assertTrue(a.isGreaterThan(-0.99));
 		assertTrue(a.isGreaterThan("0.5"));
-		
+
 		assertFalse(a.isGreaterThan("1.0"));
+	}
+
+	@Test
+	public void testInvalidIsGreaterThan() {
+		Decimal a = new Decimal();
+
+		try {
+			a.isGreaterThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(true);
+
+		try {
+			a.isGreaterThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
 	}
 
 	@Test
@@ -117,9 +227,30 @@ public class DecimalTest {
 		assertTrue(a.isGreaterOrEqualsThan(-1));
 		assertTrue(a.isGreaterOrEqualsThan(-0.99));
 		assertTrue(a.isGreaterOrEqualsThan("0.5"));
-		
+
 		assertTrue(a.isGreaterOrEqualsThan("1.0"));
 		assertTrue(a.isGreaterOrEqualsThan(new BigDecimal(1)));
+	}
+
+	@Test
+	public void testInvalidIsGreaterOrEqualsThan() {
+		Decimal a = new Decimal();
+
+		try {
+			a.isGreaterOrEqualsThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(true);
+
+		try {
+			a.isGreaterOrEqualsThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
 	}
 
 	@Test
@@ -130,8 +261,29 @@ public class DecimalTest {
 		assertFalse(a.isSmallerThan(-1));
 		assertFalse(a.isSmallerThan(-0.99));
 		assertFalse(a.isSmallerThan("0.5"));
-		
+
 		assertTrue(a.isSmallerThan("1.000001"));
+	}
+
+	@Test
+	public void testInvalidIsSmallerThan() {
+		Decimal a = new Decimal();
+
+		try {
+			a.isSmallerThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(true);
+
+		try {
+			a.isSmallerThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
 	}
 
 	@Test
@@ -142,19 +294,40 @@ public class DecimalTest {
 		assertFalse(a.isSmallerOrEqualsThan(-1));
 		assertFalse(a.isSmallerOrEqualsThan(-0.99));
 		assertFalse(a.isSmallerOrEqualsThan("0.5"));
-		
+
 		assertTrue(a.isSmallerOrEqualsThan("1.00000"));
 		assertTrue(a.isSmallerOrEqualsThan("1.000001"));
+	}
+
+	@Test
+	public void testInvalidIsSmallerOrEqualsThan() {
+		Decimal a = new Decimal();
+
+		try {
+			a.isSmallerOrEqualsThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
+
+		a = new Decimal(true);
+
+		try {
+			a.isSmallerOrEqualsThan("");
+			fail("RuntimeException expected");
+		}
+		catch (RuntimeException exc) {
+		}
 	}
 
 	@Test
 	public void testIsNegative() {
 		Decimal a = new Decimal();
 		assertFalse(a.isNegative());
-		
+
 		a.amount(1);
 		assertFalse(a.isNegative());
-		
+
 		a.amount("-0.00000001");
 		assertTrue(a.isNegative());
 	}
@@ -163,10 +336,10 @@ public class DecimalTest {
 	public void testIsZero() {
 		Decimal a = new Decimal();
 		assertTrue(a.isZero());
-		
+
 		a.amount(1);
 		assertFalse(a.isZero());
-		
+
 		a.amount("-0.00000001");
 		assertFalse(a.isZero());
 	}
@@ -175,13 +348,13 @@ public class DecimalTest {
 	public void testIsPositive() {
 		Decimal a = new Decimal();
 		assertFalse(a.isPositive());
-		
+
 		a.amount("0.0000001");
 		assertTrue(a.isPositive());
-		
+
 		a.amount(1);
 		assertTrue(a.isPositive());
-		
+
 		a.amount("-0.00000001");
 		assertFalse(a.isPositive());
 	}
@@ -190,7 +363,7 @@ public class DecimalTest {
 	public void testAbs() {
 		Decimal a = new Decimal("-0.00000001");
 		assertTrue(a.isNegative());
-		
+
 		Decimal b = a.abs();
 		assertSame(b, a);
 		assertFalse(a.isNegative());
@@ -201,7 +374,7 @@ public class DecimalTest {
 	public void testNegate() {
 		Decimal a = new Decimal("-0.00000001");
 		assertTrue(a.isNegative());
-		
+
 		Decimal b = a.negate();
 		assertSame(b, a);
 		assertFalse(a.isNegative());
@@ -217,11 +390,51 @@ public class DecimalTest {
 	}
 
 	@Test
+	public void testInvalidMaxBetween() {
+		Decimal a = new Decimal(10);
+
+		try {
+			a.maxBetween("1", "a", "2.5");
+			fail();
+		}
+		catch (RuntimeException exc) {
+		}
+		
+		try {
+			a.maxBetween("1", null, "2.5");
+			fail();
+		}
+		catch (RuntimeException exc) {
+		}
+
+	}
+
+	@Test
 	public void testMinBetween() {
 		Decimal a = new Decimal(1);
 
 		assertSame(a, a.minBetween("1", "2.09", "3.00001", "9.9999999", "10.00"));
 		assertEquals(new Decimal(-2.00), a.minBetween(1, -2, 3, 4, 10, 20));
+	}
+	
+	@Test
+	public void testInvalidMinBetween() {
+		Decimal a = new Decimal(10);
+
+		try {
+			a.minBetween("1", "a", "2.5");
+			fail();
+		}
+		catch (RuntimeException exc) {
+		}
+		
+		try {
+			a.minBetween("1", null, "2.5");
+			fail();
+		}
+		catch (RuntimeException exc) {
+		}
+
 	}
 
 	@Test
@@ -234,6 +447,22 @@ public class DecimalTest {
 
 		b = a.addPercentage("50.50");
 		assertEquals(new Decimal(new BigDecimal("30.10")), a);
+	}
+	
+	@Test
+	public void testInvalidAddPercentage() {
+		Decimal a = new Decimal(10);
+
+		try {
+			a.addPercentage("");
+			fail();
+		}
+		catch (RuntimeException e) {
+		}
+		
+		a = new Decimal(10, true);
+		a.addPercentage((BigDecimal) null);
+		assertEquals(new Decimal(10), a);
 	}
 
 	@Test
@@ -251,6 +480,21 @@ public class DecimalTest {
 
 		b = b.getPercentage(new BigDecimal("10.00"));
 		assertEquals(new Decimal(new BigDecimal("0.25")), b);
+	}
+	
+	@Test
+	public void testInvalidGetPercentage() {
+		Decimal a = new Decimal(100);
+
+		try {
+			a.getPercentage("");
+			fail();
+		}
+		catch (RuntimeException e) {
+		}
+		
+		a = new Decimal(100, true);
+		assertNull(a.getPercentage(""));
 	}
 
 	@Test
@@ -283,7 +527,7 @@ public class DecimalTest {
 		assertEquals("0.99", a.toString(2, RoundingMode.DOWN));
 		assertEquals("1", a.toString(0, RoundingMode.UP));
 	}
-	
+
 	@Test
 	public void testToString() {
 		Decimal a = new Decimal();
