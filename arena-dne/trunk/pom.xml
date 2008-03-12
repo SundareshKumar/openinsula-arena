@@ -6,11 +6,11 @@
 	<packaging>jar</packaging>
 	<name>Project arena-dne</name>
 	<description>
-		O DNE - Diretorio Nacional de Enderecos é a base de dados utilizada pelos Correios para realizar
-		a entrega de correspondência no Brasil.
+		O DNE - Diretorio Nacional de Enderecos Ã© a base de dados utilizada pelos Correios para realizar
+		a entrega de correspondÃªncia no Brasil.
 		O Projeto arena-dne disponibiliza classes para importar os arquivos-text disponibilizados pelos Correios e
-		também disponibiliza um DAO baseado em JDBC para executar as buscas de dados, bem como entidades que
-		podem ser persistidas através de JPA.
+		tambÃ©m disponibiliza um DAO baseado em JDBC para executar as buscas de dados, bem como entidades que
+		podem ser persistidas atravÃ©s de JPA.
 	</description>
 	<url>http://www.openinsula.org/projects/arena-dne</url>
 	<inceptionYear>2006</inceptionYear>
