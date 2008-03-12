@@ -1,7 +1,6 @@
 <projectDescription>
   <name>arena-echo2</name>
-  <comment>Projeto de componentes e ferramentas em comum para os projetos
-		que utilizam o echo2.</comment>
+  <comment>Projeto de componentes e ferramentas em comum para os projetos que utilizam o echo2.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>
