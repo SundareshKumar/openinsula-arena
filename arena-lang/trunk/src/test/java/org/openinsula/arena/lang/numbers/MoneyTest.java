@@ -11,6 +11,12 @@ import org.openinsula.arena.lang.util.OtherLocales;
 public class MoneyTest {
 	
 	@Test
+	public void testNew() {
+		Money money = new Money();
+		assertEquals(new Money("0.00"), money);
+	}
+	
+	@Test
 	public void testeAdd() {
 		Money money = new Money(5).from(OtherLocales.BRAZIL);
 		money.add(0.259);

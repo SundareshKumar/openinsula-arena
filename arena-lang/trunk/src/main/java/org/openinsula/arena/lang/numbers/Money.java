@@ -12,7 +12,7 @@ public class Money extends AbstractDecimal<Money> {
 	private Locale locale = Locale.getDefault();
 	
 	public Money() {
-		super();
+		super("0.00");
 	}
 
 	public Money(final Money money) {
