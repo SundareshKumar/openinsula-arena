@@ -21,8 +21,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.echo2.component.util.FormFactory;
 import org.openinsula.arena.echo2.component.util.Styles;
-
-import br.com.insula.jazz.view.echo.AbstractEchoWindow;
+import org.openinsula.arena.echo2.pane.AbstractEchoWindow;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Classe utilitária para exibição de caixas de Mensagem, Confirmação e Opção.
@@ -30,7 +30,7 @@ import br.com.insula.jazz.view.echo.AbstractEchoWindow;
  * @author fabiano
  *
  */
-public final class DialogUtils extends AbstractEchoWindow {
+public class DialogUtils extends AbstractEchoWindow {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,6 +42,7 @@ public final class DialogUtils extends AbstractEchoWindow {
 		}
 	};
 
+	@Autowired
 	private Styles styles;
 
 	private TextArea messageTextArea;
@@ -61,12 +62,14 @@ public final class DialogUtils extends AbstractEchoWindow {
 	private SplitPane mainSplitPane;
 
 	public DialogUtils() {
-		try {
-			afterPropertiesSet();
-		}
-		catch (final Exception ex) {
-			logger.warn(ex);
-		}
+		logger.warn("instanciando DialogUtils: Styles = " + styles);
+		
+//		try {
+//			afterPropertiesSet();
+//		}
+//		catch (final Exception ex) {
+//			logger.warn(ex);
+//		}
 	}
 
 	public void initComponents() {
@@ -168,6 +171,22 @@ public final class DialogUtils extends AbstractEchoWindow {
 		show();
 	}
 
+	/**
+	 * This is a static method that....
+	 * @param pane The pane where the dialog will be added.
+	 * @param message The message that will be displayed.
+	 * @param okListener The listener to be executed when the OK button receive the click event.
+	 */
+	public static void showMessageDialog(final Component pane, final String message, final ActionListener okListener) {
+		DialogUtils dialogUtils = new DialogUtils();
+		pane.add(dialogUtils);
+		if (okListener != null) {
+			dialogUtils.showMessageDialog(message, okListener);
+		} else {
+			dialogUtils.showMessageDialog(message);
+		}
+	}
+	
 	public void showMessageDialog(final String message, final ActionListener okListener) {
 		setButtonAction(okButton, okListener);
 		setButtons(okButton);
