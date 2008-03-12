@@ -18,7 +18,6 @@
  */
 package org.openinsula.arena.test.datasource;
 
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,25 +40,25 @@ public abstract class AbstractTestDataSourceFactoryBean implements FactoryBean {
 		return true;
 	}
 
-	protected void fireBeforeDropDatabase(DataSource dataSource) throws SQLException {
+	protected void fireBeforeDropDatabase(DataSource dataSource) throws Exception {
 		for (TestDataSourceListener listener : listenerList) {
 			listener.beforeDropDatabase(dataSource, databaseName);
 		}
 	}
 
-	protected void fireAfterDropDatabase(DataSource dataSource) throws SQLException {
+	protected void fireAfterDropDatabase(DataSource dataSource) throws Exception {
 		for (TestDataSourceListener listener : listenerList) {
 			listener.beforeDropDatabase(dataSource, databaseName);
 		}
 	}
 
-	protected void fireBeforeCreateDatabase(DataSource dataSource) throws SQLException {
+	protected void fireBeforeCreateDatabase(DataSource dataSource) throws Exception {
 		for (TestDataSourceListener listener : listenerList) {
 			listener.beforeCreateDatabase(dataSource, databaseName);
 		}
 	}
 
-	protected void fireAfterCreateDatabase(DataSource dataSource) throws SQLException {
+	protected void fireAfterCreateDatabase(DataSource dataSource) throws Exception {
 		for (TestDataSourceListener listener : listenerList) {
 			listener.afterCreateDatabase(dataSource, databaseName);
 		}

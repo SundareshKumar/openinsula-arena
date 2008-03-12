@@ -18,18 +18,16 @@
  */
 package org.openinsula.arena.test.datasource.listener;
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 public interface TestDataSourceListener {
 
-	public void beforeDropDatabase(DataSource dataSource, String database) throws SQLException;
+	public void beforeDropDatabase(DataSource dataSource, String database) throws Exception;
 
-	public void afterDropDatabase(DataSource dataSource, String database) throws SQLException;
+	public void afterDropDatabase(DataSource dataSource, String database) throws Exception;
 
-	public void beforeCreateDatabase(DataSource dataSource, String database) throws SQLException;
+	public void beforeCreateDatabase(DataSource dataSource, String database) throws Exception;
 
-	public void afterCreateDatabase(DataSource dataSource, String database) throws SQLException;
+	public void afterCreateDatabase(DataSource dataSource, String database) throws Exception;
 
 }
