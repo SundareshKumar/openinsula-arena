@@ -168,6 +168,10 @@ public class DecimalTest {
 
 		b.divide(a);
 		assertEquals(new Decimal(0.25), b);
+		
+		a = new Decimal("31.93");
+		b = new Decimal("1596.36");
+		assertEquals(new Decimal("0.02"), a.divide(b, 2, RoundingMode.HALF_EVEN));
 	}
 
 	@Test

@@ -9,6 +9,10 @@ import org.springframework.util.ObjectUtils;
 public class Money extends AbstractDecimal<Money> {
 	private static final long serialVersionUID = 1L;
 	
+	public static final int DEFAULT_SCALE = 2;
+	
+	public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_EVEN;
+	
 	private Locale locale = Locale.getDefault();
 	
 	public Money() {
@@ -28,6 +32,22 @@ public class Money extends AbstractDecimal<Money> {
 		super(amount);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Money divide(final AbstractDecimal decimal) {
+		return super.divide(decimal, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
+	}
+
+	@Override
+	public Money divide(final Number amount) {
+		return super.divide(amount, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
+	}
+	
+	@Override
+	public Money divide(final String value) {
+		return super.divide(value, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
+	}
+	
 	public final Money from(final Locale locale) {
 		this.locale = locale;
 		return this;
@@ -55,7 +75,7 @@ public class Money extends AbstractDecimal<Money> {
 
 	@Override
 	public final String toString() {
-		value = value.setScale(2, RoundingMode.HALF_EVEN);
+		value = value.setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
 		return NumberFormat.getCurrencyInstance(locale).format(value.doubleValue());
 	}
 

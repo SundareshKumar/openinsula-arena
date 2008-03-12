@@ -202,12 +202,27 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number implem
 		return divide(new NumberToStringOperation(amount).toString());
 	}
 	
+	public T divide(final Number amount, final int scale, final RoundingMode roundingMode) {
+		return divide(new NumberToStringOperation(amount).toString(), scale, roundingMode);
+	}
+	
 	public T divide(final String value) {
 		return new Operation() {
 
 			@Override
 			protected void doTryBody() throws Throwable {
 				instance.value = instance.value.divide(new BigDecimal(value));
+			}
+			
+		}.doTry();
+	}
+	
+	public T divide(final String value, final int scale, final RoundingMode roundingMode) {
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.divide(new BigDecimal(value), scale, roundingMode);
 			}
 			
 		}.doTry();
@@ -219,6 +234,17 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number implem
 			@Override
 			protected void doTryBody() throws Throwable {
 				instance.value = instance.value.divide(decimal.value);
+			}
+			
+		}.doTry();
+	}
+	
+	public T divide(final AbstractDecimal decimal, final int scale, final RoundingMode roundingMode) {
+		return new Operation() {
+
+			@Override
+			protected void doTryBody() throws Throwable {
+				instance.value = instance.value.divide(decimal.value, scale, roundingMode);
 			}
 			
 		}.doTry();

@@ -38,4 +38,12 @@ public class MoneyTest {
 		assertEquals(new Money(18000).from(OtherLocales.BRAZIL), real);
 	}
 
+	@Test
+	public void testeDivide() {
+		Money a = new Money(31.93);
+		Money b = new Money(1596.36);
+		
+		assertEquals(new Money(0.02), a.divide(b));
+	}
+	
 }
