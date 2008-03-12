@@ -6,9 +6,12 @@
 	<packaging>jar</packaging>
 	<name>Project arena-io</name>
 	<description>
-		Common classes used to read and produce text files with a predefined format.
+		Many legacy systems still use text file exchange to provided intersystem communication.
+		These text files usually have fixed field sizes predefined in some proprietary standard.
+		To ease the creation, parsing and validation of these files, we provide Arena I/O, which
+		is a set of common classes used to read, produce and validate text files with a predefined format.
 	</description>
-	<url>http://www.openinsula.org/arena/arena-io</url>
+	<url>http://www.openinsula.org/projects/arena-io</url>
 	<inceptionYear>2006</inceptionYear>
 	<licenses>
 		<license>
@@ -18,20 +21,26 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:https://svn.openinsula.org/arena/arena-io/trunk</connection>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-io/trunk</connection>
 		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-io/trunk</developerConnection>
-		<url>https://svn.openinsula.org/arena/arena-io/trunk</url>
+		<url>http://svn.openinsula.org/arena/arena-io/trunk</url>
 	</scm>
 	<issueManagement>
 		<system>jira</system>
 		<url>http://jira.insula.com.br/browse/ARENAIO</url>
 	</issueManagement>
+	<ciManagement>
+		<system>bamboo</system>
+		<url>http://bamboo.insula.com.br/browse/ARENAIO-TRUNK</url>
+	</ciManagement>
 	<developers>
 		<developer>
 			<id>yanaga</id>
 			<name>Edson Yanaga</name>
 			<email>yanaga@insula.com.br</email>
+			<url>http://www.yanaga.com.br</url>
 			<organization>Insula Tecnologia da Informacao</organization>
+			<organizationUrl>http://www.insula.com.br</organizationUrl>
 			<timezone>-3</timezone>
 			<roles>
 				<role>Project Leader</role>
@@ -40,7 +49,7 @@
 		</developer>
 	</developers>
 	<organization>
-		<name>OpenInsula</name>
+		<name>openinsula.org</name>
 		<url>http://www.openinsula.org</url>
 	</organization>
 	<repositories>
@@ -51,21 +60,41 @@
 	</repositories>
 	<distributionManagement>
 		<repository>
-			<uniqueVersion>true</uniqueVersion>
 			<id>openinsula.org</id>
-			<url>ftp://maven.openinsula.org</url>
+			<url>ftp://ftp.openinsula.org/releases</url>
 		</repository>
 		<snapshotRepository>
-			<uniqueVersion>true</uniqueVersion>
 			<id>openinsula.org</id>
-			<url>ftp://maven.openinsula.org</url>
+			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
+		<site>
+			<id>openinsula.rog</id>
+			<url>scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}</url>
+		</site>
 	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>logkit</groupId>
+					<artifactId>logkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>avalon-framework</groupId>
+					<artifactId>avalon-framework</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
