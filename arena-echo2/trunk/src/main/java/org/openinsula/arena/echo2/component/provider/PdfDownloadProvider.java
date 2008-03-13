@@ -1,48 +1,28 @@
 package org.openinsula.arena.echo2.component.provider;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
-public class PdfDownloadProvider implements DownloadProvider {
-    private byte[] pdfByteArray;
-    
-    private String fileName;
-    
-    public PdfDownloadProvider() {
-	}
-    
-    public PdfDownloadProvider(String fileName) {
-		super();
-		this.fileName = fileName;
+
+public class PdfDownloadProvider extends AbstractDownloadProvider {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @param jasperPrint
+	 * @throws JRException
+	 */
+	public PdfDownloadProvider(JasperPrint jasperPrint) throws JRException {
+		initDownloadProvider(JasperExportManager.exportReportToPdf(jasperPrint));
 	}
 
-	public PdfDownloadProvider(byte[] pdfByteArray) {
-        this.pdfByteArray = pdfByteArray;
-    }
-    
-    public String getContentType() {
-        return "application/pdf";
-    }
+	public PdfDownloadProvider(byte[] byteArray) {
+		initDownloadProvider(byteArray);
+	}
 
-    public String getFileName() {
-    	if(fileName == null) {
-    		String time = new SimpleDateFormat("_hh:mm:ss_dd-MM-yy").format(new Date());
-    		fileName = "relatorio-"+time+".pdf";
-    	}
-    	return fileName;
-    }
-
-    public int getSize() {
-        return pdfByteArray.length;
-    }
-
-    public void writeFile(OutputStream stream) throws IOException {
-        stream.write(pdfByteArray);
-    }
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	private void initDownloadProvider(byte[] byteArray) {
+		setByteArray(byteArray);
+		setContentType("application/pdf");
+		setFileName("relatorio.pdf");
 	}
 }
