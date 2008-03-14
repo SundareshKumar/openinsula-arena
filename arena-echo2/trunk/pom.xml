@@ -4,31 +4,6 @@
   <artifactId>arena-echo2</artifactId>
   <version>0.2.1-SNAPSHOT</version>
   <description>Projeto de componentes e ferramentas em comum para os projetos que utilizam o echo2.</description>
-  <build>
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ftp</artifactId>
-        <version>1.0-beta-2</version>
-      </extension>
-    </extensions>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <reportFormat>plain</reportFormat>
-          <useFile>false</useFile>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
   <dependencies>
     <dependency>
       <groupId>com.nextapp</groupId>
@@ -98,16 +73,73 @@
       <version>2.0.1</version>
     </dependency>
   </dependencies>
-  <distributionManagement>
-    <repository>
-      <id>insula</id>
-      <name>Insula TI Repository</name>
-      <url>ftp://maven.insula.com.br</url>
-    </repository>
-    <snapshotRepository>
-      <id>insula</id>
-      <name>Insula TI Repository</name>
-      <url>ftp://maven.insula.com.br</url>
-    </snapshotRepository>
-  </distributionManagement>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<surefire.reportFormat>plain</surefire.reportFormat>
+					<useFile>false</useFile>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<outputDirectory>
+						${project.build.directory}
+					</outputDirectory>
+					<finalName>${project.artifactId}</finalName>
+					<attach>true</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	
+	<distributionManagement>
+		<repository>
+			<id>openinsula</id>
+			<url>ftp://ftp.openinsula.org/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>openinsula</id>
+			<url>ftp://ftp.openinsula.org/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
 </project>
