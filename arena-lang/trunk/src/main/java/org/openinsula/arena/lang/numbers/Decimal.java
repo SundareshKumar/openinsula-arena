@@ -4,7 +4,7 @@ public class Decimal extends AbstractDecimal<Decimal> {
 	private static final long serialVersionUID = 1L;
 	
 	public Decimal() {
-		super();
+		this(false);
 	}
 	
 	public Decimal(final boolean ignoreNumberFormatException) {
@@ -12,7 +12,7 @@ public class Decimal extends AbstractDecimal<Decimal> {
 	}
 
 	public Decimal(final String amount) {
-		super(amount);
+		this(amount, false);
 	}
 	
 	public Decimal(final String amount, final boolean ignoreNumberFormatException) {
@@ -20,7 +20,7 @@ public class Decimal extends AbstractDecimal<Decimal> {
 	}
 
 	public Decimal(final Number amount) {
-		amount(amount);
+		this(amount, false);
 	}
 	
 	public Decimal(final Number amount, final boolean ignoreNumberFormatException) {
@@ -28,7 +28,7 @@ public class Decimal extends AbstractDecimal<Decimal> {
 	}
 
 	public Decimal(final Decimal decimal) {
-		super(decimal);
+		this(decimal, false);
 	}
 	
 	public Decimal(final Decimal decimal, final boolean ignoreNumberFormatException) {

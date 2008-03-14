@@ -22,7 +22,7 @@ public abstract class BaseEntity<T extends Number> implements Serializable {
 	private T id;
 	
 	@Version
-	private Integer version;
+	private Long version;
 	
 	public T getId() {
 		return id;
@@ -32,11 +32,11 @@ public abstract class BaseEntity<T extends Number> implements Serializable {
 		this.id = id;
 	}
 	
-	public void setVersion(final Integer version) {
+	public void setVersion(final Long version) {
 		this.version = version;
 	}
 	
-	public Integer getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 	

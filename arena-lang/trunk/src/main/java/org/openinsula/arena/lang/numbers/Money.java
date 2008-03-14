@@ -16,20 +16,36 @@ public class Money extends AbstractDecimal<Money> {
 	private Locale locale = Locale.getDefault();
 	
 	public Money() {
-		super("0.00");
+		this(false);
+	}
+	
+	public Money(final boolean ignoreNumberFormatException) {
+		super("0.00", ignoreNumberFormatException);
 	}
 
 	public Money(final Money money) {
-		super(money);
+		this(money, false);
+	}
+	
+	public Money(final Money money, final boolean ignoreNumberFormatException) {
+		super(money, ignoreNumberFormatException);
 		this.locale = money.locale;
 	}
 
 	public Money(final Number amount) {
-		super(amount);
+		this(amount, false);
+	}
+	
+	public Money(final Number amount, final boolean ignoreNumberFormatException) {
+		super(amount, ignoreNumberFormatException);
 	}
 
 	public Money(final String amount) {
-		super(amount);
+		this(amount, false);
+	}
+	
+	public Money(final String amount, final boolean ignoreNumberFormatException) {
+		super(amount, ignoreNumberFormatException);
 	}
 
 	@SuppressWarnings("unchecked")

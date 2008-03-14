@@ -55,7 +55,7 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number implem
 	}
 
 	public AbstractDecimal(final AbstractDecimal decimal) {
-		this(decimal, false);
+		this(decimal, decimal.ignoreNumberFormatException);
 	}
 
 	public AbstractDecimal(final AbstractDecimal decimal, final boolean ignoreNumberFormatException) {
