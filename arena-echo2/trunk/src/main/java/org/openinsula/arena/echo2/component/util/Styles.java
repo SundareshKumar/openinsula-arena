@@ -21,6 +21,8 @@ public interface Styles {
 
 	Style getCheckBox();
 
+	Style getMediumButton();
+	
 	Style getButton();
 
 	Style getIconButton();
