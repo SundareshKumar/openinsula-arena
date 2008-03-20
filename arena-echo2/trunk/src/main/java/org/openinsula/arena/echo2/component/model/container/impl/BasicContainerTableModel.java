@@ -130,6 +130,7 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 	
 	public void clear() {
 		items.clear();
+		this.fireTableDataChanged();
 	}
 
 	public boolean deleteItem(Serializable itemId) {
