@@ -12,6 +12,11 @@ import org.openinsula.arena.echo2.component.util.FormFactory;
 /**
  * This table model have generic methods to build buttons to insert into the
  * tableModel
+ * 
+ * It is strictly recommended to use buttons without the option permitDuplicates set to false, 
+ * because the comparison made to get the bean id, will get the first found. If there is a duplicate,
+ * the buttons will delete the same first bean found.  
+ * 
  * @author realm
  * 
  * @param <T>
