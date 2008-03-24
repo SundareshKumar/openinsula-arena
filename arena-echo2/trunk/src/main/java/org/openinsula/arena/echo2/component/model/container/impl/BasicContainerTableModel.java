@@ -90,11 +90,18 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 		int index = -1;
 
 		if (permitDuplicates) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("This TableModel permits duplicates and it's adding a '"+items.contains(bean)+"' duplicate.");
+			}
 			if (items.add(bean)) {
 				index = items.indexOf(bean);
 			}
 		}
 		else {
+			if (logger.isDebugEnabled()) {
+				logger.debug("This TableModel doesn't permits duplicates and it's adding a '"+items.contains(bean)+"' duplicate.");
+			}
+
 			if (items.contains(bean)) {
 				if (substituteDuplicate) {
 					items.remove(bean);
