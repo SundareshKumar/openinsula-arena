@@ -10,7 +10,7 @@ import org.openinsula.arena.lang.numbers.Money;
 import org.openinsula.arena.lang.util.OtherLocales;
 
 public class MoneyUserTypeTest extends AbstractUserTypeTest {
-	
+
 	@Test
 	public void testInsert() {
 		Session session = sessionFactory.getCurrentSession();
@@ -24,7 +24,7 @@ public class MoneyUserTypeTest extends AbstractUserTypeTest {
 		session.save(simpleEntity);
 		session.flush();
 		session.clear();
-		
+
 		int id = simpleEntity.getId();
 		assertTrue(id > 0);
 
@@ -34,10 +34,10 @@ public class MoneyUserTypeTest extends AbstractUserTypeTest {
 		assertEquals(simpleEntity.getSalaryBrazil(), persistentSimpleEntity.getSalaryBrazil());
 		assertEquals(simpleEntity.getSalaryUs(), persistentSimpleEntity.getSalaryUs());
 	}
-	
+
 	@Test
 	public void testUpdate() {
-		
+
 	}
 
 }

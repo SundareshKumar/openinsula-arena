@@ -30,7 +30,7 @@ public abstract class AbstractDecimalUserType<T extends AbstractDecimal<?>> impl
 		if (value == null) {
 			return null;
 		}
-		
+
 		try {
 			return decimalType.getConstructor(decimalType).newInstance((T) value);
 		}
@@ -109,7 +109,7 @@ public abstract class AbstractDecimalUserType<T extends AbstractDecimal<?>> impl
 		if (equals(original, target)) {
 			return original;
 		}
-		 
+
 		return deepCopy(original);
 	}
 

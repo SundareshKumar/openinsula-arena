@@ -14,11 +14,11 @@ public class DecimalSampleEntity extends BaseEntity<Integer> {
 	@Type(type = ArenaTypes.DECIMAL)
 	@Column(precision = 4, scale = 3)
 	Decimal decimal1_3;
-	
+
 	@Type(type = ArenaTypes.DECIMAL)
 	@Column(precision = 4, scale = 2)
 	Decimal decimal2_2;
-	
+
 	@Type(type = ArenaTypes.DECIMAL)
 	@Column(precision = 4, scale = 0)
 	Decimal decimal4_0;

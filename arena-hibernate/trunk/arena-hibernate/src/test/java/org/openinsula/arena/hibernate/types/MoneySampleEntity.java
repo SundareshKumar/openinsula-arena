@@ -19,21 +19,21 @@ public class MoneySampleEntity extends BaseEntity<Integer> {
 
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
-	
+
 	@Type(type = ArenaTypes.MONEY_BRAZIL)
 	@Column(precision = 9, scale = 2)
 	private Money salaryBrazil;
-	
+
 	@Type(type = ArenaTypes.MONEY_US)
 	private Money salaryUs;
-	
+
 	@Type(type = ArenaTypes.MONEY)
 	private Money salary;
 
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -41,15 +41,15 @@ public class MoneySampleEntity extends BaseEntity<Integer> {
 	public Date getBirthDate() {
 		return birthDate;
 	}
-	
+
 	public void setBirthDate(final Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	
+
 	public Money getSalaryBrazil() {
 		return salaryBrazil;
 	}
-	
+
 	public void setSalaryBrazil(final Money salary) {
 		this.salaryBrazil = salary;
 	}

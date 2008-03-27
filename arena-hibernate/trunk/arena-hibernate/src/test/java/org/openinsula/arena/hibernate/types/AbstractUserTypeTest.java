@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 public abstract class AbstractUserTypeTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	protected final Log logger = LogFactory.getLog(getClass());
-	
+
 	@Autowired
 	protected SessionFactory sessionFactory;
-	
+
 }

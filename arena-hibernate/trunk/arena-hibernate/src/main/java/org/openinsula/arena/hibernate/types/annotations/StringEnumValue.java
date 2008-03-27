@@ -8,8 +8,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface StringEnumValue {
-    public String value();
-    public boolean toUpperCase() default false;
-    public boolean toLowerCase() default false;
-    public boolean trim() default true;
+	public String value();
+
+	public boolean toUpperCase() default false;
+
+	public boolean toLowerCase() default false;
+
+	public boolean trim() default true;
 }

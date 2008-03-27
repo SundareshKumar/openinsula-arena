@@ -20,8 +20,10 @@ import org.springframework.util.StringUtils;
 
 @SuppressWarnings("unchecked")
 public class AnnotatedEnumUserType implements UserType, ParameterizedType {
+	public static final String PARAM_ENUM_CLASS = "enumClass";
+
 	protected final Log logger = LogFactory.getLog(getClass());
-	
+
 	private Class<Enum> enumClass = null;
 
 	private boolean intEnum = false;
@@ -32,47 +34,45 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 
 	@SuppressWarnings("unchecked")
 	public void setParameterValues(final Properties params) {
-		String enumClassName = params.getProperty("enumClass");
+		String enumClassName = params.getProperty(PARAM_ENUM_CLASS);
 		if (enumClassName == null) {
 			throw new MappingException("enumClass parameter not specified");
 		}
 
 		try {
 			enumClass = (Class<Enum>) Class.forName(enumClassName);
-		} catch (ClassNotFoundException ex) {
-			throw new MappingException("enumClass " + enumClassName
-					+ " not found.", ex);
-		} catch (ClassCastException ex) {
-			throw new MappingException("enumClass " + enumClassName
-					+ " is not a Java 5 Enum.", ex);
+		}
+		catch (ClassNotFoundException ex) {
+			throw new MappingException("enumClass " + enumClassName + " not found.", ex);
+		}
+		catch (ClassCastException ex) {
+			throw new MappingException("enumClass " + enumClassName + " is not a Java 5 Enum.", ex);
 		}
 
 		Field[] fields = enumClass.getFields();
 		for (Field field : fields) {
 			if (field.getAnnotation(IntEnumValue.class) != null) {
 				intEnum = true;
-			} else if (field.getAnnotation(StringEnumValue.class) != null) {
+			}
+			else if (field.getAnnotation(StringEnumValue.class) != null) {
 				stringEnum = true;
-			} else {
+			}
+			else {
 				standardEnum = true;
 			}
 		}
 
 		if (intEnum && stringEnum && standardEnum) {
-			logger
-					.warn("Mixing IntEnumValue, StringEnumValue and Standard Java 5 Enum in enum: "
-							+ enumClassName);
-		} else if (intEnum && stringEnum) {
-			logger.warn("Mixing IntEnumValue and StringEnumValue in enum: "
-					+ enumClassName);
-		} else if (intEnum && standardEnum) {
-			logger
-					.warn("Mixing IntEnumValue and Standard Java 5 Enum in enum: "
-							+ enumClassName);
-		} else if (stringEnum && standardEnum) {
-			logger
-					.warn("Mixing StringEnumValue and Standard Java 5 Enum in enum: "
-							+ enumClassName);
+			logger.warn("Mixing IntEnumValue, StringEnumValue and Standard Java 5 Enum in enum: " + enumClassName);
+		}
+		else if (intEnum && stringEnum) {
+			logger.warn("Mixing IntEnumValue and StringEnumValue in enum: " + enumClassName);
+		}
+		else if (intEnum && standardEnum) {
+			logger.warn("Mixing IntEnumValue and Standard Java 5 Enum in enum: " + enumClassName);
+		}
+		else if (stringEnum && standardEnum) {
+			logger.warn("Mixing StringEnumValue and Standard Java 5 Enum in enum: " + enumClassName);
 		}
 	}
 
@@ -83,16 +83,18 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 	public int[] sqlTypes() {
 		if (intEnum && !stringEnum && !standardEnum) {
 			return SQL_TYPE_INTEGER;
-		} else if (stringEnum && !intEnum && !standardEnum) {
+		}
+		else if (stringEnum && !intEnum && !standardEnum) {
 			return SQL_TYPE_VARCHAR;
-		} else {
+		}
+		else {
 			return SQL_TYPE_VARCHAR;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object nullSafeGet(final ResultSet rs, final String[] names,
-			final Object owner) throws HibernateException, SQLException {
+	public Object nullSafeGet(final ResultSet rs, final String[] names, final Object owner) throws HibernateException,
+			SQLException {
 		if (intEnum && !stringEnum && !standardEnum) {
 			int value = rs.getInt(names[0]);
 			if (!rs.wasNull()) {
@@ -101,42 +103,42 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 					if (field.getAnnotation(IntEnumValue.class).value() == value) {
 						try {
 							return field.get(null);
-						} catch (Exception ex) {
+						}
+						catch (Exception ex) {
 							throw new HibernateException(ex);
 						}
 					}
 				}
 			}
-		} else if (!intEnum && stringEnum && !standardEnum) {
+		}
+		else if (!intEnum && stringEnum && !standardEnum) {
 			String value = rs.getString(names[0]);
 
 			if (!rs.wasNull()) {
 				Field[] fields = enumClass.getFields();
 				for (Field field : fields) {
-					StringEnumValue stringEnumValue = field
-							.getAnnotation(StringEnumValue.class);
+					StringEnumValue stringEnumValue = field.getAnnotation(StringEnumValue.class);
 
 					if (stringEnumValue.trim()) {
 						value = StringUtils.trimWhitespace(value);
 					}
 
-					if (stringEnumValue.toUpperCase()
-							^ stringEnumValue.toLowerCase()) {
-						value = stringEnumValue.toUpperCase() ? value
-								.toUpperCase() : value.toLowerCase();
+					if (stringEnumValue.toUpperCase() ^ stringEnumValue.toLowerCase()) {
+						value = stringEnumValue.toUpperCase() ? value.toUpperCase() : value.toLowerCase();
 					}
 
-					if (stringEnumValue != null
-							&& stringEnumValue.value().equals(value)) {
+					if (stringEnumValue != null && stringEnumValue.value().equals(value)) {
 						try {
 							return field.get(null);
-						} catch (Exception ex) {
+						}
+						catch (Exception ex) {
 							throw new HibernateException(ex);
 						}
 					}
 				}
 			}
-		} else {
+		}
+		else {
 			String name = rs.getString(names[0]);
 			if (!rs.wasNull()) {
 				return Enum.valueOf(enumClass, name);
@@ -146,38 +148,41 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 		return null;
 	}
 
-	public void nullSafeSet(final PreparedStatement st, final Object value,
-			final int index) throws HibernateException, SQLException {
+	public void nullSafeSet(final PreparedStatement st, final Object value, final int index) throws HibernateException,
+			SQLException {
 		if (intEnum && !stringEnum && !standardEnum) {
 			if (value == null) {
 				st.setNull(index, Types.INTEGER);
-			} else {
+			}
+			else {
 				Enum e = (Enum) value;
 				Field[] fields = enumClass.getFields();
 				for (Field field : fields) {
 					if (field.getName().equals(e.name())) {
-						st.setInt(index, field
-								.getAnnotation(IntEnumValue.class).value());
+						st.setInt(index, field.getAnnotation(IntEnumValue.class).value());
 					}
 				}
 			}
-		} else if (!intEnum && stringEnum && !standardEnum) {
+		}
+		else if (!intEnum && stringEnum && !standardEnum) {
 			if (value == null) {
 				st.setNull(index, Types.VARCHAR);
-			} else {
+			}
+			else {
 				Enum e = (Enum) value;
 				Field[] fields = enumClass.getFields();
 				for (Field field : fields) {
 					if (field.getName().equals(e.name())) {
-						st.setString(index, field.getAnnotation(
-								StringEnumValue.class).value());
+						st.setString(index, field.getAnnotation(StringEnumValue.class).value());
 					}
 				}
 			}
-		} else {
+		}
+		else {
 			if (value == null) {
 				st.setNull(index, Types.VARCHAR);
-			} else {
+			}
+			else {
 				st.setString(index, ((Enum) value).name());
 			}
 		}
@@ -195,18 +200,15 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 		return false;
 	}
 
-	public Object assemble(final Serializable cached, final Object owner)
-			throws HibernateException {
+	public Object assemble(final Serializable cached, final Object owner) throws HibernateException {
 		return cached;
 	}
 
-	public Serializable disassemble(final Object value)
-			throws HibernateException {
+	public Serializable disassemble(final Object value) throws HibernateException {
 		return (Serializable) value;
 	}
 
-	public Object replace(final Object original, final Object target,
-			final Object owner) throws HibernateException {
+	public Object replace(final Object original, final Object target, final Object owner) throws HibernateException {
 		return original;
 	}
 
@@ -214,8 +216,7 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 		return x.hashCode();
 	}
 
-	public boolean equals(final Object x, final Object y)
-			throws HibernateException {
+	public boolean equals(final Object x, final Object y) throws HibernateException {
 		if (x == y) {
 			return true;
 		}

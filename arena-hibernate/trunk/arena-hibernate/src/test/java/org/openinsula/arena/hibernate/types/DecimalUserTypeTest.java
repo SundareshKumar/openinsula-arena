@@ -81,20 +81,21 @@ public class DecimalUserTypeTest extends AbstractUserTypeTest {
 	@Test
 	public void testUpdate() {
 		Session session = sessionFactory.getCurrentSession();
-		
+
 		DecimalSampleEntity entity = new DecimalSampleEntity();
 		entity.decimal1_3 = new Decimal(1.123);
 		session.saveOrUpdate(entity);
 		session.flush();
 		session.clear();
-		
+
 		session.refresh(entity);
 		entity.decimal1_3.add(.877);
 		session.saveOrUpdate(entity);
 		session.flush();
 		session.clear();
-		
-		DecimalSampleEntity persistentEntity = (DecimalSampleEntity) session.get(DecimalSampleEntity.class, entity.getId());
+
+		DecimalSampleEntity persistentEntity = (DecimalSampleEntity) session.get(DecimalSampleEntity.class, entity
+				.getId());
 		assertEquals(entity.decimal1_3, persistentEntity.decimal1_3);
 	}
 
