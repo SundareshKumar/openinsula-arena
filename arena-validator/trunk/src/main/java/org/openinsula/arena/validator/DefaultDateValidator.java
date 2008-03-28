@@ -1,33 +1,35 @@
 package org.openinsula.arena.validator;
 
-import java.util.Calendar;
-
-
+import java.text.SimpleDateFormat;
 
 public class DefaultDateValidator implements Validator {
+	private final SimpleDateFormat sdf;
 
-    public boolean validate(String value) {
-    	try {
-    		if (value == null || "".equals(value) || !value.matches("[0-9]{2,2}/[0-9]{2,2}/[0-9]{4,4}")) {
-    			return false;
-    		}
-    		
-    		String[] date = value.split("/");
-    		int day = Integer.parseInt(date[0]);
-    		int month = Integer.parseInt(date[1]) -1;
-    		int year = Integer.parseInt(date[2]);
-    		
-    		Calendar calendar = Calendar.getInstance();
-    		calendar.set(Calendar.DATE, day);
-    		calendar.set(Calendar.MONTH, month);
-    		calendar.set(Calendar.YEAR, year);
-    		
-    		return calendar.get(Calendar.DATE) == day && 
-    				calendar.get(Calendar.MONTH) == month &&
-    				calendar.get(Calendar.YEAR) == year;
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		return false;
-    	}
-    }
+	private final int dateLength;
+
+	public DefaultDateValidator() {
+		this("dd/MM/yyyy");
+	}
+
+	public DefaultDateValidator(String dateFormat) {
+		sdf = new SimpleDateFormat(dateFormat);
+		sdf.setLenient(false);
+
+		this.dateLength = dateFormat.length();
+	}
+
+	public boolean validate(String value) {
+		if (value == null || dateLength != value.length()) {
+			return false;
+		}
+
+		try {
+			sdf.parse(value);
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

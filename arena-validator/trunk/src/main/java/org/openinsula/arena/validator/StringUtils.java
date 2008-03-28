@@ -19,48 +19,15 @@ final class StringUtils {
 	}
 
 	public static String getDigitsOnly(String value) {
-		if (value == null) {
-			return "";
-		}
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < value.length(); i++) {
-			char c = value.charAt(i);
-			if (Character.isDigit(c)) {
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
+		return getDigitsOnly(value, (char) 0);
 	}
 
 	public static String getDigitsOnly(String value, char ignore) {
-		if (value == null) {
-			return "";
-		}
-
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < value.length(); i++) {
-			char c = value.charAt(i);
-			if (Character.isDigit(c) || c == ignore) {
-				sb.append(c);
-			}
-		}
-		return sb.toString();
+		return value == null ? "" : value.replaceAll(String.format("[^0-9%c]", ignore), "");
 	}
 
 	public static String getNonDigitsOnly(String value) {
-		if (value == null) {
-			return "";
-		}
-
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < value.length(); i++) {
-			char c = value.charAt(i);
-			if (!Character.isDigit(c)) {
-				sb.append(c);
-			}
-		}
-		return sb.toString();
+		return value == null ? "" : value.replaceAll("[0-9]", "");
 	}
 
 	public static String getStringWithoutAccent(String value) {
@@ -91,13 +58,12 @@ final class StringUtils {
 		}
 
 		StringBuilder sb = new StringBuilder();
+
 		for (int i = 0; i < value.length(); i++) {
-			if (i == 0 || value.substring(i - 1, i).equals(" ")) {
-				sb.append(value.substring(i, i + 1).toUpperCase());
-			}
-			else {
-				sb.append(value.substring(i, i + 1));
-			}
+			char c = value.charAt(i);
+			boolean capitalize = i == 0 || (Character.isLetter(c) && Character.isWhitespace(value.charAt(i - 1)));
+
+			sb.append(capitalize ? Character.toUpperCase(c) : c);
 		}
 		return sb.toString();
 	}
