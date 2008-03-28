@@ -226,7 +226,15 @@ public class Endereco implements Serializable {
 		}
 		return false;
 	}
-
+	
+	@Override
+	public int hashCode() {
+		if (chaveDne != null) {
+			return chaveDne.hashCode();
+		}
+		return 0;
+	}
+	
 	public String getBairro() {
 		return bairro;
 	}
