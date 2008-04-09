@@ -7,7 +7,38 @@ import nextapp.echo2.app.button.AbstractButton;
 import nextapp.echo2.app.list.AbstractListComponent;
 import nextapp.echo2.app.text.TextComponent;
 
-public abstract class AbstractEchoPane extends ContentPane {
+import org.openinsula.arena.echo2.component.util.FormFactory;
+import org.openinsula.arena.echo2.component.util.Styles;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public abstract class AbstractEchoPane extends ContentPane implements InitializingBean {
+
+	@Autowired
+	private Styles styles;
+	
+	public AbstractEchoPane() {
+	}
+
+	public void afterPropertiesSet() throws Exception {
+		if (FormFactory.getStyles() != null) {
+			FormFactory.setStyles(styles);
+		}
+		initComponents();
+		customizeComponents();
+		initActions();
+		verifyComponents();
+	}
+
+	public abstract void initComponents();
+	public abstract void customizeComponents();
+	public abstract void initActions();
+	public abstract void verifyComponents();
+	public abstract void clearComponents();
+
+	public boolean validateComponents() {
+		return false;
+	}
 
 	public void hideValidatorMessage(Object component) {
 		final Component c = ((Component) component);
