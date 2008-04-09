@@ -102,6 +102,12 @@ public class DialogUtils extends AbstractEchoWindow {
 		}
 	}
 
+	@Override
+	public void clearComponents() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void setStyles(Styles styles) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Setando styles: " + styles);
