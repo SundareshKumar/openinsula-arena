@@ -20,6 +20,8 @@ import nextapp.echo2.app.table.DefaultTableModel;
 import nextapp.echo2.app.table.TableColumnModel;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.echo2.component.div.Div;
 import org.openinsula.arena.echo2.component.model.info.InfoTableModel;
 import org.openinsula.arena.echo2.component.util.FormFactory;
@@ -27,316 +29,332 @@ import org.openinsula.arena.echo2.component.util.Styles;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class InfoTableModelImpl<T> extends DefaultTableModel implements InfoTableModel<T> {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Map<String, String> columnMap = new LinkedHashMap<String, String>();
+	private final Log logger = LogFactory.getLog(getClass());
 
-    private List<T> beanList = new ArrayList<T>();
+	private Map<String, String> columnMap = new LinkedHashMap<String, String>();
 
-    private boolean editColumn = true;
+	private List<T> beanList = new ArrayList<T>();
 
-    private boolean deleteColumn = true;
+	private boolean editColumn = true;
 
-    private ActionListener editButtonActionListener;
+	private boolean deleteColumn = true;
 
-    private ActionListener deleteButtonActionListener;
+	private ActionListener editButtonActionListener;
 
-    @Autowired(required = false)
-    private Styles styles;
-    
-    private ImageReference editImage;
+	private ActionListener deleteButtonActionListener;
 
-    private ImageReference deleteImage;
-    
-    {
-    	if (styles != null) {
-    		editImage = styles.getEditIcon();
-    		deleteImage = styles.getDeleteIcon();
-    	}
-    }
+	@Autowired(required = false)
+	private Styles styles;
 
-    private TableColumnModel tableColumnModel;
+	private ImageReference editImage;
 
-    private List<Extent> widthColumns = new ArrayList<Extent>();
+	private ImageReference deleteImage;
 
-    public void setTableColumnModel(TableColumnModel tableColumnModel) {
-        this.tableColumnModel = tableColumnModel;
-    }
+	{
+		if (styles != null) {
+			editImage = styles.getEditIcon();
+			deleteImage = styles.getDeleteIcon();
+		}
+	}
 
-    public void addColumn(String label, String beanField) {
-        addColumn(label, beanField, 0);
-    }
+	private TableColumnModel tableColumnModel;
 
-    public void addColumn(String label, String beanField, int width) {
-        columnMap.put(beanField, label);
-        widthColumns.add(new Extent(width, Extent.PX));
-        buildColumns();
-    }
+	private List<Extent> widthColumns = new ArrayList<Extent>();
 
-    public void clear() {
-        while (getRowCount() > 0) {
-            deleteRow(0);
-        }
+	public void setTableColumnModel(TableColumnModel tableColumnModel) {
+		this.tableColumnModel = tableColumnModel;
+	}
 
-        beanList.clear();
-    }
+	public void addColumn(String label, String beanField) {
+		addColumn(label, beanField, 0);
+	}
 
-    public void setRows(Collection<T> beans) {
-        clear();
-        for (T bean : beans) {
-            addRow(bean);
-        }
-    }
+	public void addColumn(String label, String beanField, int width) {
+		columnMap.put(beanField, label);
+		widthColumns.add(new Extent(width, Extent.PX));
+		buildColumns();
+	}
 
-    public void addAll(Collection<T> collection) {
+	public void clear() {
+		while (getRowCount() > 0) {
+			deleteRow(0);
+		}
+
+		beanList.clear();
+	}
+
+	public void setRows(Collection<T> beans) {
+		clear();
+		for (T bean : beans) {
+			addRow(bean);
+		}
+	}
+
+	public void addAll(Collection<T> collection) {
 		for (T t : collection) {
 			addRow(t);
 		}
 	}
 
 	public void addRow(T bean) {
-        List<Object> row = new ArrayList<Object>();
+		List<Object> row = new ArrayList<Object>();
 
-        int columnIndex = 0;
-        for (String field : columnMap.keySet()) {
-            try {
-                String valorCampo = formatProperty(field, PropertyUtils.getProperty(bean, field)).toString();
+		int columnIndex = 0;
+		for (String field : columnMap.keySet()) {
+			try {
+				String valorCampo = formatProperty(field, PropertyUtils.getProperty(bean, field)).toString();
 
-                Div columnDiv = new Div();
-                columnDiv.setOverflow(Div.OVERFLOW_HIDDEN);
-                columnDiv.setToolTipText(valorCampo);
+				Div columnDiv = new Div();
+				columnDiv.setOverflow(Div.OVERFLOW_HIDDEN);
+				columnDiv.setToolTipText(valorCampo);
 
-                if (tableColumnModel != null && widthColumns.get(columnIndex) != null) {
-                    tableColumnModel.getColumn(columnIndex).setWidth(widthColumns.get(columnIndex));
-                }
-
-                Label valorDescricaoLabel = new Label();
-                valorDescricaoLabel.setText(valorCampo);
-                valorDescricaoLabel.setLineWrap(false);
-                valorDescricaoLabel.setFont(new Font(Font.VERDANA, Font.PLAIN, new Extent(10, Extent.PX)));
-
-                columnDiv.add(valorDescricaoLabel);
-
-                row.add(columnDiv);
-                columnIndex++;
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-        }
-
-        long beanId = -1;
-        try {
-            beanId = getBeanId(bean);
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
-        } catch (NoSuchMethodException e) {
-        }
-        
-        if (isEditColumn()) {
-        	row.add(buildEditButton(bean, beanId));
-        }
-        
-        if (isDeleteColumn()) {
-            row.add(buildDeleteButton(bean, beanId));
-        }
-
-        if (!beanList.contains(bean)) {
-            super.addRow(row.toArray());
-            beanList.add(bean);
-        }
-
-    }
-    
-    /**
-     * Constrói o botão de deletar
-     * @param bean
-     * @param beanId
-     * @return
-     */
-    protected Button buildDeleteButton(T bean, long beanId) {
-    	Button button = FormFactory.iconButton("Remover", getDeleteImage());
-    	if (deleteButtonActionListener != null && beanId > -1) {
-    		button.setActionCommand(Long.toString(beanId));
-    		button.addActionListener(deleteButtonActionListener);
-    	}
-
-    	return button;
-    }
-
-    /**
-     * Constrói o botão de editar
-     * @param bean
-     * @return
-     */
-    protected Button buildEditButton(T bean, long beanId) {
-    	Button button = FormFactory.iconButton("Selecionar", getEditImage());
-    	if (editButtonActionListener != null && beanId > -1) {
-    		button.setActionCommand(Long.toString(beanId));
-    		button.addActionListener(editButtonActionListener);
-    	}
-    	return button;
-    }
-    
-	/*
-     * Método que recebe o nome e o valor da propriedade para ser formatado em
-     * sub-classes
-     */
-    protected Object formatProperty(String property, Object value) {
-        if (value instanceof Date) {
-        	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            return sdf.format((Date)value);
-        }
-
-        return value;
-    }
-
-    public long getSelectedBeanId(ActionEvent ae) {
-        return Long.parseLong(ae.getActionCommand());
-    }
-
-    public long getBeanId(T bean) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-    	return (Long) PropertyUtils.getProperty(bean, "id");
-    }
-    
-    public void deleteRow(long beanId) {
-        int index = -1;
-        int counter = 0;
-
-        T bean = null; 
-        
-        for (T item : beanList) {
-            try {
-				if (getBeanId(item) == beanId) {
-				    index = counter;
-				    bean = item;
-				} else {
-				    counter++;
+				if (tableColumnModel != null && widthColumns.get(columnIndex) != null) {
+					tableColumnModel.getColumn(columnIndex).setWidth(widthColumns.get(columnIndex));
 				}
-			} catch (Exception e) {
+
+				Label valorDescricaoLabel = new Label();
+				valorDescricaoLabel.setText(valorCampo);
+				valorDescricaoLabel.setLineWrap(false);
+				valorDescricaoLabel.setFont(new Font(Font.VERDANA, Font.PLAIN, new Extent(10, Extent.PX)));
+
+				columnDiv.add(valorDescricaoLabel);
+
+				row.add(columnDiv);
+				columnIndex++;
+			}
+			catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+			catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+		}
+
+		long beanId = -1;
+		try {
+			beanId = getBeanId(bean);
+		}
+		catch (IllegalAccessException e) {
+			logger.warn("", e);
+		}
+		catch (InvocationTargetException e) {
+			logger.warn("", e);
+		}
+		catch (NoSuchMethodException e) {
+			logger.warn("", e);
+		}
+
+		if (isEditColumn()) {
+			row.add(buildEditButton(bean, beanId));
+		}
+
+		if (isDeleteColumn()) {
+			row.add(buildDeleteButton(bean, beanId));
+		}
+
+		if (!beanList.contains(bean)) {
+			super.addRow(row.toArray());
+			beanList.add(bean);
+		}
+
+	}
+
+	/**
+	 * Constrói o botão de deletar
+	 * @param bean
+	 * @param beanId
+	 * @return
+	 */
+	protected Button buildDeleteButton(T bean, long beanId) {
+		Button button = FormFactory.iconButton("Remover", getDeleteImage());
+		if (deleteButtonActionListener != null && beanId > -1) {
+			button.setActionCommand(Long.toString(beanId));
+			button.addActionListener(deleteButtonActionListener);
+		}
+
+		return button;
+	}
+
+	/**
+	 * Constrói o botão de editar
+	 * @param bean
+	 * @return
+	 */
+	protected Button buildEditButton(T bean, long beanId) {
+		Button button = FormFactory.iconButton("Selecionar", getEditImage());
+		if (editButtonActionListener != null && beanId > -1) {
+			button.setActionCommand(Long.toString(beanId));
+			button.addActionListener(editButtonActionListener);
+		}
+		return button;
+	}
+
+	/*
+	 * Método que recebe o nome e o valor da propriedade para ser formatado em
+	 * sub-classes
+	 */
+	protected Object formatProperty(String property, Object value) {
+		if (value instanceof Date) {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			return sdf.format((Date) value);
+		}
+
+		return value;
+	}
+
+	public long getSelectedBeanId(ActionEvent ae) {
+		return Long.parseLong(ae.getActionCommand());
+	}
+
+	public long getBeanId(T bean) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		return (Long) PropertyUtils.getProperty(bean, "id");
+	}
+
+	public void deleteRow(long beanId) {
+		int index = -1;
+		int counter = 0;
+
+		T bean = null;
+
+		for (T item : beanList) {
+			try {
+				if (getBeanId(item) == beanId) {
+					index = counter;
+					bean = item;
+				}
+				else {
+					counter++;
+				}
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 				return;
 			}
-        }
-        if (index >= 0) {
-            super.deleteRow(index);
-            beanList.remove(bean);
-        }
-    }
-    
-    public void deleteRow(T bean) {
-        int index = -1;
-        int counter = 0;
+		}
+		if (index >= 0) {
+			super.deleteRow(index);
+			beanList.remove(bean);
+		}
+	}
 
-        for (Object item : beanList) {
-            if (item.equals(bean)) {
-                index = counter;
-            } else {
-                counter++;
-            }
-        }
-        if (index >= 0) {
-            super.deleteRow(index);
-            beanList.remove(bean);
-        }
-    }
+	public void deleteRow(T bean) {
+		int index = -1;
+		int counter = 0;
 
-    private void buildColumns() {
-        int columnCount = columnMap.size();
-        if (isEditColumn())
-            columnCount++;
-        if (isDeleteColumn())
-            columnCount++;
-        setColumnCount(columnCount);
+		for (Object item : beanList) {
+			if (item.equals(bean)) {
+				index = counter;
+			}
+			else {
+				counter++;
+			}
+		}
+		if (index >= 0) {
+			super.deleteRow(index);
+			beanList.remove(bean);
+		}
+	}
 
-        int columnIndex = 0;
-        for (String column : columnMap.values()) {
-            setColumnName(columnIndex, column);
-            columnIndex++;
-        }
+	private void buildColumns() {
+		int columnCount = columnMap.size();
+		if (isEditColumn()) {
+			columnCount++;
+		}
+		if (isDeleteColumn()) {
+			columnCount++;
+		}
+		setColumnCount(columnCount);
 
-        if (isEditColumn()) {
-            setColumnName(columnIndex, "");
-            columnIndex++;
-        }
-        if (isDeleteColumn()) {
-            setColumnName(columnIndex, "");
-            columnIndex++;
-        }
-    }
+		int columnIndex = 0;
+		for (String column : columnMap.values()) {
+			setColumnName(columnIndex, column);
+			columnIndex++;
+		}
 
-    public List<T> getBeanList() {
-        return beanList;
-    }
+		if (isEditColumn()) {
+			setColumnName(columnIndex, "");
+			columnIndex++;
+		}
+		if (isDeleteColumn()) {
+			setColumnName(columnIndex, "");
+			columnIndex++;
+		}
+	}
 
-    public boolean isDeleteColumn() {
-        return deleteColumn;
-    }
+	public List<T> getBeanList() {
+		return beanList;
+	}
 
-    public void setDeleteColumn(boolean deleteColumn) {
-        this.deleteColumn = deleteColumn;
-        buildColumns();
-    }
+	public boolean isDeleteColumn() {
+		return deleteColumn;
+	}
 
-    public boolean isEditColumn() {
-        return editColumn;
-    }
+	public void setDeleteColumn(boolean deleteColumn) {
+		this.deleteColumn = deleteColumn;
+		buildColumns();
+	}
 
-    public void setEditColumn(boolean editColumn) {
-        this.editColumn = editColumn;
-        buildColumns();
-    }
+	public boolean isEditColumn() {
+		return editColumn;
+	}
 
-    public ActionListener getDeleteButtonActionListener() {
-        return deleteButtonActionListener;
-    }
+	public void setEditColumn(boolean editColumn) {
+		this.editColumn = editColumn;
+		buildColumns();
+	}
 
-    public void setDeleteButtonActionListener(ActionListener deleteButtonActionListener) {
-        this.deleteButtonActionListener = deleteButtonActionListener;
-    }
+	public ActionListener getDeleteButtonActionListener() {
+		return deleteButtonActionListener;
+	}
 
-    public ActionListener getEditButtonActionListener() {
-        return editButtonActionListener;
-    }
+	public void setDeleteButtonActionListener(ActionListener deleteButtonActionListener) {
+		this.deleteButtonActionListener = deleteButtonActionListener;
+	}
 
-    public void setEditButtonActionListener(ActionListener editButtonActionListener) {
-        this.editButtonActionListener = editButtonActionListener;
-    }
+	public ActionListener getEditButtonActionListener() {
+		return editButtonActionListener;
+	}
 
-    public ImageReference getEditImage() {
-        return editImage;
-    }
+	public void setEditButtonActionListener(ActionListener editButtonActionListener) {
+		this.editButtonActionListener = editButtonActionListener;
+	}
 
-    public void setEditImage(ImageReference editImage) {
-        this.editImage = editImage;
-    }
+	public ImageReference getEditImage() {
+		return editImage;
+	}
 
-    public ImageReference getDeleteImage() {
-        return deleteImage;
-    }
+	public void setEditImage(ImageReference editImage) {
+		this.editImage = editImage;
+	}
 
-    public void setDeleteImage(ImageReference deleteImage) {
-        this.deleteImage = deleteImage;
-    }
+	public ImageReference getDeleteImage() {
+		return deleteImage;
+	}
 
-    private int currentPage = 0;
-    
-    private int pageSize = 10;
-    
+	public void setDeleteImage(ImageReference deleteImage) {
+		this.deleteImage = deleteImage;
+	}
+
+	private int currentPage = 0;
+
+	private int pageSize = 10;
+
 	public int getCurrentPage() {
 		return currentPage;
 	}
 
 	public int getPageCount() {
 		int pageCount = (beanList.size() / pageSize);
-		
-		if ( (beanList.size() % pageSize) != 0 ) {
+
+		if ((beanList.size() % pageSize) != 0) {
 			pageCount++;
 		}
-		
+
 		return pageCount;
 	}
 

@@ -13,73 +13,75 @@ public class PagerRow extends Row {
 	private static final long serialVersionUID = 1L;
 
 	private PageableTableModel model;
-	
+
 	private int showPages;
-	
+
 	private PagerStyles pagerStyles;
 
 	public PagerRow(PageableTableModel pageableTableModel) throws IllegalArgumentException {
 		super();
 		this.model = pageableTableModel;
 	}
-	
+
 	public void renderPager() {
 		removeAll();
-		
+
 		int startPage = 0;
-		int endPage = getTotalNumberPages(); 
-		if(showPages > 0) {
+		int endPage = getTotalNumberPages();
+		if (showPages > 0) {
 			startPage = (getCurrentPage() / showPages) * showPages;
 			endPage = Math.min(startPage + showPages, getTotalNumberPages());
 		}
-		
+
 		BotoesControleActionListener botoesControleActionListener = new BotoesControleActionListener();
 
 		// botao 'anterior'
 		if (getCurrentPage() > 0) {
 			Button botaoAnterior = new Button();
 			botaoAnterior.setStyle(pagerStyles.getBackPagerButtonStyle());
-			
+
 			if (botaoAnterior.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
 				botaoAnterior.setText("[Anterior]");
 			}
-			
+
 			botaoAnterior.setActionCommand("anterior");
 			botaoAnterior.addActionListener(botoesControleActionListener);
 			this.add(botaoAnterior);
 		}
-		
+
 		// botao para retornar a paginacao das paginas
-		if(startPage > 0) {
+		if (startPage > 0) {
 			Button botaoPaginacaoAnterior = new Button();
 			botaoPaginacaoAnterior.setStyle(pagerStyles.getSkipPagerButtonStyle());
-			
+
 			if (botaoPaginacaoAnterior.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
 				botaoPaginacaoAnterior.setText("[...]");
 			}
-			
-			botaoPaginacaoAnterior.setActionCommand(new Integer((startPage - 1)).toString());
+
+			botaoPaginacaoAnterior.setActionCommand(Integer.toString(startPage - 1));
 			botaoPaginacaoAnterior.addActionListener(new BotaoNumeradoActionListener());
 			this.add(botaoPaginacaoAnterior);
 		}
-		
+
 		// botoes com a numeracao
 		for (int i = startPage; i < endPage; i++) {
 			if (endPage - startPage > 1) {
 				Button b = new Button();
 				if (getCurrentPage() == i) {
 					b.setStyle(pagerStyles.getSelectedPagerButtonStyle());
-				} else {
+				}
+				else {
 					b.setStyle(pagerStyles.getPagerButtonStyle());
 				}
-				
+
 				if (b.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
-					b.setText("["+(i+1)+"]");
-				} else {
-					b.setText(new Integer(i + 1).toString());
+					b.setText("[" + (i + 1) + "]");
 				}
-				
-				b.setActionCommand(new Integer(i).toString());
+				else {
+					b.setText(Integer.toString(i + 1));
+				}
+
+				b.setActionCommand(Integer.toString(i));
 				b.addActionListener(new BotaoNumeradoActionListener());
 				Div div = new Div();
 				div.setMargin(new Extent(2, Extent.PX));
@@ -87,30 +89,30 @@ public class PagerRow extends Row {
 				this.add(div);
 			}
 		}
-		
+
 		// botao para avancar a paginacao das paginas
-		if(endPage < getTotalNumberPages()) {
+		if (endPage < getTotalNumberPages()) {
 			Button botaoPaginacaoProxima = new Button();
 			botaoPaginacaoProxima.setStyle(pagerStyles.getSkipPagerButtonStyle());
-			
+
 			if (botaoPaginacaoProxima.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
 				botaoPaginacaoProxima.setText("[...]");
 			}
-			
-			botaoPaginacaoProxima.setActionCommand(new Integer(endPage).toString());
+
+			botaoPaginacaoProxima.setActionCommand(Integer.toString(endPage));
 			botaoPaginacaoProxima.addActionListener(new BotaoNumeradoActionListener());
 			this.add(botaoPaginacaoProxima);
 		}
-		
+
 		// botao 'proxima' pagina
-		if (getCurrentPage() < (getTotalNumberPages()-1)) {
+		if (getCurrentPage() < (getTotalNumberPages() - 1)) {
 			Button botaoProxima = new Button();
 			botaoProxima.setStyle(pagerStyles.getNextPagerButtonStyle());
-			
+
 			if (botaoProxima.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
 				botaoProxima.setText("[Próxima]");
 			}
-			
+
 			botaoProxima.setActionCommand("proxima");
 			botaoProxima.addActionListener(botoesControleActionListener);
 			this.add(botaoProxima);
@@ -134,14 +136,15 @@ public class PagerRow extends Row {
 			String command = actionEvent.getActionCommand();
 			if ("anterior".equals(command)) {
 				model.setCurrentPage(model.getCurrentPage() - 1);
-			} else if ("proxima".equals(command)) {
+			}
+			else if ("proxima".equals(command)) {
 				model.setCurrentPage(model.getCurrentPage() + 1);
 			}
-			
+
 			PagerRow.this.renderPager();
 		}
 	}
-	
+
 	protected int getTotalNumberPages() {
 		return model.getPageCount();
 	}

@@ -33,7 +33,7 @@ public class OrderedLayout extends AbstractLayout {
 	private int captionWidth = -1;
 
 	private int traversalIndex = 0;
-	
+
 	public OrderedLayout() {
 	}
 
@@ -77,22 +77,16 @@ public class OrderedLayout extends AbstractLayout {
 				LayoutStyle layoutStyle = (LayoutStyle) entry.getLayoutElement();
 
 				if (layoutStyle.getKlazz() == null) {
-					if (divStyles.contains(layoutStyle)) {
-						if (!divStyles.remove(layoutStyle)) {
-							logger
-									.warn("Error on deleting from divStyles list, the property: "
-											+ layoutStyle.getName());
-						}
+					if (divStyles.contains(layoutStyle) && !divStyles.remove(layoutStyle)) {
+						logger.warn("Error on deleting from divStyles list, the property: " + layoutStyle.getName());
 					}
 
 					divStyles.add(layoutStyle);
 				}
 				else {
-					if (componentStyles.contains(layoutStyle)) {
-						if (!componentStyles.remove(layoutStyle)) {
-							logger.warn("Error on deleting from componentStyles list, the property: "
-									+ layoutStyle.getName());
-						}
+					if (componentStyles.contains(layoutStyle) && !componentStyles.remove(layoutStyle)) {
+						logger.warn("Error on deleting from componentStyles list, the property: "
+								+ layoutStyle.getName());
 					}
 
 					componentStyles.add(layoutStyle);
@@ -150,22 +144,16 @@ public class OrderedLayout extends AbstractLayout {
 				LayoutStyle layoutStyle = (LayoutStyle) entry.getLayoutElement();
 
 				if (layoutStyle.getKlazz() == null) {
-					if (divStyles.contains(layoutStyle)) {
-						if (!divStyles.remove(layoutStyle)) {
-							logger
-									.warn("Error on deleting from divStyles list, the property: "
-											+ layoutStyle.getName());
-						}
+					if (divStyles.contains(layoutStyle) && !divStyles.remove(layoutStyle)) {
+						logger.warn("Error on deleting from divStyles list, the property: " + layoutStyle.getName());
 					}
 
 					divStyles.add(layoutStyle);
 				}
 				else {
-					if (componentStyles.contains(layoutStyle)) {
-						if (!componentStyles.remove(layoutStyle)) {
-							logger.warn("Error on deleting from componentStyles list, the property: "
-									+ layoutStyle.getName());
-						}
+					if (componentStyles.contains(layoutStyle) && !componentStyles.remove(layoutStyle)) {
+						logger.warn("Error on deleting from componentStyles list, the property: "
+								+ layoutStyle.getName());
 					}
 
 					componentStyles.add(layoutStyle);
@@ -217,22 +205,16 @@ public class OrderedLayout extends AbstractLayout {
 				LayoutStyle layoutStyle = (LayoutStyle) entry.getLayoutElement();
 
 				if (layoutStyle.getKlazz() == null) {
-					if (divStyles.contains(layoutStyle)) {
-						if (!divStyles.remove(layoutStyle)) {
-							logger
-									.warn("Error on deleting from divStyles list, the property: "
-											+ layoutStyle.getName());
-						}
+					if (divStyles.contains(layoutStyle) && !divStyles.remove(layoutStyle)) {
+						logger.warn("Error on deleting from divStyles list, the property: " + layoutStyle.getName());
 					}
 
 					divStyles.add(layoutStyle);
 				}
 				else {
-					if (componentStyles.contains(layoutStyle)) {
-						if (!componentStyles.remove(layoutStyle)) {
-							logger.warn("Error on deleting from componentStyles list, the property: "
-									+ layoutStyle.getName());
-						}
+					if (componentStyles.contains(layoutStyle) && !componentStyles.remove(layoutStyle)) {
+						logger.warn("Error on deleting from componentStyles list, the property: "
+								+ layoutStyle.getName());
 					}
 
 					componentStyles.add(layoutStyle);

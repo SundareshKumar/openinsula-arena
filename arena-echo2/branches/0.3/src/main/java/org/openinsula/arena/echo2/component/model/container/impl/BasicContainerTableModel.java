@@ -8,7 +8,8 @@ import java.util.List;
 import nextapp.echo2.app.event.ActionEvent;
 import nextapp.echo2.app.table.AbstractTableModel;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.echo2.component.model.container.ContainerTableModel;
 
 /**
@@ -21,7 +22,7 @@ import org.openinsula.arena.echo2.component.model.container.ContainerTableModel;
 public abstract class BasicContainerTableModel<T> extends AbstractTableModel implements ContainerTableModel<T> {
 	private static final long serialVersionUID = 1L;
 
-	protected final Logger logger = Logger.getLogger(getClass());
+	protected final Log logger = LogFactory.getLog(getClass());
 
 	protected List<T> items = new ArrayList<T>();
 
@@ -101,16 +102,15 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 					if (items.add(bean)) {
 						index = items.indexOf(bean);
 					}
-				} else {
-					// don't do anything
 				}
-			} else {
+			}
+			else {
 				if (items.add(bean)) {
 					index = items.indexOf(bean);
 				}
 			}
 		}
-		
+
 		if (index != -1) {
 			fireTableRowsInserted(index, index);
 		}
@@ -121,13 +121,13 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 			this.addItem(bean);
 		}
 	}
-	
+
 	public void addItems(Collection<T> beans) {
 		for (T bean : beans) {
 			this.addItem(bean);
 		}
 	}
-	
+
 	public void clear() {
 		items.clear();
 	}
@@ -136,7 +136,7 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 		T bean = getItemById(itemId);
 		return deleteItem(bean);
 	}
-	
+
 	public boolean deleteItem(ActionEvent actionEvent) {
 		T bean = getSelectedItem(actionEvent);
 		return deleteItem(bean);
@@ -147,14 +147,15 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 		if (items.contains(bean)) {
 			index = items.indexOf(bean);
 		}
-		
+
 		try {
 			if (items.remove(bean)) {
 				if (index > -1) {
 					fireTableRowsDeleted(index, index);
 				}
 				return true;
-			} else {
+			}
+			else {
 				return false;
 			}
 		}
@@ -162,7 +163,7 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 			logger.error("An error has ocurred while trying to remove a bean from the list.", e);
 			return false;
 		}
-		
+
 	}
 
 	public T getSelectedItem(ActionEvent actionEvent) {

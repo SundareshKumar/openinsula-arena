@@ -8,14 +8,15 @@ import nextapp.echo2.app.Label;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.echo2.component.layout.impl.LayoutComponent;
 import org.openinsula.arena.echo2.component.layout.impl.LayoutPropertyType;
 import org.openinsula.arena.echo2.component.layout.impl.LayoutStyle;
 
 public abstract class AbstractLayout implements Layout {
 
-	protected static final Logger logger = Logger.getLogger(AbstractLayout.class);
+	protected static final Log logger = LogFactory.getLog(AbstractLayout.class);
 
 	private List<LayoutEntry> properties = new ArrayList<LayoutEntry>();
 
@@ -24,7 +25,8 @@ public abstract class AbstractLayout implements Layout {
 	}
 
 	public void addComponent(Component component, boolean visibleCaption) {
-		properties.add(new LayoutEntry(LayoutPropertyType.COMPONENT, new LayoutComponent(null, component, visibleCaption)));
+		properties.add(new LayoutEntry(LayoutPropertyType.COMPONENT, new LayoutComponent(null, component,
+				visibleCaption)));
 	}
 
 	public void addComponent(String caption, Component component) {

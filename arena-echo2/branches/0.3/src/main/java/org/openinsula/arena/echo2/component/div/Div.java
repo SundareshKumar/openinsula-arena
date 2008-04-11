@@ -6,13 +6,14 @@ import nextapp.echo2.app.Extent;
 import nextapp.echo2.app.ImageReference;
 import nextapp.echo2.app.ResourceImageReference;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.echo2.component.util.TextAlignment;
 
 public class Div extends Component {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = Logger.getLogger(Div.class);
+	private static final Log logger = LogFactory.getLog(Div.class);
 
 	/* constantes para usar no Styles */
 	public static final String PROPERTY_TEXT_ALIGNMENT = "text-alignment";

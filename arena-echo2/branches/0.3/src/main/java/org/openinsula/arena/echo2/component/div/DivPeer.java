@@ -115,39 +115,47 @@ public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, Imag
 		{ // padding
 			// left
 			Extent paddingTop = div.getPaddingTop();
-			if (paddingTop != null)
+			if (paddingTop != null) {
 				builder.addProperty("padding-top: ", paddingTop);
+			}
 			// left
 			Extent paddingLeft = div.getPaddingLeft();
-			if (paddingLeft != null)
+			if (paddingLeft != null) {
 				builder.addProperty("padding-left: ", paddingLeft);
+			}
 			// bottom
 			Extent paddingBottom = div.getPaddingBottom();
-			if (paddingBottom != null)
+			if (paddingBottom != null) {
 				builder.addProperty("padding-bottom: ", paddingBottom);
+			}
 			// right
 			Extent paddingRight = div.getPaddingRight();
-			if (paddingRight != null)
+			if (paddingRight != null) {
 				builder.addProperty("padding-right: ", paddingRight);
+			}
 		}
 
 		{ // margin
 			// top
 			Extent marginTop = div.getMarginTop();
-			if (marginTop != null)
+			if (marginTop != null) {
 				builder.addProperty("margin-top: ", marginTop);
+			}
 			// left
 			Extent marginLeft = div.getMarginLeft();
-			if (marginLeft != null)
+			if (marginLeft != null) {
 				builder.addProperty("margin-left: ", marginLeft);
+			}
 			// bottom
 			Extent marginBottom = div.getMarginBottom();
-			if (marginBottom != null)
+			if (marginBottom != null) {
 				builder.addProperty("margin-bottom: ", marginBottom);
+			}
 			// right
 			Extent marginRight = div.getMarginRight();
-			if (marginRight != null)
+			if (marginRight != null) {
 				builder.addProperty("margin-right: ", marginRight);
+			}
 		}
 
 		{ // overflow
@@ -160,8 +168,9 @@ public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, Imag
 		divE.setAttribute("style", builder.toString());
 
 		String toolTipText = ((Div) component).getToolTipText();
-		if (toolTipText != null)
+		if (toolTipText != null) {
 			divE.setAttribute("title", toolTipText);
+		}
 
 		Component[] children = component.getVisibleComponents();
 		for (Component child : children) {
