@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2006 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena I/O.
  *
  *  Arena I/O is free software: you can redistribute it and/or modify
@@ -21,7 +21,10 @@ package org.openinsula.arena.io.textfile.line;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openinsula.arena.io.textfile.field.DateField;
 import org.openinsula.arena.io.textfile.field.Field;
+import org.openinsula.arena.io.textfile.field.NumericField;
+import org.openinsula.arena.io.textfile.field.StringField;
 
 public abstract class AbstractLineFactory implements LineFactory {
 	protected boolean used = false;
@@ -45,6 +48,18 @@ public abstract class AbstractLineFactory implements LineFactory {
 		}
 	}
 
+	public void addNumericField(int size, String description) {
+		addField(new NumericField(size, description));
+	}
+
+	public void addStringField(int size, String description) {
+		addField(new StringField(size, description));
+	}
+
+	public void addDateField(int size, String dateFormat, String description) {
+		addField(new DateField(size, dateFormat, description));
+	}
+
 	public Line createLine() {
 		used = true;
 		return new DefaultLine(this, fields, totalSize);
@@ -63,8 +78,8 @@ public abstract class AbstractLineFactory implements LineFactory {
 	protected abstract boolean doMatches(String s);
 
 	protected String getFieldString(String s, int index) {
-		Field<?> field = fields.get(index);
-		int tokenStart = fieldStartIndexes.get(index);
+		final Field<?> field = fields.get(index);
+		final int tokenStart = fieldStartIndexes.get(index);
 
 		return s.substring(tokenStart, tokenStart + field.getSize());
 	}
@@ -80,16 +95,16 @@ public abstract class AbstractLineFactory implements LineFactory {
 					+ s.length());
 		}
 
-		Line line = new DefaultLine(this, fields, totalSize);
+		final Line line = new DefaultLine(this, fields, totalSize);
 
 		for (int i = 0; i < fields.size(); i++) {
 			try {
-				Field<?> field = fields.get(i);
+				final Field<?> field = fields.get(i);
 
 				line.setValue(i, field.parseValue(getFieldString(s, i)));
 			}
-			catch (Exception ex) {
-				int tokenStart = fieldStartIndexes.get(i);
+			catch (final Exception ex) {
+				final int tokenStart = fieldStartIndexes.get(i);
 				throw new IllegalArgumentException("Erro ao processar campo na posicao [" + (tokenStart + 1) + ","
 						+ (tokenStart + fields.get(i).getSize()) + "]. " + ex.getMessage(), ex);
 			}
