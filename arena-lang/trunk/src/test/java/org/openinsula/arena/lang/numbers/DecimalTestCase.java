@@ -25,7 +25,7 @@ import java.math.RoundingMode;
 
 import org.junit.Test;
 
-public class DecimalTest {
+public class DecimalTestCase {
 
 	@Test
 	public void testConstructor() {

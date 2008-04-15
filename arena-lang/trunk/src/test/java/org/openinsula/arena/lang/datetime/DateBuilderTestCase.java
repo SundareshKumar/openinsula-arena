@@ -27,7 +27,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
-public class DateBuilderTest {
+public class DateBuilderTestCase {
 
 	@Test
 	public void testMethods() {

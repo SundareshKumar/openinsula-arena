@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-public class FailSafeOperationTest {
+public class FailSafeOperationTestCase {
 
 	@Test
 	public void testDoTry() {

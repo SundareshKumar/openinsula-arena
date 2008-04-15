@@ -16,42 +16,31 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.lang.numbers;
+package org.openinsula.arena.lang.math.distribution;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+import java.util.List;
 
-import java.util.Locale;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+import org.openinsula.arena.lang.util.LogUtil;
 
-public class DecimalUtilsTest {
+public class ListDistributionTestCase {
 
+	protected final Log logger = LogFactory.getLog(getClass());
+	
 	@Test
-	public void testNullSafeCopyDecimal() {
-		Decimal a = null;
-		assertNull(DecimalUtils.nullSafeCopy(a));
+	public void testGenerate() {
+		List<Integer> itens = Arrays.asList(1,2,3,4,5);
 		
-		a = new Decimal();
-		Decimal b = DecimalUtils.nullSafeCopy(a);
+		ListDistribution<Integer> distr1 = new ListDistribution<Integer>(itens);
+		List<List<Integer>> list1 = distr1.distribute(5);
 		
-		assertNotSame(b, a);
-		assertEquals(a, b);
-	}
-
-	@Test
-	public void testNullSafeCopyMoney() {
-		Money a = null;
-		assertNull(DecimalUtils.nullSafeCopy(a));
+		ListDistribution<Integer> distr2 = new ListDistribution<Integer>(itens);
+		List<List<Integer>> list2 = distr2.distribute(4);
 		
-		a = new Money();
-		Money b = DecimalUtils.nullSafeCopy(a);
-		assertNotSame(b, a);
-		assertEquals(a, b);
-		
-		b.from(Locale.CHINA);
-		Money c = DecimalUtils.nullSafeCopy(b);
-		assertEquals(c, b);
-		
+		LogUtil.debug(logger, "List 1: %s%nList 2: %s", list1, list2);
 	}
 
 }

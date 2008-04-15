@@ -20,31 +20,38 @@ package org.openinsula.arena.lang.numbers;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-import org.openinsula.arena.lang.reflection.GenericsUtils;
+import java.util.Locale;
 
-public class GenericsUtilsTest {
+import org.junit.Test;
+
+public class DecimalUtilsTestCase {
 
 	@Test
-	public void testGetSuperclassGenericType() {
-		assertSame(Integer.class, GenericsUtils.getSuperclassGenericType(IntegerGrandchild.class));
-		assertNull(GenericsUtils.getSuperclassGenericType(new ConcreteGenericChild<Integer>().getClass()));
+	public void testNullSafeCopyDecimal() {
+		Decimal a = null;
+		assertNull(DecimalUtils.nullSafeCopy(a));
+		
+		a = new Decimal();
+		Decimal b = DecimalUtils.nullSafeCopy(a);
+		
+		assertNotSame(b, a);
+		assertEquals(a, b);
 	}
 
-}
+	@Test
+	public void testNullSafeCopyMoney() {
+		Money a = null;
+		assertNull(DecimalUtils.nullSafeCopy(a));
+		
+		a = new Money();
+		Money b = DecimalUtils.nullSafeCopy(a);
+		assertNotSame(b, a);
+		assertEquals(a, b);
+		
+		b.from(Locale.CHINA);
+		Money c = DecimalUtils.nullSafeCopy(b);
+		assertEquals(c, b);
+		
+	}
 
-abstract class Generic<T> {
-	
-}
-
-abstract class GenericChild<T> extends Generic<T> {
-	
-}
-
-class ConcreteGenericChild<T> extends Generic<T> {
-	
-}
-
-class IntegerGrandchild extends GenericChild<Integer> {
-	
 }

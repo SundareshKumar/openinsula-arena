@@ -16,31 +16,35 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.lang.math.distribution;
+package org.openinsula.arena.lang.numbers;
 
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.Assert.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import org.openinsula.arena.lang.util.LogUtil;
+import org.openinsula.arena.lang.reflection.GenericsUtils;
 
-public class ListDistributionTest {
+public class GenericsUtilsTestCase {
 
-	protected final Log logger = LogFactory.getLog(getClass());
-	
 	@Test
-	public void testGenerate() {
-		List<Integer> itens = Arrays.asList(1,2,3,4,5);
-		
-		ListDistribution<Integer> distr1 = new ListDistribution<Integer>(itens);
-		List<List<Integer>> list1 = distr1.distribute(5);
-		
-		ListDistribution<Integer> distr2 = new ListDistribution<Integer>(itens);
-		List<List<Integer>> list2 = distr2.distribute(4);
-		
-		LogUtil.debug(logger, "List 1: %s%nList 2: %s", list1, list2);
+	public void testGetSuperclassGenericType() {
+		assertSame(Integer.class, GenericsUtils.getSuperclassGenericType(IntegerGrandchild.class));
+		assertNull(GenericsUtils.getSuperclassGenericType(new ConcreteGenericChild<Integer>().getClass()));
 	}
 
+}
+
+abstract class Generic<T> {
+	
+}
+
+abstract class GenericChild<T> extends Generic<T> {
+	
+}
+
+class ConcreteGenericChild<T> extends Generic<T> {
+	
+}
+
+class IntegerGrandchild extends GenericChild<Integer> {
+	
 }

@@ -26,7 +26,7 @@ import java.util.Locale;
 import org.junit.Test;
 import org.openinsula.arena.lang.util.OtherLocales;
 
-public class MoneyTest {
+public class MoneyTestCase {
 	
 	@Test
 	public void testNew() {
