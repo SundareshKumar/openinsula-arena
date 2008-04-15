@@ -69,8 +69,27 @@
 	</organization>
 	<repositories>
 		<repository>
-			<id>openinsula.org</id>
+			<id>openinsula</id>
+			<name>OpenInsula Repository</name>
 			<url>http://maven.openinsula.org</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>openinsula-snapshots</id>
+			<name>OpenInsula Snapshots Repository</name>
+			<url>http://maven-snapshots.openinsula.org</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 	<distributionManagement>
