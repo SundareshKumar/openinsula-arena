@@ -14,7 +14,7 @@
  *  GNU Lesser General Public License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with Arena-Hibernate.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.openinsula.arena.hibernate.types;
 
@@ -25,7 +25,7 @@ import org.hibernate.exception.DataException;
 import org.junit.Test;
 import org.openinsula.arena.lang.numbers.Decimal;
 
-public class DecimalUserTypeTest extends AbstractUserTypeTest {
+public class DecimalUserTypeTestCase extends AbstractUserTypeTestCase {
 
 	@Test
 	public void testInsert() {

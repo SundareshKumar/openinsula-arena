@@ -14,7 +14,7 @@
  *  GNU Lesser General Public License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with Arena-Hibernate.  If not, see <http://www.gnu.org/licenses/>.
  */
 @TypeDefs( {
 		@TypeDef(name = ArenaTypes.MONEY, typeClass = MoneyUserType.class),
@@ -38,5 +38,6 @@ import org.hibernate.annotations.TypeDefs;
 import org.openinsula.arena.hibernate.types.ArenaTypes;
 import org.openinsula.arena.hibernate.types.DecimalUserType;
 import org.openinsula.arena.hibernate.types.MoneyUserType;
+
 
 

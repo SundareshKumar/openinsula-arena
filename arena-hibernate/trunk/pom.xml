@@ -83,7 +83,7 @@
 			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
 		<site>
-			<id>openinsula.rog</id>
+			<id>openinsula.org</id>
 			<url>
 				scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}
 			</url>

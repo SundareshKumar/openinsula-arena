@@ -14,7 +14,7 @@
  *  GNU Lesser General Public License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with Arena-Hibernate.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.openinsula.arena.hibernate.types;
 
@@ -26,7 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 @ContextConfiguration(locations = { "/test-context.xml" })
-public abstract class AbstractUserTypeTest extends AbstractTransactionalJUnit4SpringContextTests {
+public abstract class AbstractUserTypeTestCase extends AbstractTransactionalJUnit4SpringContextTests {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 

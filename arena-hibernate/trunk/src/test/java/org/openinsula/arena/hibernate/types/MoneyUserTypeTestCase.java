@@ -14,7 +14,7 @@
  *  GNU Lesser General Public License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public License
- *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with Arena-Hibernate.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.openinsula.arena.hibernate.types;
 
@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.openinsula.arena.lang.numbers.Money;
 import org.openinsula.arena.lang.util.OtherLocales;
 
-public class MoneyUserTypeTest extends AbstractUserTypeTest {
+public class MoneyUserTypeTestCase extends AbstractUserTypeTestCase {
 
 	@Test
 	public void testInsert() {
