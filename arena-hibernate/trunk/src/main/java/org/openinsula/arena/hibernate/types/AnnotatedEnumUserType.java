@@ -1,3 +1,21 @@
+/*
+ *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
+ * 
+ *  This file is part of Arena-Hibernate.
+ *
+ *  Arena-Hibernate is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Arena-Hibernate is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.openinsula.arena.hibernate.types;
 
 import java.io.Serializable;
@@ -16,6 +34,7 @@ import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 import org.openinsula.arena.hibernate.types.annotations.IntEnumValue;
 import org.openinsula.arena.hibernate.types.annotations.StringEnumValue;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @SuppressWarnings("unchecked")
@@ -32,7 +51,6 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 
 	private boolean standardEnum = false;
 
-	@SuppressWarnings("unchecked")
 	public void setParameterValues(final Properties params) {
 		String enumClassName = params.getProperty(PARAM_ENUM_CLASS);
 		if (enumClassName == null) {
@@ -92,7 +110,6 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public Object nullSafeGet(final ResultSet rs, final String[] names, final Object owner) throws HibernateException,
 			SQLException {
 		if (intEnum && !stringEnum && !standardEnum) {
@@ -213,16 +230,10 @@ public class AnnotatedEnumUserType implements UserType, ParameterizedType {
 	}
 
 	public int hashCode(final Object x) throws HibernateException {
-		return x.hashCode();
+		return ObjectUtils.nullSafeHashCode(x);
 	}
 
 	public boolean equals(final Object x, final Object y) throws HibernateException {
-		if (x == y) {
-			return true;
-		}
-		if (null == x || null == y) {
-			return false;
-		}
-		return x.equals(y);
+		return ObjectUtils.nullSafeEquals(x, y);
 	}
 }

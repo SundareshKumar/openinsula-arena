@@ -56,11 +56,11 @@
 
 	<distributionManagement>
 		<repository>
-			<id>openinsula</id>
+			<id>openinsula.org</id>
 			<url>ftp://ftp.openinsula.org/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>openinsula</id>
+			<id>openinsula.org</id>
 			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
 		<site>
@@ -70,6 +70,35 @@
 	</distributionManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>logkit</groupId>
+					<artifactId>logkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>avalon-framework</groupId>
+					<artifactId>avalon-framework</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -88,12 +117,7 @@
 			<version>3.2</version>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-			<optional>true</optional>
-		</dependency>
+		
 
 		<dependency>
 			<groupId>junit</groupId>
