@@ -9,7 +9,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="org.openinsula.arena">
+	<logger name="org.openinsula.arena.lang">
 		<level value="DEBUG"/>
 	</logger>
 	
