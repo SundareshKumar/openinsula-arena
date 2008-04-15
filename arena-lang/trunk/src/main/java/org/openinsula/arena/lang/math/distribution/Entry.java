@@ -25,20 +25,26 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openinsula.arena.lang.util.LogUtil;
 
 public abstract class Entry<T> implements Iterable<T> {
 	protected final Log logger = LogFactory.getLog(getClass());
 	
-	protected final Collection<T> values;
+	protected Collection<T> values;
+	
+	private final T[] valuesArray;
 	
 	public Entry(final T... valuesArray) {
-		List<T> inputList = Arrays.asList(valuesArray);
+		this.valuesArray = valuesArray;
+		
+		prepareValues();
+	}
+	
+	private void prepareValues() {
+		List<T> inputList = Arrays.asList(this.valuesArray);
 		this.values = prepareValues(inputList);
 		
-		if (logger.isDebugEnabled()) {
-			logger.debug("Entry: " + this + " for input " + inputList);
-		}
-		
+		LogUtil.debug(logger, "Entry: %s for input %s", this, inputList);
 	}
 	
 	protected abstract Collection<T> prepareValues(List<T> referenceValues); 
@@ -71,6 +77,10 @@ public abstract class Entry<T> implements Iterable<T> {
 	@Override
 	public Iterator<T> iterator() {
 		return values.iterator();
+	}
+	
+	public T[] toArray() {
+		return values.toArray(valuesArray);
 	}
 	
 }

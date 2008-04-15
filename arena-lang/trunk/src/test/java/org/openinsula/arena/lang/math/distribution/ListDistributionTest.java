@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+import org.openinsula.arena.lang.util.LogUtil;
 
 public class ListDistributionTest {
 
@@ -39,11 +40,7 @@ public class ListDistributionTest {
 		ListDistribution<Integer> distr2 = new ListDistribution<Integer>(itens);
 		List<List<Integer>> list2 = distr2.distribute(4);
 		
-		if (logger.isDebugEnabled()) {
-			logger.debug("List 1: " + list1);
-			logger.debug("List 2: " + list2);
-		}
-		
+		LogUtil.debug(logger, "List 1: %s%nList 2: %s", list1, list2);
 	}
 
 }

@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.lang.math.counter.Counter;
 import org.openinsula.arena.lang.math.counter.CounterIterator;
+import org.openinsula.arena.lang.util.LogUtil;
 import org.springframework.util.Assert;
 
 public class ListDistribution<T> {
@@ -44,17 +45,13 @@ public class ListDistribution<T> {
 
 		this.referenceList = Collections.unmodifiableList(list);
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Reference list: " + this.referenceList);
-		}
+		LogUtil.debug(logger, "Reference list: %s", this.referenceList);
 	}
 
 	public List<List<T>> distribute(final int sampleSize) {
 		Assert.isTrue(sampleSize <= referenceList.size(), "sampleSize must be lesser or equals collection's size");
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Distribution size: " + sampleSize + " itens per list");
-		}
+		LogUtil.debug(logger, "Distribution size: %d itens per list", sampleSize);
 
 		List<List<T>> distributionList = new ArrayList<List<T>>();
 

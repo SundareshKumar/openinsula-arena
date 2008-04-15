@@ -25,6 +25,7 @@ import java.math.RoundingMode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.lang.util.FailSafeOperation;
+import org.openinsula.arena.lang.util.LogUtil;
 
 /**
  * @author Eduardo R Danielli
@@ -548,9 +549,7 @@ public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number implem
 				throw (RuntimeException) throwable;
 			}
 			
-			if (logger.isWarnEnabled()) {
-				logger.warn("Invalid value! Operation ignored!", throwable);
-			}
+			LogUtil.warn(logger, throwable, "Invalid value! Operation ignored!");
 
 			return instance;
 		}

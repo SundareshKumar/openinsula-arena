@@ -31,6 +31,7 @@ import org.openinsula.arena.lang.math.counter.Counter;
 import org.openinsula.arena.lang.math.counter.CounterIterator;
 import org.openinsula.arena.lang.math.counter.IrregularLimitsCounterDelegate;
 import org.openinsula.arena.lang.math.counter.SequencialCounterIterator;
+import org.openinsula.arena.lang.util.LogUtil;
 import org.springframework.util.Assert;
 
 public class DisjointListDistribution<T> implements Iterable<List<T>[]> {
@@ -51,18 +52,14 @@ public class DisjointListDistribution<T> implements Iterable<List<T>[]> {
 
 		this.referenceList = Collections.unmodifiableList(list);
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Reference list: " + this.referenceList);
-		}
+		LogUtil.debug(logger, "Reference list: %s", this.referenceList);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void distribute(final int... samples) {
 
 		if (isSame(samples)) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Returning cached distribution");
-			}
+			LogUtil.debug(logger, "Returning cached distribution");
 
 			return;
 		}

@@ -52,13 +52,8 @@ public abstract class FailSafeOperation<R> {
 	}
 
 	protected R doCatch(final Throwable throwable) {
-		if (logger.isWarnEnabled()) {
-			logger.warn("Exception occured", throwable);
-		}
-		
-		if (logger.isDebugEnabled()) {
-			logger.debug("Action: " + (rethrowException ? "throw RuntimeException" : "return null"));
-		}
+		LogUtil.warn(logger, throwable, "Exception occured");
+		LogUtil.debug(logger, "Action: %s", (rethrowException ? "throw RuntimeException" : "return null"));
 		
 		if (rethrowException) {
 			throw (RuntimeException) throwable;
