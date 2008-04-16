@@ -21,9 +21,8 @@ package org.openinsula.arena.test.datasource;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.DisposableBean;
 
 /**
  * Factory bean que cria um DataSource para ser utilizado nos TestCases de banco
@@ -32,9 +31,11 @@ import org.apache.commons.dbcp.BasicDataSource;
  * "drop database" e um "create database" ao ser inicializado.
  * @author yanaga
  */
-public class MysqlTestDataSourceFactoryBean extends AbstractTestDataSourceFactoryBean {
+public class MysqlTestDataSourceFactoryBean extends AbstractTestDataSourceFactoryBean implements DisposableBean {
 
 	private static final long serialVersionUID = 1L;
+
+	private BasicDataSource dataSource;
 
 	private String host = "localhost";
 
@@ -45,23 +46,28 @@ public class MysqlTestDataSourceFactoryBean extends AbstractTestDataSourceFactor
 	private String password = "testcase";
 
 	public Object getObject() throws Exception {
-		DataSource dataSource = doCreateDataSource();
+		dataSource = doCreateDataSource();
 
 		Connection conn = dataSource.getConnection();
 		Statement st = conn.createStatement();
 
 		fireBeforeDropDatabase(dataSource);
-		st.execute("drop database " + getDatabaseName());
+		st.execute("drop database " + databaseName);
 		fireAfterDropDatabase(dataSource);
 
 		fireBeforeCreateDatabase(dataSource);
-		st.execute("create database " + getDatabaseName());
+		st.execute("create database " + databaseName);
 		fireAfterCreateDatabase(dataSource);
 
 		return dataSource;
 	}
 
-	private DataSource doCreateDataSource() {
+	@Override
+	public void destroy() throws Exception {
+		dataSource.close();
+	}
+
+	private BasicDataSource doCreateDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -73,16 +79,7 @@ public class MysqlTestDataSourceFactoryBean extends AbstractTestDataSourceFactor
 	}
 
 	protected String getJdbcUrl() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("jdbc:mysql://");
-		sb.append(host);
-		sb.append(":");
-		sb.append(port);
-		sb.append("/");
-		sb.append(databaseName);
-
-		return sb.toString();
+		return String.format("jdbc:mysql://%s:%s/%s", host, port, databaseName);
 	}
 
 	public String getHost() {

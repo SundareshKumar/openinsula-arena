@@ -19,7 +19,6 @@
 package org.openinsula.arena.test.datasource;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -28,11 +27,11 @@ import javax.sql.DataSource;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-public class DerbyTestDataSourceFactoryBeanTestCase {
+public class HSQLTestDataSourceFactoryBeanTestCase {
 
 	@Test
 	public void testGetObject() throws Exception {
-		DerbyTestDataSourceFactoryBean factoryBean = new DerbyTestDataSourceFactoryBean();
+		HSQLTestDataSourceFactoryBean factoryBean = new HSQLTestDataSourceFactoryBean();
 
 		Object object = factoryBean.getObject();
 
@@ -43,23 +42,14 @@ public class DerbyTestDataSourceFactoryBeanTestCase {
 		DataSource dataSource = (DataSource) object;
 
 		assertNotNull(dataSource.getConnection());
-
-		assertTrue(factoryBean.databaseDir.exists());
-		factoryBean.destroy();
-		assertFalse(factoryBean.databaseDir.exists());
 	}
 
 	@Test
 	public void testGetJdbcUrl() {
-		DerbyTestDataSourceFactoryBean factoryBean = new DerbyTestDataSourceFactoryBean();
+		HSQLTestDataSourceFactoryBean factoryBean = new HSQLTestDataSourceFactoryBean();
 
-		factoryBean.setDatabaseName("testcase");
 		String url = factoryBean.getJdbcUrl();
-		assertEquals("jdbc:derby:" + factoryBean.databaseDir.getAbsolutePath() + ";create=true", url);
-
-		factoryBean.setDatabaseName("bla");
-		url = factoryBean.getJdbcUrl();
-		assertEquals("jdbc:derby:" + factoryBean.databaseDir.getAbsolutePath() + ";create=true", url);
+		assertEquals("jdbc:hsqldb:mem:/testcase", url);
 	}
 
 }

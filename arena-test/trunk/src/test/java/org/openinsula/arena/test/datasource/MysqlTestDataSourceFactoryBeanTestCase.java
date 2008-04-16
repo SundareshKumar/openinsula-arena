@@ -34,10 +34,6 @@ public class MysqlTestDataSourceFactoryBeanTestCase {
 	public void testGetObject() throws Exception {
 		MysqlTestDataSourceFactoryBean factoryBean = new MysqlTestDataSourceFactoryBean();
 
-		factoryBean.setDatabaseName("testcase");
-		factoryBean.setUsername("testcase");
-		factoryBean.setPassword("testcase");
-
 		Object object = factoryBean.getObject();
 
 		assertNotNull(object);

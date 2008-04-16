@@ -18,26 +18,14 @@
  */
 package org.openinsula.arena.test.datasource;
 
-import java.io.File;
-
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-/**
- * Factory bean que cria um DataSource para ser utilizado nos TestCases de banco
- * de dados. <br>
- * Esta implementação é específica para o <strong>Derby</strong>, e cria o
- * banco de dados no diretorio apontado pela propriedade "java.io.tmpdir". O
- * diretorio é removido ao se executar o método destroy().
- * @author yanaga
- */
-public class DerbyTestDataSourceFactoryBean extends AbstractTestDataSourceFactoryBean implements DisposableBean {
+public class HSQLTestDataSourceFactoryBean extends AbstractTestDataSourceFactoryBean implements DisposableBean {
 
 	private static final long serialVersionUID = 1L;
 
 	protected SingleConnectionDataSource dataSource = null;
-
-	protected File databaseDir;
 
 	public Object getObject() throws Exception {
 		dataSource = doCreateDataSource();
@@ -53,7 +41,7 @@ public class DerbyTestDataSourceFactoryBean extends AbstractTestDataSourceFactor
 	private SingleConnectionDataSource doCreateDataSource() {
 		SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
 
-		dataSource.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
+		dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
 		dataSource.setUrl(getJdbcUrl());
 		dataSource.setSuppressClose(true);
 
@@ -63,32 +51,10 @@ public class DerbyTestDataSourceFactoryBean extends AbstractTestDataSourceFactor
 	public void destroy() throws Exception {
 		dataSource.setSuppressClose(false);
 		dataSource.getConnection().close();
-
-		deleteDir(databaseDir);
-	}
-
-	public boolean deleteDir(File dir) {
-		if (dir.isDirectory()) {
-			String[] children = dir.list();
-			for (int i = 0; i < children.length; i++) {
-				boolean success = deleteDir(new File(dir, children[i]));
-				if (!success) {
-					return false;
-				}
-			}
-		}
-
-		return dir.delete();
-	}
-
-	protected File createDatabaseDirectory() {
-		return new File(System.getProperty("java.io.tmpdir"), databaseName + (int) (Math.random() * 1000 * 1000 * 1000));
 	}
 
 	protected String getJdbcUrl() {
-		databaseDir = createDatabaseDirectory();
-
-		return String.format("jdbc:derby:%s;create=true", databaseDir.getAbsolutePath());
+		return String.format("jdbc:hsqldb:mem:/testcase");
 	}
 
 }
