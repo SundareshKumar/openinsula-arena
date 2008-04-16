@@ -18,7 +18,9 @@
  */
 package org.openinsula.arena.hibernate.types;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
@@ -51,11 +53,6 @@ public class MoneyUserTypeTestCase extends AbstractUserTypeTestCase {
 		assertEquals(simpleEntity.getSalary(), persistentSimpleEntity.getSalary());
 		assertEquals(simpleEntity.getSalaryBrazil(), persistentSimpleEntity.getSalaryBrazil());
 		assertEquals(simpleEntity.getSalaryUs(), persistentSimpleEntity.getSalaryUs());
-	}
-
-	@Test
-	public void testUpdate() {
-
 	}
 
 }

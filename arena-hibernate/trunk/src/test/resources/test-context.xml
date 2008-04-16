@@ -1,63 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans
-	xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
-	default-autowire="byName"
->
+	default-autowire="byName">
 
-	<bean
-		id="dataSource"
-		class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
-		p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://127.0.0.1:3306/testcase"
-		p:username="testcase"
-		p:password="testcase"
-		p:suppressClose="true"
-	/>
+	<bean id="dataSource"
+		class="org.openinsula.arena.test.datasource.MysqlTestDataSourceFactoryBean"/>
 
-	<bean
-		id="sessionFactory"
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-		p:schemaUpdate="true"
-	>
+		p:schemaUpdate="true">
 		<property name="annotatedPackages">
 			<list>
 				<value>org.openinsula.arena.hibernate</value>
 			</list>
 		</property>
-
 		<property name="annotatedClasses">
 			<list>
-				<value>org.openinsula.arena.hibernate.types.MoneySampleEntity</value>
-				<value>org.openinsula.arena.hibernate.types.DecimalSampleEntity</value>
+				<value>
+					org.openinsula.arena.hibernate.types.MoneySampleEntity
+				</value>
+				<value>
+					org.openinsula.arena.hibernate.types.DecimalSampleEntity
+				</value>
 			</list>
 		</property>
-
 		<property name="hibernateProperties">
-			<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-				<property name="properties">
-					<props>
-						<prop key="hibernate.dialect">
-							org.hibernate.dialect.MySQL5InnoDBDialect
-						</prop>
-						<prop key="hibernate.show_sql">true</prop>
-						<prop key="hibernate.format_sql">true</prop>
-						<prop key="hibernate.cache.provider_class">
-							net.sf.ehcache.hibernate.SingletonEhCacheProvider
-						</prop>
-						<prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
-					</props>
-				</property>
+			<bean class="org.openinsula.arena.hibernate.MysqlHibernatePropertiesFactoryBean">
 			</bean>
 		</property>
 	</bean>
 
-	<bean
-		id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
-	/>
-
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager" />
 </beans>
