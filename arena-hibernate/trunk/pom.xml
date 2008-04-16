@@ -1,28 +1,31 @@
 <?xml version="1.0"?>
-<project
-	xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
->
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-hibernate</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Project arena-hibernate</name>
-	<description>A collection of Hibernate Custom Types and other extensions.</description>
+	<description>
+		A collection of Hibernate Custom Types and other extensions.
+	</description>
 	<url>http://www.openinsula.org/projects/arena-hibernate</url>
 	<inceptionYear>2008</inceptionYear>
 	<licenses>
 		<license>
-			<name>The GNU Lesser General Public License, Version 3.0</name>
+			<name>
+				The GNU Lesser General Public License, Version 3.0
+			</name>
 			<url>http://www.gnu.org/licenses/lgpl.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-hibernate/trunk</connection>
+		<connection>
+			scm:svn:http://svn.openinsula.org/arena/arena-hibernate/trunk
+		</connection>
 		<developerConnection>
 			scm:svn:https://svn.openinsula.org/arena/arena-hibernate/trunk
 		</developerConnection>
@@ -34,7 +37,9 @@
 	</issueManagement>
 	<ciManagement>
 		<system>bamboo</system>
-		<url>http://bamboo.insula.com.br/browse/ARENAHIBERNATE-TRUNK</url>
+		<url>
+			http://bamboo.insula.com.br/browse/ARENAHIBERNATE-TRUNK
+		</url>
 	</ciManagement>
 	<developers>
 		<developer>
@@ -58,7 +63,7 @@
 			<organizationUrl>http://www.insula.com.br</organizationUrl>
 			<timezone>-3</timezone>
 			<roles>
-				<role>Project Co-Leader</role>
+				<role>Project Leader</role>
 				<role>Java Developer</role>
 			</roles>
 		</developer>
@@ -242,7 +247,9 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

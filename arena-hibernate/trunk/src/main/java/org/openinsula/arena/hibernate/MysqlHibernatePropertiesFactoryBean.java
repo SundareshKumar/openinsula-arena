@@ -16,21 +16,13 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena Hibernate.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.hibernate.types;
+package org.openinsula.arena.hibernate;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+public class MysqlHibernatePropertiesFactoryBean extends AbstractHibernatePropertiesFactoryBean {
 
-@ContextConfiguration(locations = { "/test-context.xml" })
-public abstract class AbstractUserTypeTestCase extends AbstractTransactionalJUnit4SpringContextTests {
-
-	protected final Log logger = LogFactory.getLog(getClass());
-
-	@Autowired
-	protected SessionFactory sessionFactory;
+	@Override
+	protected String getDialect() {
+		return "org.hibernate.dialect.MySQL5InnoDBDialect";
+	}
 
 }
