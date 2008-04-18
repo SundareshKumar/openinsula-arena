@@ -22,22 +22,16 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.lang.util.FailSafeOperation;
 import org.openinsula.arena.lang.util.LogUtil;
 
 /**
- * @author Eduardo R Danielli
+ * @author Eduardo Rebola
  * 
  * @param <T> AbstractDecimal Type for typesafe chained methods
  */
 @SuppressWarnings("unchecked")
-public class AbstractDecimal<T extends AbstractDecimal<?>> extends Number implements Serializable, Comparable<T> {
-
-	protected static final Log logger = LogFactory.getLog(AbstractDecimal.class);
-
-	private static final long serialVersionUID = 1L;
+public abstract class AbstractDecimal<T extends AbstractDecimal<?>> extends Number implements Serializable, Comparable<T> {
 
 	private boolean ignoreNumberFormatException;
 

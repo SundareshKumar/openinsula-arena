@@ -18,12 +18,19 @@
  */
 package org.openinsula.arena.lang.numbers;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.springframework.util.ObjectUtils;
 
+/**
+ * A <b>Mutable</b> BigDecimal implementation for currency values.
+ * By default, scale is 2 and RoundingMode is HALF_EVEN. 
+ * @author Eduardo Rebola
+ *
+ */
 public class Money extends AbstractDecimal<Money> {
 	private static final long serialVersionUID = 1L;
 	
@@ -109,8 +116,8 @@ public class Money extends AbstractDecimal<Money> {
 
 	@Override
 	public final String toString() {
-		value = value.setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
-		return NumberFormat.getCurrencyInstance(locale).format(value.doubleValue());
+		BigDecimal copy = value.setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
+		return NumberFormat.getCurrencyInstance(locale).format(copy.doubleValue());
 	}
 
 }

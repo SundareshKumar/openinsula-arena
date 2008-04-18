@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class FailSafeOperation<R> {
 
-	protected static final Log logger = LogFactory.getLog(FailSafeOperation.class);
+	protected final Log logger = LogFactory.getLog(FailSafeOperation.class);
 
 	private boolean rethrowException;
 	
@@ -53,7 +53,10 @@ public abstract class FailSafeOperation<R> {
 
 	protected R doCatch(final Throwable throwable) {
 		LogUtil.warn(logger, throwable, "Exception occured");
-		LogUtil.debug(logger, "Action: %s", (rethrowException ? "throw RuntimeException" : "return null"));
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug(String.format("Action: %s", (rethrowException ? "throw RuntimeException" : "return null")));
+		}
 		
 		if (rethrowException) {
 			throw (RuntimeException) throwable;

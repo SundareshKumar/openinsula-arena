@@ -18,6 +18,11 @@
  */
 package org.openinsula.arena.lang.numbers;
 
+/**
+ * A <b>Mutable</b> Decimal implementation with chained methods. Useful for calculations.
+ * @author Eduardo Rebola
+ *
+ */
 public class Decimal extends AbstractDecimal<Decimal> {
 	private static final long serialVersionUID = 1L;
 	
