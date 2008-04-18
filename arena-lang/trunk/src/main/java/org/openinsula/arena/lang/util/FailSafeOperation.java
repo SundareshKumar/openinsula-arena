@@ -34,10 +34,18 @@ public abstract class FailSafeOperation<R> {
 
 	private boolean rethrowException;
 	
+	/**
+	 * By default, <code>null</code> is returned if any exception occurs 
+	 */
 	public FailSafeOperation() {
 		this(false);
 	}
 	
+	/**
+	 * @param rethrowException if <b>true</b>, the exception (if occurs) will be rethrowed as
+	 * <code>RuntimeException</code>. Otherwise, <code>null</code> is returned and the exception
+	 * is ignored. 
+	 */
 	public FailSafeOperation(final boolean rethrowException) {
 		this.rethrowException = rethrowException;
 	}
