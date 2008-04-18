@@ -141,6 +141,7 @@
 			<groupId>org.openinsula.arena</groupId>
 			<artifactId>arena-lang</artifactId>
 			<version>1.0-SNAPSHOT</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
