@@ -1,4 +1,4 @@
-/* 
+/*
  * This file is part of the Echo File Transfer Library (hereinafter "EFTL").
  * Copyright (C) 2002-2005 NextApp, Inc.
  *
@@ -47,45 +47,51 @@ import org.w3c.dom.Element;
 /**
  * A peer for <code>Download</code> commands.
  */
+@SuppressWarnings("unchecked")
 public class DownloadPeer implements CommandSynchronizePeer, Serializable {
-   
-    private static final Map ID_TO_DOWNLOAD_MAP = Collections.synchronizedMap(new HashMap());
-    
-    /**
-     * Service to provide supporting JavaScript library.
-     */
-    public static final Service DOWNLOAD_SERVICE = JavaScriptService.forResource("Echo.DownloadComponent", "/js/Download.js");
 
-    static {
-        WebRenderServlet.getServiceRegistry().add(DOWNLOAD_SERVICE);
-    }
-    
-    /**
-     * @see nextapp.echo2.webcontainer.CommandSynchronizePeer#render(RenderContext, Command)
-     */
-    public void render(RenderContext rc, Command command) {
-        Download download = (Download)command;
-        if (download.isActive()) {
-            ServerMessage serverMessage = rc.getServerMessage();
-            serverMessage.addLibrary(DOWNLOAD_SERVICE.getId());
-            
-            String id = download.getRenderId();
-            ID_TO_DOWNLOAD_MAP.put(id,download);
+	private static final long serialVersionUID = 1L;
 
-            String serviceUri = DownloadService.INSTANCE.createUri(rc.getContainerInstance(),id);
-            Element itemizedUpdateElement = serverMessage.getItemizedDirective(ServerMessage.GROUP_ID_UPDATE, "EchoDownloadComponent.MessageProcessor", "init",  new String[]{}, new String[]{});
-            Element itemElement = serverMessage.getDocument().createElement("echoDownload");
-            itemElement.setAttribute("serviceUri", serviceUri);
-            itemizedUpdateElement.appendChild(itemElement);
-            
-            download.setActive(false);
-        }
-    }
-    
-    /**
-     * Accessor to internal Download Map for Download Service
-     */
-    static Download getDownload(String id){
-        return (Download) ID_TO_DOWNLOAD_MAP.get(id);
-    }
+	private static final Map ID_TO_DOWNLOAD_MAP = Collections.synchronizedMap(new HashMap());
+
+	/**
+	 * Service to provide supporting JavaScript library.
+	 */
+	public static final Service DOWNLOAD_SERVICE = JavaScriptService.forResource("Echo.DownloadComponent",
+			"/js/Download.js");
+
+	static {
+		WebRenderServlet.getServiceRegistry().add(DOWNLOAD_SERVICE);
+	}
+
+	/**
+	 * @see nextapp.echo2.webcontainer.CommandSynchronizePeer#render(RenderContext,
+	 * Command)
+	 */
+	public void render(RenderContext rc, Command command) {
+		final Download download = (Download) command;
+		if (download.isActive()) {
+			final ServerMessage serverMessage = rc.getServerMessage();
+			serverMessage.addLibrary(DOWNLOAD_SERVICE.getId());
+
+			final String id = download.getRenderId();
+			ID_TO_DOWNLOAD_MAP.put(id, download);
+
+			final String serviceUri = DownloadService.INSTANCE.createUri(rc.getContainerInstance(), id);
+			final Element itemizedUpdateElement = serverMessage.getItemizedDirective(ServerMessage.GROUP_ID_UPDATE,
+					"EchoDownloadComponent.MessageProcessor", "init", new String[] {}, new String[] {});
+			final Element itemElement = serverMessage.getDocument().createElement("echoDownload");
+			itemElement.setAttribute("serviceUri", serviceUri);
+			itemizedUpdateElement.appendChild(itemElement);
+
+			download.setActive(false);
+		}
+	}
+
+	/**
+	 * Accessor to internal Download Map for Download Service
+	 */
+	static Download getDownload(String id) {
+		return (Download) ID_TO_DOWNLOAD_MAP.get(id);
+	}
 }

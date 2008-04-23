@@ -20,21 +20,24 @@ public class CsvDownloadProvider extends AbstractDownloadProvider {
 	 * @param jasperPrint
 	 * @throws JRException
 	 */
-	public CsvDownloadProvider(JasperPrint jasperPrint, FieldDelimiter fieldDelimiter, RecordDelimiter recordDelimiter) throws JRException {
+	public CsvDownloadProvider(JasperPrint jasperPrint, FieldDelimiter fieldDelimiter, RecordDelimiter recordDelimiter)
+			throws JRException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final JRCsvExporter csvExporter = new JRCsvExporter();
-		
+
 		if (fieldDelimiter != null) {
 			csvExporter.setParameter(JRCsvExporterParameter.FIELD_DELIMITER, fieldDelimiter.getDelimiter());
-		} else {
+		}
+		else {
 			csvExporter.setParameter(JRCsvExporterParameter.FIELD_DELIMITER, FieldDelimiter.VIRGULA.getDelimiter());
 		}
 		if (recordDelimiter != null) {
 			csvExporter.setParameter(JRCsvExporterParameter.RECORD_DELIMITER, recordDelimiter.getDelimiter());
-		} else {
+		}
+		else {
 			csvExporter.setParameter(JRCsvExporterParameter.RECORD_DELIMITER, RecordDelimiter.BARRA_N.getDelimiter());
 		}
-		
+
 		csvExporter.setParameter(JRCsvExporterParameter.JASPER_PRINT, jasperPrint);
 		csvExporter.setParameter(JRCsvExporterParameter.OUTPUT_STREAM, baos);
 		csvExporter.exportReport();

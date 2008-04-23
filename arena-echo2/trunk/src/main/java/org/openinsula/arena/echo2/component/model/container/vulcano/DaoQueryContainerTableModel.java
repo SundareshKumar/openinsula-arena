@@ -3,10 +3,18 @@ package org.openinsula.arena.echo2.component.model.container.vulcano;
 import java.util.List;
 
 import org.openinsula.arena.echo2.component.model.SortableTableModel;
+import org.openinsula.arena.echo2.component.model.container.impl.UpdatableContainerTableModel;
+import org.openinsula.vulcano.core.command.invoker.CommandInvoker;
+import org.openinsula.vulcano.orm.command.factory.CommandFactory;
 import org.openinsula.vulcano.orm.dao.query.DaoQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class DaoQueryContainerTableModel<T> extends TransactionInvokerContainerTableModel<T> {
+public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel<T> {
+
 	private static final long serialVersionUID = 1L;
+
+	@Autowired
+	private CommandInvoker commandInvoker;
 
 	private DaoQuery daoQuery;
 
@@ -15,23 +23,24 @@ public class DaoQueryContainerTableModel<T> extends TransactionInvokerContainerT
 	private boolean order;
 
 	/**
-	 * This method will run the daoQuery in the DaoCommandTransactionFacade specified
-	 * and update the tableModel items.
+	 * This method will run the daoQuery in the DaoCommandTransactionFacade
+	 * specified and update the tableModel items.
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void updateTableItems() {
-		if (getDaoCommandTransactionFacade() == null) {
-			logger.warn("Cannot update a DaoQueryContainerTableModel with a null DaoCommandTransactionFacade.");
+		if (commandInvoker == null) {
+			logger.warn("Cannot update a DaoQueryContainerTableModel with a null CommandInvoker.");
 			return;
 		}
-	
+
 		if (daoQuery == null) {
 			logger.warn("Cannot update a DaoQueryContainerTableModel with a null DaoQuery.");
 			return;
 		}
-		
+
 		if (this instanceof SortableTableModel && sortedProperty != null && sortedProperty.isEmpty()) {
-			StringBuilder parameter = new StringBuilder(sortedProperty);
+			final StringBuilder parameter = new StringBuilder(sortedProperty);
 
 			if (order) {
 				parameter.append(" asc");
@@ -43,15 +52,15 @@ public class DaoQueryContainerTableModel<T> extends TransactionInvokerContainerT
 			daoQuery.setOrderParameters(new String[] { parameter.toString() });
 		}
 
-		int firstResult = getCurrentPage() * getPageCount();
+		final int firstResult = getCurrentPage() * getPageCount();
 
 		daoQuery.setFirstResult(firstResult);
 		daoQuery.setLimit(getPageSize());
 
-		List<T> list = getDaoCommandTransactionFacade().<T> find(daoQuery);
-		this.setItems(list);
+		final List<T> list = commandInvoker.invoke(CommandFactory.<T> newFind(daoQuery));
+		setItems(list);
 	}
-	
+
 	/**
 	 * @param daoQuery
 	 * @param update If true runs the method updateTableItems()
@@ -81,6 +90,10 @@ public class DaoQueryContainerTableModel<T> extends TransactionInvokerContainerT
 
 	public void setOrder(boolean order) {
 		this.order = order;
+	}
+
+	public void setCommandInvoker(CommandInvoker commandInvoker) {
+		this.commandInvoker = commandInvoker;
 	}
 
 }

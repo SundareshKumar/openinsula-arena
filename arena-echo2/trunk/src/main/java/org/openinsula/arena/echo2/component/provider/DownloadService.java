@@ -1,4 +1,4 @@
-/* 
+/*
  * This file is part of the Echo File Transfer Library (hereinafter "EFTL").
  * Copyright (C) 2002-2005 NextApp, Inc.
  *
@@ -46,100 +46,105 @@ import nextapp.echo2.webrender.WebRenderServlet;
  */
 class DownloadService implements Service, Serializable {
 
-    private static final String SERVICE_ID = "Echo.Download"; 
-    
-    private static final String PARAMETER_DOWNLOAD_UID = "downloaduid"; 
-    private static final String[] URL_PARAMETERS = new String[]{PARAMETER_DOWNLOAD_UID}; 
-    
-    public static final DownloadService INSTANCE = new DownloadService();
-    
-    static {
-        WebRenderServlet.getServiceRegistry().add(INSTANCE);
-    }
-    
-    /**
-     * Creates a URI to execute a specific <code>DownloadProvider</code>
-     * 
-     * @param containerInstance the relevant application container instance.
-     * @param downloadId the unique id to retrieve the download from the
-     *        <code>ContainerInstance</code>
-     */
-    public String createUri(ContainerInstance containerInstance, String downloadId) {
-        return containerInstance.getServiceUri(this, URL_PARAMETERS, new String[]{downloadId});
-    }
-    
-    /**
-     * @see nextapp.echo2.webrender.Service#getId()
-     */
-    public String getId() {
-        return SERVICE_ID;
-    }
-    
-    /**
-     * @see nextapp.echo2.webrender.Service#getVersion()
-     */
-    public int getVersion() {
-        return DO_NOT_CACHE;
-    }
- 
-    /**
-     * @see nextapp.echo2.webrender.Service#service(Connection)
-     */
-    public void service(Connection conn) throws IOException {
-        ContainerInstance containerInstance = (ContainerInstance)conn.getUserInstance();
-        if (containerInstance == null) {
-            serviceBadRequest(conn, "No container available.");
-            return;
-        }
-        String downloadId = conn.getRequest().getParameter(PARAMETER_DOWNLOAD_UID);
-        if (downloadId == null) {
-            serviceBadRequest(conn, "Download UID not specified.");
-            return;
-        }
-        Download download = DownloadPeer.getDownload(downloadId);
-        
-        if (download == null) {
-            serviceBadRequest(conn, "Download UID is not valid.");
-            return;
-        }
-        service(conn,download);
-    }
-    
-    public void service(Connection conn, Download download) throws IOException {
-        OutputStream out = conn.getOutputStream();
-        DownloadProvider provider = download.getProvider();
-        HttpServletResponse response = conn.getResponse();
-        
-        /**
-        * As 4 linhas abaixo foram adicionadas pelo Tuim, para 
-        * arrumar problema de abrir arquivos pdf em IE.
-        */
-        response.setHeader("Last-Modified", "'.gmdate('D, d M Y H:i:s') . ' GMT'");
-        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-        response.setHeader("Cache-Control", "pre-check=0, post-check=0, max-age=0");
-        response.setHeader("Content-Transfer-Encoding", "none");
-        
-        if (provider.getFileName() == null) {
-            response.setHeader("Content-Disposition", "attachment");
-        } else {
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + provider.getFileName() + "\"");
-        }
-        if (provider.getSize() > 0) {
-            response.setIntHeader("Content-Length", provider.getSize());
-        }
-        String contentType = provider.getContentType();
-        if (contentType == null) {
-            response.setContentType("application/octet-stream");
-        } else {
-            response.setContentType(provider.getContentType());
-        }
-        provider.writeFile(out);
-    }
-    
-    public void serviceBadRequest(Connection conn, String message) {
-        conn.getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        conn.setContentType(ContentType.TEXT_PLAIN);
-        conn.getWriter().write(message);
-    }
+	private static final long serialVersionUID = 1L;
+
+	private static final String SERVICE_ID = "Echo.Download";
+
+	private static final String PARAMETER_DOWNLOAD_UID = "downloaduid";
+
+	private static final String[] URL_PARAMETERS = new String[] { PARAMETER_DOWNLOAD_UID };
+
+	public static final DownloadService INSTANCE = new DownloadService();
+
+	static {
+		WebRenderServlet.getServiceRegistry().add(INSTANCE);
+	}
+
+	/**
+	 * Creates a URI to execute a specific <code>DownloadProvider</code>
+	 *
+	 * @param containerInstance the relevant application container instance.
+	 * @param downloadId the unique id to retrieve the download from the
+	 * <code>ContainerInstance</code>
+	 */
+	public String createUri(ContainerInstance containerInstance, String downloadId) {
+		return containerInstance.getServiceUri(this, URL_PARAMETERS, new String[] { downloadId });
+	}
+
+	/**
+	 * @see nextapp.echo2.webrender.Service#getId()
+	 */
+	public String getId() {
+		return SERVICE_ID;
+	}
+
+	/**
+	 * @see nextapp.echo2.webrender.Service#getVersion()
+	 */
+	public int getVersion() {
+		return DO_NOT_CACHE;
+	}
+
+	/**
+	 * @see nextapp.echo2.webrender.Service#service(Connection)
+	 */
+	public void service(Connection conn) throws IOException {
+		final ContainerInstance containerInstance = (ContainerInstance) conn.getUserInstance();
+		if (containerInstance == null) {
+			serviceBadRequest(conn, "No container available.");
+			return;
+		}
+		final String downloadId = conn.getRequest().getParameter(PARAMETER_DOWNLOAD_UID);
+		if (downloadId == null) {
+			serviceBadRequest(conn, "Download UID not specified.");
+			return;
+		}
+		final Download download = DownloadPeer.getDownload(downloadId);
+
+		if (download == null) {
+			serviceBadRequest(conn, "Download UID is not valid.");
+			return;
+		}
+		service(conn, download);
+	}
+
+	public void service(Connection conn, Download download) throws IOException {
+		final OutputStream out = conn.getOutputStream();
+		final DownloadProvider provider = download.getProvider();
+		final HttpServletResponse response = conn.getResponse();
+
+		/**
+		 * As 4 linhas abaixo foram adicionadas pelo Tuim, para arrumar problema
+		 * de abrir arquivos pdf em IE.
+		 */
+		response.setHeader("Last-Modified", "'.gmdate('D, d M Y H:i:s') . ' GMT'");
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.setHeader("Cache-Control", "pre-check=0, post-check=0, max-age=0");
+		response.setHeader("Content-Transfer-Encoding", "none");
+
+		if (provider.getFileName() == null) {
+			response.setHeader("Content-Disposition", "attachment");
+		}
+		else {
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + provider.getFileName() + "\"");
+		}
+		if (provider.getSize() > 0) {
+			response.setIntHeader("Content-Length", provider.getSize());
+		}
+		final String contentType = provider.getContentType();
+		if (contentType == null) {
+			response.setContentType("application/octet-stream");
+		}
+		else {
+			response.setContentType(provider.getContentType());
+		}
+		provider.writeFile(out);
+	}
+
+	public void serviceBadRequest(Connection conn, String message) {
+		conn.getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		conn.setContentType(ContentType.TEXT_PLAIN);
+		conn.getWriter().write(message);
+	}
 
 }

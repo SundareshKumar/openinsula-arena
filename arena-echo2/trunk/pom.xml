@@ -1,78 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.openinsula.arena</groupId>
-  <artifactId>arena-echo2</artifactId>
-  <version>0.2.1-SNAPSHOT</version>
-  <description>Projeto de componentes e ferramentas em comum para os projetos que utilizam o echo2.</description>
-  <dependencies>
-    <dependency>
-      <groupId>com.nextapp</groupId>
-      <artifactId>echo2-app</artifactId>
-      <version>2.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.nextapp</groupId>
-      <artifactId>echo2-extras-app</artifactId>
-      <version>0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>com.nextapp</groupId>
-      <artifactId>echo2-extras-webcontainer</artifactId>
-      <version>0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>com.nextapp</groupId>
-      <artifactId>echo2-webcontainer</artifactId>
-      <version>2.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.nextapp</groupId>
-      <artifactId>echo2-webrender</artifactId>
-      <version>2.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>echopointng</groupId>
-      <artifactId>echopointng</artifactId>
-      <version>2.1.0rc5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openinsula</groupId>
-      <artifactId>vulcano-orm</artifactId>
-      <version>1.0</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.9</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.3</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.7.0</version>
-    </dependency>
-    <dependency>
-      <groupId>br.com.insula</groupId>
-      <artifactId>insula-swing-util</artifactId>
-      <version>2.0.1-arena</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-    </dependency>
-    <dependency>
-      <groupId>jasperreports</groupId>
-      <artifactId>jasperreports</artifactId>
-      <version>2.0.4</version>
-    </dependency>
-  </dependencies>
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.openinsula.arena</groupId>
+	<artifactId>arena-echo2</artifactId>
+	<version>0.2.1-SNAPSHOT</version>
+	<description>
+		Commom NextApp Echo2 components and tools.
+	</description>
+	<dependencies>
+		<dependency>
+			<groupId>com.nextapp</groupId>
+			<artifactId>echo2-app</artifactId>
+			<version>2.1.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.nextapp</groupId>
+			<artifactId>echo2-extras-app</artifactId>
+			<version>0.4</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.nextapp</groupId>
+			<artifactId>echo2-extras-webcontainer</artifactId>
+			<version>0.4</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.nextapp</groupId>
+			<artifactId>echo2-webcontainer</artifactId>
+			<version>2.1.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.nextapp</groupId>
+			<artifactId>echo2-webrender</artifactId>
+			<version>2.1.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>echopointng</groupId>
+			<artifactId>echopointng</artifactId>
+			<version>2.1.0rc5</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.openinsula.vulcano</groupId>
+			<artifactId>vulcano-orm</artifactId>
+			<version>1.1-SNAPSHOT</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.9</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.7.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>br.com.insula</groupId>
+			<artifactId>insula-swing-util</artifactId>
+			<version>2.0.1-arena</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>2.0.5</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.openinsula.arena</groupId>
+			<artifactId>arena-report</artifactId>
+			<version>1.1-SNAPSHOT</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<extensions>
@@ -87,8 +107,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.5</source>
+					<target>1.5</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -129,7 +149,7 @@
 		</plugins>
 	</build>
 
-	
+
 	<distributionManagement>
 		<repository>
 			<id>openinsula</id>

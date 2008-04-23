@@ -4,7 +4,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
-
 public class PdfDownloadProvider extends AbstractDownloadProvider {
 	private static final long serialVersionUID = 1L;
 
