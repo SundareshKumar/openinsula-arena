@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-echo2</artifactId>
 	<version>0.2.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Project arena-echo2</name>
 	<description>
 		Commom NextApp Echo2 components and tools.
 	</description>
+	<organization>
+		<name>openinsula.org</name>
+		<url>http://www.openinsula.org</url>
+	</organization>
+	<repositories>
+		<repository>
+			<id>openinsula.org</id>
+			<url>http://maven.openinsula.org</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>com.nextapp</groupId>
@@ -93,15 +117,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-2</version>
-			</extension>
-		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -113,13 +129,6 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<surefire.reportFormat>plain</surefire.reportFormat>
-					<useFile>false</useFile>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<configuration>
 					<outputDirectory>
@@ -147,19 +156,12 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
 	</build>
-
-
-	<distributionManagement>
-		<repository>
-			<id>openinsula</id>
-			<url>ftp://ftp.openinsula.org/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>openinsula</id>
-			<url>ftp://ftp.openinsula.org/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-
 </project>
