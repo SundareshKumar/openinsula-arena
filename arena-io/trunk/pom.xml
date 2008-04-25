@@ -85,7 +85,7 @@
 			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
 		<site>
-			<id>openinsula.rog</id>
+			<id>openinsula.org</id>
 			<url>
 				scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}
 			</url>
@@ -140,10 +140,20 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<goals>source:jar javadoc:jar deploy</goals>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
 					<linkXref>false</linkXref>
 					<targetJdk>1.5</targetJdk>
+					<excludes>
+						<exclude>**/clover/**</exclude>
+					</excludes>
 					<rulesets>
 						<ruleset>/rulesets/braces.xml</ruleset>
 						<ruleset>/rulesets/basic.xml</ruleset>
@@ -153,18 +163,22 @@
 				</configuration>
 				<executions>
 					<execution>
+						<id>main</id>
+						<phase>verify</phase>
 						<goals>
-							<goal>check</goal>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>site</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<goals>source:jar javadoc:jar deploy</goals>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.atlassian.maven.plugins</groupId>
@@ -187,7 +201,7 @@
 						<phase>verify</phase>
 						<goals>
 							<goal>instrument</goal>
-							<goal>aggregate</goal>
+							<goal>clover</goal>
 						</goals>
 					</execution>
 					<execution>
@@ -195,7 +209,7 @@
 						<phase>pre-site</phase>
 						<goals>
 							<goal>instrument</goal>
-							<goal>aggregate</goal>
+							<goal>clover</goal>
 						</goals>
 					</execution>
 				</executions>
