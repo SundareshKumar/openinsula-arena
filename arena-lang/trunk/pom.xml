@@ -3,7 +3,7 @@
 	
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-lang</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Arena Java Language Extensions</name>
 	<description>Java API Extensions</description>
