@@ -3,7 +3,7 @@
 	
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-lang</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<name>Arena Java Language Extensions</name>
 	<description>Java API Extensions</description>
@@ -18,9 +18,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-lang/trunk</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-lang/trunk</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-lang/trunk</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-lang/tags/arena-lang-1.0.0</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-lang/tags/arena-lang-1.0.0</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-lang/tags/arena-lang-1.0.0</url>
 	</scm>
 	<issueManagement>
 		<system>jira</system>
