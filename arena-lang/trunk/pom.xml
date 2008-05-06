@@ -1,25 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-lang</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Arena Java Language Extensions</name>
 	<description>Java API Extensions</description>
 	<url>http://www.openinsula.org/projects/arena-lang</url>
-	
+
 	<inceptionYear>2008</inceptionYear>
 	<licenses>
 		<license>
-			<name>The GNU Lesser General Public License, Version 3.0</name>
+			<name>
+				The GNU Lesser General Public License, Version 3.0
+			</name>
 			<url>http://www.gnu.org/licenses/lgpl.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-lang/trunk</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-lang/trunk</developerConnection>
+		<connection>
+			scm:svn:http://svn.openinsula.org/arena/arena-lang/trunk
+		</connection>
+		<developerConnection>
+			scm:svn:https://svn.openinsula.org/arena/arena-lang/trunk
+		</developerConnection>
 		<url>http://svn.openinsula.org/arena/arena-lang/trunk</url>
 	</scm>
 	<issueManagement>
@@ -60,7 +68,9 @@
 		</snapshotRepository>
 		<site>
 			<id>openinsula.org</id>
-			<url>scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}</url>
+			<url>
+				scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}
+			</url>
 		</site>
 	</distributionManagement>
 
@@ -117,7 +127,7 @@
 			<version>3.2</version>
 			<optional>true</optional>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -163,9 +173,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
-					<goals>
-						source:jar javadoc:jar deploy
-					</goals>
+					<goals>source:jar javadoc:jar deploy</goals>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -185,7 +193,9 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
