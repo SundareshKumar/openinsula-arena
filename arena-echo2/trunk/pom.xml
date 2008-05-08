@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-echo2</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 	<packaging>jar</packaging>
 	<name>Project arena-echo2</name>
 	<description>

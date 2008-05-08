@@ -57,7 +57,7 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 		daoQuery.setFirstResult(firstResult);
 		daoQuery.setLimit(getPageSize());
 
-		final List<T> list = commandInvoker.invoke(CommandFactory.<T> newFind(daoQuery));
+		final List<T> list = (List<T>)commandInvoker.invoke(CommandFactory.<T> newFind(daoQuery));
 		setItems(list);
 	}
 
