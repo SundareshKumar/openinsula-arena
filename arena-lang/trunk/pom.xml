@@ -51,12 +51,37 @@
 				<role>Java Developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>yanaga</id>
+			<name>Edson Yanaga</name>
+			<email>yanaga@insula.com.br</email>
+			<url>http://www.yanaga.com.br</url>
+			<organization>Insula Tecnologia da Informacao</organization>
+			<organizationUrl>http://www.insula.com.br</organizationUrl>
+			<timezone>-3</timezone>
+			<roles>
+				<role>Project Leader</role>
+				<role>Java Developer</role>
+			</roles>
+		</developer>		
 	</developers>
 	<organization>
 		<name>openinsula.org</name>
 		<url>http://www.openinsula.org</url>
 	</organization>
-
+	<repositories>
+		<repository>
+			<id>openinsula.org</id>
+			<url>http://maven.openinsula.org</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>atlassian-m2-repository</id>
+			<name>Atlassian Maven 2.x Repository</name>
+			<url>http://repository.atlassian.com/maven2</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<distributionManagement>
 		<repository>
 			<id>openinsula.org</id>
@@ -73,7 +98,6 @@
 			</url>
 		</site>
 	</distributionManagement>
-
 	<dependencies>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -127,8 +151,6 @@
 			<version>3.2</version>
 			<optional>true</optional>
 		</dependency>
-
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -136,7 +158,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -149,10 +170,20 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<goals>source:jar javadoc:jar deploy</goals>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
 					<linkXref>false</linkXref>
 					<targetJdk>1.5</targetJdk>
+					<excludes>
+						<exclude>**/clover/**</exclude>
+					</excludes>
 					<rulesets>
 						<ruleset>/rulesets/braces.xml</ruleset>
 						<ruleset>/rulesets/basic.xml</ruleset>
@@ -162,19 +193,56 @@
 				</configuration>
 				<executions>
 					<execution>
+						<id>main</id>
+						<phase>verify</phase>
 						<goals>
-							<goal>check</goal>
-							<goal>cpd-check</goal>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>site</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-clover-plugin</artifactId>
 				<configuration>
-					<goals>source:jar javadoc:jar deploy</goals>
+					<includesTestSourceRoots>
+						false
+					</includesTestSourceRoots>
+					<source>1.5</source>
+					<licenseLocation>
+						${user.home}/.m2/clover.license
+					</licenseLocation>
+					<generatePdf>false</generatePdf>
+					<generateXml>true</generateXml>
+					<generateHtml>true</generateHtml>
 				</configuration>
+				<executions>
+					<execution>
+						<id>main</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>instrument</goal>
+							<goal>clover</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>site</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>instrument</goal>
+							<goal>clover</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<extensions>
@@ -212,6 +280,22 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changelog-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-clover-plugin</artifactId>
+				<configuration>
+					<includesTestSourceRoots>
+						false
+					</includesTestSourceRoots>
+					<source>1.5</source>
+					<licenseLocation>
+						${user.home}/.m2/clover.license
+					</licenseLocation>
+					<generatePdf>false</generatePdf>
+					<generateXml>true</generateXml>
+					<generateHtml>true</generateHtml>
+				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>
