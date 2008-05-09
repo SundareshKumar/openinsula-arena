@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula T.I. Ltda.
- * 
+ *
  *  This file is part of Arena Lang.
  *
  *  Arena Lang is free software: you can redistribute it and/or modify
@@ -18,15 +18,39 @@
  */
 package org.openinsula.arena.lang.time;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.junit.Test;
-import org.openinsula.arena.lang.time.DateUtils;
 
 public class DateUtilsTestCase {
+
+	// private void assertEquals(Date expected, Date actual) {
+	// assertEquals(2005, calendar.get(Calendar.YEAR));
+	// assertEquals(Calendar.JULY, calendar.get(Calendar.MONTH));
+	// assertEquals(27, calendar.get(Calendar.DAY_OF_MONTH));
+	// assertEquals(0, calendar.get(Calendar.HOUR_OF_DAY));
+	// assertEquals(0, calendar.get(Calendar.MINUTE));
+	// assertEquals(0, calendar.get(Calendar.SECOND));
+	// assertEquals(0, calendar.get(Calendar.MILLISECOND));
+	// }
+	//
+	// private void assertEquals(Calendar expected, Calendar actual) {
+	// assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
+	// assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
+	// assertEquals(expected.get(Calendar.DAY_OF_MONTH),
+	// actual.get(Calendar.DAY_OF_MONTH));
+	// assertEquals(expected.get(Calendar.HOUR_OF_DAY),
+	// actual.get(Calendar.HOUR_OF_DAY));
+	// assertEquals(expected.get(Calendar.MINUTE), actual.get(Calendar.MINUTE));
+	// assertEquals(expected.get(Calendar.DAY_OF_MONTH),
+	// actual.get(Calendar.SECOND));
+	// assertEquals(expected.get(Calendar.MILLISECOND),
+	// actual.get(Calendar.MILLISECOND));
+	// }
 
 	@Test
 	public void testDifferenceInDays() {
@@ -75,16 +99,18 @@ public class DateUtilsTestCase {
 		end = new GregorianCalendar(2007, 9, 15);
 		assertEquals(2, DateUtils.differenceInDays(start, end));
 
-		start = new GregorianCalendar(2007, GregorianCalendar.OCTOBER, 22);
-		end = new GregorianCalendar(2007, GregorianCalendar.NOVEMBER, 16);
+		// testing time-saving in Brazil
+
+		start = new GregorianCalendar(2007, Calendar.OCTOBER, 22);
+		end = new GregorianCalendar(2007, Calendar.NOVEMBER, 16);
 		assertEquals(25, DateUtils.differenceInDays(start, end));
-		
-		start = new GregorianCalendar(2007, GregorianCalendar.OCTOBER, 21);
-		end = new GregorianCalendar(2007, GregorianCalendar.NOVEMBER, 16);
+
+		start = new GregorianCalendar(2007, Calendar.OCTOBER, 21);
+		end = new GregorianCalendar(2007, Calendar.NOVEMBER, 16);
 		assertEquals(26, DateUtils.differenceInDays(start, end));
-		
-		start = new GregorianCalendar(2007, GregorianCalendar.OCTOBER, 20);
-		end = new GregorianCalendar(2007, GregorianCalendar.NOVEMBER, 16);
+
+		start = new GregorianCalendar(2007, Calendar.OCTOBER, 20);
+		end = new GregorianCalendar(2007, Calendar.NOVEMBER, 16);
 		assertEquals(27, DateUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(1997, Calendar.OCTOBER, 7);
@@ -96,5 +122,31 @@ public class DateUtilsTestCase {
 
 		end = new GregorianCalendar(2007, Calendar.DECEMBER, 10);
 		assertEquals(3716, DateUtils.differenceInDays(start, end));
+	}
+
+	@Test
+	public void testLowerLimitForDay() {
+		Date timeSaving = new GregorianCalendar(2007, Calendar.OCTOBER, 14, 23, 59, 59).getTime();
+		Date expected = new GregorianCalendar(2007, Calendar.OCTOBER, 14).getTime();
+		assertEquals(expected, DateUtils.lowerLimitForDay(timeSaving));
+
+		timeSaving = new GregorianCalendar(2008, Calendar.FEBRUARY, 16, 23, 59, 59).getTime();
+		expected = new GregorianCalendar(2008, Calendar.FEBRUARY, 16).getTime();
+		assertEquals(expected, DateUtils.lowerLimitForDay(timeSaving));
+	}
+
+	@Test
+	public void testUpperLimitForDay() {
+		Calendar timeSaving = new GregorianCalendar(2007, Calendar.OCTOBER, 14);
+		Calendar expected = new GregorianCalendar(2007, Calendar.OCTOBER, 14, 23, 59, 59);
+		expected.set(Calendar.MILLISECOND, 999);
+
+		assertEquals(expected, DateUtils.upperLimitForDay(timeSaving));
+
+		timeSaving = new GregorianCalendar(2008, Calendar.FEBRUARY, 16);
+		expected = new GregorianCalendar(2008, Calendar.FEBRUARY, 16, 23, 59, 59);
+		expected.set(Calendar.MILLISECOND, 999);
+
+		assertEquals(expected, DateUtils.upperLimitForDay(timeSaving));
 	}
 }
