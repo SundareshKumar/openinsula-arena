@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -22,8 +22,9 @@ import org.apache.commons.logging.Log;
 
 /**
  * @author Eduardo Rebola
- * 
+ * @deprecated These methods may allocate resources (Strings) for nothing.
  */
+@Deprecated
 public abstract class LogUtil {
 
 	public static void debug(final Log logger, final String format, final Object... args) {
@@ -31,7 +32,7 @@ public abstract class LogUtil {
 			logger.debug(getMessage(format, args));
 		}
 	}
-	
+
 	public static void debug(final Log logger, final Throwable throwable, final String format, final Object... args) {
 		if (logger.isDebugEnabled()) {
 			logger.debug(getMessage(format, args), throwable);
@@ -43,7 +44,7 @@ public abstract class LogUtil {
 			logger.info(getMessage(format, args));
 		}
 	}
-	
+
 	public static void info(final Log logger, final Throwable throwable, final String format, final Object... args) {
 		if (logger.isInfoEnabled()) {
 			logger.info(getMessage(format, args), throwable);
@@ -55,7 +56,7 @@ public abstract class LogUtil {
 			logger.warn(getMessage(format, args));
 		}
 	}
-	
+
 	public static void warn(final Log logger, final Throwable throwable, final String format, final Object... args) {
 		if (logger.isWarnEnabled()) {
 			logger.warn(getMessage(format, args), throwable);
@@ -67,7 +68,7 @@ public abstract class LogUtil {
 			logger.error(getMessage(format, args));
 		}
 	}
-	
+
 	public static void error(final Log logger, final Throwable throwable, final String format, final Object... args) {
 		if (logger.isErrorEnabled()) {
 			logger.error(getMessage(format, args), throwable);
@@ -79,7 +80,7 @@ public abstract class LogUtil {
 			logger.fatal(getMessage(format, args));
 		}
 	}
-	
+
 	public static void fatal(final Log logger, final Throwable throwable, final String format, final Object... args) {
 		if (logger.isFatalEnabled()) {
 			logger.fatal(getMessage(format, args), throwable);

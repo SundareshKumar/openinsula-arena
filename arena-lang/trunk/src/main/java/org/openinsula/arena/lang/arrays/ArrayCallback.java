@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- *
+ * 
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -16,33 +16,12 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.lang.math.distribution;
+package org.openinsula.arena.lang.arrays;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.Test;
-
-public class ListDistributionTestCase {
-
-	protected final Log logger = LogFactory.getLog(getClass());
-
-	@Test
-	public void testGenerate() {
-		List<Integer> itens = Arrays.asList(1,2,3,4,5);
-
-		ListDistribution<Integer> distr1 = new ListDistribution<Integer>(itens);
-		List<List<Integer>> list1 = distr1.distribute(5);
-
-		ListDistribution<Integer> distr2 = new ListDistribution<Integer>(itens);
-		List<List<Integer>> list2 = distr2.distribute(4);
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("List #1: " + list1);
-			logger.debug("List #2: " + list2);
-		}
-	}
-
+public interface ArrayCallback<T,R> {
+	
+	void execute(T current, int arraySize);
+	
+	R getResult();
+	
 }

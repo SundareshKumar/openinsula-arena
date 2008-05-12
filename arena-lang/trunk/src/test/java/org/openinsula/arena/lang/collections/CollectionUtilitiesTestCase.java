@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -42,8 +42,8 @@ public class CollectionUtilitiesTestCase {
 		expected.add("2");
 		expected.add("3");
 
-		Collection<String> actual = CollectionUtilities.transform(input, new ToStringTransformer<Integer>());
-		
+		Collection<String> actual = CollectionUtils.transform(input, new ToStringTransformer<Integer>());
+
 		assertEquals(expected, actual);
 	}
 
@@ -53,14 +53,14 @@ public class CollectionUtilitiesTestCase {
 		input.add(10.99);
 		input.add(20.01);
 		input.add(30.00);
-		
+
 		List<Integer> expected = new ArrayList<Integer>();
 		expected.add(10);
 		expected.add(20);
 		expected.add(30);
 
-		List<Integer> actual = CollectionUtilities.transform(input, new NumberToIntegerTransformer<Double>());
-		
+		List<Integer> actual = CollectionUtils.transform(input, new NumberToIntegerTransformer<Double>());
+
 		assertEquals(expected, actual);
 	}
 
@@ -70,14 +70,14 @@ public class CollectionUtilitiesTestCase {
 		input.add(10.99);
 		input.add(20.01);
 		input.add(30.0);
-		
+
 		Set<String> expected = new LinkedHashSet<String>();
 		expected.add("10.99");
 		expected.add("20.01");
 		expected.add("30.0");
-		
-		Set<String> actual = CollectionUtilities.transform(input, new ToStringTransformer<Double>());
-		
+
+		Set<String> actual = CollectionUtils.transform(input, new ToStringTransformer<Double>());
+
 		assertEquals(expected, actual);
 	}
 

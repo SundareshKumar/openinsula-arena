@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-import org.openinsula.arena.lang.arrays.ArrayUtilities;
+import org.openinsula.arena.lang.arrays.ArrayUtils;
 import org.openinsula.arena.lang.math.counter.Counter;
 import org.openinsula.arena.lang.math.counter.CounterIterator;
 import org.springframework.util.Assert;
@@ -30,15 +30,15 @@ import org.springframework.util.Assert;
 public class Distribution implements Iterable<Entry<Integer>>{
 
 	private final int numberOfElements;
-	
+
 	private Collection<Entry<Integer>> distribution;
-	
+
 	public Distribution(final int numberOfElements, final int slots) {
 		Assert.isTrue(numberOfElements > 0, "numberOfElements must be greater than 0 (zero)");
 		Assert.isTrue(slots <= numberOfElements && slots > 0, "slots must be positive and lesser or equals numberOfElements");
-		
+
 		this.numberOfElements = numberOfElements;
-		
+
 		distribute(slots);
 	}
 
@@ -46,10 +46,10 @@ public class Distribution implements Iterable<Entry<Integer>>{
 		CounterIterator iterator = createCounterIterator(slots);
 		distribution = iterator.getEntryCollection();
 	}
-	
+
 	private CounterIterator createCounterIterator(final int digits) {
 		Counter c = Counter.createDefaultCounter(digits, 1, numberOfElements);
-		
+
 		CounterIterator counterIterator = new CounterIterator(c) {
 
 			@Override
@@ -59,16 +59,16 @@ public class Distribution implements Iterable<Entry<Integer>>{
 
 			@Override
 			protected boolean isValid(final Integer[] counterCombination) {
-				return ArrayUtilities.sumAll(counterCombination) == numberOfElements;
+				return ArrayUtils.sumAll(counterCombination) == numberOfElements;
 			}
 
 			@Override
 			protected Collection<Entry<Integer>> prepareEntryCollection() {
 				return new LinkedHashSet<Entry<Integer>>();
 			}
-			
+
 		};
-		
+
 		return counterIterator;
 	}
 
@@ -76,5 +76,5 @@ public class Distribution implements Iterable<Entry<Integer>>{
 	public Iterator<Entry<Integer>> iterator() {
 		return distribution.iterator();
 	}
-	
+
 }

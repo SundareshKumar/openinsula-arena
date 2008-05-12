@@ -16,20 +16,19 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.lang.util;
+package org.openinsula.arena.lang;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Utility class for try/catch substitution. If any exception occurs,
- * doCatch is called which, by default, returns null.
+ * Utility class for try/catch substitution. If any exception occurs, doCatch is
+ * called which, by default, returns null.
  *
  * @author Eduardo R Danielli
- * @param <R> Return type
- * @deprecated in favor of {@link org.openinsula.arena.lang.FailSafeOperation}
+ * @param <R>
+ *            Return type
  */
-@Deprecated
 public abstract class FailSafeOperation<R> {
 
 	protected final Log logger = LogFactory.getLog(FailSafeOperation.class);
@@ -44,25 +43,28 @@ public abstract class FailSafeOperation<R> {
 	}
 
 	/**
-	 * @param rethrowException if <b>true</b>, the exception (if occurs) will be rethrowed as
-	 * <code>RuntimeException</code>. Otherwise, <code>null</code> is returned and the exception
-	 * is ignored.
+	 * @param rethrowException if <b>true</b>, the exception (if occurs) will be rethrowed
+	 * as <code>RuntimeException</code>. Otherwise,
+	 * <code>null</code> is returned and the exception is ignored.
 	 */
 	public FailSafeOperation(final boolean rethrowException) {
 		this.rethrowException = rethrowException;
 	}
 
-	public R doTry() {
+	public final R execute() {
 		try {
-			return tryBody();
-		}
-		catch (Throwable throwable) {
-			return doCatch(throwable);
+			return operation();
+		} catch (Throwable throwable) {
+			return handleException(throwable);
 		}
 	}
 
-	protected R doCatch(final Throwable throwable) {
-		LogUtil.warn(logger, throwable, "Exception occured");
+	protected abstract R operation() throws Throwable;
+
+	protected R handleException(final Throwable throwable) {
+		if (logger.isWarnEnabled()) {
+			logger.warn("Exception occured", throwable);
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(String.format("Action: %s", (rethrowException ? "throw RuntimeException" : "return null")));
@@ -74,7 +76,5 @@ public abstract class FailSafeOperation<R> {
 
 		return null;
 	}
-
-	protected abstract R tryBody() throws Throwable;
 
 }

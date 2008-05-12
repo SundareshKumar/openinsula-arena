@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -18,10 +18,15 @@
  */
 package org.openinsula.arena.lang.arrays;
 
+/**
+ * @author rebola
+ * @deprecated Renamed to {@link ArrayCallback}
+ */
+@Deprecated
 public interface ArrayOperation<T,R> {
-	
+
 	void execute(T current, int arraySize);
-	
+
 	R getResult();
-	
+
 }

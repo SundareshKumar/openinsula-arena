@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -23,30 +23,36 @@ import java.lang.reflect.Method;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
+
+/**
+ * @author rebola
+ * @deprecated
+ */
+@Deprecated
 public abstract class VisitorUtils {
 
 	public static Object accept(final Object visited, final Object visitor) {
 		return accept(visited, visitor, "visit");
 	}
-	
+
 	public static Object accept(final Object visited, final Object visitor, final String visitMethodName) {
 		Assert.notNull(visited, "Visited object required!");
 		Assert.notNull(visitor, "Visitor object required!");
 		Assert.hasText(visitMethodName, "Visitor 'visit' methodName missing!");
-		
+
 		Method method = ReflectionUtils.findMethod(
 				visitor.getClass(),
 				visitMethodName,
 				new Class<?>[] { visited.getClass() });
-		
+
 		if (method != null) {
 			return ReflectionUtils.invokeMethod(
-					method, 
-					visitor, 
+					method,
+					visitor,
 					new Object[] { visited });
 		}
-		
+
 		throw new IllegalArgumentException("Visitor method [" + visitMethodName + "] not found!");
 	}
-	
+
 }

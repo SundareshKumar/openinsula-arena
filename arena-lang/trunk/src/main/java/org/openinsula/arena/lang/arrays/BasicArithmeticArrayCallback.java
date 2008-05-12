@@ -18,12 +18,7 @@
  */
 package org.openinsula.arena.lang.arrays;
 
-/**
- * @author erdanielli
- * @deprecated Renamed to {@link BasicArithmeticArrayCallback}
- */
-@Deprecated
-public abstract class BasicArithmeticArrayOperation<T extends Number> implements ArrayOperation<T,Double> {
+public abstract class BasicArithmeticArrayCallback<T extends Number> implements ArrayCallback<T,Double> {
 	private double accumulator = 0.0;
 
 	@Override
@@ -40,8 +35,7 @@ public abstract class BasicArithmeticArrayOperation<T extends Number> implements
 
 }
 
-@SuppressWarnings("deprecation")
-class SumArrayOperation<T extends Number> extends BasicArithmeticArrayOperation<T> {
+class SumArrayCallback<T extends Number> extends BasicArithmeticArrayCallback<T> {
 
 	@Override
 	protected double doBasicArithmeticOperation(final double current, final double accumulator) {
@@ -50,8 +44,7 @@ class SumArrayOperation<T extends Number> extends BasicArithmeticArrayOperation<
 
 }
 
-@SuppressWarnings("deprecation")
-class SubtractArrayOperation<T extends Number> extends BasicArithmeticArrayOperation<T> {
+class SubtractArrayCallback<T extends Number> extends BasicArithmeticArrayCallback<T> {
 
 	@Override
 	protected double doBasicArithmeticOperation(final double current, final double accumulator) {
@@ -60,8 +53,7 @@ class SubtractArrayOperation<T extends Number> extends BasicArithmeticArrayOpera
 
 }
 
-@SuppressWarnings("deprecation")
-class MultiplyArrayOperation<T extends Number> extends BasicArithmeticArrayOperation<T> {
+class MultiplyArrayCallback<T extends Number> extends BasicArithmeticArrayCallback<T> {
 
 	@Override
 	protected double doBasicArithmeticOperation(final double current, final double accumulator) {

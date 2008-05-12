@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- *
+ * 
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.lang.util;
+package org.openinsula.arena.lang.security;
 
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
@@ -24,9 +24,8 @@ import java.text.DecimalFormat;
 /**
  * @author Edson Yanaga
  * @author Eduardo Rebola
- * @deprecated This class was moved to {@link org.openinsula.arena.lang.security.RandomGenerator}
+ * 
  */
-@Deprecated
 public abstract class RandomGenerator {
 
 	private static final SecureRandom random = new SecureRandom();

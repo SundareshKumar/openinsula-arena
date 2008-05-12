@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -28,7 +28,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.lang.math.counter.Counter;
 import org.openinsula.arena.lang.math.counter.CounterIterator;
-import org.openinsula.arena.lang.util.LogUtil;
 import org.springframework.util.Assert;
 
 public class ListDistribution<T> {
@@ -43,15 +42,19 @@ public class ListDistribution<T> {
 	public void setReferenceList(final List<T> list) {
 		Assert.notNull(list, "Reference list required!");
 
-		this.referenceList = Collections.unmodifiableList(list);
+		referenceList = Collections.unmodifiableList(list);
 
-		LogUtil.debug(logger, "Reference list: %s", this.referenceList);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Reference list: " + referenceList);
+		}
 	}
 
 	public List<List<T>> distribute(final int sampleSize) {
 		Assert.isTrue(sampleSize <= referenceList.size(), "sampleSize must be lesser or equals collection's size");
 
-		LogUtil.debug(logger, "Distribution size: %d itens per list", sampleSize);
+		if (logger.isDebugEnabled()) {
+			logger.debug(String.format("Distribution size: %d itens per list", referenceList.size()));
+		}
 
 		List<List<T>> distributionList = new ArrayList<List<T>>();
 
@@ -74,7 +77,7 @@ public class ListDistribution<T> {
 				distributionList.add(distribution);
 			}
 		}
-		
+
 		return distributionList;
 	}
 

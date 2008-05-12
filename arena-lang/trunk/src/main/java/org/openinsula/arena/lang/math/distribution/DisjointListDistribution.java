@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -31,7 +31,6 @@ import org.openinsula.arena.lang.math.counter.Counter;
 import org.openinsula.arena.lang.math.counter.CounterIterator;
 import org.openinsula.arena.lang.math.counter.IrregularLimitsCounterDelegate;
 import org.openinsula.arena.lang.math.counter.SequencialCounterIterator;
-import org.openinsula.arena.lang.util.LogUtil;
 import org.springframework.util.Assert;
 
 public class DisjointListDistribution<T> implements Iterable<List<T>[]> {
@@ -52,14 +51,19 @@ public class DisjointListDistribution<T> implements Iterable<List<T>[]> {
 
 		this.referenceList = Collections.unmodifiableList(list);
 
-		LogUtil.debug(logger, "Reference list: %s", this.referenceList);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Reference list: " + this.referenceList);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	public void distribute(final int... samples) {
 
 		if (isSame(samples)) {
-			LogUtil.debug(logger, "Returning cached distribution");
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("Returning cached distribution");
+			}
 
 			return;
 		}

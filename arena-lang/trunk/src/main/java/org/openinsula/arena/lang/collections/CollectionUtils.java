@@ -25,10 +25,8 @@ import java.util.Set;
 /**
  * @author Eduardo Rebola
  * @author Fernando Maeda
- * @deprecated Renamed to {@link CollectionUtils}
  */
-@Deprecated
-public abstract class CollectionUtilities {
+public class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
 
 	@SuppressWarnings("unchecked")
 	public static <I, O> Collection<O> transform(final Collection<I> input, final GenericTransformer<I, O> transformer) {

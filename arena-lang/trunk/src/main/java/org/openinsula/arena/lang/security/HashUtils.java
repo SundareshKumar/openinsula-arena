@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.lang.util;
+package org.openinsula.arena.lang.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,9 +24,8 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author Edson Yanaga
  * @author Eduardo Rebola
- * @deprecated This class was moved to {@link org.openinsula.arena.lang.security.HashUtils}
+ *
  */
-@Deprecated
 public abstract class HashUtils {
 
 	private static MessageDigest md5;
@@ -74,7 +73,7 @@ public abstract class HashUtils {
 		return input == null ? null : createMD5(input.getBytes());
 	}
 
-	public static String gerarSHA1(final String input) {
+	public static String createSHA1(final String input) {
 		return input == null ? null : createSHA1(input.getBytes());
 	}
 

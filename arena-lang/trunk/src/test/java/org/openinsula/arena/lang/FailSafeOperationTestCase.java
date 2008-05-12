@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with Arena-Lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openinsula.arena.lang.util;
+package org.openinsula.arena.lang;
 
 import static org.junit.Assert.*;
 
@@ -32,11 +32,11 @@ public class FailSafeOperationTestCase {
 		BigDecimal result = new FailSafeOperation<BigDecimal>() {
 
 			@Override
-			protected BigDecimal tryBody() throws Throwable {
+			protected BigDecimal operation() throws Throwable {
 				return new BigDecimal((String) null);
 			}
 
-		}.doTry();
+		}.execute();
 
 		assertNull(result);
 	}
@@ -47,39 +47,30 @@ public class FailSafeOperationTestCase {
 		BigDecimal result = new FailSafeOperation<BigDecimal>() {
 
 			@Override
-			protected BigDecimal tryBody() throws Throwable {
+			protected BigDecimal operation() throws Throwable {
 				return new BigDecimal((String) null);
 			}
 
 			@Override
-			protected BigDecimal doCatch(Throwable throwable) {
+			protected BigDecimal handleException(Throwable throwable) {
 				return BigDecimal.ZERO;
 			}
 
-		}.doTry();
+		}.execute();
 
 		assertEquals(BigDecimal.ZERO, result);
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testDoCatchWithException() {
+		new FailSafeOperation<BigDecimal>(true) {
 
-		try {
-			new FailSafeOperation<BigDecimal>(true) {
+			@Override
+			protected BigDecimal operation() throws Throwable {
+				return new BigDecimal((String) null);
+			}
 
-				@Override
-				protected BigDecimal tryBody() throws Throwable {
-					return new BigDecimal((String) null);
-				}
-
-			}.doTry();
-			
-			fail("IllegalArgumentException expected");
-
-		}
-		catch (RuntimeException exc) {
-			
-		}
+		}.execute();
 	}
 
 }

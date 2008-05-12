@@ -23,10 +23,12 @@ import java.util.List;
 
 /**
  * @author rebola
- * @deprecated Renamed to {@link ArrayUtils}
+ *
  */
-@Deprecated
-public class ArrayUtilities {
+public class ArrayUtils extends org.apache.commons.lang.ArrayUtils {
+
+	private ArrayUtils() {
+	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> List<T> asList(final Object[] array) {
@@ -39,7 +41,7 @@ public class ArrayUtilities {
 		return result;
 	}
 
-	public static <T,R> R doWithAll(final T[] array, final ArrayOperation<T,R> closure) {
+	public static <T,R> R doWithAll(final T[] array, final ArrayCallback<T,R> closure) {
 		for (T t : array) {
 			closure.execute(t, array.length);
 		}
@@ -48,15 +50,15 @@ public class ArrayUtilities {
 	}
 
 	public static <T extends Number> double sumAll(final T[] array) {
-		return doWithAll(array, new SumArrayOperation<T>());
+		return doWithAll(array, new SumArrayCallback<T>());
 	}
 
 	public static <T extends Number> double subtractAll(final T[] array) {
-		return doWithAll(array, new SubtractArrayOperation<T>());
+		return doWithAll(array, new SubtractArrayCallback<T>());
 	}
 
 	public static <T extends Number> double multiplyAll(final T[] array) {
-		return doWithAll(array, new MultiplyArrayOperation<T>());
+		return doWithAll(array, new MultiplyArrayCallback<T>());
 	}
 
 }

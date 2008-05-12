@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -18,69 +18,178 @@
  */
 package org.openinsula.arena.lang.time;
 
+import static java.util.Calendar.*;
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Method;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.junit.Test;
-import org.openinsula.arena.lang.time.DateBuilder;
 
 public class DateBuilderTestCase {
 
+	private Date createDate(final int year, final int month, final int dayOfMonth) {
+		return new GregorianCalendar(year, month, dayOfMonth).getTime();
+	}
+
+	private Date createDate(final int year, final int month, final int dayOfMonth, final int hour, final int minute, final int second) {
+		return new GregorianCalendar(year, month, dayOfMonth, hour, minute, second).getTime();
+	}
+
 	@Test
-	public void testMethods() {
-		int[][] testValues = { { 2007, 1, 11, 30, 25 }, { 2007, 1, 0, 0, 0 } };
+	public void testJanuary() {
+		Date actual = DateBuilder.january(1, 2008);
+		Date expected = createDate(2008, JANUARY, 1);
+		assertEquals(expected, actual);
 
-		Calendar expected = new GregorianCalendar();
-		expected.set(Calendar.MILLISECOND, 0);
+		actual = DateBuilder.january(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
 
-		for (int i = 0; i < testValues.length; i++) {
-			expected.set(Calendar.YEAR, testValues[i][0]);
-			expected.set(Calendar.DAY_OF_MONTH, testValues[i][1]);
-			expected.set(Calendar.HOUR_OF_DAY, testValues[i][2]);
-			expected.set(Calendar.MINUTE, testValues[i][3]);
-			expected.set(Calendar.SECOND, testValues[i][4]);
-			
-			for (int month = 0; month < 12; month++) {
-				expected.set(Calendar.MONTH, month);
-				Date actual = runMethod(getMethod(month, true), testValues[i][1], testValues[i][0],
-						testValues[i][2], testValues[i][3], testValues[i][4]);
-				
-				assertEquals(expected.getTime(), actual);
-			}
-		}
-		
+		expected = createDate(2008, JANUARY, 1, 23, 59, 59);
+		assertEquals(expected, actual);
 	}
 
-	private Method getMethod(final int month, final boolean full) {
-		String[] methodNames = { "january", "february", "march", "april",
-			"may", "june", "july", "august", "september", "october",
-			"november", "december" };
-		
-		Class<?>[] parameterTypes = full ? 
-				new Class<?>[] { int.class, int.class, int.class, int.class, int.class } : 
-					new Class<?>[] { int.class, int.class};
-		
-		try {
-			Method method = DateBuilder.class.getMethod(methodNames[month], parameterTypes);
-			return method;
-			
-		} catch (Exception exc) {
-			throw new RuntimeException(exc);
-		}
-		
+	@Test
+	public void testFebruary() {
+		Date actual = DateBuilder.february(1, 2008);
+		Date expected = createDate(2008, FEBRUARY, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.february(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, FEBRUARY, 1, 23, 59, 59);
+		assertEquals(expected, actual);
 	}
-	
-	private Date runMethod(final Method method, final Object ... values) {
-		try {
-			return (Date) method.invoke(null, values);
-			
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+
+	@Test
+	public void testMarch() {
+		Date actual = DateBuilder.march(1, 2008);
+		Date expected = createDate(2008, MARCH, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.march(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, MARCH, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testApril() {
+		Date actual = DateBuilder.april(1, 2008);
+		Date expected = createDate(2008, APRIL, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.april(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, APRIL, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testMay() {
+		Date actual = DateBuilder.may(1, 2008);
+		Date expected = createDate(2008, MAY, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.may(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, MAY, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testJune() {
+		Date actual = DateBuilder.june(1, 2008);
+		Date expected = createDate(2008, JUNE, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.june(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, JUNE, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testJuly() {
+		Date actual = DateBuilder.july(1, 2008);
+		Date expected = createDate(2008, JULY, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.july(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, JULY, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testAugust() {
+		Date actual = DateBuilder.august(1, 2008);
+		Date expected = createDate(2008, AUGUST, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.august(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, AUGUST, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testSeptember() {
+		Date actual = DateBuilder.september(1, 2008);
+		Date expected = createDate(2008, SEPTEMBER, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.september(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, SEPTEMBER, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testOctober() {
+		Date actual = DateBuilder.october(1, 2008);
+		Date expected = createDate(2008, OCTOBER, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.october(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, OCTOBER, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testNovember() {
+		Date actual = DateBuilder.november(1, 2008);
+		Date expected = createDate(2008, NOVEMBER, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.november(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, NOVEMBER, 1, 23, 59, 59);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testDecember() {
+		Date actual = DateBuilder.december(1, 2008);
+		Date expected = createDate(2008, DECEMBER, 1);
+		assertEquals(expected, actual);
+
+		actual = DateBuilder.december(1, 2008, 23, 59, 59);
+		assertFalse(expected.equals(actual));
+
+		expected = createDate(2008, DECEMBER, 1, 23, 59, 59);
+		assertEquals(expected, actual);
 	}
 
 }

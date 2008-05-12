@@ -64,8 +64,8 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	 * @return The difference in days between the initial and end {@link Calendar}.
 	 */
 	public static long differenceInDays(final Calendar begin, final Calendar end) {
-		Calendar endCalendar = truncate(end, Calendar.DAY_OF_MONTH);
-		Calendar beginCalendar = truncate(begin, Calendar.DAY_OF_MONTH);
+		Calendar endCalendar = lowerLimitForDay(end);
+		Calendar beginCalendar = lowerLimitForDay(begin);
 
 		long endMillis = endCalendar.getTimeInMillis()
 				+ endCalendar.getTimeZone().getOffset(endCalendar.getTimeInMillis());

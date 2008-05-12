@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -20,7 +20,15 @@ package org.openinsula.arena.lang.util;
 
 import java.util.Locale;
 
-public class OtherLocales {
+/**
+ * A Collection of {@link Locale} constants that are not included in the default java distribution.
+ * @author rebola
+ */
+public abstract class OtherLocales {
+
+	/**
+	 * Locale for Brazil (language: 'pt', code: 'BR')
+	 */
 	public static final Locale BRAZIL = new Locale("pt", "BR");
 
 }
