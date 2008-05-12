@@ -47,7 +47,26 @@ public class DefaultFileParser implements FileParser {
 	}
 
 	public void addLine(Line line) throws IOException {
-		ParseContext parseContext = null;
+		ParseContext parseContext = new ParseContext() {
+			@Override
+			public int getCurrentLineCount() {
+				return 0;
+			}
+
+			@Override
+			public String getLine() throws IOException {
+				return null;
+			}
+
+			@Override
+			public String lookAhead() throws IOException {
+				return null;
+			}
+
+			@Override
+			public void process(Line line) {
+			}
+		};
 
 		if (!expression.evaluate(parseContext)) {
 			throw new IllegalStateException("Line added [" + line.getLineFactory().getClass()

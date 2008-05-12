@@ -122,7 +122,7 @@ public class ExpressionTestCase {
 		}
 	}
 
-	private class MockParseContext implements ParseContext {
+	private static class MockParseContext implements ParseContext {
 		public String getLine() {
 			return "";
 		}
@@ -139,13 +139,13 @@ public class ExpressionTestCase {
 		}
 	}
 
-	private class TrueExpression implements Expression {
+	private static class TrueExpression implements Expression {
 		public boolean evaluate(ParseContext context) throws IOException {
 			return true;
 		}
 	}
 
-	private class FalseExpression implements Expression {
+	private static class FalseExpression implements Expression {
 		public boolean evaluate(ParseContext context) throws IOException {
 			return false;
 		}

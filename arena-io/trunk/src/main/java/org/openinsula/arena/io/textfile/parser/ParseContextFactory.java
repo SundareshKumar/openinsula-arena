@@ -35,9 +35,9 @@ import org.openinsula.arena.io.textfile.line.LineFactory;
 public class ParseContextFactory {
 	protected static final Log logger = LogFactory.getLog(ParseContextFactory.class);
 
-	protected static Map<Class<?>, Map<Class<? extends LineFactory>, Method>> parseMapCache = new HashMap<Class<?>, Map<Class<? extends LineFactory>, Method>>();
+	protected static final Map<Class<?>, Map<Class<? extends LineFactory>, Method>> parseMapCache = new HashMap<Class<?>, Map<Class<? extends LineFactory>, Method>>();
 
-	protected static String charsetName = "ISO-8859-1";
+	protected static final String charsetName = "ISO-8859-1";
 
 	public static ParseContext newParseContext(InputStream in, Object handler) {
 		Map<Class<? extends LineFactory>, Method> parseMap = parseMapCache.get(handler.getClass());

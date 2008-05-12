@@ -67,7 +67,7 @@ public class DateField extends Field<Date> {
 			return sdf.parse(s);
 		}
 		catch (ParseException ex) {
-			throw new IllegalArgumentException("Formato de data invalido.");
+			throw new IllegalArgumentException("Invalid Date Format.");
 		}
 	}
 

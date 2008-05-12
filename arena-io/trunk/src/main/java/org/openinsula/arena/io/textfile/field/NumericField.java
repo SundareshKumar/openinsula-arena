@@ -47,10 +47,10 @@ public class NumericField extends Field<Number> {
 			return null;
 		}
 		else if (!trim.matches("\\d+")) {
-			throw new IllegalArgumentException("Formato numerico invalido.");
+			throw new IllegalArgumentException("Invalid Numeric Format.");
 		}
 		Long value = Long.valueOf(trim);
-		if (value.compareTo(new Long(Integer.MAX_VALUE)) <= 0) {
+		if (value.compareTo(Long.valueOf(Integer.MAX_VALUE)) <= 0) {
 			return value.intValue();
 		}
 		return value;
