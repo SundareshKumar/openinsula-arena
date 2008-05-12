@@ -27,12 +27,10 @@ import java.util.Date;
  *
  * @author yanaga
  * @since 1.1
- * @deprecated Renamed to {@link DateTimeUtils}
  */
-@Deprecated
-public class DateUtils extends org.apache.commons.lang.time.DateUtils {
+public class DateTimeUtils extends org.apache.commons.lang.time.DateUtils {
 
-	private DateUtils() {
+	private DateTimeUtils() {
 	}
 
 	/**

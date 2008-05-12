@@ -28,7 +28,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class CollectionUtilitiesTestCase {
+public class CollectionUtilsTestCase {
 
 	@Test
 	public void testTransformCollection() {

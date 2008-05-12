@@ -26,31 +26,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
-public class DateUtilsTestCase {
-
-	// private void assertEquals(Date expected, Date actual) {
-	// assertEquals(2005, calendar.get(Calendar.YEAR));
-	// assertEquals(Calendar.JULY, calendar.get(Calendar.MONTH));
-	// assertEquals(27, calendar.get(Calendar.DAY_OF_MONTH));
-	// assertEquals(0, calendar.get(Calendar.HOUR_OF_DAY));
-	// assertEquals(0, calendar.get(Calendar.MINUTE));
-	// assertEquals(0, calendar.get(Calendar.SECOND));
-	// assertEquals(0, calendar.get(Calendar.MILLISECOND));
-	// }
-	//
-	// private void assertEquals(Calendar expected, Calendar actual) {
-	// assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
-	// assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-	// assertEquals(expected.get(Calendar.DAY_OF_MONTH),
-	// actual.get(Calendar.DAY_OF_MONTH));
-	// assertEquals(expected.get(Calendar.HOUR_OF_DAY),
-	// actual.get(Calendar.HOUR_OF_DAY));
-	// assertEquals(expected.get(Calendar.MINUTE), actual.get(Calendar.MINUTE));
-	// assertEquals(expected.get(Calendar.DAY_OF_MONTH),
-	// actual.get(Calendar.SECOND));
-	// assertEquals(expected.get(Calendar.MILLISECOND),
-	// actual.get(Calendar.MILLISECOND));
-	// }
+public class DateTimeUtilsTestCase {
 
 	@Test
 	public void testDifferenceInDays() {
@@ -58,81 +34,81 @@ public class DateUtilsTestCase {
 		Calendar end = Calendar.getInstance();
 
 		end.set(2004, Calendar.APRIL, 2, 6, 0, 0);
-		assertEquals(1, DateUtils.differenceInDays(start, end));
+		assertEquals(1, DateTimeUtils.differenceInDays(start, end));
 
 		end.set(2004, Calendar.APRIL, 3, 6, 0, 0);
-		assertEquals(2, DateUtils.differenceInDays(start, end));
+		assertEquals(2, DateTimeUtils.differenceInDays(start, end));
 
 		end.set(2004, Calendar.APRIL, 4, 6, 12, 0);
-		assertEquals(3, DateUtils.differenceInDays(start, end));
+		assertEquals(3, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, 9, 13);
 		end = new GregorianCalendar(2007, 9, 11);
-		assertEquals(-2, DateUtils.differenceInDays(start, end));
-		assertEquals(-2, DateUtils.differenceInDays(start.getTime(), end.getTime()));
+		assertEquals(-2, DateTimeUtils.differenceInDays(start, end));
+		assertEquals(-2, DateTimeUtils.differenceInDays(start.getTime(), end.getTime()));
 
 		start = new GregorianCalendar(2007, 9, 13, 14, 33, 02);
 		end = new GregorianCalendar(2007, 9, 11, 01, 32, 33);
-		assertEquals(-2, DateUtils.differenceInDays(start, end));
+		assertEquals(-2, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, 9, 13);
 		end = new GregorianCalendar(2007, 9, 12);
-		assertEquals(-1, DateUtils.differenceInDays(start, end));
+		assertEquals(-1, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, 9, 13, 0, 0, 0);
 		end = new GregorianCalendar(2007, 9, 12, 23, 0);
-		assertEquals(-1, DateUtils.differenceInDays(start, end));
+		assertEquals(-1, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, 9, 13);
 		end = new GregorianCalendar(2007, 9, 13);
-		assertEquals(0, DateUtils.differenceInDays(start, end));
+		assertEquals(0, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, 9, 13);
 		end = new GregorianCalendar(2007, 9, 14);
-		assertEquals(1, DateUtils.differenceInDays(start, end));
+		assertEquals(1, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, 9, 13, 0, 0, 0);
 		end = new GregorianCalendar(2007, 9, 14, 23, 59, 59);
-		assertEquals(1, DateUtils.differenceInDays(start, end));
+		assertEquals(1, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, 9, 13);
 		end = new GregorianCalendar(2007, 9, 15);
-		assertEquals(2, DateUtils.differenceInDays(start, end));
+		assertEquals(2, DateTimeUtils.differenceInDays(start, end));
 
 		// testing time-saving in Brazil
 
 		start = new GregorianCalendar(2007, Calendar.OCTOBER, 22);
 		end = new GregorianCalendar(2007, Calendar.NOVEMBER, 16);
-		assertEquals(25, DateUtils.differenceInDays(start, end));
+		assertEquals(25, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, Calendar.OCTOBER, 21);
 		end = new GregorianCalendar(2007, Calendar.NOVEMBER, 16);
-		assertEquals(26, DateUtils.differenceInDays(start, end));
+		assertEquals(26, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(2007, Calendar.OCTOBER, 20);
 		end = new GregorianCalendar(2007, Calendar.NOVEMBER, 16);
-		assertEquals(27, DateUtils.differenceInDays(start, end));
+		assertEquals(27, DateTimeUtils.differenceInDays(start, end));
 
 		start = new GregorianCalendar(1997, Calendar.OCTOBER, 7);
 		end = new GregorianCalendar(2008, Calendar.MAY, 7);
-		assertEquals(3865, DateUtils.differenceInDays(start, end));
+		assertEquals(3865, DateTimeUtils.differenceInDays(start, end));
 
 		end = new GregorianCalendar(2008, Calendar.FEBRUARY, 10);
-		assertEquals(3778, DateUtils.differenceInDays(start, end));
+		assertEquals(3778, DateTimeUtils.differenceInDays(start, end));
 
 		end = new GregorianCalendar(2007, Calendar.DECEMBER, 10);
-		assertEquals(3716, DateUtils.differenceInDays(start, end));
+		assertEquals(3716, DateTimeUtils.differenceInDays(start, end));
 	}
 
 	@Test
 	public void testLowerLimitForDay() {
 		Date timeSaving = new GregorianCalendar(2007, Calendar.OCTOBER, 14, 23, 59, 59).getTime();
 		Date expected = new GregorianCalendar(2007, Calendar.OCTOBER, 14).getTime();
-		assertEquals(expected, DateUtils.lowerLimitForDay(timeSaving));
+		assertEquals(expected, DateTimeUtils.lowerLimitForDay(timeSaving));
 
 		timeSaving = new GregorianCalendar(2008, Calendar.FEBRUARY, 16, 23, 59, 59).getTime();
 		expected = new GregorianCalendar(2008, Calendar.FEBRUARY, 16).getTime();
-		assertEquals(expected, DateUtils.lowerLimitForDay(timeSaving));
+		assertEquals(expected, DateTimeUtils.lowerLimitForDay(timeSaving));
 	}
 
 	@Test
@@ -141,12 +117,12 @@ public class DateUtilsTestCase {
 		Calendar expected = new GregorianCalendar(2007, Calendar.OCTOBER, 14, 23, 59, 59);
 		expected.set(Calendar.MILLISECOND, 999);
 
-		assertEquals(expected, DateUtils.upperLimitForDay(timeSaving));
+		assertEquals(expected, DateTimeUtils.upperLimitForDay(timeSaving));
 
 		timeSaving = new GregorianCalendar(2008, Calendar.FEBRUARY, 16);
 		expected = new GregorianCalendar(2008, Calendar.FEBRUARY, 16, 23, 59, 59);
 		expected.set(Calendar.MILLISECOND, 999);
 
-		assertEquals(expected, DateUtils.upperLimitForDay(timeSaving));
+		assertEquals(expected, DateTimeUtils.upperLimitForDay(timeSaving));
 	}
 }

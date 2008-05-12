@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -39,21 +39,21 @@ public class DistributionTestCase {
 		Integer[] expected = new Integer[] { 1 };
 		int i = 0;
 		boolean correct = true;
-		
-		
+
+
 		for (Entry<Integer> entry : distribution) {
-			
+
 			for (Integer entryValue : entry) {
-				correct &= expected[i++] == entryValue;
+				correct = correct && (expected[i++].equals(entryValue));
 			}
-			
+
 		}
-		
+
 		assertTrue(i > 0);
 		assertTrue(correct);
-		
+
 	}
-	
+
 	@Test
 	public void testCorrectSingleDistribution() {
 		Distribution distribution = new Distribution(6, 1);
@@ -64,17 +64,17 @@ public class DistributionTestCase {
 
 		Integer[] expected = new Integer[] { 6 };
 		int i = 0;
-		
+
 		for (Entry<Integer> entry : distribution) {
-			
+
 			for (Integer entryValue : entry) {
-				assertTrue(expected[i++] == entryValue);
+				assertEquals(expected[i++], entryValue);
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	@Test
 	public void testCorrectDistribution() {
 		Distribution distribution = new Distribution(6, 2);
@@ -85,15 +85,15 @@ public class DistributionTestCase {
 
 		Integer[] expected = new Integer[] { 1, 5, 2, 4, 3, 3 };
 		int i = 0;
-		
+
 		for (Entry<Integer> entry : distribution) {
-			
+
 			for (Integer entryValue : entry) {
-				assertTrue(expected[i++] == entryValue);
+				assertEquals(expected[i++], entryValue);
 			}
-			
+
 		}
-		
+
 	}
 
 	@Test

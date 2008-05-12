@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena-Lang.
  *
  *  Arena-Lang is free software: you can redistribute it and/or modify
@@ -186,7 +186,7 @@ public class DecimalTestCase {
 
 		b.divide(a);
 		assertEquals(new Decimal(0.25), b);
-		
+
 		a = new Decimal("31.93");
 		b = new Decimal("1596.36");
 		assertEquals(new Decimal("0.02"), a.divide(b, 2, RoundingMode.HALF_EVEN));
@@ -421,7 +421,7 @@ public class DecimalTestCase {
 		}
 		catch (RuntimeException exc) {
 		}
-		
+
 		try {
 			a.maxBetween("1", null, "2.5");
 			fail();
@@ -438,7 +438,7 @@ public class DecimalTestCase {
 		assertSame(a, a.minBetween("1", "2.09", "3.00001", "9.9999999", "10.00"));
 		assertEquals(new Decimal(-2.00), a.minBetween(1, -2, 3, 4, 10, 20));
 	}
-	
+
 	@Test
 	public void testInvalidMinBetween() {
 		Decimal a = new Decimal(10);
@@ -449,7 +449,7 @@ public class DecimalTestCase {
 		}
 		catch (RuntimeException exc) {
 		}
-		
+
 		try {
 			a.minBetween("1", null, "2.5");
 			fail();
@@ -467,10 +467,10 @@ public class DecimalTestCase {
 		assertSame(a, b);
 		assertEquals(new Decimal(20), a);
 
-		b = a.addPercentage("50.50");
+		a.addPercentage("50.50");
 		assertEquals(new Decimal(new BigDecimal("30.10")), a);
 	}
-	
+
 	@Test
 	public void testInvalidAddPercentage() {
 		Decimal a = new Decimal(10);
@@ -481,7 +481,7 @@ public class DecimalTestCase {
 		}
 		catch (RuntimeException e) {
 		}
-		
+
 		a = new Decimal(10, true);
 		a.addPercentage((BigDecimal) null);
 		assertEquals(new Decimal(10), a);
@@ -503,7 +503,7 @@ public class DecimalTestCase {
 		b = b.getPercentage(new BigDecimal("10.00"));
 		assertEquals(new Decimal(new BigDecimal("0.25")), b);
 	}
-	
+
 	@Test
 	public void testInvalidGetPercentage() {
 		Decimal a = new Decimal(100);
@@ -514,7 +514,7 @@ public class DecimalTestCase {
 		}
 		catch (RuntimeException e) {
 		}
-		
+
 		a = new Decimal(100, true);
 		assertNull(a.getPercentage(""));
 	}

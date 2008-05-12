@@ -20,10 +20,12 @@ package org.openinsula.arena.lang.arrays;
 
 public abstract class BasicArithmeticArrayCallback<T extends Number> implements ArrayCallback<T,Double> {
 	private double accumulator = 0.0;
+	boolean firstParameter = true;
 
 	@Override
 	public final void execute(final T current, final int arraySize) {
 		accumulator = doBasicArithmeticOperation(current.doubleValue(), accumulator);
+		firstParameter = false;
 	}
 
 	@Override
@@ -44,20 +46,11 @@ class SumArrayCallback<T extends Number> extends BasicArithmeticArrayCallback<T>
 
 }
 
-class SubtractArrayCallback<T extends Number> extends BasicArithmeticArrayCallback<T> {
-
-	@Override
-	protected double doBasicArithmeticOperation(final double current, final double accumulator) {
-		return current - accumulator;
-	}
-
-}
-
 class MultiplyArrayCallback<T extends Number> extends BasicArithmeticArrayCallback<T> {
 
 	@Override
 	protected double doBasicArithmeticOperation(final double current, final double accumulator) {
-		return current * accumulator;
+		return firstParameter ? current : current * accumulator;
 	}
 
 }

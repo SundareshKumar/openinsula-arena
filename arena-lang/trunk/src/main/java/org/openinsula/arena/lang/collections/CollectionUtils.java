@@ -26,7 +26,7 @@ import java.util.Set;
  * @author Eduardo Rebola
  * @author Fernando Maeda
  */
-public class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
+public abstract class CollectionUtils {
 
 	@SuppressWarnings("unchecked")
 	public static <I, O> Collection<O> transform(final Collection<I> input, final GenericTransformer<I, O> transformer) {

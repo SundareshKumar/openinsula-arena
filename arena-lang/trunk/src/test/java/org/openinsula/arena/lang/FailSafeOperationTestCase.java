@@ -33,7 +33,7 @@ public class FailSafeOperationTestCase {
 
 			@Override
 			protected BigDecimal operation() throws Throwable {
-				return new BigDecimal((String) null);
+				throw new NullPointerException();
 			}
 
 		}.execute();
@@ -48,7 +48,7 @@ public class FailSafeOperationTestCase {
 
 			@Override
 			protected BigDecimal operation() throws Throwable {
-				return new BigDecimal((String) null);
+				throw new NullPointerException();
 			}
 
 			@Override
@@ -67,7 +67,7 @@ public class FailSafeOperationTestCase {
 
 			@Override
 			protected BigDecimal operation() throws Throwable {
-				return new BigDecimal((String) null);
+				throw new NullPointerException();
 			}
 
 		}.execute();

@@ -25,12 +25,10 @@ import java.util.List;
  * @author rebola
  *
  */
-public class ArrayUtils extends org.apache.commons.lang.ArrayUtils {
-
-	private ArrayUtils() {
-	}
+public abstract class ArrayUtils {
 
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	public static <T> List<T> asList(final Object[] array) {
 		List<T> result = new ArrayList<T>(array.length);
 
@@ -51,10 +49,6 @@ public class ArrayUtils extends org.apache.commons.lang.ArrayUtils {
 
 	public static <T extends Number> double sumAll(final T[] array) {
 		return doWithAll(array, new SumArrayCallback<T>());
-	}
-
-	public static <T extends Number> double subtractAll(final T[] array) {
-		return doWithAll(array, new SubtractArrayCallback<T>());
 	}
 
 	public static <T extends Number> double multiplyAll(final T[] array) {

@@ -94,7 +94,7 @@ public class ListDistribution<T> {
 			protected boolean isValid(Integer[] counterCombination) {
 				for (int i = 0; i < counterCombination.length - 1; i++) {
 					for (int j = i + 1; j < counterCombination.length; j++) {
-						if (counterCombination[i] == counterCombination[j]) {
+						if (counterCombination[i].equals(counterCombination[j])) {
 							return false;
 						}
 					}

@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.Assert;
 
 public abstract class Entry<T> implements Iterable<T> {
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -34,8 +35,8 @@ public abstract class Entry<T> implements Iterable<T> {
 	private final T[] valuesArray;
 
 	public Entry(final T... valuesArray) {
-		this.valuesArray = valuesArray;
-
+		Assert.notEmpty(valuesArray, "at least one object must be passed to build an Entry");
+		this.valuesArray = valuesArray.clone();
 		prepareValues();
 	}
 
