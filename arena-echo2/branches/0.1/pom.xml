@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openinsula.arena</groupId>
   <artifactId>arena-echo2</artifactId>
-  <version>0.1.3-SNAPSHOT</version>
+  <version>0.1.3</version>
   <description>Projeto de componentes e ferramentas em comum para os projetos
 		que utilizam o echo2.</description>
   <build>
