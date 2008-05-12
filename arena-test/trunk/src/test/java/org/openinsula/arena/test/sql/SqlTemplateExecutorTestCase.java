@@ -57,7 +57,7 @@ public class SqlTemplateExecutorTestCase {
 		testExecute(dataSource);
 	}
 
-	public void testExecute(DataSource dataSource) throws Exception {
+	private void testExecute(DataSource dataSource) throws Exception {
 		Connection conn = dataSource.getConnection();
 
 		SqlTemplateExecutor executor = new SqlTemplateExecutor();
