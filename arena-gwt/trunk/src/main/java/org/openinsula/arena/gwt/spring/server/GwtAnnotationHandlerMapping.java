@@ -1,5 +1,8 @@
 package org.openinsula.arena.gwt.spring.server;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.AbstractDetectingUrlHandlerMapping;
 
@@ -11,49 +14,48 @@ public class GwtAnnotationHandlerMapping extends AbstractDetectingUrlHandlerMapp
 
 	private String suffix = "";
 
-	protected String[] buildUrls(final Class handlerType, final String beanName) {
-		String remoteServiceName = null;
-		Class[] interfaces = handlerType.getInterfaces();
-		for (Class itf : interfaces) {
-			// find the interface that extends RemoteService
-			if (RemoteService.class.isAssignableFrom(itf)) {
-				remoteServiceName = itf.getName();
+	protected final Log logger = LogFactory.getLog(getClass());
+
+	private String getRemoteServiceInterfaceName(final Class<?> handlerType) {
+		Class<?>[] interfaces = handlerType.getInterfaces();
+
+		for (Class<?> _interface : interfaces) {
+			if (RemoteService.class.isAssignableFrom(_interface)) {
+				return _interface.getName();
 			}
 		}
 
-		if (remoteServiceName == null) {
-			throw new IllegalArgumentException("Unable to generate name for " + handlerType.getName()
-					+ "; cannot locate interface that is a subclass of RemoteService");
-		}
+		return null;
+	}
+
+	protected String[] buildUrls(final Class<?> handlerType, final String beanName) {
+		String remoteServiceName = getRemoteServiceInterfaceName(handlerType);
+
+		Assert.notNull(remoteServiceName, "Unable to generate name for " + handlerType.getName()
+				+ "; cannot locate interface that is a subclass of RemoteService");
+
 		String classPath = StringUtils.replace(remoteServiceName, ".", "/");
-		StringBuilder sb = new StringBuilder();
 
-		sb.append(prefix);
+		if (logger.isDebugEnabled()) {
+			logger.debug("remote service interface classpath: " + classPath);
+		}
 
-		sb.append(classPath);
+		String url = String.format("%s%s%s", prefix, classPath, suffix);
 
-		sb.append(suffix);
-
-		System.out.println("classpath: " + sb.toString());
-
-		return new String[] { sb.toString() };
+		return new String[] { url };
 	}
 
 	@Override
 	protected final String[] determineUrlsForHandler(final String beanName) {
-		String[] urls = new String[0];
-		Class handlerType = getApplicationContext().getType(beanName);
+		Class<?> handlerType = getApplicationContext().getType(beanName);
+
 		if (handlerType.isAnnotationPresent(GwtRpcEndPoint.class)) {
-			GwtRpcEndPoint endPointAnnotation = (GwtRpcEndPoint) handlerType.getAnnotation(GwtRpcEndPoint.class);
-			if (StringUtils.hasText(endPointAnnotation.value())) {
-				urls = new String[] { endPointAnnotation.value() };
-			}
-			else {
-				urls = buildUrls(handlerType, beanName);
-			}
+			GwtRpcEndPoint endPointAnnotation = handlerType.getAnnotation(GwtRpcEndPoint.class);
+			String endPoint = endPointAnnotation.value();
+			return StringUtils.hasText(endPoint) ? new String[] {endPoint} : buildUrls(handlerType, beanName);
 		}
 
-		return urls;
+		return new String[0];
 	}
 
 	public final void setPrefix(final String prefix) {

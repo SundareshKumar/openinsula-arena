@@ -4,7 +4,7 @@ import com.google.gwt.core.client.GWT;
 
 /**
  * @author Joao Galli
- *
+ * @deprecated Refactored to {@link org.openinsula.arena.gwt.spring.client.rpc.GwtServiceUtils}
  */
 public class GwtServiceUtils {
 
@@ -13,7 +13,7 @@ public class GwtServiceUtils {
 	private static String suffix = ".do";
 
 	/**
-	 * 
+	 *
 	 * @param proxy
 	 * @param prefix
 	 * @param suffix
@@ -22,14 +22,14 @@ public class GwtServiceUtils {
 	public static String setRpcEndPointUrl(final Object proxy, final String prefix, final String suffix) {
 		GwtServiceUtils.setPrefix(prefix);
 		GwtServiceUtils.setSuffix(suffix);
-		
+
 		return setRpcEndPointUrl(proxy);
 	}
 
 	/**
 	 * Prepares the url of the proxy to be compatible with the use of Spring Controller.
 	 * @param proxy
-	 * @return 
+	 * @return
 	 */
 	public static String setRpcEndPointUrl(final Object proxy) {
 		StringBuffer sb = new StringBuffer();
@@ -46,7 +46,7 @@ public class GwtServiceUtils {
 		return prefix;
 	}
 
-	public static void setPrefix(String prefix) {
+	public static void setPrefix(final String prefix) {
 		GwtServiceUtils.prefix = prefix;
 	}
 
@@ -54,7 +54,7 @@ public class GwtServiceUtils {
 		return suffix;
 	}
 
-	public static void setSuffix(String suffix) {
+	public static void setSuffix(final String suffix) {
 		GwtServiceUtils.suffix = suffix;
 	}
 
