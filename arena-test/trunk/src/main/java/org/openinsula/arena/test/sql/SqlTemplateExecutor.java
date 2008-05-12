@@ -47,6 +47,8 @@ public class SqlTemplateExecutor {
 
 			st.execute(sql);
 		}
+		
+		st.close();
 	}
 
 	protected List<String> readSql(String resourceName) throws Exception {
@@ -56,7 +58,7 @@ public class SqlTemplateExecutor {
 
 		List<String> sqlList = new LinkedList<String>();
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(resourceName)));
+		BufferedReader br = new BufferedReader(new InputStreamReader(SqlTemplateExecutor.class.getResourceAsStream(resourceName)));
 
 		String s = null;
 

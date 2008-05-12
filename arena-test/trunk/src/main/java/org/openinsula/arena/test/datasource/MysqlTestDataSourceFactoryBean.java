@@ -58,6 +58,9 @@ public class MysqlTestDataSourceFactoryBean extends AbstractTestDataSourceFactor
 		fireBeforeCreateDatabase(dataSource);
 		st.execute("create database " + databaseName);
 		fireAfterCreateDatabase(dataSource);
+		
+		st.close();
+		conn.close();
 
 		return dataSource;
 	}
