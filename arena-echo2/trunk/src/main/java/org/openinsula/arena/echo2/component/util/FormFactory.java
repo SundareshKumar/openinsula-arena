@@ -21,6 +21,7 @@ import nextapp.echo2.app.text.TextComponent;
 
 import org.openinsula.arena.echo2.component.model.SortableTableModel;
 import org.openinsula.arena.echo2.component.model.cellrenderer.DataTableCellRenderer;
+import org.openinsula.arena.echo2.component.model.cellrenderer.DataTableCellRendererStyles;
 import org.openinsula.arena.echo2.component.model.cellrenderer.SortableHeaderCellRenderer;
 import org.openinsula.arena.echo2.component.model.cellrenderer.SortableHeaderCellRendererStyles;
 
@@ -257,16 +258,20 @@ public class FormFactory {
 	}
 
 	public static Table table(SortableTableModel sortableTableModel, SortableHeaderCellRendererStyles styles) {
-		Table table = new Table(sortableTableModel);
+		Table table = table();
+		table.setModel(sortableTableModel);
 		table.setDefaultHeaderRenderer(new SortableHeaderCellRenderer(sortableTableModel, styles));
-		table.setDefaultRenderer(Object.class, new DataTableCellRenderer());
 		return table;
 	}
 
 	public static Table table(final Style style) {
 		Table table = new Table();
 		table.setStyle(style);
-		table.setDefaultRenderer(Object.class, new DataTableCellRenderer());
+		DataTableCellRenderer dataTableCellRenderer = new DataTableCellRenderer();
+		if (getStyles() != null && getStyles() instanceof DataTableCellRendererStyles) {
+			dataTableCellRenderer.setStyles((DataTableCellRendererStyles) styles);
+		}
+		table.setDefaultRenderer(Object.class, dataTableCellRenderer);
 		return table;
 	}
 

@@ -11,11 +11,16 @@ import nextapp.echo2.app.Table;
 import nextapp.echo2.app.button.AbstractButton;
 import nextapp.echo2.app.layout.TableLayoutData;
 import nextapp.echo2.app.table.TableCellRenderer;
+
 import org.openinsula.arena.echo2.component.div.Div;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class DataTableCellRenderer implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
+	@Autowired
+	private DataTableCellRendererStyles styles;
+	
 	public Component getTableCellRendererComponent(Table table, Object value, int column, int row) {
 		Component component;
 		TableLayoutData layoutData = new TableLayoutData();
@@ -39,14 +44,22 @@ public class DataTableCellRenderer implements TableCellRenderer {
 		}
 		component.setFont(new Font(Font.ARIAL, Font.PLAIN, new Extent(10, Extent.PX)));
 
-		if (row % 2 == 0) {
-			layoutData.setBackground(Color.WHITE);
+		if (styles != null) {
+			layoutData.setBackground(styles.getCellColor(column, row));
 		}
 		else {
-			layoutData.setBackground(new Color(237, 237, 237));
+			layoutData.setBackground(Color.WHITE);
 		}
 		component.setLayoutData(layoutData);
 		return component;
+	}
+
+	public DataTableCellRendererStyles getStyles() {
+		return styles;
+	}
+
+	public void setStyles(DataTableCellRendererStyles styles) {
+		this.styles = styles;
 	}
 
 }
