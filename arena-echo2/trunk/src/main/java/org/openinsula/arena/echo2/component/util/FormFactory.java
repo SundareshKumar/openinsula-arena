@@ -19,6 +19,7 @@ import nextapp.echo2.app.layout.RowLayoutData;
 import nextapp.echo2.app.list.ListModel;
 import nextapp.echo2.app.text.TextComponent;
 
+import org.openinsula.arena.echo2.component.field.NumberMaskField;
 import org.openinsula.arena.echo2.component.model.SortableTableModel;
 import org.openinsula.arena.echo2.component.model.cellrenderer.DataTableCellRenderer;
 import org.openinsula.arena.echo2.component.model.cellrenderer.DataTableCellRendererStyles;
@@ -145,6 +146,12 @@ public class FormFactory {
 		return textField(size.getSize(), style);
 	}
 
+	public static NumberMaskField numberMaskField(final ComponentSize size) {
+		NumberMaskField field = new NumberMaskField();
+		field.setWidth(new Extent(size.getSize(), Extent.PX));
+		return field;
+	}
+	
 	public static PasswordField passwordField(final ComponentSize size) {
 		PasswordField passwordField = new PasswordField();
 		passwordField.setWidth(new Extent(size.getSize(), Extent.PX));
