@@ -4,7 +4,7 @@ import com.google.gwt.core.client.GWT;
 
 /**
  * @author Joao Galli
- * @deprecated Refactored to {@link org.openinsula.arena.gwt.spring.client.rpc.GwtServiceUtils}
+ *
  */
 public class GwtServiceUtils {
 
@@ -27,7 +27,9 @@ public class GwtServiceUtils {
 	}
 
 	/**
-	 * Prepares the url of the proxy to be compatible with the use of Spring Controller.
+	 * Prepares the url of the proxy to be compatible with the use of Spring
+	 * Controller.
+	 *
 	 * @param proxy
 	 * @return
 	 */
