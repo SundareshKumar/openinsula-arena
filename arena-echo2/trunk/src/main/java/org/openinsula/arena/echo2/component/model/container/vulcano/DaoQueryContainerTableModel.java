@@ -16,7 +16,7 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 	@Autowired
 	private CommandInvoker commandInvoker;
 
-	private DaoQuery daoQuery;
+	private DaoQuery<T> daoQuery;
 
 	private String sortedProperty;
 
@@ -65,14 +65,14 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 	 * @param daoQuery
 	 * @param update If true runs the method updateTableItems()
 	 */
-	public void setDaoQuery(DaoQuery daoQuery, boolean update) {
+	public void setDaoQuery(DaoQuery<T> daoQuery, boolean update) {
 		this.daoQuery = daoQuery;
 		if (update) {
 			updateTableItems();
 		}
 	}
 
-	public DaoQuery getDaoQuery() {
+	public DaoQuery<T> getDaoQuery() {
 		return daoQuery;
 	}
 

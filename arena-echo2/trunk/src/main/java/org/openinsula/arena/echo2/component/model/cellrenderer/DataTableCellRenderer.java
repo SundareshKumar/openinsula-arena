@@ -20,7 +20,7 @@ public class DataTableCellRenderer implements TableCellRenderer {
 
 	@Autowired
 	private DataTableCellRendererStyles styles;
-	
+
 	public Component getTableCellRendererComponent(Table table, Object value, int column, int row) {
 		Component component;
 		TableLayoutData layoutData = new TableLayoutData();
@@ -36,6 +36,11 @@ public class DataTableCellRenderer implements TableCellRenderer {
 		}
 		else if (value instanceof Div) {
 			component = (Div) value;
+		}
+		else if (value instanceof Label) {
+			component = (Label) value;
+			component.setFont(new Font(Font.ARIAL, Font.PLAIN, new Extent(10, Extent.PX)));
+			((Label) component).setLineWrap(false);
 		}
 		else {
 			component = new Label(value.toString());
