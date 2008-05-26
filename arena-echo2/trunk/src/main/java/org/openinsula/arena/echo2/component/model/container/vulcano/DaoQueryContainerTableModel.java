@@ -49,7 +49,8 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 				parameter.append(" desc");
 			}
 
-			daoQuery.setOrderParameters(new String[] { parameter.toString() });
+			daoQuery.getOrderParameters().clear();
+			daoQuery.getOrderParameters().add(parameter.toString());
 		}
 
 		final int firstResult = getCurrentPage() * getPageCount();

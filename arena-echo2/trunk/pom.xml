@@ -3,7 +3,7 @@
   <groupId>org.openinsula.arena</groupId>
   <artifactId>arena-echo2</artifactId>
   <name>Project arena-echo2</name>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
   <description>Commom NextApp Echo2 components and tools.</description>
   <organization>
     <name>openinsula.org</name>
@@ -97,7 +97,7 @@
     <dependency>
       <groupId>org.openinsula.vulcano</groupId>
       <artifactId>vulcano-orm</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1.0</version>
       <optional>true</optional>
     </dependency>
     <dependency>
