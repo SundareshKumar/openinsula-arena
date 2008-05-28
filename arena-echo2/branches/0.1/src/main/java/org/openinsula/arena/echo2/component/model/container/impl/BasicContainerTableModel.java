@@ -43,7 +43,7 @@ public abstract class BasicContainerTableModel<T> extends AbstractTableModel imp
 	private boolean substituteDuplicate;
 
 	public BasicContainerTableModel() {
-		this(true, true);
+		this(false, false);
 	}
 
 	public BasicContainerTableModel(boolean permitDuplicates, boolean substituteDuplicate) {
