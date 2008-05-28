@@ -34,6 +34,14 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 
 	private ButtonContainerTableModelStyles styles;
 
+	public ButtonContainerTableModel() {
+		super();
+	}
+
+	public ButtonContainerTableModel(boolean permitDuplicates, boolean substituteDuplicate) {
+		super(permitDuplicates, substituteDuplicate);
+	}
+
 	@Override
 	public int getColumnCount() {
 		String[] columns = getColumns();
