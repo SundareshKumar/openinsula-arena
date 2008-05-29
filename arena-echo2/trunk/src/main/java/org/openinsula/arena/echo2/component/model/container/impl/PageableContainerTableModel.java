@@ -4,36 +4,68 @@ import org.openinsula.arena.echo2.component.model.PageableTableModel;
 
 public class PageableContainerTableModel<T> extends BeanReflectionContainerTableModel<T> implements PageableTableModel {
 	private static final long serialVersionUID = 1L;
-	
+
 	public PageableContainerTableModel() {
 	}
-	
+
 	public PageableContainerTableModel(boolean permitDuplicates, boolean substituteDuplicate) {
 		super(permitDuplicates, substituteDuplicate);
 	}
 
 	private int currentPage;
-	
+
 	private int pageSize = 20;
-	
+
+	@Override
+	public Object getValueAt(int columnIndex, int rowIndex) {
+		try {
+			rowIndex += (getPageSize() * getCurrentPage());
+
+			return super.getValueAt(columnIndex, rowIndex);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "opa";
+		}
+	}
+
+	@Override
+	public int getRowCount() {
+		return getCurrentPageSize();
+	}
+
+	private int getCurrentPageSize() {
+		int currentPageSize = getPageSize();
+
+		System.out.println("PageCount: " + getPageCount());
+		System.out.println("CurrentPage: " + getCurrentPage());
+		System.out.println(size() % this.pageSize);
+		if ((getPageCount() - 1) == getCurrentPage()) {
+			currentPageSize = size() % this.pageSize;
+		}
+
+		return currentPageSize;
+	}
+
 	public int getCurrentPage() {
 		return currentPage;
 	}
 
 	public int getPageCount() {
 		int size = size();
-		
+
 		int pageCount = size / pageSize;
-		
+
 		if ((size % pageSize) > 0) {
 			pageCount++;
 		}
-		
+
 		return pageCount;
 	}
 
 	public void setCurrentPage(int index) {
 		this.currentPage = index;
+		this.fireTableDataChanged();
 	}
 
 	public void setPageSize(int index) {
