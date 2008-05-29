@@ -5,6 +5,8 @@ import nextapp.echo2.app.Extent;
 import nextapp.echo2.app.Row;
 import nextapp.echo2.app.event.ActionEvent;
 import nextapp.echo2.app.event.ActionListener;
+import nextapp.echo2.app.event.TableModelEvent;
+import nextapp.echo2.app.event.TableModelListener;
 
 import org.openinsula.arena.echo2.component.div.Div;
 import org.openinsula.arena.echo2.component.model.PageableTableModel;
@@ -21,6 +23,12 @@ public class PagerRow extends Row {
 	public PagerRow(PageableTableModel pageableTableModel) throws IllegalArgumentException {
 		super();
 		this.model = pageableTableModel;
+		this.model.addTableModelListener(new TableModelListener() {
+			private static final long serialVersionUID = 1L;
+			public void tableChanged(TableModelEvent arg0) {
+				PagerRow.this.renderPager();
+			}
+		});
 	}
 
 	public void renderPager() throws RuntimeException {
@@ -63,7 +71,7 @@ public class PagerRow extends Row {
 				botaoPaginacaoAnterior.setText("[...]");
 			}
 
-			botaoPaginacaoAnterior.setActionCommand(new Integer((startPage - 1)).toString());
+			botaoPaginacaoAnterior.setActionCommand(Integer.toString(((startPage - 1))));
 			botaoPaginacaoAnterior.addActionListener(new BotaoNumeradoActionListener());
 			this.add(botaoPaginacaoAnterior);
 		}
@@ -84,7 +92,7 @@ public class PagerRow extends Row {
 					b.setText("[" + (i + 1) + "]");
 				}
 				else {
-					b.setText(new Integer(i + 1).toString());
+					b.setText(Integer.toString(i + 1));
 				}
 
 				b.setActionCommand(new Integer(i).toString());

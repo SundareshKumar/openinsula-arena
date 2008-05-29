@@ -65,7 +65,7 @@ public class DivPeer implements ComponentSynchronizePeer, DomUpdateSupport, Imag
 
 		{ // background color
 			Color backgroundColor = div.getBackground();
-			if (backgroundColor != null && !"".equals(backgroundColor)) {
+			if (backgroundColor != null) {
 				builder.addProperty("background: ", backgroundColor);
 			}
 		}

@@ -52,7 +52,7 @@ public abstract class AbstractLayout implements Layout {
 		return properties;
 	}
 
-	protected class LayoutEntry {
+	protected static class LayoutEntry {
 
 		private LayoutPropertyType layoutPropertyType;
 

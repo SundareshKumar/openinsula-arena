@@ -29,65 +29,69 @@
 
 package org.openinsula.arena.echo2.component.provider.ui;
 
-
 /**
- * Factory for MultipartUploadSPI implementations.  This class is responsible 
- * for discovery of MultipartUploadSPI implementations and creation of 
- * new instances on demand.  
+ * Factory for MultipartUploadSPI implementations. This class is responsible for
+ * discovery of MultipartUploadSPI implementations and creation of new instances
+ * on demand.
  * 
- * Custom MultipartUploadSPI implementations may be configured by calling 
+ * Custom MultipartUploadSPI implementations may be configured by calling
  * <code>System.setProperty(MultipartUploadSPI.SYSTEM_PROPERTY_NAME, "com.example.CustomMultipartUploadSPI")</code>
- * from within an application entry point.  The given fully qualified implementation class 
- * <strong>must</strong> implement a public default (no argument) constructor.
+ * from within an application entry point. The given fully qualified
+ * implementation class <strong>must</strong> implement a public default (no
+ * argument) constructor.
  * 
  */
 public class MultipartUploadFactory {
-    
-    protected static final Class DEFAULT_MULTIPART_UPLOAD_SPI = JakartaCommonsFileUploadProvider.class;
-    protected static MultipartUploadSPI INSTANCE = null;
-    
-    /**
-     * Attempts to find the configured MultipartUploadSPI implementation class by
-     * checking for the System property setting 
-     * <code>MultipartUploadSPI.SYSTEM_PROPERTY_NAME</code>.
-     * If the property is null, a default implementation is created and 
-     * returned.
-     * 
-     * @return the implementation
-     */
-    public static MultipartUploadSPI getMultipartUploadSPI(){
-        if (INSTANCE == null) {
-            INSTANCE = newInstance(getImplementationClass());
-        }
-        return INSTANCE;
-    }
-    
-    /**
-     * Attempts to locate the class defined by the System property 
-     * nextapp.echo2.webcontainer.filetransfer.MultipartUploadSPI
-     * 
-     * @return the <code>MultipartUploadSPI</code> class if found, otherwise the default implementation.
-     */
-    private static Class getImplementationClass() {
-        String implementationClassName = System.getProperty(MultipartUploadSPI.SYSTEM_PROPERTY_NAME);
-        
-        if (implementationClassName != null){
-            try {
-                return Class.forName(implementationClassName);
-            } catch (Exception e){
-                throw new RuntimeException(e);
-            }
-        } else {
-            return DEFAULT_MULTIPART_UPLOAD_SPI;
-        }
-        
-    }
-    
-    private static MultipartUploadSPI newInstance(Class clss){
-        try {
-            return (MultipartUploadSPI) clss.newInstance();
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
+
+	protected static final Class DEFAULT_MULTIPART_UPLOAD_SPI = JakartaCommonsFileUploadProvider.class;
+
+	private static MultipartUploadSPI INSTANCE = null;
+
+	/**
+	 * Attempts to find the configured MultipartUploadSPI implementation class
+	 * by checking for the System property setting
+	 * <code>MultipartUploadSPI.SYSTEM_PROPERTY_NAME</code>. If the property
+	 * is null, a default implementation is created and returned.
+	 * 
+	 * @return the implementation
+	 */
+	public static MultipartUploadSPI getMultipartUploadSPI() {
+		if (INSTANCE == null) {
+			INSTANCE = newInstance(getImplementationClass());
+		}
+		return INSTANCE;
+	}
+
+	/**
+	 * Attempts to locate the class defined by the System property
+	 * nextapp.echo2.webcontainer.filetransfer.MultipartUploadSPI
+	 * 
+	 * @return the <code>MultipartUploadSPI</code> class if found, otherwise
+	 * the default implementation.
+	 */
+	private static Class getImplementationClass() {
+		String implementationClassName = System.getProperty(MultipartUploadSPI.SYSTEM_PROPERTY_NAME);
+
+		if (implementationClassName != null) {
+			try {
+				return Class.forName(implementationClassName);
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		else {
+			return DEFAULT_MULTIPART_UPLOAD_SPI;
+		}
+
+	}
+
+	private static MultipartUploadSPI newInstance(Class clss) {
+		try {
+			return (MultipartUploadSPI) clss.newInstance();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
