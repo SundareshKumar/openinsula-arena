@@ -19,7 +19,6 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 	@Override
 	public Object getValueAt(int columnIndex, int rowIndex) {
 		rowIndex += (getPageSize() * getCurrentPage());
-
 		return super.getValueAt(columnIndex, rowIndex);
 	}
 
@@ -31,7 +30,9 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 	private int getCurrentPageSize() {
 		int currentPageSize = getPageSize();
 
-		if ((getPageCount() - 1) == getCurrentPage()) {
+		int lastPage = (getPageCount() > 0) ? (getPageCount() - 1) : getPageCount();
+
+		if (lastPage == getCurrentPage()) {
 			currentPageSize = size() % this.pageSize;
 		}
 
