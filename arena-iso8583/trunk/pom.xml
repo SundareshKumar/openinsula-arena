@@ -28,7 +28,7 @@
 	</scm>
 	<issueManagement>
 		<system>jira</system>
-		<url>http://jira.insula.com.br/browse/ARENAISO8583</url>
+		<url>http://jira.insula.com.br/browse/ARENAISO</url>
 	</issueManagement>
 	<ciManagement>
 		<system>bamboo</system>
