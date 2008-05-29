@@ -52,7 +52,7 @@ public class NumberMaskFieldPeer implements ActionProcessor, ComponentSynchroniz
         WebRenderServlet.getServiceRegistry().add(NUMBER_MASK_FIELD_COMPONENT_SERVICE);
     }
     
-    private class TextUpdate implements PartialUpdateParticipant {
+    private static class TextUpdate implements PartialUpdateParticipant {
         public boolean canRenderProperty(RenderContext rc, ServerComponentUpdate update) {
             return true;
         }

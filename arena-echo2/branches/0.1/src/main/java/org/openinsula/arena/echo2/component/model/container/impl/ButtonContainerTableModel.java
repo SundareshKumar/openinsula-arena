@@ -17,7 +17,7 @@ import org.openinsula.arena.echo2.component.util.FormFactory;
  * because the comparison made to get the bean id, will get the first found. If there is a duplicate,
  * the buttons will delete the same first bean found.  
  * 
- * @author realm
+ * @author Joao Galli
  * 
  * @param <T>
  */

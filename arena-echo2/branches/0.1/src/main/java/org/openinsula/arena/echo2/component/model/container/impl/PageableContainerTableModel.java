@@ -18,8 +18,7 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 
 	@Override
 	public Object getValueAt(int columnIndex, int rowIndex) {
-		rowIndex += (getPageSize() * getCurrentPage());
-		return super.getValueAt(columnIndex, rowIndex);
+		return super.getValueAt(columnIndex, getCurrentPageItemIndex(rowIndex));
 	}
 
 	@Override
@@ -27,13 +26,24 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 		return getCurrentPageSize();
 	}
 
+	/**
+	 * @param index
+	 * @return The right item index for this page.
+	 */
+	public int getCurrentPageItemIndex(int index) {
+		return index + (getPageSize() * getCurrentPage());
+	}
+
+	/**
+	 * @return The number of items in the current page
+	 */
 	private int getCurrentPageSize() {
 		int currentPageSize = getPageSize();
 
-		int lastPage = (getPageCount() > 0) ? (getPageCount() - 1) : getPageCount();
+		int lastPage = (getPageCount() > 0) ? (getPageCount() - 1) : 0;
 
 		if (lastPage == getCurrentPage()) {
-			currentPageSize = size() % this.pageSize;
+			currentPageSize = getPageSize() - (size() % getPageSize());
 		}
 
 		return currentPageSize;
