@@ -46,6 +46,10 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 			currentPageSize = getPageSize() - (size() % getPageSize());
 		}
 
+		if (size() == 0) {
+			currentPageSize = 0;
+		}
+
 		return currentPageSize;
 	}
 
