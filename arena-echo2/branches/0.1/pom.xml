@@ -2,9 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openinsula.arena</groupId>
   <artifactId>arena-echo2</artifactId>
+  <name>Project arena-echo2</name>
   <version>0.1.4-SNAPSHOT</version>
-  <description>Projeto de componentes e ferramentas em comum para os projetos
-		que utilizam o echo2.</description>
+  <description>Commom NextApp Echo2 components and tools.</description>
+  <organization>
+    <name>openinsula.org</name>
+    <url>http://www.openinsula.org</url>
+  </organization>
   <build>
     <extensions>
       <extension>
