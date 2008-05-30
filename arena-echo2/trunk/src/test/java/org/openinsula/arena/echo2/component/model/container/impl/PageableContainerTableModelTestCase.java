@@ -11,6 +11,8 @@ public class PageableContainerTableModelTestCase {
 		PageableContainerTableModel<String> model = new PageableContainerTableModel<String>();
 		model.setPageSize(2);
 
+		assertEquals(Integer.valueOf(0), Integer.valueOf(model.getPageCount()));
+		
 		model.addItem("A");
 		assertEquals(Integer.valueOf(1), Integer.valueOf(model.getPageCount()));
 		model.addItem("B");
@@ -36,6 +38,8 @@ public class PageableContainerTableModelTestCase {
 		PageableContainerTableModel<String> model = new PageableContainerTableModel<String>();
 		model.setPageSize(3);
 		model.setCurrentPage(0);
+		
+		assertEquals(Integer.valueOf(0), Integer.valueOf(model.getCurrentPageSize()));
 		
 		model.addItem("A");
 
