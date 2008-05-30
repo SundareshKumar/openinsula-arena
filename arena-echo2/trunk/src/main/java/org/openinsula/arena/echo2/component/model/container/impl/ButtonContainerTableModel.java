@@ -1,9 +1,11 @@
 package org.openinsula.arena.echo2.component.model.container.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import nextapp.echo2.app.Button;
 import nextapp.echo2.app.ImageReference;
+import nextapp.echo2.app.Style;
 import nextapp.echo2.app.event.ActionListener;
 
 import org.openinsula.arena.echo2.component.model.container.impl.styles.ButtonContainerTableModelStyles;
@@ -13,9 +15,10 @@ import org.openinsula.arena.echo2.component.util.FormFactory;
  * This table model have generic methods to build buttons to insert into the
  * tableModel
  * 
- * It is strictly recommended to use buttons without the option permitDuplicates set to false, 
- * because the comparison made to get the bean id, will get the first found. If there is a duplicate,
- * the buttons will delete the same first bean found.  
+ * It is strictly recommended to use buttons without the option permitDuplicates
+ * set to false, because the comparison made to get the bean id, will get the
+ * first found. If there is a duplicate, the buttons will delete the same first
+ * bean found.
  * 
  * @author Joao Galli
  * 
@@ -65,6 +68,12 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 	public Object getColumnValue(int columnIndex, T t) {
 		int columnsLength = getColumns().length;
 
+		List<TableColumn> tableColumns = getTableColumns();
+
+		if (!tableColumns.isEmpty() && (tableColumns.get(columnIndex) != null)) {
+
+		}
+
 		if (columnIndex < getColumns().length) {
 			return super.getColumnValue(columnIndex, t);
 		}
@@ -83,30 +92,46 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 
 	/**
 	 * Builds a generic button with actionListener
+	 * @param buttonCaption
 	 * @param bean
 	 * @param actionListener
-	 * @return
+	 * @param icon
+	 * @return The constructed button
 	 */
-	protected Button buildGenericButton(String text, T bean, ActionListener actionListener, ImageReference icon) {
-		Button button = new Button();
+	protected Button buildGenericButton(String buttonCaption, T bean, ActionListener actionListener, ImageReference icon) {
+		Button button = FormFactory.button(buttonCaption);
 
 		if (icon != null) {
 			button.setIcon(icon);
 		}
-		else if (text != null) {
-			button.setText(text);
+		else if (buttonCaption != null) {
+			button.setText(buttonCaption);
 		}
 
 		if (actionListener != null) {
 			button.addActionListener(actionListener);
 		}
 
-		Serializable beanId = findIdFromBean(bean);
-		if (beanId != null) {
-			button.setActionCommand(beanId.toString());
-		}
+		button.setActionCommand(getActionCommandFromBean(bean));
 
 		return button;
+	}
+
+	/**
+	 * Adds a generic button.
+	 * @param columnHeaderCaption
+	 * @param buttonCaption
+	 * @param bean
+	 * @param actionListener
+	 * @param icon
+	 * @param columnWidth
+	 * @return
+	 */
+	public void addGenericButtonColumn(String columnHeaderCaption, String buttonCaption, ActionListener actionListener,
+			ImageReference icon, int columnWidth, Style... styles) {
+		GenericButtonBuilder genericButtonBuilder = new GenericButtonBuilder(buttonCaption, actionListener, icon, null,
+				styles);
+		addTableColumn(columnHeaderCaption, genericButtonBuilder, columnWidth);
 	}
 
 	/**
@@ -124,7 +149,7 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 
 		Button button = null;
 
-		if (styles != null) {
+		if (styles != null && styles.getDeleteImage() != null) {
 			button = FormFactory.iconButton("Selecionar", styles.getDeleteImage());
 		}
 		else {

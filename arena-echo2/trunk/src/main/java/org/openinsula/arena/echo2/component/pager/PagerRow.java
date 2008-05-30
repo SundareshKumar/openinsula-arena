@@ -25,6 +25,7 @@ public class PagerRow extends Row {
 		this.model = pageableTableModel;
 		this.model.addTableModelListener(new TableModelListener() {
 			private static final long serialVersionUID = 1L;
+
 			public void tableChanged(TableModelEvent arg0) {
 				PagerRow.this.renderPager();
 			}
@@ -44,21 +45,20 @@ public class PagerRow extends Row {
 		BotoesControleActionListener botoesControleActionListener = new BotoesControleActionListener();
 
 		// botao 'anterior'
-		if (getCurrentPage() > 0) {
-			Button botaoAnterior = new Button();
-			if (pagerStyles != null) {
-				botaoAnterior.setStyle(pagerStyles.getBackPagerButtonStyle());
-			}
-
-			if (botaoAnterior.getStyle() == null
-					|| botaoAnterior.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
-				botaoAnterior.setText("[Anterior]");
-			}
-
-			botaoAnterior.setActionCommand("anterior");
-			botaoAnterior.addActionListener(botoesControleActionListener);
-			this.add(botaoAnterior);
+		Button botaoAnterior = new Button();
+		if (pagerStyles != null) {
+			botaoAnterior.setStyle(pagerStyles.getBackPagerButtonStyle());
 		}
+		botaoAnterior.setEnabled(getCurrentPage() > 0);
+
+		if (botaoAnterior.getStyle() == null
+				|| botaoAnterior.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
+			botaoAnterior.setText("[Anterior]");
+		}
+
+		botaoAnterior.setActionCommand("anterior");
+		botaoAnterior.addActionListener(botoesControleActionListener);
+		this.add(botaoAnterior);
 
 		// botao para retornar a paginacao das paginas
 		if (startPage > 0) {
@@ -122,21 +122,21 @@ public class PagerRow extends Row {
 		}
 
 		// botao 'proxima' pagina
-		if (getCurrentPage() < (getTotalNumberPages() - 1)) {
-			Button botaoProxima = new Button();
-			if (pagerStyles != null) {
-				botaoProxima.setStyle(pagerStyles.getNextPagerButtonStyle());
-			}
-
-			if (botaoProxima.getStyle() == null
-					|| botaoProxima.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
-				botaoProxima.setText("[Próxima]");
-			}
-
-			botaoProxima.setActionCommand("proxima");
-			botaoProxima.addActionListener(botoesControleActionListener);
-			this.add(botaoProxima);
+		Button botaoProxima = new Button();
+		if (pagerStyles != null) {
+			botaoProxima.setStyle(pagerStyles.getNextPagerButtonStyle());
 		}
+
+		botaoProxima.setEnabled(getCurrentPage() < (getTotalNumberPages() - 1));
+
+		if (botaoProxima.getStyle() == null
+				|| botaoProxima.getStyle().getProperty(Button.PROPERTY_BACKGROUND_IMAGE) == null) {
+			botaoProxima.setText("[Próxima]");
+		}
+
+		botaoProxima.setActionCommand("proxima");
+		botaoProxima.addActionListener(botoesControleActionListener);
+		this.add(botaoProxima);
 	}
 
 	private class BotaoNumeradoActionListener implements ActionListener {

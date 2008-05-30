@@ -13,6 +13,7 @@ import nextapp.echo2.app.layout.TableLayoutData;
 import nextapp.echo2.app.table.TableCellRenderer;
 
 import org.openinsula.arena.echo2.component.div.Div;
+import org.openinsula.arena.echo2.component.model.container.impl.BeanReflectionContainerTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class DataTableCellRenderer implements TableCellRenderer {
@@ -21,7 +22,7 @@ public class DataTableCellRenderer implements TableCellRenderer {
 	@Autowired
 	private DataTableCellRendererStyles styles;
 
-	public Component getTableCellRendererComponent(Table table, Object value, int column, int row) {
+	public Component getTableCellRendererComponent(Table table, Object value, int columnIndex, int rowIndex) {
 		Component component;
 		TableLayoutData layoutData = new TableLayoutData();
 		layoutData.setInsets(new Insets(2));
@@ -50,12 +51,33 @@ public class DataTableCellRenderer implements TableCellRenderer {
 		component.setFont(new Font(Font.ARIAL, Font.PLAIN, new Extent(10, Extent.PX)));
 
 		if (styles != null) {
-			layoutData.setBackground(styles.getCellColor(column, row));
+			layoutData.setBackground(styles.getCellColor(columnIndex, rowIndex));
 		}
 		else {
 			layoutData.setBackground(Color.WHITE);
 		}
 		component.setLayoutData(layoutData);
+		
+		try {
+			if (table.getModel() instanceof BeanReflectionContainerTableModel) {
+				BeanReflectionContainerTableModel model = (BeanReflectionContainerTableModel) table.getModel();
+
+				int width = model.getColumnWidth(columnIndex);
+
+				if (width > -1) {
+					Div div = new Div();
+					div.setWidth(new Extent(width));
+
+					div.add(component);
+
+					return div;
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return component;
 	}
 
