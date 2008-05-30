@@ -8,12 +8,11 @@ import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.echo2.component.provider.AbstractDownloadProvider;
 import org.openinsula.arena.echo2.component.provider.Download;
 import org.openinsula.arena.echo2.component.provider.DownloadProvider;
-import org.openinsula.arena.report.ReportDisplayer;
 
 /**
  * @author Lucas K Mogari
  */
-public abstract class AbstractDownloadReportDisplayer implements ReportDisplayer {
+public abstract class AbstractDownloadReportDisplayer {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 

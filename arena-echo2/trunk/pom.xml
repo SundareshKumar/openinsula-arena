@@ -138,7 +138,7 @@
 		<dependency>
 			<groupId>org.openinsula.arena</groupId>
 			<artifactId>arena-report</artifactId>
-			<version>1.1-SNAPSHOT</version>
+			<version>1.1.0</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
