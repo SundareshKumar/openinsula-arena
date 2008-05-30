@@ -68,12 +68,6 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 	public Object getColumnValue(int columnIndex, T t) {
 		int columnsLength = getColumns().length;
 
-		List<TableColumn> tableColumns = getTableColumns();
-
-		if (!tableColumns.isEmpty() && (tableColumns.get(columnIndex) != null)) {
-
-		}
-
 		if (columnIndex < getColumns().length) {
 			return super.getColumnValue(columnIndex, t);
 		}
