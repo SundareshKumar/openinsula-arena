@@ -37,19 +37,23 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 	/**
 	 * @return The number of items in the current page
 	 */
-	private int getCurrentPageSize() {
+	protected int getCurrentPageSize() {
 		int currentPageSize = getPageSize();
 
 		int lastPage = (getPageCount() > 0) ? (getPageCount() - 1) : 0;
 
 		if (lastPage == getCurrentPage()) {
-			currentPageSize = getPageSize() - (size() % getPageSize());
+			if (getCurrentPage() == 0) {
+				currentPageSize = size();
+			} else {
+				currentPageSize = (size() % getPageSize());
+			}
 		}
 
 		if (size() == 0) {
 			currentPageSize = 0;
 		}
-
+		
 		return currentPageSize;
 	}
 
