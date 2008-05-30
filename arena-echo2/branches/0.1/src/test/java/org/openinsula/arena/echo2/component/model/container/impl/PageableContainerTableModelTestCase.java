@@ -58,17 +58,24 @@ public class PageableContainerTableModelTestCase {
 
 		assertEquals(Integer.valueOf(1), Integer.valueOf(model.getCurrentPageSize()));
 
+		model.addItem("E");
+		assertEquals(Integer.valueOf(2), Integer.valueOf(model.getCurrentPageSize()));
+		
+		model.addItem("F");
+		
+		assertEquals(Integer.valueOf(3), Integer.valueOf(model.getCurrentPageSize()));
+		
 		model.setCurrentPage(0);
 		model.setPageSize(4);
 
-		assertEquals(Integer.valueOf(1), Integer.valueOf(model.getPageCount()));
+		assertEquals(Integer.valueOf(2), Integer.valueOf(model.getPageCount()));
 		assertEquals(Integer.valueOf(4), Integer.valueOf(model.getCurrentPageSize()));
 		
-		model.addItem("E");
+		model.addItem("G");
 		model.setCurrentPage(1);
 		
 		assertEquals(Integer.valueOf(2), Integer.valueOf(model.getPageCount()));
-		assertEquals(Integer.valueOf(1), Integer.valueOf(model.getCurrentPageSize()));
+		assertEquals(Integer.valueOf(3), Integer.valueOf(model.getCurrentPageSize()));
 	}
 
 }
