@@ -1,7 +1,6 @@
 package org.openinsula.arena.echo2.component.model.container.impl;
 
 import java.io.Serializable;
-import java.util.List;
 
 import nextapp.echo2.app.Button;
 import nextapp.echo2.app.ImageReference;
@@ -93,7 +92,7 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 	 * @return The constructed button
 	 */
 	protected Button buildGenericButton(String buttonCaption, T bean, ActionListener actionListener, ImageReference icon) {
-		Button button = FormFactory.button(buttonCaption);
+		Button button = new Button();
 
 		if (icon != null) {
 			button.setIcon(icon);
