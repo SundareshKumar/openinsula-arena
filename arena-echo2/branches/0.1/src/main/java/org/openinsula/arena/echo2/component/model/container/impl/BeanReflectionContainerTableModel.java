@@ -2,6 +2,8 @@ package org.openinsula.arena.echo2.component.model.container.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import nextapp.echo2.app.Button;
@@ -10,6 +12,7 @@ import nextapp.echo2.app.Component;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.openinsula.arena.echo2.component.model.container.ComponentBuilder;
 import org.springframework.util.StringUtils;
 
@@ -55,6 +58,25 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 		}
 		catch (Exception e) {
 			logger.error("There was an error adding a table column in the " + getClass());
+			return false;
+		}
+	}
+
+	/**
+	 * Add a new TableColumn that receives a java.util.Date or a
+	 * java.util.Calendar and format's it with the given dateFormat parameter.
+	 * @param name The name of the column, and also it's header.
+	 * @param property The property to be captured by reflection.
+	 * @param width The column width.
+	 * @param dateFormat The String formatter to the property.
+	 * @return True if succeeded
+	 */
+	public boolean addDateTableColumn(String name, String property, String dateFormat, int width) {
+		try {
+			return tableColumns.add(new TableColumn(name, property, width, dateFormat));
+		}
+		catch (Exception e) {
+			logger.error("There was an error adding a date table column in the " + getClass());
 			return false;
 		}
 	}
@@ -120,24 +142,41 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 		TableColumn tableColumn = tableColumns.get(columnIndex);
 
 		if (StringUtils.hasText(tableColumn.getProperty())) {
+
+			Object value = null;
+
 			try {
-				return PropertyUtils.getProperty(bean, tableColumn.getProperty());
+				value = PropertyUtils.getProperty(bean, tableColumn.getProperty());
 			}
 			catch (Exception e) {
 				logger.warn("There was an error getting the property '" + tableColumn.getProperty()
 						+ "' from a bean of type: " + bean.getClass());
 				e.printStackTrace();
+				return null;
 			}
+
+			if (StringUtils.hasText(tableColumn.getDateFormat())) {
+				if (value instanceof Calendar) {
+					value = ((Calendar) value).getTime();
+				}
+
+				if (value instanceof Date) {
+					value = DateFormatUtils.format((Date) value, tableColumn.getDateFormat());
+				}
+				
+				return value.toString();
+			}
+
 		}
 		else if (tableColumn.getComponentBuilder() != null) {
-			
+
 			Component component = tableColumn.getComponentBuilder().buildComponent();
-			
+
 			if (component instanceof Button) {
-				((Button)component).setActionCommand(getActionCommandFromBean(bean));
+				((Button) component).setActionCommand(getActionCommandFromBean(bean));
 			}
 			// TODO implement the rest of the components
-			
+
 			return component;
 		}
 
@@ -185,11 +224,25 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 		 */
 		private int width = -1;
 
+		/**
+		 * The date format to be used, if this dateFormat is not null or empty
+		 * the tableModel will automatically use it.
+		 */
+		private String dateFormat;
+
 		private TableColumn(String name, String property, int width) {
 			super();
 			this.name = name;
 			this.property = property;
 			this.width = width;
+		}
+
+		public TableColumn(String name, String property, int width, String dateFormat) {
+			super();
+			this.name = name;
+			this.property = property;
+			this.width = width;
+			this.dateFormat = dateFormat;
 		}
 
 		private TableColumn(String name, ComponentBuilder<?> componentBuilder, int width) {
@@ -245,6 +298,14 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 
 		public void setComponentBuilder(ComponentBuilder<? extends Component> componentBuilder) {
 			this.componentBuilder = componentBuilder;
+		}
+
+		public String getDateFormat() {
+			return dateFormat;
+		}
+
+		public void setDateFormat(String dateFormat) {
+			this.dateFormat = dateFormat;
 		}
 
 	}

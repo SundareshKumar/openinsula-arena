@@ -100,7 +100,7 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 	 * @return The constructed button
 	 */
 	protected Button buildGenericButton(String buttonCaption, T bean, ActionListener actionListener, ImageReference icon) {
-		Button button = FormFactory.button(buttonCaption);
+		Button button = new Button();
 
 		if (icon != null) {
 			button.setIcon(icon);
