@@ -6,18 +6,38 @@ import nextapp.echo2.app.Style;
 import nextapp.echo2.app.event.ActionListener;
 
 import org.openinsula.arena.echo2.component.model.container.ComponentBuilder;
-import org.openinsula.arena.echo2.component.util.FormFactory;
 
+/**
+ * This genericButton builder is used with the ButtonContainerTableModel
+ * to create Buttons like specified by this class.
+ * @author Joao Galli
+ *
+ */
 public class GenericButtonBuilder implements ComponentBuilder<Button> {
 
+	/**
+	 * If filled this will be the text from the Button.
+	 */
 	private String caption;
 
+	/**
+	 * Button.setActionListener(ActionListener actionListener).
+	 */
 	private ActionListener actionListener;
 
+	/**
+	 * Button image.
+	 */
 	private ImageReference icon;
 
+	/**
+	 * ActionCommand passed thru the actionListener
+	 */
 	private String actionCommand;
 
+	/**
+	 * Styles from the Button
+	 */
 	private Style[] styles;
 
 	public GenericButtonBuilder(String caption, ActionListener actionListener, ImageReference icon, String actionCommand) {
@@ -36,8 +56,12 @@ public class GenericButtonBuilder implements ComponentBuilder<Button> {
 	}
 
 	public Button buildComponent() {
-		Button button = FormFactory.button(caption);
+		Button button = new Button();
 
+		if (caption != null) {
+			button.setText(caption);
+		}
+		
 		if (icon != null) {
 			button.setIcon(icon);
 		}
@@ -89,6 +113,14 @@ public class GenericButtonBuilder implements ComponentBuilder<Button> {
 
 	public void setActionCommand(String actionCommand) {
 		this.actionCommand = actionCommand;
+	}
+
+	public Style[] getStyles() {
+		return styles;
+	}
+
+	public void setStyles(Style[] styles) {
+		this.styles = styles;
 	}
 
 }
