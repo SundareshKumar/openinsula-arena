@@ -164,9 +164,9 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 					value = DateFormatUtils.format((Date) value, tableColumn.getDateFormat());
 				}
 				
-				return value.toString();
 			}
 
+			return value.toString();
 		}
 		else if (tableColumn.getComponentBuilder() != null) {
 
