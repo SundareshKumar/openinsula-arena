@@ -11,8 +11,8 @@ import nextapp.echo2.app.Component;
  *
  * @param <T>
  */
-public interface ComponentBuilder<T extends Component> {
+public interface ComponentBuilder<T extends Component, B> {
 
-	public T buildComponent();
+	public T buildComponent(int columnIndex, B bean);
 	
 }

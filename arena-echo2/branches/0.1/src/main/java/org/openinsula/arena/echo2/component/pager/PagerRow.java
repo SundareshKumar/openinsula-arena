@@ -45,6 +45,7 @@ public class PagerRow extends Row {
 		BotoesControleActionListener botoesControleActionListener = new BotoesControleActionListener();
 
 		// botao 'anterior'
+		
 		Button botaoAnterior = new Button();
 		if (pagerStyles != null) {
 			botaoAnterior.setStyle(pagerStyles.getBackPagerButtonStyle());
@@ -78,7 +79,7 @@ public class PagerRow extends Row {
 
 		// botoes com a numeracao
 		for (int i = startPage; i < endPage; i++) {
-			if (endPage - startPage > 1) {
+			if (endPage - startPage > 0) {
 				Button b = new Button();
 				if (pagerStyles != null) {
 					if (getCurrentPage() == i) {
