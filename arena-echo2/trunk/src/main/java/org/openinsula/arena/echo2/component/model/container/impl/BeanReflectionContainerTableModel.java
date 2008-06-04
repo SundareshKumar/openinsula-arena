@@ -26,7 +26,7 @@ import org.springframework.util.StringUtils;
 public class BeanReflectionContainerTableModel<T> extends BasicContainerTableModel<T> {
 	private static final long serialVersionUID = 1L;
 
-	private List<TableColumn> tableColumns = new ArrayList<TableColumn>();
+	private List<TableColumn<T>> tableColumns = new ArrayList<TableColumn<T>>();
 
 	public BeanReflectionContainerTableModel() {
 	}
@@ -54,7 +54,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 */
 	public boolean addTableColumn(String name, String property, int width) {
 		try {
-			return tableColumns.add(new TableColumn(name, property, width));
+			return tableColumns.add(new TableColumn<T>(name, property, width));
 		}
 		catch (Exception e) {
 			logger.error("There was an error adding a table column in the " + getClass());
@@ -73,7 +73,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 */
 	public boolean addDateTableColumn(String name, String property, String dateFormat, int width) {
 		try {
-			return tableColumns.add(new TableColumn(name, property, width, dateFormat));
+			return tableColumns.add(new TableColumn<T>(name, property, width, dateFormat));
 		}
 		catch (Exception e) {
 			logger.error("There was an error adding a date table column in the " + getClass());
@@ -88,9 +88,9 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 * @param width The column width.
 	 * @return True if succeeded
 	 */
-	public boolean addTableColumn(String name, ComponentBuilder<?> componentBuilder, int width) {
+	public boolean addTableColumn(String name, ComponentBuilder<?, T> componentBuilder, int width) {
 		try {
-			return tableColumns.add(new TableColumn(name, componentBuilder, width));
+			return tableColumns.add(new TableColumn<T>(name, componentBuilder, width));
 		}
 		catch (Exception e) {
 			logger.error("There was an error adding a table column in the " + getClass());
@@ -139,7 +139,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 */
 	@Override
 	public Object getColumnValue(int columnIndex, T bean) {
-		TableColumn tableColumn = tableColumns.get(columnIndex);
+		TableColumn<T> tableColumn = tableColumns.get(columnIndex);
 
 		if (StringUtils.hasText(tableColumn.getProperty())) {
 
@@ -170,12 +170,12 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 		}
 		else if (tableColumn.getComponentBuilder() != null) {
 
-			Component component = tableColumn.getComponentBuilder().buildComponent();
+			Component component = tableColumn.getComponentBuilder().buildComponent(columnIndex, bean);
 
 			if (component instanceof Button) {
 				((Button) component).setActionCommand(getActionCommandFromBean(bean));
 			}
-			// TODO implement the rest of the components
+			// TODO implement the rest of the components that have actionCommand
 
 			return component;
 		}
@@ -203,7 +203,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 * @author realm
 	 * 
 	 */
-	protected static class TableColumn {
+	protected static class TableColumn<K> {
 		/**
 		 * The name of the column that appears on the column header.
 		 */
@@ -217,7 +217,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 		/**
 		 * A component builder
 		 */
-		private ComponentBuilder<? extends Component> componentBuilder;
+		private ComponentBuilder<? extends Component, K> componentBuilder;
 
 		/**
 		 * The size property to calculate the width
@@ -245,7 +245,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 			this.dateFormat = dateFormat;
 		}
 
-		private TableColumn(String name, ComponentBuilder<?> componentBuilder, int width) {
+		private TableColumn(String name, ComponentBuilder<?, K> componentBuilder, int width) {
 			super();
 			this.name = name;
 			this.componentBuilder = componentBuilder;
@@ -292,11 +292,11 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 			this.width = width;
 		}
 
-		public ComponentBuilder<? extends Component> getComponentBuilder() {
+		public ComponentBuilder<? extends Component, K> getComponentBuilder() {
 			return componentBuilder;
 		}
 
-		public void setComponentBuilder(ComponentBuilder<? extends Component> componentBuilder) {
+		public void setComponentBuilder(ComponentBuilder<? extends Component, K> componentBuilder) {
 			this.componentBuilder = componentBuilder;
 		}
 
@@ -324,7 +324,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 		}
 	}
 
-	public List<TableColumn> getTableColumns() {
+	public List<TableColumn<T>> getTableColumns() {
 		return tableColumns;
 	}
 

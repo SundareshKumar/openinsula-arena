@@ -13,7 +13,7 @@ import org.openinsula.arena.echo2.component.model.container.ComponentBuilder;
  * @author Joao Galli
  *
  */
-public class GenericButtonBuilder implements ComponentBuilder<Button> {
+public class GenericButtonBuilder<B> implements ComponentBuilder<Button, B> {
 
 	/**
 	 * If filled this will be the text from the Button.
@@ -55,7 +55,7 @@ public class GenericButtonBuilder implements ComponentBuilder<Button> {
 		this.styles = styles;
 	}
 
-	public Button buildComponent() {
+	public Button buildComponent(int columnIndex, B bean) {
 		Button button = new Button();
 
 		if (caption != null) {
