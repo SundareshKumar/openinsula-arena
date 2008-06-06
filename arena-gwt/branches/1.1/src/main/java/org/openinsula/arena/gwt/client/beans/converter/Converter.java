@@ -1,0 +1,7 @@
+package org.openinsula.arena.gwt.client.beans.converter;
+
+public interface Converter<S,T> {
+
+	T convert(S source);
+
+}
