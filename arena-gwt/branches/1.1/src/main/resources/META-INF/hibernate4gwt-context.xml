@@ -15,6 +15,7 @@
 		class="net.sf.hibernate4gwt.core.HibernateBeanManager"
 		p:pojoStore-ref="pojoStore"
 		p:sessionFactory-ref="sessionFactory"
+		p:classMapper-ref="classMapper"
 	/>
 
 </beans>
