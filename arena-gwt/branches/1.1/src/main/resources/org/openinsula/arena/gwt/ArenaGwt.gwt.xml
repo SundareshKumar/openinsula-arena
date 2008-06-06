@@ -1,6 +1,7 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name='com.googlecode.gwt.math.Math' />
+	<inherits name='net.sf.hibernate4gwt.Hibernate4Gwt' />
 	
 	<source path="client" />
 	

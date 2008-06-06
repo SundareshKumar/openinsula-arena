@@ -70,6 +70,24 @@
 	</distributionManagement>
 
 	<dependencies>
+	
+		<!-- Optional Dependencies (already declared) -->
+	
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+			<version>2.5.4</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.3.1.GA</version>
+			<optional>true</optional>
+		</dependency>
+	
+		<!-- Convenience dependencies -->
+	
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -89,52 +107,6 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-math-server</artifactId>
 			<version>2.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>avalon-framework</groupId>
-					<artifactId>avalon-framework</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<version>2.5.4</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.3.1.GA</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.hibernate4gwt</groupId>
@@ -185,17 +157,10 @@
 						<id>compile</id>
 						<phase>process-classes</phase>
 						<goals>
+							<goal>mergewebxml</goal>
 							<goal>compile</goal>
 						</goals>
-					</execution>
-					<!-- 
-						<execution>
-						<goals>
-						<goal>mergewebxml</goal>
-						<goal>compile</goal>
-						</goals>
 						</execution>
-					-->
 				</executions>
 			</plugin>
 			<plugin>
