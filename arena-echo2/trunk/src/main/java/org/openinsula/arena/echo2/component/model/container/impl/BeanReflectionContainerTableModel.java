@@ -166,7 +166,11 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 				
 			}
 
-			return value.toString();
+			if (value != null) {
+				return value.toString();
+			} else {
+				return "";
+			}
 		}
 		else if (tableColumn.getComponentBuilder() != null) {
 
