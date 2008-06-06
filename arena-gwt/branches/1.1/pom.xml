@@ -157,7 +157,6 @@
 						<id>compile</id>
 						<phase>process-classes</phase>
 						<goals>
-							<goal>mergewebxml</goal>
 							<goal>compile</goal>
 						</goals>
 						</execution>
