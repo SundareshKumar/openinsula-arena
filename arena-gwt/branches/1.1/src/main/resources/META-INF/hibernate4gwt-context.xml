@@ -7,7 +7,7 @@
 >
 	<bean
 		id="pojoStore"
-		class="net.sf.hibernate4gwt.core.store.stateless.StatelessPojoStore"
+		class="net.sf.hibernate4gwt.core.store.stateful.HttpSessionPojoStore"
 	/>
 
 	<bean
@@ -15,7 +15,6 @@
 		class="net.sf.hibernate4gwt.core.HibernateBeanManager"
 		p:pojoStore-ref="pojoStore"
 		p:sessionFactory-ref="sessionFactory"
-		p:classMapper-ref="classMapper"
 	/>
 
 </beans>
