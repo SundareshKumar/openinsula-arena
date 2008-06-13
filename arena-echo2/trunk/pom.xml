@@ -4,7 +4,7 @@
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-echo2</artifactId>
 	<name>Project arena-echo2</name>
-	<version>0.4.0-SNAPSHOT</version>
+	<version>0.4.0</version>
 	<description>
 		Commom NextApp Echo2 components and tools.
 	</description>
