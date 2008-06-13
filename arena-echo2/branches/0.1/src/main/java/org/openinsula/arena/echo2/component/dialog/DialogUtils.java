@@ -26,9 +26,9 @@ import br.com.insula.jazz.view.echo.AbstractEchoWindow;
 
 /**
  * Classe utilitária para exibição de caixas de Mensagem, Confirmação e Opção.
- *
+ * 
  * @author fabiano
- *
+ * 
  */
 public final class DialogUtils extends AbstractEchoWindow {
 
@@ -139,17 +139,20 @@ public final class DialogUtils extends AbstractEchoWindow {
 	}
 
 	private void setButtonAction(final Button button, final ActionListener actionListener) {
-		if (!closeActionListener.equals(actionListener)) {
-			final ActionListener oldAction = actionMap.get(button);
-			button.removeActionListener(oldAction);
-			actionMap.put(button, actionListener);
+		ActionListener old = actionMap.get(button);
+
+		if (old != null) {
+			button.removeActionListener(old);
+			actionMap.remove(button);
 		}
 
-		button.removeActionListener(closeActionListener);
-		button.addActionListener(actionListener);
 		if (!closeActionListener.equals(actionListener)) {
-			button.addActionListener(closeActionListener);
+			actionMap.put(button, actionListener);
+			button.addActionListener(actionListener);
 		}
+		
+		button.removeActionListener(closeActionListener);
+		button.addActionListener(closeActionListener);
 	}
 
 	private void setButtons(final Component... components) {
