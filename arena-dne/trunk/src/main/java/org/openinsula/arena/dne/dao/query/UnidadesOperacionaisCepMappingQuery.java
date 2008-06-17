@@ -60,23 +60,23 @@ public class UnidadesOperacionaisCepMappingQuery extends MappingSqlQuery {
 		StringBuilder sb = new StringBuilder();
 		sb.append(rs.getString("tipo"));
 		sb.append(" ");
-		String s = rs.getString("preposicao");
-		if (!StringUtils.isBlank(s)) {
-			sb.append(s);
+		String preposicao = rs.getString("preposicao");
+		if (!StringUtils.isBlank(preposicao)) {
+			sb.append(preposicao.trim());
 			sb.append(" ");
 		}
-		s = rs.getString("titulo");
-		if (!StringUtils.isBlank(s)) {
-			sb.append(s);
+		String titulo = rs.getString("titulo");
+		if (!StringUtils.isBlank(titulo)) {
+			sb.append(titulo.trim());
 			sb.append(" ");
 		}
 		sb.append(rs.getString("logradouro"));
 		endereco.setLogradouro(sb.toString());
 
-		s = rs.getString("nomeComplemento").trim();
-		if (!StringUtils.isBlank(s)) {
+		String nomeComplemento = rs.getString("nomeComplemento");
+		if (!StringUtils.isBlank(nomeComplemento)) {
 			sb = new StringBuilder();
-			sb.append(s);
+			sb.append(nomeComplemento.trim());
 			sb.append(" ");
 			sb.append(rs.getString("numeroComplemento"));
 			endereco.setComplemento(sb.toString());
