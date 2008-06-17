@@ -25,15 +25,4 @@ public abstract class LookupAction {
 
 	protected abstract Object createService();
 
-	public int hashCode() {
-		return serviceClass.hashCode();
-	}
-
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		return serviceClass == ((LookupAction) obj).serviceClass;
-	}
 }
