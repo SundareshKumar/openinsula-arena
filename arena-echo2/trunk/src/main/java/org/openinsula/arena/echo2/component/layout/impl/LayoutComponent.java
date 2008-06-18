@@ -4,18 +4,26 @@ import nextapp.echo2.app.Component;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.echo2.component.layout.LayoutElement;
 
 public class LayoutComponent implements LayoutElement {
+	private Log logger = LogFactory.getLog(getClass());
+
 	private Component caption;
 
 	private Component field;
-	
+
 	private boolean visibleCaption = true;
 
 	public LayoutComponent(Component caption, Component field) {
 		this.caption = caption;
 		this.field = field;
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("Creating Layout Component: " + toString());
+		}
 	}
 
 	public LayoutComponent(Component caption, Component field, boolean visibleCaption) {
@@ -37,6 +45,15 @@ public class LayoutComponent implements LayoutElement {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(caption).append(field).toHashCode();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("LayoutComponent, caption: ");
+		sb.append(caption);
+		sb.append(", field: ").append(field);
+		sb.append(", visibleCaption: ").append(visibleCaption);
+		return sb.toString();
 	}
 
 	public Component getCaption() {

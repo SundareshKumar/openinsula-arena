@@ -32,8 +32,8 @@ public class OrderedLayout extends AbstractLayout {
 
 	private int captionWidth = -1;
 
-	private int traversalIndex = 0;
-	
+	private int traversalIndex = -1;
+
 	public OrderedLayout() {
 	}
 
@@ -68,8 +68,8 @@ public class OrderedLayout extends AbstractLayout {
 				else if (layoutComponent.isVisibleCaption()) {
 					main.add(buildAndConfigureDiv(new Label(layoutComponent.getField().getId())));
 				}
-				configureComponent(layoutComponent.getCaption());
-				configureComponent(layoutComponent.getField());
+				configureComponent(layoutComponent.getCaption(), false);
+				configureComponent(layoutComponent.getField(), true);
 
 				main.add(buildAndConfigureDiv(layoutComponent.getField()));
 				break;
@@ -123,6 +123,17 @@ public class OrderedLayout extends AbstractLayout {
 			case COMPONENT:
 				LayoutComponent layoutComponent = (LayoutComponent) entry.getLayoutElement();
 
+				if (logger.isDebugEnabled()) {
+
+					if (layoutComponent.getCaption() instanceof Label) {
+						logger.debug("Adding: " + ((Label) layoutComponent.getCaption()).getText());
+					}
+					else {
+						logger.debug("Adding: " + layoutComponent);
+					}
+
+				}
+
 				Row row = new Row();
 
 				if (layoutComponent.getCaption() != null) {
@@ -139,11 +150,14 @@ public class OrderedLayout extends AbstractLayout {
 					}
 					row.add(buildAndConfigureDiv);
 				}
-				configureComponent(layoutComponent.getCaption());
-				configureComponent(layoutComponent.getField());
+				configureComponent(layoutComponent.getCaption(), false);
+				configureComponent(layoutComponent.getField(), true);
 
 				row.add(buildAndConfigureDiv(layoutComponent.getField()));
-
+				
+				row.setFocusTraversalParticipant(false);
+				row.setFocusTraversalIndex(-1);
+				
 				main.add(row);
 				break;
 			case STYLE:
@@ -173,6 +187,10 @@ public class OrderedLayout extends AbstractLayout {
 				break;
 			}
 		}
+		
+		main.setFocusTraversalParticipant(false);
+		main.setFocusTraversalIndex(-1);
+
 		return main;
 	}
 
@@ -199,15 +217,15 @@ public class OrderedLayout extends AbstractLayout {
 				Column column = new Column();
 
 				if (layoutComponent.getCaption() != null) {
-					configureComponent(layoutComponent.getCaption());
+					configureComponent(layoutComponent.getCaption(), false);
 					column.add(buildAndConfigureDiv(layoutComponent.getCaption()));
 				}
 				else if (layoutComponent.isVisibleCaption()) {
 					Label label = new Label(layoutComponent.getField().getId());
-					configureComponent(label);
+					configureComponent(label, false);
 					column.add(buildAndConfigureDiv(label));
 				}
-				configureComponent(layoutComponent.getField());
+				configureComponent(layoutComponent.getField(), true);
 
 				column.add(buildAndConfigureDiv(layoutComponent.getField()));
 
@@ -240,6 +258,10 @@ public class OrderedLayout extends AbstractLayout {
 				break;
 			}
 		}
+		
+		main.setFocusTraversalParticipant(false);
+		main.setFocusTraversalIndex(-1);
+
 		return main;
 	}
 
@@ -255,7 +277,7 @@ public class OrderedLayout extends AbstractLayout {
 		return null;
 	}
 
-	private void configureComponent(Component field) {
+	private void configureComponent(Component field, boolean traversalParticipant) {
 		if (field == null) {
 			return;
 		}
@@ -268,7 +290,10 @@ public class OrderedLayout extends AbstractLayout {
 			}
 		}
 
-		field.setFocusTraversalIndex(traversalIndex++);
+		if (traversalParticipant && traversalIndex > 0) {
+			field.setFocusTraversalParticipant(true);
+			field.setFocusTraversalIndex(traversalIndex++);
+		}
 	}
 
 	public Div buildAndConfigureDiv(Component component) {

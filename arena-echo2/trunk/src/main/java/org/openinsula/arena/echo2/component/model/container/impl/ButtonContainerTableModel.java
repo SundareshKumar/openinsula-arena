@@ -36,6 +36,14 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 
 	private ButtonContainerTableModelStyles styles;
 
+	public ButtonContainerTableModel() {
+		super();
+	}
+
+	public ButtonContainerTableModel(boolean permitDuplicates, boolean substituteDuplicate) {
+		super(permitDuplicates, substituteDuplicate);
+	}
+
 	@Override
 	public int getColumnCount() {
 		String[] columns = getColumns();
@@ -143,7 +151,7 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 		Button button = null;
 
 		if (styles != null && styles.getDeleteImage() != null) {
-			button = FormFactory.iconButton("Selecionar", styles.getDeleteImage());
+			button = FormFactory.iconButton("Clique para excluir", styles.getDeleteImage());
 		}
 		else {
 			button = FormFactory.button("Excluir");
@@ -152,7 +160,9 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 		if (deleteButtonActionListener != null) {
 			button.addActionListener(deleteButtonActionListener);
 		}
-
+		
+		button.setToolTipText("Clique para excluir");
+		
 		if (beanId != null) {
 			button.setActionCommand(beanId.toString());
 		}
@@ -171,7 +181,7 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 		Button button = null;
 
 		if (styles != null) {
-			button = FormFactory.iconButton("Selecionar", styles.getEditImage());
+			button = FormFactory.iconButton("Clique para editar", styles.getEditImage());
 		}
 		else {
 			button = FormFactory.button("Editar");
@@ -180,6 +190,8 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 			button.addActionListener(editButtonActionListener);
 		}
 
+		button.setToolTipText("Clique para editar");
+		
 		if (beanId != null) {
 			button.setActionCommand(beanId.toString());
 		}

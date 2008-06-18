@@ -6,6 +6,14 @@ import java.util.Comparator;
 public class SortableContainerTableModel<T> extends PageableContainerTableModel<T> {
 	private static final long serialVersionUID = 1L;
 
+	public SortableContainerTableModel() {
+		super();
+	}
+
+	public SortableContainerTableModel(boolean permitDuplicates, boolean substituteDuplicate) {
+		super(permitDuplicates, substituteDuplicate);
+	}
+
 	public void sortItems(Comparator<T> comparator) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Sorting table:" + this.getClass());
