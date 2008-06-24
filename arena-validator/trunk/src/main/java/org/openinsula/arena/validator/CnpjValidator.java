@@ -1,14 +1,22 @@
 package org.openinsula.arena.validator;
 
-public class DefaultCnpjValidator implements Validator {
+import org.hibernate.validator.Validator;
+
+public class CnpjValidator implements Validator<Cnpj> {
+
 	private static int[] multiplicadoresPrimeiroDigito = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
 	private static int[] multiplicadoresSegundoDigito = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
-	public boolean validate(String value) {
-		value = StringUtils.getDigitsOnly(value);
-		if (value.matches("\\d{14}")) {
-			char[] numbers = value.toCharArray();
+	@Override
+	public void initialize(Cnpj parameters) {
+	}
+
+	@Override
+	public boolean isValid(Object value) {
+		String s = ValidatorUtils.getDigitsOnly(value);
+		if (s.matches("\\d{14}")) {
+			char[] numbers = s.toCharArray();
 			int soma = 0;
 
 			for (int i = 0; i < multiplicadoresPrimeiroDigito.length; i++) {

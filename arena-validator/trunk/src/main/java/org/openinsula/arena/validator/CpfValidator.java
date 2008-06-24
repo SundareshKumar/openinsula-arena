@@ -3,14 +3,14 @@ package org.openinsula.arena.validator;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DefaultCpfValidator implements Validator {
+import org.hibernate.validator.Validator;
+
+public class CpfValidator implements Validator<Cpf> {
+
 	private static Set<String> invalidValues = new HashSet<String>();
 
 	static {
-		String zero = "";
-		for (int i = 1; i <= 11; i++) {
-			invalidValues.add(zero = (zero + "0"));
-		}
+		invalidValues.add("00000000000");
 		invalidValues.add("11111111111");
 		invalidValues.add("22222222222");
 		invalidValues.add("33333333333");
@@ -22,10 +22,16 @@ public class DefaultCpfValidator implements Validator {
 		invalidValues.add("99999999999");
 	}
 
-	public boolean validate(String value) {
-		value = StringUtils.getDigitsOnly(value);
-		if (value.matches("\\d{11}") && !invalidValues.contains(value)) {
-			char[] numbers = value.toCharArray();
+	@Override
+	public void initialize(Cpf parameters) {
+	}
+
+	@Override
+	public boolean isValid(Object value) {
+		String s = ValidatorUtils.getDigitsOnly(value);
+
+		if (s.matches("\\d{11}") && !invalidValues.contains(s)) {
+			char[] numbers = s.toCharArray();
 			int soma = 0;
 
 			for (int i = 0; i < 9; i++) {
