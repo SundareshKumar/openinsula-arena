@@ -57,6 +57,10 @@
 			<id>openinsula.org</id>
 			<url>http://maven.openinsula.org</url>
 		</repository>
+		<repository>
+			<id>JBoss Maven Repository</id>
+			<url>http://repository.jboss.org/maven2/</url>
+		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
