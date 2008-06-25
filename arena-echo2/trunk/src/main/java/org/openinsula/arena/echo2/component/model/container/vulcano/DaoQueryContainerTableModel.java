@@ -13,7 +13,7 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private CommandInvoker commandInvoker;
+	protected CommandInvoker commandInvoker;
 
 	private DaoQuery<T> daoQuery;
 
@@ -75,6 +75,10 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 
 	public void setCommandInvoker(CommandInvoker commandInvoker) {
 		this.commandInvoker = commandInvoker;
+	}
+
+	public CommandInvoker getCommandInvoker() {
+		return commandInvoker;
 	}
 
 }
