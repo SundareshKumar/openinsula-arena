@@ -2,10 +2,60 @@ package org.openinsula.arena.validator;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Locale;
+
 import org.hibernate.validator.ClassValidator;
+import org.hibernate.validator.InvalidValue;
 import org.junit.Test;
 
 public class PersonTestCase {
+
+	@Test
+	public void testMessagesWithDefaultLocale() {
+		ClassValidator<Person> classValidator = new ClassValidator<Person>(Person.class);
+		Person person = new Person();
+
+		InvalidValue[] invalidValues = classValidator.getInvalidValues(person, "cpf");
+		assertEquals("Invalid CPF", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "cnpj");
+		assertEquals("Invalid CNPJ", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "cpfOrCnpj");
+		assertEquals("Invalid CPF or CNPJ", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "dateFormat");
+		assertEquals("Invalid date format", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "pisPasep");
+		assertEquals("Invalid PIS/PASEP", invalidValues[0].getMessage());
+	}
+
+	@Test
+	public void testMessagesWithPtBrLocale() {
+		Locale oldLocale = Locale.getDefault();
+		Locale.setDefault(new Locale("pt", "BR"));
+
+		ClassValidator<Person> classValidator = new ClassValidator<Person>(Person.class);
+		Person person = new Person();
+
+		InvalidValue[] invalidValues = classValidator.getInvalidValues(person, "cpf");
+		assertEquals("CPF inválido", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "cnpj");
+		assertEquals("CNPJ inválido", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "cpfOrCnpj");
+		assertEquals("CPF ou CNPJ inválido", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "dateFormat");
+		assertEquals("Formato de data inválido", invalidValues[0].getMessage());
+
+		invalidValues = classValidator.getInvalidValues(person, "pisPasep");
+		assertEquals("PIS/PASEP inválido", invalidValues[0].getMessage());
+
+		Locale.setDefault(oldLocale);
+	}
 
 	@Test
 	public void testCpf() {
