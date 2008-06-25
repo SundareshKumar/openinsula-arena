@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 
-public class NavigationSupport extends Composite implements HistoryListener {
+public abstract class NavigationSupport extends Composite implements HistoryListener {
 
 	private final List<Hyperlink> links;
 
