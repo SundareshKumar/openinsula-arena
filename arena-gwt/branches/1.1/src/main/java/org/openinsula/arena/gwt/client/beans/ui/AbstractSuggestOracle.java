@@ -15,14 +15,33 @@
  */
 package org.openinsula.arena.gwt.client.beans.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SuggestOracle;
 
 public abstract class AbstractSuggestOracle<T> extends SuggestOracle {
 
     private static HTML convertMe = new HTML();
-
-    public static String escapeText(final String escapeMe) {
+    
+    private List<OracleSuggestListener> suggestionListeners = new ArrayList<OracleSuggestListener>();
+	
+	public void addOracleSuggestListener(OracleSuggestListener listener) {
+		suggestionListeners.add(listener);
+	}
+	
+	public void removeOracleSuggestListener(OracleSuggestListener listener) {
+		suggestionListeners.remove(listener);
+	}
+	
+	protected void fireOracleSuggestUpdated(OracleSuggestEvent event) {
+		for (OracleSuggestListener listener : suggestionListeners) {
+			listener.onSuggestsUpdated(event);
+		}
+	}
+    
+	public static String escapeText(final String escapeMe) {
         convertMe.setText(escapeMe);
         String escaped = convertMe.getHTML();
         return escaped;
@@ -35,7 +54,7 @@ public abstract class AbstractSuggestOracle<T> extends SuggestOracle {
      * @param candidate
      * @param query
      * @return
-     */
+     */ 
     public static String highlight(final String candidate, String query) {
 
         int index = 0;
@@ -62,20 +81,8 @@ public abstract class AbstractSuggestOracle<T> extends SuggestOracle {
         // Finish creating the formatted string.
         String end = candidate.substring(cursor);
         accum.append(escapeText(end));
-
+        
         return accum.toString();
     }
-
-    /**
-     * Repsonsible for turning the final string into an object of type T.
-     * Some Oracles may choose to simply run anohter requestSuggestions()
-     * then take the first element returned. Others (like those that
-     * operate on a List<String> instead of List<T> may need to do a
-     * separate Async call to load the object.
-     *
-     * @param completeStr
-     * @param listener
-     */
-    public abstract void fireCompleteListenerFromCompleteString(
-            String completeStr, CompleteListener<T> listener);
+    
 }
