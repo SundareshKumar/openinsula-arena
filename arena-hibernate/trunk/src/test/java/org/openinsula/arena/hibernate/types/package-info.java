@@ -31,13 +31,14 @@
 				parameters = {
 					@Parameter(name = AnnotatedEnumUserType.PARAM_ENUM_CLASS, value = "org.openinsula.arena.hibernate.types.UFIntEnumType")
 				}
-		),
+		)
 })
 package org.openinsula.arena.hibernate.types;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+
 
 
 
