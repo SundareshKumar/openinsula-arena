@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena Hibernate.
  *
  *  Arena Hibernate is free software: you can redistribute it and/or modify
@@ -18,36 +18,69 @@
  */
 package org.openinsula.arena.hibernate;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
-import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import org.springframework.core.io.ByteArrayResource;
 
-public abstract class AbstractHibernatePropertiesFactoryBean implements FactoryBean {
+public abstract class AbstractHibernatePropertiesFactoryBean extends PropertiesFactoryBean {
 
-	protected abstract String getDialect();
+	private boolean enversEnabled = false;
 
 	@Override
-	public Object getObject() throws Exception {
+	protected Object createInstance() throws IOException {
+		createDefaultProperties();
+		setLocalOverride(true);
+
+		return super.createInstance();
+	}
+
+	private void createDefaultProperties() throws IOException {
+		Properties defaultProperties = getDefaultProperties();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(defaultProperties.size() * 30);
+
+		defaultProperties.store(baos, null);
+
+		ByteArrayResource resource = new ByteArrayResource(baos.toByteArray()) {
+
+			// Spring always call this method. Since the default implementations always throws the exception,
+			// it's necessary to override and ignore it. We won't use the filename anyway.
+			@Override
+			public String getFilename() throws IllegalStateException {
+				return "";
+			}
+
+		};
+
+		setLocation(resource);
+	}
+
+	protected Properties getDefaultProperties() {
 		Properties properties = new Properties();
 
 		properties.put("hibernate.dialect", getDialect());
-		properties.put("hibernate.show_sql", true);
-		properties.put("hibernate.format_sql", true);
+		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.format_sql", "true");
 		properties.put("hibernate.cache.provider_class", "net.sf.ehcache.hibernate.SingletonEhCacheProvider");
-		properties.put("hibernate.bytecode.use_reflection_optimizer", true);
+		properties.put("hibernate.bytecode.use_reflection_optimizer", "true");
+
+		if (enversEnabled) {
+			final String enversListener =  "org.jboss.envers.event.VersionsEventListener";
+
+			properties.put("hibernate.ejb.event.post-insert", enversListener);
+			properties.put("hibernate.ejb.event.post-update", enversListener);
+			properties.put("hibernate.ejb.event.post-delete", enversListener);
+		}
 
 		return properties;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class getObjectType() {
-		return Properties.class;
+	public void setEnversEnabled(final boolean enable) {
+		this.enversEnabled = enable;
 	}
 
-	@Override
-	public boolean isSingleton() {
-		return true;
-	}
+	protected abstract String getDialect();
 
 }

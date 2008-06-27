@@ -1,6 +1,6 @@
 /*
  *  (C) Copyright 2008 Insula Tecnologia da Informacao Ltda.
- * 
+ *
  *  This file is part of Arena Hibernate.
  *
  *  Arena Hibernate is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-@ContextConfiguration(locations = { "/test-context.xml" })
+@ContextConfiguration
 public abstract class AbstractUserTypeTestCase extends AbstractTransactionalJUnit4SpringContextTests {
 
 	protected final Log logger = LogFactory.getLog(getClass());
