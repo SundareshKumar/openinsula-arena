@@ -22,10 +22,9 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 	private boolean order;
 
 	/**
-	 * This method will run the daoQuery in the DaoCommandTransactionFacade
-	 * specified and update the tableModel items.
+	 * This method will run the daoQuery in the CommandInvoker specified and
+	 * update the tableModel items.
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void updateTableItems() {
 		if (commandInvoker == null) {
@@ -38,7 +37,7 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 			return;
 		}
 
-		final List<T> list = (List<T>)commandInvoker.invoke(CommandFactory.<T> newFind(daoQuery));
+		final List<T> list = (List<T>) commandInvoker.invoke(CommandFactory.<T> newFind(daoQuery));
 		setItems(list);
 	}
 
