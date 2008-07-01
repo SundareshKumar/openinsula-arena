@@ -7,11 +7,15 @@ import javax.persistence.Id;
 
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
-public abstract class GwtEntity<T extends Serializable> extends LazyPojo implements Serializable {
+public abstract class GwtEntity<T extends Number> extends LazyPojo implements Serializable {
 
 	@Id
 	@GeneratedValue
 	private T id;
+
+	public boolean isNew() {
+		return getId() == null || getId().longValue() == 0L;
+	}
 
 	public T getId() {
 		return id;
