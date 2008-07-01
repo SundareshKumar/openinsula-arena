@@ -15,24 +15,59 @@
  */
 package org.openinsula.arena.gwt.client.beans.ui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DeckPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.SuggestionEvent;
-import com.google.gwt.user.client.ui.SuggestionHandler;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CompleterBox<T> extends Composite {
 
 	private final SuggestBox suggestBox;
 	
+	private DeckPanel deckPanel;
+	
+	private Label selectedItemLabel;
+	
+	private Hyperlink changeSelectionLink;
+	
 	private AbstractSuggestOracle<T> suggestOracle;
 	
 	private Timer keyboardEnterTimer;
 	
+	private T selectedItem;
+	
+	private CompleterBoxRenderer<T> renderer = new StringCompleterBoxRenderer<T>();
+	
+	public void setRenderer(CompleterBoxRenderer<T> renderer) {
+		this.renderer = renderer;
+	}
+
+	public void setSelectedItem(T selectedItem) {
+		this.selectedItem = selectedItem;
+		if (selectedItem != null) {
+			GWT.log("label: " + selectedItemLabel, null);
+			GWT.log("renderer: " + renderer, null);
+			deckPanel.showWidget(1);
+			selectedItemLabel.setText(renderer.render(selectedItem));
+		} else {
+			deckPanel.showWidget(0);
+			selectedItemLabel.setText("");
+		}
+	}
+
+	public T getSelectedItem() {
+		return selectedItem;
+	}
+
 	public void addCompleteListener(CompleteListener<T> listener) {
 		suggestBox.addEventHandler(listener);
 	}
@@ -46,20 +81,18 @@ public class CompleterBox<T> extends Composite {
 		suggestBox = new SuggestBox(oracle);
 		this.suggestOracle = oracle;
 		
-//		suggestBox.addFocusListener(new FocusListenerAdapter() {
-//			@Override
-//			public void onLostFocus(Widget sender) {
-//			}
-//		});
-		
-		suggestBox.addEventHandler(new SuggestionHandler() {
-			public void onSuggestionSelected(final SuggestionEvent event) {
+		suggestBox.addEventHandler(new CompleteListener<T>() {
+			@Override
+			public void onComplete(T result) {
 				if (keyboardEnterTimer != null) {
 					keyboardEnterTimer.cancel();
 				}
+				setSelectedItem(result);
+				
+				deckPanel.showWidget(1);
 			}
 		});
-
+		
 		suggestBox.addKeyboardListener(new KeyboardListenerAdapter() {
 
 			@Override
@@ -75,8 +108,28 @@ public class CompleterBox<T> extends Composite {
 			}
 		});
 		
+		deckPanel = new DeckPanel();
+		changeSelectionLink = new Hyperlink("Alterar Selecao", null);
+		changeSelectionLink.setStyleName("completer-changeSelectionLink");
+		selectedItemLabel = new Label();
 		
-		initWidget(suggestBox);
+		changeSelectionLink.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				deckPanel.showWidget(0);
+				selectedItem = null;
+				selectedItemLabel.setText("");
+			}
+		});
+		
+		VerticalPanel panel =  new VerticalPanel();
+		panel.add(changeSelectionLink);
+		panel.add(selectedItemLabel);
+		
+		deckPanel.add(suggestBox);
+		deckPanel.add(panel);
+		
+		deckPanel.showWidget(0);
+		initWidget(deckPanel);
 	}
 
 	public void setText(final String string) {

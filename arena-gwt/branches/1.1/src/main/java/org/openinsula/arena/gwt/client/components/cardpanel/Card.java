@@ -10,6 +10,20 @@ public interface Card extends CardChangeListener {
 	
 	void removeCardChangeListener(CardChangeListener listener);
 	
-	boolean fireCardChanged(CardChangeEvent event);
+	boolean fireCardShowed(CardChangeEvent event);
+	
+	boolean fireCardHided(CardChangeEvent event);
+	
+	void setNextCard(Card card);
+	
+	void setPreviousCard(Card card);
+	
+	Card getNextCard();
+	
+	Card getPreviousCard();
+	
+	String getNextLabel();
+	
+	String getPreviousLabel();
 	
 }

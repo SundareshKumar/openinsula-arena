@@ -9,6 +9,11 @@ public interface CardChangeListener {
 	 * @param event
 	 * @return booleano indicando se a troca de paineis deve proceder.
 	 */
-	boolean onCardChange(CardChangeEvent event);
+	boolean onShow(CardChangeEvent event);
 	
+	/**
+	 * @param event
+	 * @return booleano indicando se a troca de paineis deve proceder.
+	 */
+	boolean onHide(CardChangeEvent event);
 }
