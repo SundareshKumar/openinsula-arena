@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
+@MappedSuperclass
 public abstract class GwtEntity<T extends Number> extends LazyPojo implements Serializable {
 
 	@Id
