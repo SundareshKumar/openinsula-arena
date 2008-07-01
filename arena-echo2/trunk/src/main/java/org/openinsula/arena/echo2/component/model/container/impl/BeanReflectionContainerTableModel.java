@@ -197,7 +197,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 		String[] names = new String[tableColumns.size()];
 		int counter = 0;
 
-		for (TableColumn tableColumn : tableColumns) {
+		for (TableColumn<T> tableColumn : tableColumns) {
 			names[counter++] = tableColumn.getName();
 		}
 
@@ -319,7 +319,7 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 			return columnWidthMap.get(columnIndex);
 		}
 		catch (Exception e) {
-			logger.error("An error ocurred when trying to capture the width of the column: " + columnIndex, e);
+			logger.info("An error ocurred when trying to capture the width of the column: " + columnIndex, e);
 			return -1;
 		}
 	}
