@@ -17,10 +17,6 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 
 	private DaoQuery<T> daoQuery;
 
-	private String sortedProperty;
-
-	private boolean order;
-
 	/**
 	 * This method will run the daoQuery in the CommandInvoker specified and
 	 * update the tableModel items.
@@ -54,22 +50,6 @@ public class DaoQueryContainerTableModel<T> extends UpdatableContainerTableModel
 
 	public DaoQuery<T> getDaoQuery() {
 		return daoQuery;
-	}
-
-	public String getSortedProperty() {
-		return sortedProperty;
-	}
-
-	public void setSortedProperty(String sortedProperty) {
-		this.sortedProperty = sortedProperty;
-	}
-
-	public boolean isOrder() {
-		return order;
-	}
-
-	public void setOrder(boolean order) {
-		this.order = order;
 	}
 
 	public void setCommandInvoker(CommandInvoker commandInvoker) {

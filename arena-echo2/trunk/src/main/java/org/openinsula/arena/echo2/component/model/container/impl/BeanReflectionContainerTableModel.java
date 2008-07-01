@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nextapp.echo2.app.Button;
 import nextapp.echo2.app.Component;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.openinsula.arena.echo2.component.model.container.ComponentBuilder;
 import org.springframework.util.StringUtils;
@@ -27,6 +27,8 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	private static final long serialVersionUID = 1L;
 
 	private List<TableColumn<T>> tableColumns = new ArrayList<TableColumn<T>>();
+
+	private Map<Integer, Integer> columnWidthMap = new HashMap<Integer, Integer>();
 
 	public BeanReflectionContainerTableModel() {
 	}
@@ -54,7 +56,15 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 */
 	public boolean addTableColumn(String name, String property, int width) {
 		try {
-			return tableColumns.add(new TableColumn<T>(name, property, width));
+			TableColumn<T> tableColumn = new TableColumn<T>(name, property);
+
+			boolean added = tableColumns.add(tableColumn);
+
+			if (added) {
+				int index = findTableColumnIndex(tableColumn);
+				columnWidthMap.put(index, width);
+			}
+			return added;
 		}
 		catch (Exception e) {
 			logger.error("There was an error adding a table column in the " + getClass());
@@ -73,7 +83,15 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 */
 	public boolean addDateTableColumn(String name, String property, String dateFormat, int width) {
 		try {
-			return tableColumns.add(new TableColumn<T>(name, property, width, dateFormat));
+			TableColumn<T> tableColumn = new TableColumn<T>(name, property, dateFormat);
+
+			boolean added = tableColumns.add(tableColumn);
+
+			if (added) {
+				int index = findTableColumnIndex(tableColumn);
+				columnWidthMap.put(index, width);
+			}
+			return added;
 		}
 		catch (Exception e) {
 			logger.error("There was an error adding a date table column in the " + getClass());
@@ -90,7 +108,15 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 */
 	public boolean addTableColumn(String name, ComponentBuilder<?, T> componentBuilder, int width) {
 		try {
-			return tableColumns.add(new TableColumn<T>(name, componentBuilder, width));
+			TableColumn<T> tableColumn = new TableColumn<T>(name, componentBuilder);
+
+			boolean added = tableColumns.add(tableColumn);
+
+			if (added) {
+				int index = findTableColumnIndex(tableColumn);
+				columnWidthMap.put(index, width);
+			}
+			return added;
 		}
 		catch (Exception e) {
 			logger.error("There was an error adding a table column in the " + getClass());
@@ -99,29 +125,73 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	}
 
 	/**
+	 * Find a tableColumn by it's name
+	 * @param name
+	 * @return
+	 */
+	public TableColumn<T> findTableColumnByName(final String name) {
+		TableColumn<T> found = null;
+		for (TableColumn<T> tableColumn : tableColumns) {
+			if (tableColumn.getName().equals(name)) {
+				found = tableColumn;
+				break;
+			}
+		}
+
+		return found;
+	}
+
+	/**
+	 * @param tableColumn
+	 * @return Returns the index of the table column
+	 */
+	private int findTableColumnIndex(final TableColumn<T> tableColumn) {
+		if (tableColumns.contains(tableColumn)) {
+			for (int i = 0; i < tableColumns.size(); i++) {
+				if (tableColumns.get(i).equals(tableColumn)) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	/**
 	 * Searches for a table column with the name from the parameter and removes
 	 * it from the list.
 	 * @param name
 	 * @return True if succeeded
 	 */
-	public boolean removeTableColumn(String name) {
+	public boolean removeTableColumn(final String name) {
+		TableColumn<T> findTableColumnByName = findTableColumnByName(name);
+		return removeTableColumn(findTableColumnByName);
+	}
+
+	/**
+	 * @param tableColumn
+	 * @return Tries to remove
+	 */
+	public boolean removeTableColumn(final TableColumn<T> tableColumn) {
 		try {
-			TableColumn found = null;
-			for (TableColumn tableColumn : tableColumns) {
-				if (tableColumn.getName().equals(name)) {
-					found = tableColumn;
-					break;
-				}
+			boolean removed = tableColumns.remove(tableColumn);
+
+			if (removed) {
+				int findTableColumnIndex = findTableColumnIndex(tableColumn);
+				columnWidthMap.remove(findTableColumnIndex);
 			}
 
-			return tableColumns.remove(found);
+			return removed;
 		}
 		catch (Exception e) {
-			logger.error("There was an erro removing a table column in the " + getClass());
+			logger.error("There was an error removing a table column in the " + getClass());
 			return false;
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.openinsula.arena.echo2.component.model.container.impl.BasicContainerTableModel#getColumns()
+	 */
 	@Override
 	public String[] getColumns() {
 		String[] names = new String[tableColumns.size()];
@@ -163,12 +233,13 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 				if (value instanceof Date) {
 					value = DateFormatUtils.format((Date) value, tableColumn.getDateFormat());
 				}
-				
+
 			}
 
 			if (value != null) {
 				return value.toString();
-			} else {
+			}
+			else {
 				return "";
 			}
 		}
@@ -203,115 +274,39 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	}
 
 	/**
-	 * Wrapper class to control properties from each column.
-	 * @author realm
-	 * 
+	 * Adds a column width
+	 * @param columnIndex
+	 * @param width
 	 */
-	protected static class TableColumn<K> {
-		/**
-		 * The name of the column that appears on the column header.
-		 */
-		private String name;
+	public void addColumnWidth(int columnIndex, int width) {
+		columnWidthMap.put(columnIndex, width);
+	}
 
-		/**
-		 * The property that will be get from the bean using reflection
-		 */
-		private String property;
-
-		/**
-		 * A component builder
-		 */
-		private ComponentBuilder<? extends Component, K> componentBuilder;
-
-		/**
-		 * The size property to calculate the width
-		 */
-		private int width = -1;
-
-		/**
-		 * The date format to be used, if this dateFormat is not null or empty
-		 * the tableModel will automatically use it.
-		 */
-		private String dateFormat;
-
-		private TableColumn(String name, String property, int width) {
-			super();
-			this.name = name;
-			this.property = property;
-			this.width = width;
+	/**
+	 * Adds all the column widths
+	 * @param columnIndex
+	 * @param width
+	 */
+	public void addColumnWidth(int[] columnIndex, int[] width) {
+		for (int i = 0; i < width.length; i++) {
+			addColumnWidth(columnIndex[i], width[i]);
 		}
-
-		public TableColumn(String name, String property, int width, String dateFormat) {
-			super();
-			this.name = name;
-			this.property = property;
-			this.width = width;
-			this.dateFormat = dateFormat;
+	}
+	
+	/**
+	 * Adds all width incrementing the columns by the first column passed in the firstIndex
+	 * If the first index is 4 and it is passed 3 elements like 100, 210, 250 in the width array parameter,
+	 * the combination will be:
+	 * 4 - 100
+	 * 5 - 210
+	 * 6 - 250 
+	 * @param firstIndex
+	 * @param width
+	 */
+	public void addColumnWidth(int firstIndex, int ... width) {
+		for (int i = 0; i < width.length; i++) {
+			addColumnWidth(firstIndex++, width[i]);
 		}
-
-		private TableColumn(String name, ComponentBuilder<?, K> componentBuilder, int width) {
-			super();
-			this.name = name;
-			this.componentBuilder = componentBuilder;
-			this.width = width;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj == null || !(obj instanceof TableColumn)) {
-				return false;
-			}
-
-			TableColumn other = (TableColumn) obj;
-
-			return new EqualsBuilder().append(this.name, other.name).isEquals();
-		}
-
-		@Override
-		public int hashCode() {
-			return new HashCodeBuilder().append(this.name).toHashCode();
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getProperty() {
-			return property;
-		}
-
-		public void setProperty(String property) {
-			this.property = property;
-		}
-
-		public int getWidth() {
-			return width;
-		}
-
-		public void setWidth(int width) {
-			this.width = width;
-		}
-
-		public ComponentBuilder<? extends Component, K> getComponentBuilder() {
-			return componentBuilder;
-		}
-
-		public void setComponentBuilder(ComponentBuilder<? extends Component, K> componentBuilder) {
-			this.componentBuilder = componentBuilder;
-		}
-
-		public String getDateFormat() {
-			return dateFormat;
-		}
-
-		public void setDateFormat(String dateFormat) {
-			this.dateFormat = dateFormat;
-		}
-
 	}
 
 	/**
@@ -321,13 +316,17 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 	 */
 	public int getColumnWidth(int columnIndex) {
 		try {
-			return tableColumns.get(columnIndex).getWidth();
+			return columnWidthMap.get(columnIndex);
 		}
 		catch (Exception e) {
+			logger.error("An error ocurred when trying to capture the width of the column: " + columnIndex, e);
 			return -1;
 		}
 	}
 
+	/**
+	 * @return All tablecolumns in a mutable List
+	 */
 	public List<TableColumn<T>> getTableColumns() {
 		return tableColumns;
 	}

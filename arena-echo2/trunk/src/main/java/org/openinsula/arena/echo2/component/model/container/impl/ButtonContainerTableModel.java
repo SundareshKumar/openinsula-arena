@@ -104,6 +104,7 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 
 		if (icon != null) {
 			button.setIcon(icon);
+			button.setToolTipText(buttonCaption);
 		}
 		else if (buttonCaption != null) {
 			button.setText(buttonCaption);
@@ -160,9 +161,9 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 		if (deleteButtonActionListener != null) {
 			button.addActionListener(deleteButtonActionListener);
 		}
-		
+
 		button.setToolTipText("Clique para excluir");
-		
+
 		if (beanId != null) {
 			button.setActionCommand(beanId.toString());
 		}
@@ -191,7 +192,7 @@ public class ButtonContainerTableModel<T> extends SortableContainerTableModel<T>
 		}
 
 		button.setToolTipText("Clique para editar");
-		
+
 		if (beanId != null) {
 			button.setActionCommand(beanId.toString());
 		}

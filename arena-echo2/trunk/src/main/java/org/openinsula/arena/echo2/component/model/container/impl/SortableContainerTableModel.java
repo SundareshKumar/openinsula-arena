@@ -14,7 +14,12 @@ public class SortableContainerTableModel<T> extends PageableContainerTableModel<
 		super(permitDuplicates, substituteDuplicate);
 	}
 
-	public void sortItems(Comparator<T> comparator) {
+	/**
+	 * Execute the sorting comparator and activate the changes in the table.
+	 * @param columnIndex
+	 * @param comparator
+	 */
+	public void sortItems(int columnIndex, Comparator<T> comparator) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Sorting table:" + this.getClass());
 		}
