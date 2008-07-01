@@ -11,6 +11,15 @@ import nextapp.echo2.app.Row;
 public class RowBuilder extends Row {
 	private static final long serialVersionUID = 1L;
 
+	public RowBuilder() {
+	}
+
+	public RowBuilder(Component... components) {
+		for (Component component : components) {
+			this.add(component);
+		}
+	}
+	
 	public RowBuilder append(Component... components) {
 		for (Component component : components) {
 			this.add(component);
