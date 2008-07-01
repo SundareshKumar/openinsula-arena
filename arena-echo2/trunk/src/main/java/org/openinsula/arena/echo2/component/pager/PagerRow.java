@@ -32,6 +32,11 @@ public class PagerRow extends Row {
 		});
 	}
 
+	public PagerRow(PageableTableModel model, PagerStyles pagerStyles) {
+		this(model);
+		this.pagerStyles = pagerStyles;
+	}
+
 	public void renderPager() throws RuntimeException {
 		removeAll();
 
@@ -45,7 +50,7 @@ public class PagerRow extends Row {
 		BotoesControleActionListener botoesControleActionListener = new BotoesControleActionListener();
 
 		// botao 'anterior'
-		
+
 		Button botaoAnterior = new Button();
 		if (pagerStyles != null) {
 			botaoAnterior.setStyle(pagerStyles.getBackPagerButtonStyle());

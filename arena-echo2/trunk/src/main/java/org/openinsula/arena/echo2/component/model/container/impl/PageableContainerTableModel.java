@@ -2,8 +2,19 @@ package org.openinsula.arena.echo2.component.model.container.impl;
 
 import org.openinsula.arena.echo2.component.model.PageableTableModel;
 
+/**
+ * This TableModel supports pagination and it is also an optional to use the
+ * PagerRow Component to update it's pages.
+ * @author Joao Galli
+ * 
+ * @param <T>
+ */
 public class PageableContainerTableModel<T> extends BeanReflectionContainerTableModel<T> implements PageableTableModel {
 	private static final long serialVersionUID = 1L;
+
+	private int currentPage;
+
+	private int pageSize = 20;
 
 	public PageableContainerTableModel() {
 	}
@@ -11,10 +22,6 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 	public PageableContainerTableModel(boolean permitDuplicates, boolean substituteDuplicate) {
 		super(permitDuplicates, substituteDuplicate);
 	}
-
-	private int currentPage;
-
-	private int pageSize = 20;
 
 	@Override
 	public Object getValueAt(int columnIndex, int rowIndex) {
@@ -45,9 +52,11 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 		if (lastPage == getCurrentPage()) {
 			if (getCurrentPage() == 0) {
 				currentPageSize = size();
-			} else if ((size() % getPageSize()) == 0) {
+			}
+			else if ((size() % getPageSize()) == 0) {
 				return getPageSize();
-			} else {
+			}
+			else {
 				currentPageSize = (size() % getPageSize());
 			}
 		}
@@ -55,7 +64,7 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 		if (size() == 0) {
 			currentPageSize = 0;
 		}
-		
+
 		return currentPageSize;
 	}
 
