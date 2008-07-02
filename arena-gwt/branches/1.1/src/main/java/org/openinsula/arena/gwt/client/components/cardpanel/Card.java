@@ -14,14 +14,6 @@ public interface Card extends CardChangeListener {
 	
 	boolean fireCardHided(CardChangeEvent event);
 	
-	void setNextCard(Card card);
-	
-	void setPreviousCard(Card card);
-	
-	Card getNextCard();
-	
-	Card getPreviousCard();
-	
 	String getNextLabel();
 	
 	String getPreviousLabel();

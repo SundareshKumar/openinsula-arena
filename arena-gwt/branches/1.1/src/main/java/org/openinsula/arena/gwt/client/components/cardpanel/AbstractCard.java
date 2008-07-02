@@ -10,10 +10,6 @@ public abstract class AbstractCard extends Composite implements Card {
 
 	private int index;
 	
-	private Card previousCard = null;
-	
-	private Card nextCard = null;
-	
 	private List<CardChangeListener> cardChangeListeners = new ArrayList<CardChangeListener>();
 	
 	{
@@ -24,22 +20,19 @@ public abstract class AbstractCard extends Composite implements Card {
 		initWidget(createMainWidget());
 	}
 	
-	public Card getPreviousCard() {
-		return previousCard;
+	@Override
+	public int hashCode() {
+		return index;
 	}
-
-	public void setPreviousCard(Card previousCard) {
-		this.previousCard = previousCard;
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AbstractCard) {
+			return ((AbstractCard) obj).getIndex() == this.getIndex();
+		}
+		return false;
 	}
-
-	public Card getNextCard() {
-		return nextCard;
-	}
-
-	public void setNextCard(Card nextCard) {
-		this.nextCard = nextCard;
-	}
-
+	
 	protected abstract Widget createMainWidget();
 	
 	protected abstract void initActions();

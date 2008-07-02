@@ -1,10 +1,14 @@
 package org.openinsula.arena.gwt.client.components.cardpanel.wizard;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openinsula.arena.gwt.client.components.cardpanel.AbstractCard;
 import org.openinsula.arena.gwt.client.components.cardpanel.Card;
 import org.openinsula.arena.gwt.client.components.cardpanel.CardChangeAdapterImpl;
 import org.openinsula.arena.gwt.client.components.cardpanel.CardChangeEvent;
 import org.openinsula.arena.gwt.client.components.cardpanel.CardPanel;
+import org.openinsula.arena.gwt.client.components.cardpanel.Sequence;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -22,14 +26,25 @@ public class DefaultWizardPanel extends VerticalPanel {
 	
 	private CardPanel cardPanel;
 	
+	private Map<Card, WizardNavigatorListener> navigatiorListenerMap = new HashMap<Card, WizardNavigatorListener>();
+	
 	{
 		initComponents();
 		customizeComponents();
 		initActions();
 	}
 	
+	public void setCardSequence(Sequence<Card> cardSequence) {
+		cardPanel.setCardSequence(cardSequence);
+	}
+	
 	public void addCard(final AbstractCard card) {
 		cardPanel.addCard(card);
+	}
+	
+	public void addCard(final AbstractCard card, WizardNavigatorListener listener) {
+		navigatiorListenerMap.put(card, listener);
+		addCard(card);
 	}
 
 	public void showCard(Card card) {
@@ -40,9 +55,18 @@ public class DefaultWizardPanel extends VerticalPanel {
 		cardPanel.setWidth("100%");
 	}
 	
+	public Card getVisibleCard() {
+		return cardPanel.getCard(cardPanel.getVisibleWidget());
+	}
+	
 	private void initActions() {
 		nextButton.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
+//				Card card = getVisibleCard();
+//				WizardNavigatorListener listener = navigatiorListenerMap.get(card);
+//				listener.onNext(new WizardNavigatorEvent((AbstractCard)card));
+				
+				
 				cardPanel.next();
 				refreshButtonBar();
 			}
@@ -65,7 +89,6 @@ public class DefaultWizardPanel extends VerticalPanel {
 	}
 	
 	private void refreshButtonBar() {
-		nextButton.setVisible(cardPanel.hasNext());
 		previousButton.setVisible(cardPanel.hasPrevious());
 	}
 	

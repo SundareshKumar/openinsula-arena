@@ -4,11 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.DeckPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class CardPanel extends DeckPanel {
 	
 	private List<CardChangeListener> listeners = new ArrayList<CardChangeListener>();
+
+	private Sequence<Card> cardSequence = new CardSequence();
 	
+	public Sequence<Card> getCardSequence() {
+		return cardSequence;
+	}
+	
+	@Override
+	public void add(Widget w) {
+		throw new IllegalArgumentException("Utilize o metodo addCard() para adicionar novos Cards.");
+	}
+
+	public void setCardSequence(Sequence<Card> cardSequence) {
+		this.cardSequence = cardSequence;
+	}
+
 	public void addCardChangeListener(CardChangeListener listener) {
 		listeners.add(listener);
 	}
@@ -49,7 +65,6 @@ public class CardPanel extends DeckPanel {
 				}
 			}
 		}
-		
 	}
 	
 	public Card getCard(int index) {
@@ -64,30 +79,23 @@ public class CardPanel extends DeckPanel {
 	}
 	
 	public void addCard(AbstractCard card) {
-		add(card);
-		card.setIndex(getWidgetCount() -1);
+		card.setIndex(getWidgetCount());
+		cardSequence.add(card);
+		super.add(card);
 	}
 	
 	public void next() {
 		int indiceAtual = getVisibleWidget();
 		Card cardAtual = getCard(indiceAtual);
-		if (cardAtual != null && cardAtual.getNextCard() != null) {
-			showCard(cardAtual.getNextCard());
-		} else if (++indiceAtual < getWidgetCount()) {
-			Card card = getCard(indiceAtual);
-			showCard(card);
-		}
+		Card newCard = cardSequence.next(cardAtual);
+		showCard(newCard);
 	}
 	
 	public void previous() {
 		int indiceAtual = getVisibleWidget();
 		Card cardAtual = getCard(indiceAtual);
-		if (cardAtual != null && cardAtual.getPreviousCard() != null) {
-			showCard(cardAtual.getPreviousCard());
-		} else if (--indiceAtual >= 0) {
-			Card card = getCard(indiceAtual);
-			showCard(card);
-		}
+		Card newCard = cardSequence.previous(cardAtual);
+		showCard(newCard);
 	}
 	
 	public boolean hasNext() {
