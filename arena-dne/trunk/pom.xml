@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>org.openinsula.arena</groupId>
 			<artifactId>arena-test</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
