@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.components;
+package org.openinsula.arena.gwt.client.ui.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -4,8 +4,7 @@
 	<inherits name='net.sf.hibernate4gwt.Hibernate4Gwt15' />
 	<inherits name='net.sf.hibernate4gwt.emul.java5.ejb3.Ejb3'/>
 	
-	<stylesheet src='dataTable-style.css'/>
-	<stylesheet src='completer-style.css'/>
+	<stylesheet src='Default.css'/>
 
 	<entry-point class='org.openinsula.arena.gwt.client.Main' />	
 	

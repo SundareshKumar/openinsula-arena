@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.openinsula.arena.gwt.client.beans.ui;
+package org.openinsula.arena.gwt.client.ui.suggest;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;

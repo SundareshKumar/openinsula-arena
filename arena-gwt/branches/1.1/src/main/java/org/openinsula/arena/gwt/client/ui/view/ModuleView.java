@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.components;
+package org.openinsula.arena.gwt.client.ui.view;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;

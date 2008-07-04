@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.beans.ui;
+package org.openinsula.arena.gwt.client.ui.suggest;
 
 public interface OracleSuggestListener {
 

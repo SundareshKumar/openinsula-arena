@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.components;
+package org.openinsula.arena.gwt.client.ui.view;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * <p>.ApplicationViewTitle { }
  * <p>.ApplicationViewTitleBar { }
  * <p>.ApplicationViewMenuBar { }
- * @author erdanielli
+ * @author Eduardo Rebola
  *
  */
 public class ApplicationView extends NavigationSupport {
