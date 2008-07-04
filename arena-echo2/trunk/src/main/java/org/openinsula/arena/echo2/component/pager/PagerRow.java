@@ -20,6 +20,13 @@ public class PagerRow extends Row {
 
 	private PagerStyles pagerStyles;
 
+	private boolean resetOnTableChange = true;
+
+	public PagerRow(PageableTableModel pageableTableModel, boolean resetOnTableChange) {
+		this(pageableTableModel);
+		this.resetOnTableChange = resetOnTableChange;
+	}
+
 	public PagerRow(PageableTableModel pageableTableModel) throws IllegalArgumentException {
 		super();
 		this.model = pageableTableModel;
@@ -27,6 +34,9 @@ public class PagerRow extends Row {
 			private static final long serialVersionUID = 1L;
 
 			public void tableChanged(TableModelEvent arg0) {
+				if (resetOnTableChange) {
+					model.setCurrentPage(0);
+				}
 				PagerRow.this.renderPager();
 			}
 		});
@@ -197,5 +207,13 @@ public class PagerRow extends Row {
 
 	public void setPagerStyles(PagerStyles pagerStyles) {
 		this.pagerStyles = pagerStyles;
+	}
+
+	public boolean isResetOnTableChange() {
+		return resetOnTableChange;
+	}
+
+	public void setResetOnTableChange(boolean resetOnTableChange) {
+		this.resetOnTableChange = resetOnTableChange;
 	}
 }
