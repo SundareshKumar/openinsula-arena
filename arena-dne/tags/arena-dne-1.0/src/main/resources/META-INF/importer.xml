@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<bean 
+		id="dneHandler"
+		class="br.com.insula.dne.importer.handler.DneHandler"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuPaisesSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuPaisesSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuUnidadesFederacaoSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuUnidadesFederacaoSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuLocalidadesSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuLocalidadesSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuCaixasPostaisComunitariasSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuCaixasPostaisComunitariasSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuUnidadesOperacionaisSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuUnidadesOperacionaisSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuBairrosSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuBairrosSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuLogradourosSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuLogradourosSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuLogradourosSecSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuLogradourosSecSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuLogradourosNumLoteSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuLogradourosNumLoteSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuLogradourosCompl1SqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuLogradourosCompl1SqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="dneGuGrandesUsuariosSqlUpdate"
+		class="br.com.insula.dne.importer.jdbc.DneGuGrandesUsuariosSqlUpdate"
+		autowire="byType"/>
+
+	<bean 
+		id="importService"
+		class="br.com.insula.dne.importer.service.impl.ImportServiceImpl"
+		autowire="byType"/>
+
+	<bean 
+		id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		autowire="byType"/>
+</beans>
