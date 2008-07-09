@@ -5,10 +5,12 @@ import java.util.Collection;
 
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BeanListBox<T> extends Composite implements ListBoxModelListener {
+public class BeanListBox<T> extends Composite implements ListBoxModelListener, SourcesFocusEvents {
 
 	private final ListBox listBox;
 
@@ -89,4 +91,11 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener {
 		model.removeListBoxModelListener(this);
 	}
 
+	public void addFocusListener(FocusListener listener) {
+		listBox.addFocusListener(listener);
+	}
+
+	public void removeFocusListener(FocusListener listener) {
+		listBox.removeFocusListener(listener);
+	}
 }

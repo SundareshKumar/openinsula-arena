@@ -2,7 +2,6 @@ package org.openinsula.arena.gwt.client.ui.form;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -17,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @see GroupFormItem
  * @param <T>
  */
-public class FormItem<T extends FocusWidget> extends Composite {
+public class FormItem<T extends Widget> extends Composite {
 	
 	private FocusPanel mainPanel;
 

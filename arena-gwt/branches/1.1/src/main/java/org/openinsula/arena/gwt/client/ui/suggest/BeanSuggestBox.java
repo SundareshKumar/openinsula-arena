@@ -4,13 +4,15 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
+import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestionEvent;
 import com.google.gwt.user.client.ui.SuggestionHandler;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class BeanSuggestBox<T> extends Composite {
+public abstract class BeanSuggestBox<T> extends Composite implements SourcesFocusEvents {
 	private final SuggestBox suggestBox;
 	private BeanSuggestBoxListener<T> listener;
 	private Timer keyboardEnterTimer;
@@ -86,4 +88,12 @@ public abstract class BeanSuggestBox<T> extends Composite {
 
 	}
 
+	public void addFocusListener(FocusListener listener) {
+		suggestBox.addFocusListener(listener);
+	}
+
+	public void removeFocusListener(FocusListener listener) {
+		suggestBox.removeFocusListener(listener);
+	}
+	
 }

@@ -2,8 +2,8 @@ package org.openinsula.arena.gwt.client.ui.form;
 
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.MouseListenerAdapter;
+import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @param <T>
  */
-public class FormItemWidgetWrapper<T extends FocusWidget> {
+public class FormItemWidgetWrapper<T extends Widget> {
 
 	private final T widget;
 
@@ -30,7 +30,9 @@ public class FormItemWidgetWrapper<T extends FocusWidget> {
 		hasFocus = false;
 		hasMouse = false;
 
-		widget.addFocusListener(new FormItemFocusedListener());
+		if (widget instanceof SourcesFocusEvents) {
+			((SourcesFocusEvents) widget).addFocusListener(new FormItemFocusedListener());
+		}
 		parent.addMouseListener(new FormItemParentMouseListener());
 	}
 
