@@ -10,6 +10,8 @@ public abstract class ModuleView extends NavigationSupport {
 
 	public ModuleView() {
 		mainPanel = new HorizontalPanel();
+		initWidget(mainPanel);
+
 		mainPanel.setWidth("97%");
 		mainPanel.setStyleName("ModuleView");
 
@@ -30,8 +32,6 @@ public abstract class ModuleView extends NavigationSupport {
 
 		mainPanel.setCellWidth(menuBar, "20%");
 		mainPanel.setCellWidth(getViewDeck(), "80%");
-
-		initWidget(mainPanel);
 	}
 
 	protected Widget createMenuBar() {
