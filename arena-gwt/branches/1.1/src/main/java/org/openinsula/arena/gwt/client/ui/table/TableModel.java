@@ -14,8 +14,8 @@ public interface TableModel<T> {
 
 	int getRowCount();
 
-	boolean addTableModelListener(TableModelListener<T> listener);
+	boolean addTableModelListener(TableModelListener listener);
 
-	boolean removeTableModelListener(TableModelListener<T> listener);
+	boolean removeTableModelListener(TableModelListener listener);
 
 }

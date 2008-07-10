@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class AbstractTableModel<T> implements TableModel<T> {
 
-	private final List<TableModelListener<T>> listeners;
+	private final List<TableModelListener> listeners;
 
 	private RowSorter<T> rowSorter;
 
@@ -31,7 +31,7 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 			}
 		}
 
-		listeners = new ArrayList<TableModelListener<T>>();
+		listeners = new ArrayList<TableModelListener>();
 	}
 
 	public void setRowSorter(final RowSorter<T> rowSorter) {
@@ -44,19 +44,19 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 	}
 
 	private void notifyListeners() {
-		for (TableModelListener<T> listener : listeners) {
-			listener.onTableModelChange(this);
+		for (TableModelListener listener : listeners) {
+			listener.onTableDataChange();
 		}
 	}
 
-	public boolean addTableModelListener(final TableModelListener<T> listener) {
+	public boolean addTableModelListener(final TableModelListener listener) {
 		if (!listeners.contains(listener)) {
 			return listeners.add(listener);
 		}
 		return false;
 	}
 
-	public boolean removeTableModelListener(final TableModelListener<T> listener) {
+	public boolean removeTableModelListener(final TableModelListener listener) {
 		return listeners.remove(listener);
 	}
 

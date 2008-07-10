@@ -18,6 +18,10 @@ public abstract class BeanSuggestBox<T> extends Composite implements SourcesFocu
 	private Timer keyboardEnterTimer;
 	private T selection;
 
+	public BeanSuggestBox(final RemoteBeanSuggestOracle<T> oracle) {
+		this(oracle, null);
+	}
+
 	public BeanSuggestBox(final RemoteBeanSuggestOracle<T> oracle, final BeanSuggestBoxListener<T> listener) {
 		setListener(listener);
 
@@ -88,12 +92,12 @@ public abstract class BeanSuggestBox<T> extends Composite implements SourcesFocu
 
 	}
 
-	public void addFocusListener(FocusListener listener) {
+	public void addFocusListener(final FocusListener listener) {
 		suggestBox.addFocusListener(listener);
 	}
 
-	public void removeFocusListener(FocusListener listener) {
+	public void removeFocusListener(final FocusListener listener) {
 		suggestBox.removeFocusListener(listener);
 	}
-	
+
 }

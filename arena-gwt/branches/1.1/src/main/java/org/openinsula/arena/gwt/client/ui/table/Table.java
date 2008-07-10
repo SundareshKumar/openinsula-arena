@@ -8,8 +8,8 @@ import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.google.gwt.user.client.ui.HTMLTable.RowFormatter;
 
-public class Table<T> extends Composite implements TableModelListener<T> {
-	private StyleBuilder style = new StyleBuilder("sandBox", "Table");
+public class Table<T> extends Composite implements TableModelListener {
+	private final StyleBuilder style = new StyleBuilder("sandBox", "Table");
 
 	private TableListener<T> tableListener;
 
@@ -36,12 +36,16 @@ public class Table<T> extends Composite implements TableModelListener<T> {
 		this.tableModel.addTableModelListener(this);
 	}
 
-	public void onTableModelChange(final TableModel<T> updatedTableModel) {
+	public void onTableDataChange() {
 		updateTable();
 	}
 
 	public void setTableListener(final TableListener<T> selectionListener) {
 		this.tableListener = selectionListener;
+	}
+
+	public TableModel<T> getTableModel() {
+		return tableModel;
 	}
 
 	private void prepareTable() {

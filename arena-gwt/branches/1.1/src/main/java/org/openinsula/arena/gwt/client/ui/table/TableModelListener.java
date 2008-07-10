@@ -1,7 +1,7 @@
 package org.openinsula.arena.gwt.client.ui.table;
 
-public interface TableModelListener<T> {
+public interface TableModelListener {
 
-	void onTableModelChange(TableModel<T> updatedTableModel);
+	void onTableDataChange();
 
 }
