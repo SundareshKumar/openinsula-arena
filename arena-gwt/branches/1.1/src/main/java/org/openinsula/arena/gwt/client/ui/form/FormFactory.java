@@ -105,7 +105,7 @@ public abstract class FormFactory {
 	}
 	
 	public static PopupPanel hintPopupPanel() {
-		PopupPanel panel = new PopupPanel();
+		PopupPanel panel = new PopupPanel(true);
 		panel.setStyleName(STYLE_FORM_PANEL_HINT);
 		return panel;
 	}
