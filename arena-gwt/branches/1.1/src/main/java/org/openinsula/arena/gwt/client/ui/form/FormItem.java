@@ -1,5 +1,7 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
+import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
+
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -202,6 +204,8 @@ public class FormItem<T extends Widget> extends Composite {
 			((TextBoxBase) widget).setText(null);
 		} else if(widget instanceof CheckBox) {
 			((CheckBox) widget).setChecked(false);
+		} else if(widget instanceof BeanSuggestBox<?>) {
+			((BeanSuggestBox<?>) widget).getSuggestBox().setText(null);
 		}
 	}
 }

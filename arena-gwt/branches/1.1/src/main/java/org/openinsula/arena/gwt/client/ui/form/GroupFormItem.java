@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
-import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -13,7 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @see FormItemWidgetWrapper
  * @param <T>
  */
-public class GroupFormItem<T extends FocusWidget> extends FormItem<T> {
+public class GroupFormItem<T extends Widget> extends FormItem<T> {
 
 	private boolean sameLine;
 
