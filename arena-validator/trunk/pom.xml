@@ -6,10 +6,8 @@
 	<packaging>jar</packaging>
 	<name>Project arena-validator</name>
 	<description>
-		Common converters and validators (inspired on the JSF model) used in business applications.
-		Converts typically makes type conversion from a view property to a model property.
-		Validators typically are invoked after conversion, to verify if the provided value is valid
-		according to application semantics.
+		Hibernate Validator extensions for commons validators such as CPF, CNPJ, PIS/PASEP,
+		IBGE, BACEN and othres.
 	</description>
 	<url>http://www.openinsula.org/projects/arena-validator</url>
 	<inceptionYear>2006</inceptionYear>
@@ -83,29 +81,6 @@
 			<version>3.1.0.CR1</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>avalon-framework</groupId>
-					<artifactId>avalon-framework</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.4</version>
@@ -161,7 +136,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<goals>
-						source:jar javadoc:jar deploy
+						source:jar javadoc:jar deploy site site:deploy
 					</goals>
 				</configuration>
 			</plugin>
