@@ -16,6 +16,8 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 
 	private final ListBoxModel<T> model;
 
+	private boolean emptySelectionAllowed = true;
+
 	public BeanListBox(final ListBoxModel<T> listBoxModel) {
 		this(new ListBox(), listBoxModel);
 	}
@@ -38,9 +40,16 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 		this.model.addListBoxModelListener(this);
 	}
 
+	public void setEmptySelectionAllowed(final boolean nullAllowed) {
+		this.emptySelectionAllowed = nullAllowed;
+	}
+
 	private void clearListBox() {
 		listBox.clear();
-		listBox.addItem("");
+
+		if (emptySelectionAllowed) {
+			listBox.addItem("");
+		}
 	}
 
 	private void onListBoxChange() {
@@ -57,7 +66,13 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 
 		} else {
 			int idx = listBox.getSelectedIndex();
-			model.setSelectedItem(idx < 1 ? null : model.getElementAt(idx - 1));
+
+			if (emptySelectionAllowed) {
+				model.setSelectedItem(idx < 1 ? null : model.getElementAt(idx - 1));
+			} else {
+				model.setSelectedItem(idx == -1 ? null : model.getElementAt(idx));
+			}
+
 		}
 	}
 
@@ -78,11 +93,24 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 			Collection<T> selectedItems = model.getSelectedItems();
 
 			for (int i = 0, rows = model.getSize(); i < rows; i++) {
-				listBox.setItemSelected(i + 1, selectedItems.contains(model.getElementAt(i)));
+
+				if (emptySelectionAllowed) {
+					listBox.setItemSelected(i + 1, selectedItems.contains(model.getElementAt(i)));
+				} else {
+					listBox.setItemSelected(i, selectedItems.contains(model.getElementAt(i)));
+				}
+
 			}
 		} else {
 			T selectedItem = model.getSelectedItem();
 			int idx = selectedItem == null ? 0 : model.indexOf(selectedItem) + 1;
+
+			if (emptySelectionAllowed) {
+				idx = selectedItem == null ? 0 : model.indexOf(selectedItem) + 1;
+			} else {
+				idx = selectedItem == null ? -1 : model.indexOf(selectedItem);
+			}
+
 			listBox.setSelectedIndex(idx);
 		}
 	}
@@ -91,11 +119,11 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 		model.removeListBoxModelListener(this);
 	}
 
-	public void addFocusListener(FocusListener listener) {
+	public void addFocusListener(final FocusListener listener) {
 		listBox.addFocusListener(listener);
 	}
 
-	public void removeFocusListener(FocusListener listener) {
+	public void removeFocusListener(final FocusListener listener) {
 		listBox.removeFocusListener(listener);
 	}
 }
