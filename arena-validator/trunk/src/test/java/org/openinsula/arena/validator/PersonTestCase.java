@@ -418,4 +418,115 @@ public class PersonTestCase {
 		person.setPisPasep("00000000009");
 		assertEquals(1, classValidator.getInvalidValues(person, "pisPasep").length);
 	}
+
+	@Test
+	public void testBacenPais() {
+		ClassValidator<Person> classValidator = new ClassValidator<Person>(Person.class);
+		Person person = new Person();
+
+		person.setPaisString("1058");
+		assertEquals(0, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisInteger(1058);
+		assertEquals(0, classValidator.getInvalidValues(person, "paisInteger").length);
+
+		person.setPaisString("5860");
+		assertEquals(0, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisInteger(5860);
+		assertEquals(0, classValidator.getInvalidValues(person, "paisInteger").length);
+
+		person.setPaisString("7560");
+		assertEquals(0, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisString("7562");
+		assertEquals(1, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisString("7561");
+		assertEquals(1, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisInteger(7561);
+		assertEquals(1, classValidator.getInvalidValues(person, "paisInteger").length);
+
+		person.setPaisString("105");
+		assertEquals(1, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisInteger(105);
+		assertEquals(1, classValidator.getInvalidValues(person, "paisInteger").length);
+
+		person.setPaisString("1057");
+		assertEquals(1, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisString(null);
+		assertEquals(1, classValidator.getInvalidValues(person, "paisString").length);
+
+		person.setPaisString("asdfg");
+		assertEquals(1, classValidator.getInvalidValues(person, "paisString").length);
+	}
+
+	@Test
+	public void testIbgeMunicipio() {
+		ClassValidator<Person> classValidator = new ClassValidator<Person>(Person.class);
+		Person person = new Person();
+
+		person.setMunicipioInteger(3550308);
+		assertEquals(0, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(2111300);
+		assertEquals(0, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(4106902);
+		assertEquals(0, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(4205407);
+		assertEquals(0, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(1302603);
+		assertEquals(0, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(1721000);
+		assertEquals(0, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(3304557);
+		assertEquals(0, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(null);
+		assertEquals(1, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(123);
+		assertEquals(1, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(4566788);
+		assertEquals(1, classValidator.getInvalidValues(person, "municipioInteger").length);
+
+		person.setMunicipioInteger(2111301);
+		assertEquals(1, classValidator.getInvalidValues(person, "municipioInteger").length);
+	}
+
+	@Test
+	public void testIbgeUf() {
+		ClassValidator<Person> classValidator = new ClassValidator<Person>(Person.class);
+		Person person = new Person();
+
+		person.setUf(21);
+		assertEquals(0, classValidator.getInvalidValues(person, "uf").length);
+
+		person.setUf(41);
+		assertEquals(0, classValidator.getInvalidValues(person, "uf").length);
+
+		person.setUf(15);
+		assertEquals(0, classValidator.getInvalidValues(person, "uf").length);
+
+		person.setUf(null);
+		assertEquals(1, classValidator.getInvalidValues(person, "uf").length);
+
+		person.setUf(123);
+		assertEquals(1, classValidator.getInvalidValues(person, "uf").length);
+
+		person.setUf(0);
+		assertEquals(1, classValidator.getInvalidValues(person, "uf").length);
+
+		person.setUf(34);
+		assertEquals(1, classValidator.getInvalidValues(person, "uf").length);
+	}
 }
