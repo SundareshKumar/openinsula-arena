@@ -83,7 +83,14 @@ public class LazyDeckPanel extends DeckPanel {
 
 	@Override
 	public Widget getWidget(final int index) {
-		return super.getWidget(index);
+		ListEntry<?> entry = lazyWidgetList.get(index);
+		entry.loadAndReturnIndex();
+
+		if (entry instanceof WidgetEntry) {
+			return ((WidgetEntry) entry).widget;
+		}
+
+		return ((LazyEntry) entry).loadedWidget;
 	}
 
 	@Override
