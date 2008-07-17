@@ -34,7 +34,7 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 			final String suffix) {
 		this.widgets = widgets;
 		createComponents(label, null, hint, optional, suffix);
-		
+
 		this.sameLine = sameLine;
 		super.pack();
 	}
@@ -49,6 +49,11 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 			panel.add(wrapper.getWidget());
 		}
 
+		if (widgets.length > 0) {
+			final T localWidget = widgets[0];
+			setLabelClickListener(localWidget);
+		}
+
 		return panel;
 	}
 
@@ -58,12 +63,11 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 
 	@Override
 	public void clear() {
-		for(T widget: widgets) {
+		for (T widget : widgets) {
 			clearWidget(widget);
 		}
 		isNew = true;
 		refresh();
 	}
-	
-	
+
 }

@@ -3,8 +3,10 @@ package org.openinsula.arena.gwt.client.ui.form;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusPanel;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -14,14 +16,14 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * 
- *
+ * 
  * @see FormBuilder
  * @see FormItemWidgetWrapper
  * @see GroupFormItem
  * @param <T>
  */
 public class FormItem<T extends Widget> extends Composite {
-	
+
 	private FocusPanel mainPanel;
 
 	private Panel contentPanel;
@@ -33,19 +35,20 @@ public class FormItem<T extends Widget> extends Composite {
 	private String hint;
 
 	private boolean optional;
-	
+
 	private boolean valid = true;
-	
+
 	private Label errorLabel;
 
 	private String suffixMessage;
-	
+
 	private Label suffixLabel;
-	
+
 	protected boolean isNew;
-	
-	protected FormItem() {}
-	
+
+	protected FormItem() {
+	}
+
 	public FormItem(final String label, final T widget) {
 		this(label, widget, null, false, null);
 	}
@@ -67,7 +70,7 @@ public class FormItem<T extends Widget> extends Composite {
 	 * @param label the text
 	 * @param widget the "user input component"
 	 * @param hint any kind of hint/help that user may need
-	 * @param optional if the field is optional 
+	 * @param optional if the field is optional
 	 * @param suffixMessage the text that may appear after the widget
 	 */
 	public FormItem(final String label, final T widget, final String hint, boolean optional, final String suffixMessage) {
@@ -75,55 +78,57 @@ public class FormItem<T extends Widget> extends Composite {
 		pack();
 	}
 
-	protected void createComponents(String label, T widget, String hint, boolean optional, String suffixMessage) {
+	protected void createComponents(String label, final T widget, String hint, boolean optional, String suffixMessage) {
 		this.label = FormFactory.label(label);
 		this.errorLabel = FormFactory.errorLabel("");
 		this.optional = optional;
 		this.contentPanel = new VerticalPanel();
 		this.suffixMessage = suffixMessage;
-		
+
 		this.mainPanel = new FocusPanel();
 		mainPanel.add(contentPanel);
-		
+
 		contentPanel.setTitle(label);
-		
+
 		this.hint = hint;
-		
+
 		if (widget != null) {
 			this.widgetWrapper = new FormItemWidgetWrapper<T>(widget, mainPanel, hint);
+			setLabelClickListener(widget);
 		}
-		
+
 		initWidget(mainPanel);
 		setStyleName("salto-FormItem");
-		
+
 		isNew = true;
 	}
-	
+
 	/**
 	 * 
 	 */
 	protected void pack() {
-		label.setStyleName(FormFactory.STYLE_FORM_LABEL);
+		label.setStyleName(FormFactory.getStyleFormLabel());
 
 		if (optional) {
 			Panel optionalPanel = new HorizontalPanel();
-			Label optionalLabel = FormFactory.optionalLabel(); 
+			Label optionalLabel = FormFactory.optionalLabel();
 			optionalPanel.add(label);
 			optionalPanel.add(optionalLabel);
 			contentPanel.add(optionalPanel);
-		} else {
+		}
+		else {
 			contentPanel.add(label);
 		}
 
 		contentPanel.add(getWidgetForPanel());
-		
+
 		if (suffixMessage != null) {
 			suffixLabel = FormFactory.suffixLabel(suffixMessage);
 			contentPanel.add(suffixLabel);
 		}
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -131,7 +136,7 @@ public class FormItem<T extends Widget> extends Composite {
 	protected Widget getWidgetForPanel() {
 		return widgetWrapper.getWidget();
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -139,27 +144,26 @@ public class FormItem<T extends Widget> extends Composite {
 		if (suffixMessage != null) {
 			contentPanel.add(suffixLabel);
 		}
-		
+
 		if (isNew) {
 			contentPanel.remove(errorLabel);
-			removeStyleName("salto-FormItemInvalid");
-			removeStyleName("salto-FormItemValid");
-			addStyleName("salto-FormItem");
+			setStyleName(FormFactory.getStyleFormItem());
 			setErrorMessage(null);
-		} else {
+		}
+		else {
 			if (valid) {
 				contentPanel.remove(errorLabel);
-				removeStyleName("salto-FormItemInvalid");
-				addStyleName("salto-FormItemValid");
+				removeStyleName(FormFactory.getStyleFormItemInvalid());
+				addStyleName(FormFactory.getStyleFormItemValid());
 				setErrorMessage(null);
-			} else {
-				removeStyleName("salto-FormItemValid");
-				addStyleName("salto-FormItemInvalid");
+			}
+			else {
+				removeStyleName(FormFactory.getStyleFormItemValid());
+				addStyleName(FormFactory.getStyleFormItemInvalid());
 				contentPanel.add(errorLabel);
 			}
 		}
-		
-		
+
 	}
 
 	public Label getLabel() {
@@ -196,16 +200,37 @@ public class FormItem<T extends Widget> extends Composite {
 	public void clear() {
 		isNew = true;
 		clearWidget(getWidget());
-		refresh();		
+		refresh();
 	}
-	
+
 	protected void clearWidget(T widget) {
 		if (widget instanceof TextBoxBase) {
 			((TextBoxBase) widget).setText(null);
-		} else if(widget instanceof CheckBox) {
+		}
+		else if (widget instanceof CheckBox) {
 			((CheckBox) widget).setChecked(false);
-		} else if(widget instanceof BeanSuggestBox<?>) {
+		}
+		else if (widget instanceof BeanSuggestBox<?>) {
 			((BeanSuggestBox<?>) widget).getSuggestBox().setText(null);
 		}
+	}
+
+	/**
+	 * This method looks for widget with "focus" properties and tries to add a
+	 * clickListener to its label
+	 * 
+	 * @param widget
+	 */
+	protected void setLabelClickListener(final T widget) {
+		this.label.addClickListener(new ClickListener() {
+			public void onClick(Widget sender) {
+				if (widget instanceof FocusWidget) {
+					((FocusWidget) widget).setFocus(true);
+				}
+				else if (widget instanceof BeanSuggestBox<?>) {
+					((BeanSuggestBox<?>) widget).getSuggestBox().setFocus(true);
+				}
+			}
+		});
 	}
 }

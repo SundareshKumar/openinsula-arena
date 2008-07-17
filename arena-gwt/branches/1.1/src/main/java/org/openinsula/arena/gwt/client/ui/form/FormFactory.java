@@ -1,11 +1,14 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
-import com.google.gwt.dom.client.Style;
+
+import org.openinsula.arena.gwt.client.StyleBuilder;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -15,57 +18,89 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public abstract class FormFactory {
 
-	public static final Style style = null;
+	static final StyleBuilder styleBuilder;
+	
+	static {
+		styleBuilder = new StyleBuilder();
+	}
 
-	public static final String STYLE_FORM_LABEL = "salto-FormItemLabel";
+	public static void setModulePrefix(String modulePrefix) {
+		styleBuilder.setModulePrefix(modulePrefix);
+	}
 	
-	public static final String STYLE_FORM_LABEL_OPTIONAL = "salto-FormItemLabelOptional";
+	static final String STYLE_FORM_LABEL = "FormItemLabel";
 	
-	public static final String STYLE_FORM_LABEL_ERROR = "salto-FormItemLabelError";
+	public static final String getStyleFormLabel() {
+		return styleBuilder.getRule(STYLE_FORM_LABEL);
+	}
 	
-	public static final String STYLE_FORM_PANEL_HINT = "salto-FormItemPopupPanelHint";
+	static final String STYLE_FORM_LABEL_OPTIONAL = "FormItemLabelOptional";
 	
-	public static final String STYLE_FORM_BUTTON = "salto-button";
+	static final String STYLE_FORM_LABEL_ERROR = "FormItemLabelError";
 	
-	public static final String STYLE_FORM_LABEL_TITULO_H1 = "salto-FormItemLabelH1";
+	static final String STYLE_FORM_PANEL_HINT = "FormItemPopupPanelHint";
 	
-	public static final String STYLE_FORM_VERTICAL_PANEL = "salto-FormVerticalPanel";
+	static final String STYLE_FORM_BUTTON = "Button";
 	
-	public static final String STYLE_FORM_ITEM = "salto-FormItem";
+	static final String STYLE_FORM_LABEL_TITULO_H1 = "FormItemLabelH1";
 	
-	public static final String STYLE_FORM_ITEM_FOCUSED = "salto-FormItemFocused";
+	static final String STYLE_FORM_VERTICAL_PANEL = "FormVerticalPanel";
+	
+	static final String STYLE_FORM_ITEM = "FormItem";
+	
+	public static final String getStyleFormItem() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM);
+	}
+	
+	static final String STYLE_FORM_ITEM_VALID = "FormItemValid";
+	
+	public static final String getStyleFormItemValid() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM_VALID);
+	}
+	
+	static final String STYLE_FORM_ITEM_INVALID = "FormItemInvalid";
+	
+	public static final String getStyleFormItemInvalid() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM_INVALID);
+	}
+	
+	static final String STYLE_FORM_ITEM_FOCUSED = "FormItemFocused";
+	
+	public static final String getStyleFormItemFocused() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM_FOCUSED);
+	}
 
-	public static final String STYLE_FORM_LABEL_SUFFIX = "salto-FormItemLabelSuffix";
+	static final String STYLE_FORM_LABEL_SUFFIX = "FormItemLabelSuffix";
 	
-	public static final String STYLE_FORM_TEXT_BOX_DISABLED = "salto-FormItemTextBoxDisabled";
+	static final String STYLE_FORM_TEXT_BOX_DISABLED = "FormItemTextBoxDisabled";
 	
 	public static Label label(String text) {
 		Label label = new Label(text);
-		label.setStyleName(STYLE_FORM_LABEL);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL));
 		return label;
 	}
 	
 	public static Label labelH1(String text) {
 		Label label = new Label(text);
-		label.setStyleName(STYLE_FORM_LABEL_TITULO_H1);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_TITULO_H1));
 		return label;
 	}
 	
 	public static Label optionalLabel() {
 		Label label = new Label("(opcional)");
-		label.setStyleName(STYLE_FORM_LABEL_OPTIONAL);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_OPTIONAL));
 		return label;
 	}
 	
 	public static Label suffixLabel(String text) {
 		Label label = new Label(text);
-		label.setStyleName(STYLE_FORM_LABEL_SUFFIX);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_SUFFIX));
 		return label;
 	}
 	
 	public static Label errorLabel(String text) {
 		Label label = new Label(text);
-		label.setStyleName(STYLE_FORM_LABEL_ERROR);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_ERROR));
 		return label;
 	}
 	
@@ -76,16 +111,16 @@ public abstract class FormFactory {
 	
 	public static TextBox textBox(String width) {
 		TextBox textBox = new TextBox();
-		textBox.setWidth(width + "px");
+		textBox.setWidth(width);
 		return textBox;
 	}
 	
 	public static TextBox textBoxSmall() {
-		return textBox("50");
+		return textBox("50px");
 	}
 	
 	public static TextBox textBoxBig() {
-		return textBox("250");
+		return textBox("250px");
 	}
 	
 	public static Button button(String text) {
@@ -95,7 +130,7 @@ public abstract class FormFactory {
 	
 	public static Panel verticalPanel() {
 		Panel panel = new VerticalPanel();
-		panel.setStyleName(STYLE_FORM_VERTICAL_PANEL);
+		panel.setStyleName(styleBuilder.getRule(STYLE_FORM_VERTICAL_PANEL));
 		return panel;
 	}
 
@@ -106,14 +141,24 @@ public abstract class FormFactory {
 	
 	public static PopupPanel hintPopupPanel() {
 		PopupPanel panel = new PopupPanel(true);
-		panel.setStyleName(STYLE_FORM_PANEL_HINT);
+		panel.setStyleName(styleBuilder.getRule(STYLE_FORM_PANEL_HINT));
 		return panel;
 	}
 	
 	public static TextBox disabledTextBox() {
 		TextBox textBox = new TextBox();
-		textBox.setStyleName(STYLE_FORM_TEXT_BOX_DISABLED);
+		textBox.setStyleName(styleBuilder.getRule(STYLE_FORM_TEXT_BOX_DISABLED));
 		textBox.setEnabled(false);
 		return textBox;
+	}
+	
+	public static TextArea textArea(String width, String height) {
+		TextArea textArea = new TextArea();
+		textArea.setSize(width, height);
+		return textArea;
+	}
+	
+	public static TextArea textArea() {
+		return textArea("150px", "75px");
 	}
 }
