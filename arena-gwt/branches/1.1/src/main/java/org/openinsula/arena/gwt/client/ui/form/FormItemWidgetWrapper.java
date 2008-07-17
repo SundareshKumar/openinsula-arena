@@ -46,12 +46,12 @@ public class FormItemWidgetWrapper<T extends Widget> {
 	 */
 	public class FormItemFocusedListener implements FocusListener {
 		public void onFocus(Widget sender) {
-			parent.setStyleName(FormFactory.STYLE_FORM_ITEM_FOCUSED);
+			parent.setStyleName(FormFactory.getStyleFormItemFocused());
 			hasFocus = true;
 		}
 
 		public void onLostFocus(Widget sender) {
-			parent.setStyleName(FormFactory.STYLE_FORM_ITEM);
+			parent.setStyleName(FormFactory.getStyleFormItem());
 			hasFocus = false;
 			if (!hasMouse) {
 				hintManager.hideHint();
