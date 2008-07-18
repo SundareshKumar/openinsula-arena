@@ -86,13 +86,12 @@ public class PageableContainerTableModel<T> extends BeanReflectionContainerTable
 
 	public void setCurrentPage(int index) {
 		this.currentPage = index;
-		this.fireTableDataChanged();
 	}
 
 	public void setPageSize(int index) {
 		this.pageSize = index;
 	}
-
+	
 	public int getPageSize() {
 		return pageSize;
 	}

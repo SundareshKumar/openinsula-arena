@@ -7,6 +7,7 @@ import nextapp.echo2.app.event.ActionEvent;
 import nextapp.echo2.app.event.ActionListener;
 import nextapp.echo2.app.event.TableModelEvent;
 import nextapp.echo2.app.event.TableModelListener;
+import nextapp.echo2.app.table.AbstractTableModel;
 
 import org.openinsula.arena.echo2.component.div.Div;
 import org.openinsula.arena.echo2.component.model.PageableTableModel;
@@ -20,13 +21,6 @@ public class PagerRow extends Row {
 
 	private PagerStyles pagerStyles;
 
-	private boolean resetOnTableChange = true;
-
-	public PagerRow(PageableTableModel pageableTableModel, boolean resetOnTableChange) {
-		this(pageableTableModel);
-		this.resetOnTableChange = resetOnTableChange;
-	}
-
 	public PagerRow(PageableTableModel pageableTableModel) throws IllegalArgumentException {
 		super();
 		this.model = pageableTableModel;
@@ -34,9 +28,11 @@ public class PagerRow extends Row {
 			private static final long serialVersionUID = 1L;
 
 			public void tableChanged(TableModelEvent arg0) {
-				if (resetOnTableChange) {
+
+				if (model.getPageCount() < model.getCurrentPage()) {
 					model.setCurrentPage(0);
 				}
+
 				PagerRow.this.renderPager();
 			}
 		});
@@ -161,6 +157,11 @@ public class PagerRow extends Row {
 		public void actionPerformed(ActionEvent actionEvent) {
 			int command = Integer.parseInt(actionEvent.getActionCommand());
 			model.setCurrentPage(command);
+
+			if (model instanceof AbstractTableModel) {
+				((AbstractTableModel) model).fireTableDataChanged();
+			}
+
 			PagerRow.this.renderPager();
 		}
 	}
@@ -175,6 +176,10 @@ public class PagerRow extends Row {
 			}
 			else if ("proxima".equals(command)) {
 				model.setCurrentPage(model.getCurrentPage() + 1);
+			}
+
+			if (model instanceof AbstractTableModel) {
+				((AbstractTableModel) model).fireTableDataChanged();
 			}
 
 			PagerRow.this.renderPager();
@@ -207,13 +212,5 @@ public class PagerRow extends Row {
 
 	public void setPagerStyles(PagerStyles pagerStyles) {
 		this.pagerStyles = pagerStyles;
-	}
-
-	public boolean isResetOnTableChange() {
-		return resetOnTableChange;
-	}
-
-	public void setResetOnTableChange(boolean resetOnTableChange) {
-		this.resetOnTableChange = resetOnTableChange;
 	}
 }
