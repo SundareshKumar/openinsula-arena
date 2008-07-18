@@ -24,7 +24,6 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 
 	public BeanListBox(final ListBox listBox, final ListBoxModel<T> listBoxModel) {
 		this.listBox = listBox;
-		clearListBox();
 
 		this.listBox.addChangeListener(new ChangeListener() {
 
@@ -41,7 +40,11 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 	}
 
 	public void setEmptySelectionAllowed(final boolean nullAllowed) {
-		this.emptySelectionAllowed = nullAllowed;
+		if (this.emptySelectionAllowed != nullAllowed) {
+			this.emptySelectionAllowed = nullAllowed;
+			onListDataChange();
+			onListSelectionChange();
+		}
 	}
 
 	private void clearListBox() {
@@ -57,11 +60,19 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 		if (listBox.isMultipleSelect()) {
 			Collection<T> selection = new ArrayList<T>();
 
-			for (int i = 1, rows = listBox.getItemCount(); i < rows; i++) {
-				if (listBox.isItemSelected(i)) {
-					selection.add(model.getElementAt(i - 1));
+			int listBoxIdx = 0;
+			int modelIdx = 0;
+
+			if (emptySelectionAllowed) {
+				listBoxIdx++;
+			}
+
+			for (int rows = listBox.getItemCount(); listBoxIdx < rows; listBoxIdx++, modelIdx++) {
+				if (listBox.isItemSelected(listBoxIdx)) {
+					selection.add(model.getElementAt(modelIdx));
 				}
 			}
+
 			model.setSelectedItems(selection);
 
 		} else {
@@ -92,26 +103,14 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 		if (listBox.isMultipleSelect()) {
 			Collection<T> selectedItems = model.getSelectedItems();
 
-			for (int i = 0, rows = model.getSize(); i < rows; i++) {
-
-				if (emptySelectionAllowed) {
-					listBox.setItemSelected(i + 1, selectedItems.contains(model.getElementAt(i)));
-				} else {
-					listBox.setItemSelected(i, selectedItems.contains(model.getElementAt(i)));
-				}
-
+			for (int i = 0, j = emptySelectionAllowed ? 1 : 0, rows = model.getSize(); i < rows; i++, j++) {
+				listBox.setItemSelected(j, selectedItems.contains(model.getElementAt(i)));
 			}
 		} else {
 			T selectedItem = model.getSelectedItem();
-			int idx = selectedItem == null ? 0 : model.indexOf(selectedItem) + 1;
-
-			if (emptySelectionAllowed) {
-				idx = selectedItem == null ? 0 : model.indexOf(selectedItem) + 1;
-			} else {
-				idx = selectedItem == null ? -1 : model.indexOf(selectedItem);
-			}
-
-			listBox.setSelectedIndex(idx);
+			int idx = model.indexOf(selectedItem);
+			int diff = emptySelectionAllowed ? 1 : 0;
+			listBox.setSelectedIndex(idx + diff);
 		}
 	}
 
