@@ -7,6 +7,7 @@ import org.openinsula.arena.gwt.client.ui.LazyWidget;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+@Deprecated
 public class LazyDeckPanel extends DeckPanel {
 
 	private final LinkedList<ListEntry<?>> lazyWidgetList;

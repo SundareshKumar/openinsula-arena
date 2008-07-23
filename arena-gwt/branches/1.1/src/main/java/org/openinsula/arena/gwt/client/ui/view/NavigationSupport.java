@@ -8,18 +8,16 @@ import java.util.Map;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DeckPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 
-public abstract class NavigationSupport extends Composite implements HistoryListener {
+public abstract class NavigationSupport extends Composite implements
+		HistoryListener {
 
 	private final List<Hyperlink> links;
 
 	private final Map<String, Integer> viewStack;
 
-	private final DeckPanel viewDeck;
+	private final AdvancedDeckPanel viewDeck;
 
 	private String defaultToken;
 
@@ -32,7 +30,7 @@ public abstract class NavigationSupport extends Composite implements HistoryList
 	public NavigationSupport() {
 		links = new ArrayList<Hyperlink>();
 		viewStack = new HashMap<String, Integer>();
-		viewDeck = new DeckPanel();
+		viewDeck = new AdvancedDeckPanel();
 
 		setLinkStyleName("NavigationLink");
 		setViewDeckStyleName("NavigationViewDeck");
@@ -62,6 +60,14 @@ public abstract class NavigationSupport extends Composite implements HistoryList
 	}
 
 	public void addView(final String label, final Widget view, final boolean defaultView) {
+		addView(label, view, defaultView, null);
+	}
+
+	public void addView(final String label, final Widget view, final ClickListener listener) {
+		addView(label, view, false, listener);
+	}
+
+	public void addView(final String label, final Widget view, final boolean defaultView, final ClickListener listener) {
 		String token = getHistoryToken(label);
 
 		if (defaultView) {
@@ -71,7 +77,13 @@ public abstract class NavigationSupport extends Composite implements HistoryList
 		viewDeck.add(view);
 		viewStack.put(token, viewDeck.getWidgetCount() - 1);
 
-		links.add(createLink(label, token));
+		Hyperlink link = createLink(label, token);
+
+		if (listener != null) {
+			link.addClickListener(listener);
+		}
+
+		links.add(link);
 	}
 
 	protected String getHistoryToken(final String linkLabel) {
@@ -92,14 +104,15 @@ public abstract class NavigationSupport extends Composite implements HistoryList
 		if (viewStack.containsKey(historyToken)) {
 			viewDeck.showWidget(viewStack.get(historyToken));
 
-			for (Hyperlink link : links) {
-				if (link.getTargetHistoryToken().equals(historyToken)) {
-					link.setStyleName(linkSelectedStyleName);
-				} else {
-					link.setStyleName(linkStyleName);
+			if (viewDeck.wasShowed()) {
+				for (Hyperlink link : links) {
+					if (link.getTargetHistoryToken().equals(historyToken)) {
+						link.setStyleName(linkSelectedStyleName);
+					} else {
+						link.setStyleName(linkStyleName);
+					}
 				}
 			}
-
 		}
 	}
 
