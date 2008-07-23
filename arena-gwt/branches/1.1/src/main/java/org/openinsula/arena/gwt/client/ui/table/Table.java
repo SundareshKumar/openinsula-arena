@@ -126,4 +126,8 @@ public class Table<T> extends Composite implements TableModelListener {
 		tableModel.removeTableModelListener(this);
 	}
 
+	public CellFormatter getCellFormatter() {
+		return cellFormatter;
+	}
+
 }
