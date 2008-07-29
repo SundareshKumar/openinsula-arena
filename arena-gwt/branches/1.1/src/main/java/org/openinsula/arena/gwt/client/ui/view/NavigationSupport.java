@@ -68,7 +68,7 @@ public abstract class NavigationSupport extends Composite implements
 	}
 
 	public void addView(final String label, final Widget view, final boolean defaultView, final ClickListener listener) {
-		String token = getHistoryToken(label);
+		String token = getHistoryToken(label, view);
 
 		if (defaultView) {
 			defaultToken = token;
@@ -86,11 +86,13 @@ public abstract class NavigationSupport extends Composite implements
 		links.add(link);
 	}
 
-	protected String getHistoryToken(final String linkLabel) {
+	protected String getHistoryToken(final String linkLabel, Widget view) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(hashCode());
-		sb.append('-');
-		sb.append(linkLabel.replaceAll("\\s", "").toUpperCase());
+		sb.append(view.hashCode());
+		
+//		sb.append(hashCode());
+//		sb.append('-');
+//		sb.append(linkLabel.replaceAll("\\s", "").toUpperCase());
 
 		return sb.toString();
 	}
