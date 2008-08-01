@@ -37,4 +37,38 @@ public abstract class BigDecimalUtils {
 		return o1.compareTo(o2) == 0;
 	}
 
+	public static BigDecimal newBigDecimal(final String value) throws IllegalArgumentException, NumberFormatException {
+		if (value == null) {
+			throw new IllegalArgumentException("value must not be null");
+		}
+
+		String numbersAndDots = value.replaceAll("[^0-9.,]", "");
+
+		int dotIndex = numbersAndDots.lastIndexOf('.');
+		int commaIndex = numbersAndDots.lastIndexOf(',');
+
+		int separatorIndex = dotIndex > commaIndex ? dotIndex : commaIndex;
+
+		int scale = 0;
+
+		if (separatorIndex != -1) {
+			scale = numbersAndDots.length() - separatorIndex - 1;
+		}
+
+		String result = numbersAndDots.replaceAll("[^0-9]", "");
+
+		if (scale > 0) {
+			int length = result.length();
+			separatorIndex = length - scale;
+
+			result = new StringBuilder(length + scale)
+			.append(result.substring(0, separatorIndex))
+			.append('.')
+			.append(result.substring(separatorIndex))
+			.toString();
+		}
+
+		return new BigDecimal(result);
+	}
+
 }

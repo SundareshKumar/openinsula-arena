@@ -59,4 +59,28 @@ public class BigDecimalUtilsTestCase {
 		assertFalse(BigDecimalUtils.nullSafeEquals(value1, value3));
 	}
 
+	@Test
+	public void testNewBigDecimal() {
+
+		try {
+			BigDecimalUtils.newBigDecimal(null);
+			fail();
+		} catch (IllegalArgumentException e) {
+		}
+
+		try {
+			BigDecimalUtils.newBigDecimal("");
+			fail();
+		} catch (NumberFormatException e) {
+		}
+
+		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("1.000,00   "));
+		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("  1,000,00"));
+		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("1 000,0 0"));
+		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("1000.00"));
+		assertEquals(new BigDecimal("1000.0"), BigDecimalUtils.newBigDecimal("1000,0"));
+		assertEquals(new BigDecimal("1000"), BigDecimalUtils.newBigDecimal("1000."));
+		assertEquals(new BigDecimal("1000"), BigDecimalUtils.newBigDecimal("1000,"));
+	}
+
 }
