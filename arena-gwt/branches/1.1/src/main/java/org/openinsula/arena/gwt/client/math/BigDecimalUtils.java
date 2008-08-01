@@ -37,10 +37,16 @@ public abstract class BigDecimalUtils {
 		return o1.compareTo(o2) == 0;
 	}
 
-	public static BigDecimal newBigDecimal(final String value) throws IllegalArgumentException, NumberFormatException {
+	/**
+	 * Does not support Exponential notation.
+	 * @throws NumberFormatException if value is null
+	 */
+	public static BigDecimal newBigDecimal(final String value) throws NumberFormatException {
 		if (value == null) {
-			throw new IllegalArgumentException("value must not be null");
+			throw new NumberFormatException("value must not be null");
 		}
+
+		boolean isNegative = value.indexOf("-") != -1;
 
 		String numbersAndDots = value.replaceAll("[^0-9.,]", "");
 
@@ -61,11 +67,17 @@ public abstract class BigDecimalUtils {
 			int length = result.length();
 			separatorIndex = length - scale;
 
-			result = new StringBuilder(length + scale)
-			.append(result.substring(0, separatorIndex))
+			StringBuilder sb = new StringBuilder(length + scale);
+
+			if (isNegative) {
+				sb.append('-');
+			}
+
+			sb.append(result.substring(0, separatorIndex))
 			.append('.')
-			.append(result.substring(separatorIndex))
-			.toString();
+			.append(result.substring(separatorIndex));
+
+			result = sb.toString();
 		}
 
 		return new BigDecimal(result);

@@ -65,7 +65,7 @@ public class BigDecimalUtilsTestCase {
 		try {
 			BigDecimalUtils.newBigDecimal(null);
 			fail();
-		} catch (IllegalArgumentException e) {
+		} catch (NumberFormatException e) {
 		}
 
 		try {
@@ -74,8 +74,8 @@ public class BigDecimalUtilsTestCase {
 		} catch (NumberFormatException e) {
 		}
 
-		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("1.000,00   "));
-		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("  1,000,00"));
+		assertEquals(new BigDecimal("-1000.00"), BigDecimalUtils.newBigDecimal("-1.000,00   "));
+		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal(" + 1,000,00"));
 		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("1 000,0 0"));
 		assertEquals(new BigDecimal("1000.00"), BigDecimalUtils.newBigDecimal("1000.00"));
 		assertEquals(new BigDecimal("1000.0"), BigDecimalUtils.newBigDecimal("1000,0"));
