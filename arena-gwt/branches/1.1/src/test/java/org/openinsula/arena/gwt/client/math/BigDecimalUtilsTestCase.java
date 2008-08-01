@@ -21,6 +21,30 @@ public class BigDecimalUtilsTestCase {
 	}
 
 	@Test
+	public void testIsNegative() {
+		BigDecimal zero = BigDecimalUtils.ZERO;
+		BigDecimal value1 = new BigDecimal("-0.01");
+		BigDecimal value2 = new BigDecimal("-1");
+
+		assertFalse(BigDecimalUtils.isNegative(null));
+		assertFalse(BigDecimalUtils.isNegative(zero));
+		assertTrue(BigDecimalUtils.isNegative(value1));
+		assertTrue(BigDecimalUtils.isNegative(value2));
+	}
+
+	@Test
+	public void testIsPositive() {
+		BigDecimal zero = BigDecimalUtils.ZERO;
+		BigDecimal value1 = new BigDecimal("0.01");
+		BigDecimal value2 = new BigDecimal("1");
+
+		assertFalse(BigDecimalUtils.isPositive(null));
+		assertFalse(BigDecimalUtils.isPositive(zero));
+		assertTrue(BigDecimalUtils.isPositive(value1));
+		assertTrue(BigDecimalUtils.isPositive(value2));
+	}
+
+	@Test
 	public void testNullSafeEquals() {
 		assertTrue(BigDecimalUtils.nullSafeEquals(null, null));
 

@@ -10,6 +10,22 @@ public abstract class BigDecimalUtils {
 		return nullSafeEquals(value, ZERO);
 	}
 
+	public static boolean isNegative(final BigDecimal value) {
+		if (value == null) {
+			return false;
+		}
+
+		return value.compareTo(ZERO) < 0;
+	}
+
+	public static boolean isPositive(final BigDecimal value) {
+		if (value == null) {
+			return false;
+		}
+
+		return value.compareTo(ZERO) > 0;
+	}
+
 	public static boolean nullSafeEquals(final BigDecimal o1, final BigDecimal o2) {
 		if (o1 == o2) {
 			return true;
