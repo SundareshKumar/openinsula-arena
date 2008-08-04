@@ -40,10 +40,10 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 
 	public final void setValues(final List<T> values) {
 		this.values = values;
-		notifyListeners();
+		fireTableDataChanged();
 	}
 
-	private void notifyListeners() {
+	public void fireTableDataChanged() {
 		for (TableModelListener listener : listeners) {
 			listener.onTableDataChange();
 		}
@@ -77,7 +77,7 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 
 		if (comparator != null) {
 			Collections.sort(values, comparator);
-			notifyListeners();
+			fireTableDataChanged();
 		}
 	}
 
