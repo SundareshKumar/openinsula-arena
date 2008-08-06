@@ -1,0 +1,169 @@
+package org.openinsula.arena.gwt.client.ui.form;
+
+import org.openinsula.arena.gwt.client.StyleBuilder;
+
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
+
+/**
+ * 
+ * 
+ */
+public abstract class FormFactory {
+
+	static final StyleBuilder styleBuilder;
+
+	static {
+		styleBuilder = new StyleBuilder();
+	}
+
+	public static void setModulePrefix(String modulePrefix) {
+		styleBuilder.setModulePrefix(modulePrefix);
+	}
+
+	static final String STYLE_FORM_LABEL = "FormItemLabel";
+
+	public static final String getStyleFormLabel() {
+		return styleBuilder.getRule(STYLE_FORM_LABEL);
+	}
+
+	static final String STYLE_FORM_LABEL_OPTIONAL = "FormItemLabelOptional";
+
+	static final String STYLE_FORM_LABEL_ERROR = "FormItemLabelError";
+
+	static final String STYLE_FORM_PANEL_HINT = "FormItemPopupPanelHint";
+
+	static final String STYLE_FORM_BUTTON = "Button";
+
+	static final String STYLE_FORM_LABEL_TITULO_H1 = "FormItemLabelH1";
+
+	static final String STYLE_FORM_VERTICAL_PANEL = "FormVerticalPanel";
+
+	static final String STYLE_FORM_ITEM = "FormItem";
+
+	public static final String getStyleFormItem() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM);
+	}
+
+	static final String STYLE_FORM_ITEM_VALID = "FormItemValid";
+
+	public static final String getStyleFormItemValid() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM_VALID);
+	}
+
+	static final String STYLE_FORM_ITEM_INVALID = "FormItemInvalid";
+
+	public static final String getStyleFormItemInvalid() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM_INVALID);
+	}
+
+	static final String STYLE_FORM_ITEM_FOCUSED = "FormItemFocused";
+
+	public static final String getStyleFormItemFocused() {
+		return styleBuilder.getRule(STYLE_FORM_ITEM_FOCUSED);
+	}
+
+	static final String STYLE_FORM_LABEL_SUFFIX = "FormItemLabelSuffix";
+
+	static final String STYLE_FORM_TEXT_BOX_DISABLED = "FormItemTextBoxDisabled";
+
+	public static Label label(String text) {
+		Label label = new Label(text);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL));
+		return label;
+	}
+
+	public static Label labelH1(String text) {
+		Label label = new Label(text);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_TITULO_H1));
+		return label;
+	}
+
+	public static Label optionalLabel() {
+		Label label = new Label("(opcional)");
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_OPTIONAL));
+		return label;
+	}
+
+	public static Label suffixLabel(String text) {
+		Label label = new Label(text);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_SUFFIX));
+		return label;
+	}
+
+	public static Label errorLabel(String text) {
+		Label label = new Label(text);
+		label.setStyleName(styleBuilder.getRule(STYLE_FORM_LABEL_ERROR));
+		return label;
+	}
+
+	public static TextBox textBox() {
+		TextBox textBox = new TextBox();
+		return textBox;
+	}
+
+	public static TextBox textBox(String width) {
+		TextBox textBox = new TextBox();
+		textBox.setWidth(width);
+		return textBox;
+	}
+
+	public static TextBox textBoxSmall() {
+		return textBox("50px");
+	}
+
+	public static TextBox textBoxBig() {
+		return textBox("250px");
+	}
+
+	public static TextBox textBoxDate() {
+		TextBox box = textBox("80px");
+		box.setMaxLength(10);
+		return box;
+	}
+
+	public static Button button(String text) {
+		Button button = new Button(text);
+		return button;
+	}
+
+	public static Panel verticalPanel() {
+		Panel panel = new VerticalPanel();
+		panel.setStyleName(styleBuilder.getRule(STYLE_FORM_VERTICAL_PANEL));
+		return panel;
+	}
+
+	public static PasswordTextBox passwordTextBox() {
+		PasswordTextBox textBox = new PasswordTextBox();
+		return textBox;
+	}
+
+	public static PopupPanel hintPopupPanel() {
+		PopupPanel panel = new PopupPanel(true);
+		panel.setStyleName(styleBuilder.getRule(STYLE_FORM_PANEL_HINT));
+		return panel;
+	}
+
+	public static TextBox disabledTextBox() {
+		TextBox textBox = new TextBox();
+		textBox.setStyleName(styleBuilder.getRule(STYLE_FORM_TEXT_BOX_DISABLED));
+		textBox.setEnabled(false);
+		return textBox;
+	}
+
+	public static TextArea textArea(String width, String height) {
+		TextArea textArea = new TextArea();
+		textArea.setSize(width, height);
+		return textArea;
+	}
+
+	public static TextArea textArea() {
+		return textArea("150px", "75px");
+	}
+}
