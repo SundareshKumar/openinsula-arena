@@ -1,0 +1,9 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name='com.googlecode.gwt.math.Math' />
+	
+	<stylesheet src='Default.css'/>
+
+	<entry-point class='org.openinsula.arena.gwt.client.Main' />	
+	
+</module>
