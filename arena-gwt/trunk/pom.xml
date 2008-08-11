@@ -12,13 +12,12 @@
 		<url>http://www.openinsula.org</url>
 	</organization>
 	<scm>
-		<connection>
-			scm:svn:http://svn.openinsula.org/arena/arena-gwt/branches/1.1
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/trunk
 		</connection>
 		<developerConnection>
-			scm:svn:https://svn.openinsula.org/arena/arena-gwt/branches/1.1
+			scm:svn:https://svn.openinsula.org/arena/arena-gwt/trunk
 		</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-gwt/branches/1.1
+		<url>http://svn.openinsula.org/arena/arena-gwt/trunk
 		</url>
 	</scm>
 	<repositories>
@@ -78,33 +77,30 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<dependencies>
-
-		<!-- Optional Dependencies (already declared) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
 			<version>2.5.5</version>
 			<optional>true</optional>
 		</dependency>
-
-		<!-- Convenience dependencies -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>1.5.0-rc1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-math-user</artifactId>
 			<version>2.0.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-math-server</artifactId>
 			<version>2.0.1</version>
+			<scope>provided</scope>
 		</dependency>
-		
-		<!-- Test Dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

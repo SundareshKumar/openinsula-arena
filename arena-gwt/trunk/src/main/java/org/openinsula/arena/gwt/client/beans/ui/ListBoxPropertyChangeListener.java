@@ -10,11 +10,15 @@ import org.openinsula.arena.gwt.client.beans.converter.ToStringConverter;
 import com.google.gwt.user.client.ui.ListBox;
 
 public class ListBoxPropertyChangeListener<T> implements PropertyChangeListener {
+
 	protected final ListBox component;
+
 	protected final Converter<T, String> labelConverter;
+
 	protected final Converter<T, String> valueConverter;
 
 	protected boolean useDefaultSelection = true;
+
 	protected String defaultSelectionLabel = "(choose)";
 
 	public ListBoxPropertyChangeListener(final ListBox component) {
@@ -25,7 +29,8 @@ public class ListBoxPropertyChangeListener<T> implements PropertyChangeListener 
 		this(component, converter, converter);
 	}
 
-	public ListBoxPropertyChangeListener(final ListBox component, final Converter<T, String> labelConverter, final Converter<T, String> valueConverter) {
+	public ListBoxPropertyChangeListener(final ListBox component, final Converter<T, String> labelConverter,
+			final Converter<T, String> valueConverter) {
 		assert component != null;
 		assert labelConverter != null;
 		assert valueConverter != null;
@@ -52,6 +57,7 @@ public class ListBoxPropertyChangeListener<T> implements PropertyChangeListener 
 		this.defaultSelectionLabel = defaultSelectionLabel;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void propertyChange(final PropertyChangeEvent evt) {
 		component.clear();
 
@@ -59,7 +65,7 @@ public class ListBoxPropertyChangeListener<T> implements PropertyChangeListener 
 			component.addItem(defaultSelectionLabel, "");
 		}
 
-		Collection<T> collection = (Collection<T>) evt.newValue;
+		final Collection<T> collection = (Collection<T>) evt.newValue;
 
 		filterCollection(collection);
 		mapCollection(collection);
@@ -70,7 +76,7 @@ public class ListBoxPropertyChangeListener<T> implements PropertyChangeListener 
 
 	protected void mapCollection(final Collection<T> values) {
 		if (values != null && !values.isEmpty()) {
-			for (T item : values) {
+			for (final T item : values) {
 				component.addItem(labelConverter.convert(item), valueConverter.convert(item));
 			}
 		}
