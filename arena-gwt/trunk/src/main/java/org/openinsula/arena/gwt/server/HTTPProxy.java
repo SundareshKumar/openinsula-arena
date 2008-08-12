@@ -17,10 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class HTTPProxy extends HttpServlet {
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String localName = req.getLocalName();
+
 		URL url = null;
 		String user, password, method = "GET", post = null;
+
 		int timeout = 0;
 		Set entrySet = req.getParameterMap().entrySet();
 		Map headers = new HashMap();

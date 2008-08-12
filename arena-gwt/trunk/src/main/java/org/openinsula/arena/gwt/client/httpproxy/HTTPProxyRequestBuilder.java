@@ -3,7 +3,7 @@ package org.openinsula.arena.gwt.client.httpproxy;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
@@ -13,7 +13,6 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 
 public class HTTPProxyRequestBuilder {
-	private Map headers;
 
 	private String password;
 
@@ -21,52 +20,128 @@ public class HTTPProxyRequestBuilder {
 
 	private String user;
 
-	StringBuffer postBuilder = new StringBuffer();
+	private Map<String, String> params = new HashMap<String, String>();
+
+	public HTTPProxyRequestBuilder(String url) {
+		putParameter("url", url);
+	}
 
 	public HTTPProxyRequestBuilder(RequestBuilder.Method httpMethod, String url) {
 		this((httpMethod == null) ? null : httpMethod.toString(), url);
 	}
 
 	public HTTPProxyRequestBuilder(String httpMethod, String url) {
-		// build
-		postBuilder.append("method=");
-		postBuilder.append(httpMethod);
-		setParam("url", url);
+		this(url);
+		putParameter("method", httpMethod);
 	}
 
-	protected void setParam(String key, String value) {
-		postBuilder.append("&");
-		postBuilder.append(key);
-		postBuilder.append("=");
-		postBuilder.append(URL.encodeComponent(value));
+	/**
+	 * Sends a request with the GET method
+	 * @param callback
+	 * @return
+	 * @throws RequestException
+	 */
+	public Request sendGet(RequestCallback callback) throws RequestException {
+		setRequestMethod("GET");
+		return sendRequest(null, callback);
+	}
+
+	/**
+	 * Sends a request with the POST method
+	 * @param requestData
+	 * @param callback
+	 * @return
+	 * @throws RequestException
+	 */
+	public Request sendPost(String requestData, RequestCallback callback) throws RequestException {
+		setRequestMethod("POST");
+		return sendRequest(requestData, callback);
+	}
+
+	/**
+	 * Sends a request with the PUT method
+	 * @param requestData
+	 * @param callback
+	 * @return
+	 * @throws RequestException
+	 */
+	public Request sendPut(String requestData, RequestCallback callback) throws RequestException {
+		setRequestMethod("PUT");
+		return sendRequest(requestData, callback);
+	}
+
+	/**
+	 * Sends a request with the DELETE method
+	 * @param requestData
+	 * @param callback
+	 * @return
+	 * @throws RequestException
+	 */
+	public Request sendDelete(String requestData, RequestCallback callback) throws RequestException {
+		setRequestMethod("DELETE");
+		return sendRequest(requestData, callback);
+	}
+
+	/**
+	 * Puts the requestMethod in the parameters list.
+	 * @param requestMethod
+	 */
+	public void setRequestMethod(String requestMethod) {
+		putParameter("method=", requestMethod);
+	}
+
+	/**
+	 * Put a parameter in the params map.
+	 * @param key
+	 * @param value
+	 */
+	protected void putParameter(String key, String value) {
+		params.put(key, value);
+	}
+
+	/**
+	 * @return The list of params in String
+	 */
+	public String buildParametersAsString() {
+		StringBuffer postBuilder = new StringBuffer("");
+
+		Iterator<Entry<String, String>> iterator = params.entrySet().iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
+
+			if (entry.getValue() == null) {
+				continue;
+			}
+
+			postBuilder.append(entry.getKey());
+			postBuilder.append("=");
+			postBuilder.append(URL.encodeComponent(entry.getValue()));
+
+			if (iterator.hasNext()) {
+				postBuilder.append("&");
+			}
+		}
+
+		return postBuilder.toString();
 	}
 
 	public Request sendRequest(String requestData, RequestCallback callback) throws RequestException {
-		if (user != null)
-			setParam("user", user);
-		if (password != null)
-			setParam("password", password);
-		if (timeoutMillis > 0)
-			setParam("timeout", Integer.toString(timeoutMillis));
-		if (headers != null) {
-			Set entrySet = headers.entrySet();
-			for (Iterator iter = entrySet.iterator(); iter.hasNext();) {
-				Map.Entry header = (Map.Entry) iter.next();
-				setParam((String) header.getKey(), (String) header.getValue());
-			}
+
+		putParameter("user", user);
+		putParameter("password", password);
+		putParameter("post", requestData);
+
+		if (timeoutMillis > 0) {
+			putParameter("timeout", Integer.toString(timeoutMillis));
 		}
-		if (requestData != null)
-			setParam("post", requestData);
+
 		RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, GWT.getModuleBaseURL() + "/HTTPProxy");
 		requestBuilder.setHeader("Content-type", "application/x-www-form-urlencoded");
-		return requestBuilder.sendRequest(postBuilder.toString(), callback);
-	}
 
-	public void setHeader(String header, String value) {
-		if (headers == null) {
-			headers = new HashMap();
-		}
-		headers.put(header, value);
+		GWT.log(buildParametersAsString(), null);
+
+		return requestBuilder.sendRequest(buildParametersAsString(), callback);
 	}
 
 	public void setPassword(String password) {
