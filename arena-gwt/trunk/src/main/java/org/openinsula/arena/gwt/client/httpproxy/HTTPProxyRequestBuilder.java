@@ -14,11 +14,13 @@ import com.google.gwt.http.client.URL;
 
 public class HTTPProxyRequestBuilder {
 
+	private String user;
+
 	private String password;
 
 	private int timeoutMillis;
 
-	private String user;
+	private Map<String, String> query = new HashMap<String, String>();
 
 	private Map<String, String> params = new HashMap<String, String>();
 
@@ -77,9 +79,9 @@ public class HTTPProxyRequestBuilder {
 	 * @return
 	 * @throws RequestException
 	 */
-	public Request sendDelete(String requestData, RequestCallback callback) throws RequestException {
+	public Request sendDelete(RequestCallback callback) throws RequestException {
 		setRequestMethod("DELETE");
-		return sendRequest(requestData, callback);
+		return sendRequest(null, callback);
 	}
 
 	/**
@@ -87,7 +89,7 @@ public class HTTPProxyRequestBuilder {
 	 * @param requestMethod
 	 */
 	public void setRequestMethod(String requestMethod) {
-		putParameter("method=", requestMethod);
+		putParameter("method", requestMethod);
 	}
 
 	/**
@@ -99,28 +101,63 @@ public class HTTPProxyRequestBuilder {
 		params.put(key, value);
 	}
 
+	public void putQuery(String key, String value) {
+		query.put(key, value);
+	}
+
+	public void removeQuery(String key) {
+		query.remove(key);
+	}
+
 	/**
 	 * @return The list of params in String
 	 */
 	public String buildParametersAsString() {
 		StringBuffer postBuilder = new StringBuffer("");
+		postBuilder.append('?');
+		{
+			Iterator<Entry<String, String>> iterator = params.entrySet().iterator();
 
-		Iterator<Entry<String, String>> iterator = params.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
 
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
+				if (entry.getValue() == null) {
+					continue;
+				}
 
-			if (entry.getValue() == null) {
-				continue;
+				postBuilder.append(entry.getKey());
+				postBuilder.append("=");
+				postBuilder.append(URL.encodeComponent(entry.getValue()));
+
+				if (iterator.hasNext()) {
+					postBuilder.append("&");
+				}
 			}
-
-			postBuilder.append(entry.getKey());
-			postBuilder.append("=");
-			postBuilder.append(URL.encodeComponent(entry.getValue()));
-
-			if (iterator.hasNext()) {
+		}
+		{
+			Iterator<Entry<String, String>> iteratorQuery = query.entrySet().iterator();
+			
+			if (iteratorQuery.hasNext()) {
 				postBuilder.append("&");
 			}
+			
+			while (iteratorQuery.hasNext()) {
+				Map.Entry<String, String> entry = (Map.Entry<String, String>) iteratorQuery.next();
+
+				if (entry.getValue() == null) {
+					continue;
+				}
+				
+				postBuilder.append("query");
+				postBuilder.append(entry.getKey());
+				postBuilder.append("=");
+				postBuilder.append(URL.encodeComponent(entry.getValue()));
+
+				if (iteratorQuery.hasNext()) {
+					postBuilder.append("&");
+				}
+			}
+
 		}
 
 		return postBuilder.toString();

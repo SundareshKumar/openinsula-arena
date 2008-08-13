@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,13 +22,20 @@ public class HTTPProxy extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		URL url = null;
-		String user, password, method = "GET", post = null;
-
+		String urlString = null;
+		String user;
+		String password;
+		String method = "GET";
+		String post = null;
 		int timeout = 0;
 		Set entrySet = req.getParameterMap().entrySet();
+
 		Map headers = new HashMap();
 
+		Map<String, String> query = new HashMap<String, String>();
+
 		for (Iterator iter = entrySet.iterator(); iter.hasNext();) {
+
 			Map.Entry header = (Map.Entry) iter.next();
 			String key = (String) header.getKey();
 			String value = ((String[]) header.getValue())[0];
@@ -47,12 +55,18 @@ public class HTTPProxy extends HttpServlet {
 				post = value;
 			}
 			else if (key.compareTo("url") == 0) {
-				url = new URL(value);
+				urlString = value;
+			}
+			else if (key.startsWith("query")) {
+				String q = key.substring(5);
+				query.put(q, value);
 			}
 			else {
 				headers.put(key, value);
 			}
 		}
+
+		url = new URL(urlString + buildQuery(query));
 
 		if (url != null) {
 			boolean complete = false;
@@ -116,5 +130,30 @@ public class HTTPProxy extends HttpServlet {
 				}
 			}
 		}
+	}
+
+	public static String buildQuery(Map<String, String> query) {
+		StringBuilder postBuilder = new StringBuilder();
+		postBuilder.append("?");
+
+		Iterator<Entry<String, String>> iteratorQuery = query.entrySet().iterator();
+
+		while (iteratorQuery.hasNext()) {
+			Map.Entry<String, String> entry = (Map.Entry<String, String>) iteratorQuery.next();
+
+			if (entry.getValue() == null) {
+				continue;
+			}
+
+			postBuilder.append(entry.getKey());
+			postBuilder.append("=");
+			postBuilder.append(entry.getValue());
+
+			if (iteratorQuery.hasNext()) {
+				postBuilder.append("&");
+			}
+		}
+
+		return postBuilder.toString();
 	}
 }
