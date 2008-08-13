@@ -24,8 +24,11 @@ public class HTTPProxyRequestBuilder {
 
 	private Map<String, String> params = new HashMap<String, String>();
 
+	public HTTPProxyRequestBuilder() {
+	}
+
 	public HTTPProxyRequestBuilder(String url) {
-		putParameter("url", url);
+		setUrl(url);
 	}
 
 	public HTTPProxyRequestBuilder(RequestBuilder.Method httpMethod, String url) {
@@ -35,6 +38,14 @@ public class HTTPProxyRequestBuilder {
 	public HTTPProxyRequestBuilder(String httpMethod, String url) {
 		this(url);
 		putParameter("method", httpMethod);
+	}
+
+	public void setUrl(String url) {
+		putParameter("url", url);
+	}
+
+	public String getUrl() {
+		return params.get("url");
 	}
 
 	/**
@@ -101,6 +112,10 @@ public class HTTPProxyRequestBuilder {
 		params.put(key, value);
 	}
 
+	public void putAllQueries(Map<String, String> queryParameters) {
+		this.query.putAll(queryParameters);
+	}
+
 	public void putQuery(String key, String value) {
 		query.put(key, value);
 	}
@@ -136,18 +151,18 @@ public class HTTPProxyRequestBuilder {
 		}
 		{
 			Iterator<Entry<String, String>> iteratorQuery = query.entrySet().iterator();
-			
+
 			if (iteratorQuery.hasNext()) {
 				postBuilder.append("&");
 			}
-			
+
 			while (iteratorQuery.hasNext()) {
 				Map.Entry<String, String> entry = (Map.Entry<String, String>) iteratorQuery.next();
 
 				if (entry.getValue() == null) {
 					continue;
 				}
-				
+
 				postBuilder.append("query");
 				postBuilder.append(entry.getKey());
 				postBuilder.append("=");
