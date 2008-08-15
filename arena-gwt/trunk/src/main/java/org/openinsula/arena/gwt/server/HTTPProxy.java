@@ -3,7 +3,7 @@ package org.openinsula.arena.gwt.server;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -91,9 +91,9 @@ public class HTTPProxy extends HttpServlet {
 				// send post
 				if (post != null) {
 					urlConnection.setDoOutput(true);
-					OutputStreamWriter outRemote = new OutputStreamWriter(urlConnection.getOutputStream());
-					outRemote.write(post);
-					outRemote.flush();
+					OutputStream out = urlConnection.getOutputStream();
+					out.write(post.getBytes());
+					out.flush();
 				}
 
 				// get content type
