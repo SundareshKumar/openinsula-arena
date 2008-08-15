@@ -191,7 +191,7 @@ public class HTTPProxyRequestBuilder {
 		RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, GWT.getModuleBaseURL() + "/HTTPProxy");
 		requestBuilder.setHeader("Content-type", "application/x-www-form-urlencoded");
 
-		GWT.log(buildParametersAsString(), null);
+//		GWT.log(buildParametersAsString(), null);
 
 		return requestBuilder.sendRequest(buildParametersAsString(), callback);
 	}

@@ -73,7 +73,6 @@ public class HTTPProxy extends HttpServlet {
 			while (!complete) {
 
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-				urlConnection.setDoOutput(true);
 				urlConnection.setDoInput(true);
 				urlConnection.setUseCaches(false);
 				urlConnection.setInstanceFollowRedirects(false);
@@ -91,6 +90,7 @@ public class HTTPProxy extends HttpServlet {
 
 				// send post
 				if (post != null) {
+					urlConnection.setDoOutput(true);
 					OutputStreamWriter outRemote = new OutputStreamWriter(urlConnection.getOutputStream());
 					outRemote.write(post);
 					outRemote.flush();
