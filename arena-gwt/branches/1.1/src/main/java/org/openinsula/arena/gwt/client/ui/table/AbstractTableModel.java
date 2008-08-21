@@ -69,7 +69,7 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 	}
 
 	public int getRowCount() {
-		return values.size();
+		return values == null ? 0 : values.size();
 	}
 
 	public final void sortValues(final int columnIndex) {

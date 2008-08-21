@@ -69,5 +69,14 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 		isNew = true;
 		refresh();
 	}
+	
+	@Override
+	public T getWidget() {
+		throw new UnsupportedOperationException("Use GroupFormItem.getWidgets() instead!");
+	}
+	
+	public T[] getWidgets() {
+		return widgets;
+	}
 
 }

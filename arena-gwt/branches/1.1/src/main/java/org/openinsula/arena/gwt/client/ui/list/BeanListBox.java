@@ -125,4 +125,8 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 	public void removeFocusListener(final FocusListener listener) {
 		listBox.removeFocusListener(listener);
 	}
+
+	public ListBox getListBox() {
+		return listBox;
+	}
 }
