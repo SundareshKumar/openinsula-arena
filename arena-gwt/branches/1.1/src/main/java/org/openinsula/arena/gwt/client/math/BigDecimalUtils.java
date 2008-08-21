@@ -78,7 +78,11 @@ public abstract class BigDecimalUtils {
 			.append(result.substring(separatorIndex));
 
 			result = sb.toString();
-		}
+		} else {
+			if (isNegative) {
+				result = new StringBuffer("-").append(result).toString();
+			}
+ 		}
 
 		return new BigDecimal(result);
 	}
