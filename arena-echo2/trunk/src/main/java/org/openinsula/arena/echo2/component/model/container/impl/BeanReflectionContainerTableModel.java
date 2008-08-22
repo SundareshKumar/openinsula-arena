@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nextapp.echo2.app.Button;
 import nextapp.echo2.app.Component;
+import nextapp.echo2.app.button.AbstractButton;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -190,7 +190,9 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.openinsula.arena.echo2.component.model.container.impl.BasicContainerTableModel#getColumns()
+	 * 
+	 * @seeorg.openinsula.arena.echo2.component.model.container.impl.
+	 * BasicContainerTableModel#getColumns()
 	 */
 	@Override
 	public String[] getColumns() {
@@ -247,9 +249,10 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 
 			Component component = tableColumn.getComponentBuilder().buildComponent(columnIndex, bean);
 
-			if (component instanceof Button) {
-				((Button) component).setActionCommand(getActionCommandFromBean(bean));
+			if (component instanceof AbstractButton) {
+				((AbstractButton) component).setActionCommand(getActionCommandFromBean(bean));
 			}
+
 			// TODO implement the rest of the components that have actionCommand
 
 			return component;
@@ -292,18 +295,16 @@ public class BeanReflectionContainerTableModel<T> extends BasicContainerTableMod
 			addColumnWidth(columnIndex[i], width[i]);
 		}
 	}
-	
+
 	/**
-	 * Adds all width incrementing the columns by the first column passed in the firstIndex
-	 * If the first index is 4 and it is passed 3 elements like 100, 210, 250 in the width array parameter,
-	 * the combination will be:
-	 * 4 - 100
-	 * 5 - 210
-	 * 6 - 250 
+	 * Adds all width incrementing the columns by the first column passed in the
+	 * firstIndex If the first index is 4 and it is passed 3 elements like 100,
+	 * 210, 250 in the width array parameter, the combination will be: 4 - 100 5
+	 * - 210 6 - 250
 	 * @param firstIndex
 	 * @param width
 	 */
-	public void addColumnWidth(int firstIndex, int ... width) {
+	public void addColumnWidth(int firstIndex, int... width) {
 		for (int i = 0; i < width.length; i++) {
 			addColumnWidth(firstIndex++, width[i]);
 		}
