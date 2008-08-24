@@ -23,8 +23,8 @@ public class HTTPProxy extends HttpServlet {
 
 		URL url = null;
 		String urlString = null;
-		String user;
-		String password;
+		String user = null;
+		String password = null;
 		String method = "GET";
 		String post = null;
 		int timeout = 0;
@@ -77,6 +77,15 @@ public class HTTPProxy extends HttpServlet {
 				urlConnection.setUseCaches(false);
 				urlConnection.setInstanceFollowRedirects(false);
 				urlConnection.setRequestMethod(method);
+
+				if (user != null) {
+					urlConnection.addRequestProperty("user", user);
+				}
+
+				if (password != null) {
+					urlConnection.addRequestProperty("password", password);
+				}
+
 				if (timeout > 0) {
 					urlConnection.setConnectTimeout(timeout);
 				}

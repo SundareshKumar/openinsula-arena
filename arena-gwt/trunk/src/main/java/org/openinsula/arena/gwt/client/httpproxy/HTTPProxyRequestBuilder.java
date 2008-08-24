@@ -129,7 +129,6 @@ public class HTTPProxyRequestBuilder {
 	 */
 	public String buildParametersAsString() {
 		StringBuffer postBuilder = new StringBuffer("");
-		postBuilder.append('?');
 		{
 			Iterator<Entry<String, String>> iterator = params.entrySet().iterator();
 
@@ -188,10 +187,10 @@ public class HTTPProxyRequestBuilder {
 			putParameter("timeout", Integer.toString(timeoutMillis));
 		}
 
-		RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, GWT.getModuleBaseURL() + "/HTTPProxy");
+		RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, GWT.getModuleBaseURL() + "HTTPProxy");
 		requestBuilder.setHeader("Content-type", "application/x-www-form-urlencoded");
 
-//		GWT.log(buildParametersAsString(), null);
+		GWT.log(buildParametersAsString(), null);
 
 		return requestBuilder.sendRequest(buildParametersAsString(), callback);
 	}
