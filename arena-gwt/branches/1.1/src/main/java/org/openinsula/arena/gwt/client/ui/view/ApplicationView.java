@@ -50,7 +50,7 @@ public class ApplicationView extends NavigationSupport {
 		HorizontalPanel titlePanel = new HorizontalPanel();
 		titlePanel.setWidth("100%");
 		titlePanel.setStyleName("ApplicationViewTitleBar");
-		titlePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		titlePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 //		titlePanel.add(title);
 		titlePanel.add(getApplicationTitle());
