@@ -83,6 +83,13 @@ public class StyleBuilder {
 		return _rule == null ? toString() : toString() + _rule;
 	}
 
+	public String getRuleFromModule(final String rule) {
+		String _rule = nullSafeTrim(rule);
+
+		return _rule == null ? modulePrefix : new StringBuffer().append(modulePrefix).append(separator).append(_rule)
+				.toString();
+	}
+
 	public String toString() {
 		if (!rootDirty && !rulesDirty) {
 			return fullCache;

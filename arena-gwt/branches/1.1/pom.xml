@@ -27,6 +27,10 @@
 
 	<repositories>
 		<repository>
+			<id>gwt-maven</id>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+		</repository>
+		<repository>
 			<id>openinsula</id>
 			<name>OpenInsula Repository</name>
 			<url>http://maven.openinsula.org</url>
@@ -49,10 +53,6 @@
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>gwt-maven</id>
-			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -65,6 +65,7 @@
 	<properties>
 		<google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
 		<java.library.path>${google.webtoolkit.home}</java.library.path>
+		<gwt.version>1.5.2</gwt.version>
 	</properties>
 
 	<distributionManagement>
@@ -97,6 +98,34 @@
 
 		<!-- Convenience dependencies -->
 
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwt.version}</version>
+            <classifier>linux-libs</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwt.version}</version>
+            <classifier>linux</classifier>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+        </dependency>
+
+        <!--
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -107,6 +136,7 @@
 			<artifactId>gwt-servlet</artifactId>
 			<version>1.5.0-rc1</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-math-user</artifactId>
@@ -117,6 +147,7 @@
 			<artifactId>gwt-math-server</artifactId>
 			<version>2.0.1</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>net.sf.hibernate4gwt</groupId>
 			<artifactId>hibernate4gwt</artifactId>

@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.google.gwt.user.client.ui.HTMLTable.RowFormatter;
 
 public class Table<T> extends Composite implements TableModelListener {
-	private final StyleBuilder style = new StyleBuilder("sandBox", "Table");
+	private final StyleBuilder style = new StyleBuilder("salto", "Table");
 
 	private TableListener<T> tableListener;
 
