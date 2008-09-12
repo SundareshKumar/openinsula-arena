@@ -3,6 +3,7 @@ package org.openinsula.arena.gwt.client.ui.form;
 import org.openinsula.arena.gwt.client.StyleBuilder;
 
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -165,5 +166,32 @@ public abstract class FormFactory {
 
 	public static TextArea textArea() {
 		return textArea("150px", "75px");
+	}
+	
+	/**
+	 * Cria um {@link Hyperlink} e gera um "token" automatico, baseado no 
+	 * label fornecido (concatenando com um numero aleatorio).
+	 * 
+	 * @see #hyperlink(String, String)
+	 * @param label
+	 * @return
+	 */
+	public static Hyperlink hyperlink(String label) {
+		if (label == null || label.trim().isEmpty()) {
+			return hyperlink("no label");
+		}
+		
+		String noTokenAtAll = label.toLowerCase()
+						.replaceAll("\\s", "-")
+						.replaceAll("[\\W&&[^-]]", "")
+						.replaceAll("--", "-");
+		
+		noTokenAtAll += "-tk" + Math.random();
+		
+		return hyperlink(label, noTokenAtAll);
+	}
+	
+	public static Hyperlink hyperlink(String label, String targetHistoryToken) {
+		return new Hyperlink(label, targetHistoryToken);
 	}
 }
