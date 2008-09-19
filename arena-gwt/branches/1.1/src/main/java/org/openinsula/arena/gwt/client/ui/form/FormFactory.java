@@ -3,6 +3,8 @@ package org.openinsula.arena.gwt.client.ui.form;
 import org.openinsula.arena.gwt.client.StyleBuilder;
 
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -11,10 +13,11 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * 
+ *
+ *
  */
 public abstract class FormFactory {
 
@@ -167,11 +170,11 @@ public abstract class FormFactory {
 	public static TextArea textArea() {
 		return textArea("150px", "75px");
 	}
-	
+
 	/**
-	 * Cria um {@link Hyperlink} e gera um "token" automatico, baseado no 
-	 * label fornecido (concatenando com um numero aleatorio).
-	 * 
+	 * Cria um {@link Hyperlink} e gera um "token" automatico, baseado no label
+	 * fornecido (concatenando com um numero aleatorio).
+	 *
 	 * @see #hyperlink(String, String)
 	 * @param label
 	 * @return
@@ -180,18 +183,42 @@ public abstract class FormFactory {
 		if (label == null || label.trim().isEmpty()) {
 			return hyperlink("no label");
 		}
-		
-		String noTokenAtAll = label.toLowerCase()
-						.replaceAll("\\s", "-")
-						.replaceAll("[\\W&&[^-]]", "")
-						.replaceAll("--", "-");
-		
+
+		String noTokenAtAll = label.toLowerCase().replaceAll("\\s", "-").replaceAll("[\\W&&[^-]]", "").replaceAll("--",
+				"-");
+
 		noTokenAtAll += "-tk" + Math.random();
-		
+
 		return hyperlink(label, noTokenAtAll);
 	}
-	
+
 	public static Hyperlink hyperlink(String label, String targetHistoryToken) {
 		return new Hyperlink(label, targetHistoryToken);
+	}
+
+	public static HorizontalPanel actionPanel() {
+		Widget[] ws = new Widget[] {};
+		return actionPanel(ws);
+	}
+
+	public static HorizontalPanel actionPanel(Widget... widgets) {
+		HorizontalPanel panel = new HorizontalPanel();
+		panel.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
+
+		for (Widget widget : widgets) {
+			panel.add(widget);
+		}
+
+		return panel;
+	}
+
+	public static Panel formBuilderToPanel(FormItem<?>... formItems) {
+		FormBuilder formBuilder = new FormBuilder();
+
+		for (FormItem<?> formItem : formItems) {
+			formBuilder.add(formItem);
+		}
+
+		return formBuilder.toPanel();
 	}
 }

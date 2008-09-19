@@ -129,4 +129,8 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 	public ListBox getListBox() {
 		return listBox;
 	}
+
+	public ListBoxModel<T> getModel() {
+		return model;
+	}
 }
