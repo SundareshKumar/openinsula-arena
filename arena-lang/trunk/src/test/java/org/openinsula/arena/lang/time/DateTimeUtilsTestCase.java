@@ -20,6 +20,7 @@ package org.openinsula.arena.lang.time;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -124,5 +125,13 @@ public class DateTimeUtilsTestCase {
 		expected.set(Calendar.MILLISECOND, 999);
 
 		assertEquals(expected, DateTimeUtils.upperLimitForDay(timeSaving));
+	}
+	
+	@Test
+	// TODO This test can be better
+	public void testCreateRFC3339SimpleDateFormat() {
+		SimpleDateFormat sdf = DateTimeUtils.createRFC3339SimpleDateFormat();
+		String result = sdf.format(new Date());
+		assertEquals(25, result.length());
 	}
 }

@@ -18,8 +18,10 @@
  */
 package org.openinsula.arena.lang.time;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * A suite of utitilies that extends the ones provided by
@@ -122,6 +124,34 @@ public class DateTimeUtils extends org.apache.commons.lang.time.DateUtils {
 		result.set(Calendar.MILLISECOND, 999);
 
 		return result;
+	}
+	
+	/**
+	 * Create a {@link SimpleDateFormat} instance following <b>RFC3339</b> rule.
+	 * <p>The method uses the default {@link TimeZone}.
+	 * If you need a specific {@link TimeZone}, use {@link #createRFC3339SimpleDateFormat(TimeZone)} instead.
+	 * @return {@link SimpleDateFormat} instance for RFC3339.
+	 * @author Eduardo Rebola
+	 */
+	public static SimpleDateFormat createRFC3339SimpleDateFormat() {
+		return createRFC3339SimpleDateFormat(TimeZone.getDefault());
+	}
+	
+	/**
+	 * Create a {@link SimpleDateFormat} instance following <b>RFC3339</b> rule and configured for the specified {@link TimeZone}.
+	 * <p>For default {@link TimeZone}, use {@link #createRFC3339SimpleDateFormat()} instead.
+	 * @param timeZone a required {@link TimeZone}.
+	 * @return {@link SimpleDateFormat} instance for RFC3339.
+	 * @author Eduardo Rebola
+	 */
+	public static SimpleDateFormat createRFC3339SimpleDateFormat(TimeZone timeZone) {
+		int hoursOffset = timeZone.getOffset(System.currentTimeMillis()) / 3600000;
+		
+		// 3	-> +03:00
+		// -12	-> -12:00
+		String pattern = String.format("yyyy-MM-dd'T'HH:mm:ss%+03d:00", hoursOffset);
+		
+		return new SimpleDateFormat(pattern);
 	}
 
 }
