@@ -137,8 +137,8 @@ public abstract class FormFactory {
 		return button;
 	}
 
-	public static Panel verticalPanel() {
-		Panel panel = new VerticalPanel();
+	public static VerticalPanel verticalPanel() {
+		VerticalPanel panel = new VerticalPanel();
 		panel.setStyleName(styleBuilder.getRule(STYLE_FORM_VERTICAL_PANEL));
 		return panel;
 	}

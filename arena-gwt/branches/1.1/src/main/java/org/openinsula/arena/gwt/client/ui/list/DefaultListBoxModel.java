@@ -1,6 +1,7 @@
 package org.openinsula.arena.gwt.client.ui.list;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,12 +19,23 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 	private final List<T> selection;
 
 	public DefaultListBoxModel() {
-		this(null);
+		this(null, (T[]) null);
 	}
 
-	public DefaultListBoxModel(final Comparator<T> comparator) {
+	public DefaultListBoxModel(Comparator<T> comparator) {
+		this(comparator, (T[]) null);
+	}
+
+	public DefaultListBoxModel(T ... values) {
+		this(null, values);
+	}
+
+	public DefaultListBoxModel(final Comparator<T> comparator, T ... values) {
 		this.comparator = comparator;
 		this.selection = new ArrayList<T>();
+		if (values != null) {
+			this.values = Arrays.asList(values);
+		}
 
 		listeners = new ArrayList<ListBoxModelListener>();
 	}

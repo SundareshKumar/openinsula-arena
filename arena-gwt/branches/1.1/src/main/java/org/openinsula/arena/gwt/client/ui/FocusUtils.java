@@ -33,10 +33,10 @@ public abstract class FocusUtils {
 		});
 	}
 
-	public static void nextOnKeyDown(final int keyCode, final SourcesKeyboardEvents source, final HasFocus target) {
+	public static void nextOnKeyUp(final int keyCode, final SourcesKeyboardEvents source, final HasFocus target) {
 		source.addKeyboardListener(new KeyboardListenerAdapter() {
 			@Override
-			public void onKeyDown(final Widget sender, final char key, final int modifiers) {
+			public void onKeyUp(final Widget sender, final char key, final int modifiers) {
 				if (key == keyCode) {
 					deferredFocus(target);
 				}
@@ -56,11 +56,11 @@ public abstract class FocusUtils {
 	}
 
 	public static void nextOnEnter(final SourcesKeyboardEvents source, final HasFocus target) {
-		nextOnKeyDown(KeyboardListener.KEY_ENTER, source, target);
+		nextOnKeyUp(KeyboardListener.KEY_ENTER, source, target);
 	}
 
 	public static void nextOnTab(final SourcesKeyboardEvents source, final HasFocus target) {
-		nextOnKeyDown(KeyboardListener.KEY_TAB, source, target);
+		nextOnKeyUp(KeyboardListener.KEY_TAB, source, target);
 	}
 
 	public static void nextOnChange(final SourcesChangeEvents source, final HasFocus target) {

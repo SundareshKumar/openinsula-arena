@@ -1,10 +1,15 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openinsula.arena.gwt.client.ui.FocusComposite;
+import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -15,18 +20,18 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * 
+ *
+ *
  * @see FormBuilder
  * @see FormItemWidgetWrapper
  * @see GroupFormItem
  * @param <T>
  */
-public class FormItem<T extends Widget> extends Composite {
+public class FormItem<T extends Widget> extends FocusComposite {
 
 	private FocusPanel mainPanel;
 
-	private Panel contentPanel;
+	protected Panel contentPanel;
 
 	private Label label;
 
@@ -66,7 +71,7 @@ public class FormItem<T extends Widget> extends Composite {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param label the text
 	 * @param widget the "user input component"
 	 * @param hint any kind of hint/help that user may need
@@ -76,8 +81,22 @@ public class FormItem<T extends Widget> extends Composite {
 	public FormItem(final String label, final T widget, final String hint, boolean optional, final String suffixMessage) {
 		createComponents(label, widget, hint, optional, suffixMessage);
 		pack();
+		initActions();
 	}
 
+	private void initActions() {
+		addFocusListener(new FocusListener() {
+			public void onFocus(Widget sender) {
+				setErrorMessage("");
+				setValid(true);
+				refresh();
+			}
+			public void onLostFocus(Widget sender) {
+			}
+		});
+	}
+
+	@SuppressWarnings("unchecked")
 	protected void createComponents(String label, final T widget, String hint, boolean optional, String suffixMessage) {
 		this.label = FormFactory.label(label);
 		this.errorLabel = FormFactory.errorLabel("");
@@ -93,6 +112,10 @@ public class FormItem<T extends Widget> extends Composite {
 		this.hint = hint;
 
 		if (widget != null) {
+			if (widget instanceof FormItemValidator) {
+				addFormItemValidator((FormItemValidator<T>) widget);
+			}
+
 			this.widgetWrapper = new FormItemWidgetWrapper<T>(widget, mainPanel, hint);
 			setLabelClickListener(widget);
 		}
@@ -104,9 +127,11 @@ public class FormItem<T extends Widget> extends Composite {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected void pack() {
+		setTabIndex(-1);
+
 		label.setStyleName(FormFactory.getStyleFormLabel());
 
 		if (optional) {
@@ -126,11 +151,10 @@ public class FormItem<T extends Widget> extends Composite {
 			suffixLabel = FormFactory.suffixLabel(suffixMessage);
 			contentPanel.add(suffixLabel);
 		}
-
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	protected Widget getWidgetForPanel() {
@@ -138,7 +162,7 @@ public class FormItem<T extends Widget> extends Composite {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected void refresh() {
 		if (suffixMessage != null) {
@@ -218,7 +242,7 @@ public class FormItem<T extends Widget> extends Composite {
 	/**
 	 * This method looks for widget with "focus" properties and tries to add a
 	 * clickListener to its label
-	 * 
+	 *
 	 * @param widget
 	 */
 	protected void setLabelClickListener(final T widget) {
@@ -233,4 +257,36 @@ public class FormItem<T extends Widget> extends Composite {
 			}
 		});
 	}
+
+	/*
+	 * trecho abaixo é experimental
+	 */
+	private List<FormItemValidator<T>> formItemValidators;
+
+	protected List<FormItemValidator<T>> formItemValidators() {
+		if (formItemValidators == null) {
+			formItemValidators = new ArrayList<FormItemValidator<T>>();
+		}
+		return formItemValidators;
+	}
+
+	public void addFormItemValidator(FormItemValidator<T> validator) {
+		formItemValidators().add(validator);
+	}
+
+	public boolean isValidated() {
+		for (FormItemValidator<T> validator : formItemValidators()) {
+			if (!validator.validate(getWidget())) {
+				setErrorMessage(validator.getInvalidValueMessage());
+				setValid(false);
+				refresh();
+				return false;
+			}
+		}
+		setErrorMessage("");
+		setValid(true);
+		refresh();
+		return true;
+	}
+
 }

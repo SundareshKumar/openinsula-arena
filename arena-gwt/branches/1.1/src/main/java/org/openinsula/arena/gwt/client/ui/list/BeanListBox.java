@@ -3,14 +3,15 @@ package org.openinsula.arena.gwt.client.ui.list;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.openinsula.arena.gwt.client.ui.FocusComposite;
+
 import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BeanListBox<T> extends Composite implements ListBoxModelListener, SourcesFocusEvents {
+public class BeanListBox<T> extends FocusComposite implements ListBoxModelListener, SourcesFocusEvents {
 
 	private final ListBox listBox;
 
@@ -67,7 +68,7 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 				listBoxIdx++;
 			}
 
-			for (int rows = listBox.getItemCount(); listBoxIdx < rows; listBoxIdx++, modelIdx++) {
+			for (int rows = listBox.getItemCount() -1; listBoxIdx < rows; listBoxIdx++, modelIdx++) {
 				if (listBox.isItemSelected(listBoxIdx)) {
 					selection.add(model.getElementAt(modelIdx));
 				}
@@ -112,6 +113,23 @@ public class BeanListBox<T> extends Composite implements ListBoxModelListener, S
 			int diff = emptySelectionAllowed ? 1 : 0;
 			listBox.setSelectedIndex(idx + diff);
 		}
+	}
+
+	public void setSelectedItem(T item) {
+		model.setSelectedItem(item);
+	}
+
+	public T getSelectedItem() {
+		int selectedIndex = listBox.getSelectedIndex() -1;
+		if (selectedIndex >= 0) {
+			return model.getElementAt(selectedIndex);
+		}
+
+		return null;
+	}
+
+	public void setSelectedIndex(int index) {
+		listBox.setSelectedIndex(index);
 	}
 
 	protected void finalize() throws Throwable {
