@@ -14,7 +14,7 @@ public abstract class XmlRequestCallback extends HttpRequestCallback {
 
 	protected abstract void onXmlParsed(Document document);
 
-	public void onResponseReturned(Response response) {
+	public final void onResponseReturned(Response response) {
 		final String text = response.getText();
 		final Document document = XMLParser.parse(text);
 

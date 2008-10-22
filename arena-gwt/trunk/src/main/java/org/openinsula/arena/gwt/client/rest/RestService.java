@@ -6,7 +6,7 @@ import com.google.gwt.http.client.RequestCallback;
 /**
  * @author Lucas K Mogari
  */
-public interface Service {
+public interface RestService {
 
 	public Request create(String url, String createData, RequestCallback callback);
 

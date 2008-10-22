@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.openinsula.arena.gwt.client.rest.xml.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.rest.xml.NodeParser;
 import org.openinsula.arena.gwt.client.rest.xml.XmlParserUtils;
 
 import com.google.gwt.xml.client.Node;
@@ -30,17 +32,14 @@ public abstract class AtomResource extends CompositeNodeParser {
 	private List<Link> links;
 
 	public AtomResource() {
-		this(null, "empty title");
 	}
 
 	public AtomResource(String id, String title) {
 		this.title = new Text(title);
 		this.id = id;
-
-		initNodeParsers();
 	}
 
-	protected void initNodeParsers() {
+	{
 		addParser("id", new IdNodeParser());
 		addParser("title", new TitleNodeParser());
 		addParser("updated", new UpdatedNodeParser());
@@ -48,7 +47,7 @@ public abstract class AtomResource extends CompositeNodeParser {
 		addParser("author", new AuthorNodeParser());
 		addParser("contributor", new ContributorNodeParser());
 		addParser("category", new CategoryNodeParser());
-		addParser("link", new LinkNodeParser());
+		addParser("link", new EntryLinkNodeParser());
 	}
 
 	public Text getTitle() {
@@ -126,6 +125,11 @@ public abstract class AtomResource extends CompositeNodeParser {
 
 	public Link getEditLink() {
 		return getLink(Link.Rel.ENTRY_EDIT, Link.Type.ATOM);
+	}
+
+	public String getSelfUrl() {
+		final Link selfLink = getSelfLink();
+		return selfLink != null ? selfLink.getHref() : null;
 	}
 
 	public void setLinks(List<Link> links) {
@@ -255,28 +259,13 @@ public abstract class AtomResource extends CompositeNodeParser {
 
 	}
 
-	private final class LinkNodeParser implements NodeParser {
+	private final class EntryLinkNodeParser extends LinkNodeParser {
 
+		@Override
 		public void parse(Node node) {
-			final String href = XmlParserUtils.getAttribute(node, "href");
+			super.parse(node);
 
-			if (href == null) {
-				throw new NullPointerException("");
-			}
-
-			final Link link = new Link();
-
-			link.setHref(href);
-			link.setHreflang(XmlParserUtils.getAttribute(node, "hreflang"));
-			link.setRel(XmlParserUtils.getAttribute(node, "rel"));
-			link.setType(XmlParserUtils.getAttribute(node, "type"));
-			link.setTitle(XmlParserUtils.getAttribute(node, "title"));
-
-			final String length = XmlParserUtils.getAttribute(node, "length");
-
-			if (length != null) {
-				link.setLength(Byte.valueOf(length));
-			}
+			addLink(getLink());
 		}
 
 	}

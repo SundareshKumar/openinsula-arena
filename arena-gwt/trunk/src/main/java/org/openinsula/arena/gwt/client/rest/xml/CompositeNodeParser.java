@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.rest.xml.atom;
+package org.openinsula.arena.gwt.client.rest.xml;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +26,8 @@ public class CompositeNodeParser implements NodeParser {
 		}
 	}
 
-	public int getParsersCount() {
-		return parsers.size();
+	public boolean hasParsers() {
+		return !parsers.isEmpty();
 	}
 
 	public void addParser(String nodeName, NodeParser parser) {

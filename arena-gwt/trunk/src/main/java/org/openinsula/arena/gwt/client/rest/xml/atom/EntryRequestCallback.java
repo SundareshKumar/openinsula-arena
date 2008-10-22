@@ -7,7 +7,7 @@ import com.google.gwt.xml.client.Document;
 /**
  * @author Lucas K Mogari
  */
-public class EntryRequestCallback<T extends Entry> extends XmlRequestCallback {
+public abstract class EntryRequestCallback<T extends Entry> extends XmlRequestCallback {
 
 	private T entry;
 
@@ -18,6 +18,15 @@ public class EntryRequestCallback<T extends Entry> extends XmlRequestCallback {
 		this.entry = entry;
 	}
 
+	protected abstract void onEntryParsed(T entry);
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback#onXmlParsed
+	 * (com.google.gwt.xml.client.Document)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	protected final void onXmlParsed(Document document) {
@@ -28,9 +37,6 @@ public class EntryRequestCallback<T extends Entry> extends XmlRequestCallback {
 		entry.parse(document);
 
 		onEntryParsed(entry);
-	}
-
-	protected void onEntryParsed(T entry) {
 	}
 
 }

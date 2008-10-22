@@ -2,9 +2,12 @@ package org.openinsula.arena.gwt.client.rest.xml.atom;
 
 import java.util.Date;
 
+import org.openinsula.arena.gwt.client.rest.xml.CompositeNodeFactory;
+import org.openinsula.arena.gwt.client.rest.xml.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.rest.xml.NodeParser;
+import org.openinsula.arena.gwt.client.rest.xml.SingleNodeFactory;
 import org.openinsula.arena.gwt.client.rest.xml.XmlParserUtils;
 
-import com.google.gwt.http.client.Request;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -13,7 +16,7 @@ import com.google.gwt.xml.client.XMLParser;
 /**
  * @author Lucas K Mogari
  */
-public class Entry extends AtomResource {
+public class Entry extends AtomResource implements SingleNodeFactory {
 
 	private Text summary;
 
@@ -21,11 +24,13 @@ public class Entry extends AtomResource {
 
 	private Date published;
 
-	private AtomService service;
-
 	private Document document;
 
-	private CompositeNodeParser contentNodeParser;
+	private EntryNodeFactory entryNodeFactory;
+
+	private final CompositeNodeFactory contentNodeFactory = new ContentNodeFactory();
+
+	private final CompositeNodeParser contentNodeParser = new ContentNodeParser();
 
 	public Entry() {
 	}
@@ -34,173 +39,46 @@ public class Entry extends AtomResource {
 		super(id, title);
 	}
 
-	@Override
-	protected void initNodeParsers() {
-		super.initNodeParsers();
-
-		contentNodeParser = new ContentNodeParser();
-
+	{
 		addParser("summary", new SummaryNodeParser());
 		addParser("published", new PublishedNodeParser());
 		addParser("content", contentNodeParser);
 	}
 
-	public CompositeNodeParser getContentNodeParser() {
+	public void parseContent(Node node) {
+		contentNodeParser.parse(node);
+	}
+
+	public final CompositeNodeFactory getContentNodeFactory() {
+		return contentNodeFactory;
+	}
+
+	public final CompositeNodeParser getContentNodeParser() {
 		return contentNodeParser;
 	}
 
-	public String buildData() {
+	public String toXml() {
 		document = XMLParser.createDocument();
-		final Element entryElement = createAndAppendEntryToDocument();
+		final Node entryNode = createNode();
 
-		if (getTitle() != null) {
-			entryElement.appendChild(createTextElement("title", getTitle()));
-		}
-		if (getId() != null) {
-			entryElement.appendChild(createTextElement("id", getId()));
-		}
-		if (getSummary() != null) {
-			entryElement.appendChild(createTextElement("summary", getSummary()));
-		}
-		if (getContent() != null) {
-			entryElement.appendChild(createContentNode());
-		}
-		// if (updated != null) {
-		// entryElement.appendChild(createTextElement("updated", updated));
-		// }
-
-		for (final Person author : getAuthors()) {
-			entryElement.appendChild(createPersonNode("author", author));
-		}
-		for (final Person contributor : getContributors()) {
-			entryElement.appendChild(createPersonNode("contributor", contributor));
-		}
-		for (final Link link : getLinks()) {
-			entryElement.appendChild(createLinkNode(link));
-		}
-		for (final Category category : getCategories()) {
-			entryElement.appendChild(createCategoryNode(category));
+		if (entryNode != null) {
+			document.appendChild(entryNode);
 		}
 
 		return document.toString();
 	}
 
-	private Request gettinRequest;
-
-	/**
-	 * Parse the content retrived from the specified self link.
-	 */
-	@SuppressWarnings("unchecked")
-	public Request getSelf() {
-		if (gettinRequest != null && gettinRequest.isPending()) {
-			return gettinRequest;
+	public Node createNode() {
+		if (entryNodeFactory == null) {
+			entryNodeFactory = new EntryNodeFactory();
 		}
+		entryNodeFactory.setDocument(document);
 
-		final Link selfLink = getSelfLink();
-
-		if (selfLink == null) {
-			return null;
-		}
-
-		final String url = selfLink.getHref();
-
-		if (url == null || url.isEmpty()) {
-			return null;
-		}
-
-		gettinRequest = service.getEntry(url, new EntryRequestCallback(this));
-
-		return gettinRequest;
+		return entryNodeFactory.createNode();
 	}
 
-	private Node createContentNode() {
-		final Element contentElement = createTextElement("content", content);
-
-		if (content.getSrc() != null) {
-			contentElement.setAttribute("src", content.getSrc());
-		}
-
-		return contentElement;
-	}
-
-	protected Element createTextElement(String name, String value) {
-		final Element element = document.createElement(name);
-
-		element.appendChild(document.createTextNode(value));
-
-		return element;
-	}
-
-	protected Element createTextElement(String name, Text text) {
-		final Element textElement = createTextElement(name, text.getValue());
-
-		if (text.getType() != null) {
-			textElement.setAttribute("type", text.getType());
-		}
-
-		return textElement;
-	}
-
-	private Node createCategoryNode(Category category) {
-		final Element categoryElement = document.createElement("link");
-
-		categoryElement.setAttribute("term", category.getTerm());
-
-		if (category.getLabel() != null) {
-			categoryElement.setAttribute("label", category.getLabel());
-		}
-		if (category.getScheme() != null) {
-			categoryElement.setAttribute("scheme", category.getScheme());
-		}
-		return categoryElement;
-	}
-
-	private Node createLinkNode(Link link) {
-		final Element linkElement = document.createElement("link");
-
-		linkElement.setAttribute("href", link.getHref());
-
-		if (link.getTitle() != null) {
-			linkElement.setAttribute("title", link.getTitle());
-		}
-		if (link.getType() != null) {
-			linkElement.setAttribute("type", link.getType());
-		}
-		if (link.getHreflang() != null) {
-			linkElement.setAttribute("hreflang", link.getHreflang());
-		}
-		if (link.getLength() > 0) {
-			final String length = Integer.toString(link.getLength());
-			linkElement.setAttribute("length", length);
-		}
-		if (link.getRel() != null) {
-			linkElement.setAttribute("rel", link.getRel());
-		}
-		return linkElement;
-	}
-
-	private Node createPersonNode(String name, Person person) {
-		final Element personElement = document.createElement(name);
-
-		personElement.appendChild(createTextElement("name", person.getName()));
-
-		if (person.getEmail() != null) {
-			personElement.appendChild(createTextElement("email", person.getEmail()));
-		}
-		if (person.getUri() != null) {
-			personElement.appendChild(createTextElement("uri", person.getUri()));
-		}
-
-		return personElement;
-	}
-
-	private Element createAndAppendEntryToDocument() {
-		final Element entryElement = document.createElement("entry");
-
-		entryElement.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
-
-		document.appendChild(entryElement);
-		return entryElement;
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 
 	public Text getSummary() {
@@ -242,11 +120,14 @@ public class Entry extends AtomResource {
 
 	}
 
-	public final class ContentNodeParser extends CompositeNodeParser {
+	private final class ContentNodeParser extends CompositeNodeParser {
 
 		@Override
 		public final void parse(Node node) {
-			if (getParsersCount() == 0) {
+			if (hasParsers()) {
+				super.parse(node);
+			}
+			else {
 				final String value = XmlParserUtils.getText(node);
 
 				if (value == null) {
@@ -261,9 +142,6 @@ public class Entry extends AtomResource {
 				content.setType(XmlParserUtils.getAttribute(node, "type"));
 				content.setSrc(XmlParserUtils.getAttribute(node, "src"));
 			}
-			else {
-				super.parse(node);
-			}
 		}
 
 	}
@@ -272,6 +150,57 @@ public class Entry extends AtomResource {
 
 		public void parse(Node node) {
 			published = XmlParserUtils.getDate(node);
+		}
+
+	}
+
+	private final class EntryNodeFactory extends CompositeNodeFactory {
+
+		public EntryNodeFactory() {
+			addNodeFactory(new CategoriesNodesFactory(getCategories()));
+			addNodeFactory(new PeopleNodesFactory("author", getAuthors()));
+			addNodeFactory(new PeopleNodesFactory("contributor", getContributors()));
+			addNodeFactory(new LinksNodesFactory(getLinks()));
+			addNodeFactory(new ContentNodeFactory());
+		}
+
+		@Override
+		protected Node createBaseNode() {
+			final Element entryElement = createElement("entry");
+			final Text title = getTitle();
+			final Text summary = getSummary();
+
+			entryElement.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
+
+			if (title != null) {
+				entryElement.appendChild(createTextElement("title", title));
+			}
+			if (summary != null) {
+				entryElement.appendChild(createTextElement("summary", summary));
+			}
+			return entryElement;
+		}
+
+	}
+
+	private final class ContentNodeFactory extends CompositeNodeFactory {
+
+		@Override
+		protected Node createBaseNode() {
+			Element contentElement = null;
+
+			if (content == null) {
+				contentElement = createElement("content");
+			}
+			else {
+				contentElement = createTextElement("content", content);
+				final String src = content.getSrc();
+
+				if (src != null && src.trim().length() > 0) {
+					contentElement.setAttribute("src", src);
+				}
+			}
+			return contentElement;
 		}
 
 	}

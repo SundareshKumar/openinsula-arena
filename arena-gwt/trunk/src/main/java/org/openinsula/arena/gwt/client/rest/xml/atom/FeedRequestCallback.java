@@ -7,30 +7,33 @@ import com.google.gwt.xml.client.Document;
 /**
  * @author Lucas K Mogari
  */
-public class FeedRequestCallback<T extends Entry> extends XmlRequestCallback {
+public abstract class FeedRequestCallback<T extends Entry> extends XmlRequestCallback {
 
-	private BaseFeed<T> feed;
+	private EntryFactory<T> entryFactory;
 
 	public FeedRequestCallback() {
 	}
 
-	public FeedRequestCallback(BaseFeed<T> feed) {
-		this.feed = feed;
+	public FeedRequestCallback(EntryFactory<T> entryFactory) {
+		this.entryFactory = entryFactory;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void onXmlParsed(Document document) {
-		if (feed == null) {
-			feed = (BaseFeed<T>) new Feed();
-		}
+	protected abstract void onFeedParsed(Feed<T> feed);
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback#onXmlParsed
+	 * (com.google.gwt.xml.client.Document)
+	 */
+	@Override
+	protected final void onXmlParsed(Document document) {
+		final Feed<T> feed = new Feed<T>();
 		feed.parse(document);
+		feed.setEntryFactory(entryFactory);
 
 		onFeedParsed(feed);
-	}
-
-	protected void onFeedParsed(BaseFeed<T> feed) {
 	}
 
 }

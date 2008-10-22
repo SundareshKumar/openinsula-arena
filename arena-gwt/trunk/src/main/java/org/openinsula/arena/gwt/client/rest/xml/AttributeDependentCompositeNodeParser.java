@@ -1,6 +1,4 @@
-package org.openinsula.arena.gwt.client.rest.xml.atom;
-
-import org.openinsula.arena.gwt.client.rest.xml.XmlParserUtils;
+package org.openinsula.arena.gwt.client.rest.xml;
 
 import com.google.gwt.xml.client.NamedNodeMap;
 import com.google.gwt.xml.client.Node;
@@ -32,12 +30,12 @@ public class AttributeDependentCompositeNodeParser implements NodeParser {
 		}
 	}
 
-	public void addParser(String attributeName, NodeParser parser) {
-		compositeNodeParser.addParser(attributeName, parser);
+	public void addParser(String attributeValue, NodeParser parser) {
+		compositeNodeParser.addParser(attributeValue, parser);
 	}
 
-	public void removeParser(String attributeName) {
-		compositeNodeParser.removeParser(attributeName);
+	public void removeParser(String attributeValue) {
+		compositeNodeParser.removeParser(attributeValue);
 	}
 
 }

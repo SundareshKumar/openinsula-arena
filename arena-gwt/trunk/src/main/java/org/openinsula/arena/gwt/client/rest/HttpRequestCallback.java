@@ -18,6 +18,13 @@ public abstract class HttpRequestCallback implements RequestCallback, HttpRespon
 		addHttpResponseListener(this);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.http.client.RequestCallback#onResponseReceived(com.google
+	 * .gwt.http.client.Request, com.google.gwt.http.client.Response)
+	 */
 	public final void onResponseReceived(Request request, Response response) {
 		final int statusCode = response.getStatusCode();
 
