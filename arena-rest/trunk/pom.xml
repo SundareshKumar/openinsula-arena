@@ -1,0 +1,120 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.openinsula.arena</groupId>
+	<artifactId>arena-rest</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>Arena REST Utilities for Spring</name>
+	<description>Arena REST Utilities for Spring</description>
+	<url>http://www.openinsula.org/projects/arena-rest</url>
+	<inceptionYear>2008</inceptionYear>
+	<licenses>
+		<license>
+			<name>
+				The GNU Lesser General Public License, Version 3.0
+			</name>
+			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<connection>
+			scm:svn:http://svn.openinsula.org/arena/arena-rest/trunk
+		</connection>
+		<developerConnection>
+			scm:svn:https://svn.openinsula.org/arena/arena-rest/trunk
+		</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-rest/trunk</url>
+	</scm>
+	<issueManagement>
+		<system>jira</system>
+		<url>http://jira.insula.com.br/browse/ARENAREST</url>
+	</issueManagement>
+	<ciManagement>
+		<system>bamboo</system>
+		<url>http://bamboo.insula.com.br/browse/ARENAREST-TRUNK</url>
+	</ciManagement>
+	<developers>
+		<developer>
+			<id>rebola</id>
+			<name>Eduardo Rebola Danielli</name>
+			<email>erdanielli@insula.com.br</email>
+			<organization>Insula Tecnologia da Informacao</organization>
+			<organizationUrl>http://www.insula.com.br</organizationUrl>
+			<timezone>-3</timezone>
+			<roles>
+				<role>Project Leader</role>
+				<role>Java Developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<organization>
+		<name>openinsula.org</name>
+		<url>http://www.openinsula.org</url>
+	</organization>
+	<repositories>
+		<repository>
+			<id>openinsula.org</id>
+			<url>http://maven.openinsula.org</url>
+		</repository>
+		<repository>
+			<id>java.net</id>
+			<url>https://maven-repository.dev.java.net/nonav/repository</url>
+		</repository>
+	</repositories>	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>atlassian-m2-repository</id>
+			<name>Atlassian Maven 2.x Repository</name>
+			<url>http://repository.atlassian.com/maven2</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/snapshots</url>
+		</snapshotRepository>
+		<site>
+			<id>openinsula.org</id>
+			<url>
+				scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}
+			</url>
+		</site>
+	</distributionManagement>
+	
+	<properties>
+		<spring.version>2.5.5</spring.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openinsula.arena</groupId>
+			<artifactId>arena-lang</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
