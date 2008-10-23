@@ -92,7 +92,7 @@ public class FormItem<W extends Widget> extends FocusComposite {
 				refresh();
 			}
 			public void onLostFocus(Widget sender) {
-				validate();//TODO experimental
+				validate();
 			}
 		});
 	}
@@ -261,64 +261,6 @@ public class FormItem<W extends Widget> extends FocusComposite {
 			}
 		});
 	}
-
-	/*
-	 * trecho abaixo é experimental
-	private List<FormItemValidator<T>> formItemValidators;
-
-	protected List<FormItemValidator<T>> formItemValidators() {
-		if (formItemValidators == null) {
-			formItemValidators = new ArrayList<FormItemValidator<T>>();
-		}
-		return formItemValidators;
-	}
-
-	public void addFormItemValidator(FormItemValidator<T> validator) {
-		formItemValidators().add(validator);
-	}
-
-//	public boolean isValidated() {
-//		for (FormItemValidator<T> validator : formItemValidators()) {
-//			if (!validator.validate(getWidget())) {
-//				setErrorMessage(validator.getInvalidValueMessage());
-//				setValid(false);
-//				return false;
-//			}
-//		}
-//		setErrorMessage("");
-//		setValid(true);
-//		refresh();
-//		return true;
-//	}
-
-	/**
-	 *--------trecho abaixo é experimental
-	 */
-
-//	private void evaluateSyncValidators() {
-//		setValid(true);
-//		for (FormItemValidator<T> validator : formItemValidators()) {
-//			if (!validator.validate(getWidget())) {
-//				setErrorMessage(validator.getInvalidValueMessage());
-//				setValid(false);
-//				break;
-//			}
-//		}
-//		refresh();
-//	}
-//
-//	private void evaluateAsyncValidators() {
-//
-//	}
-//
-//
-//	protected void validate() {
-//		setValid(true);
-//		evaluateSyncValidators();
-//		if (isValid()) {
-//			evaluateAsyncValidators();
-//		}
-//	}
 
 	private ValidatorChain<W> validatorChain;
 

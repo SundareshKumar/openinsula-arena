@@ -191,6 +191,16 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		}
 	}
 
+	@Override
+	public void addFocusListener(FocusListener listener) {
+		searchForm.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(FocusListener listener) {
+		searchForm.removeFocusListener(listener);
+	}
+
 	public class SearchForm extends FocusComposite implements BeanSuggestBoxListener<T> {
 
 		protected final BeanSuggestBox<T> suggestBox;

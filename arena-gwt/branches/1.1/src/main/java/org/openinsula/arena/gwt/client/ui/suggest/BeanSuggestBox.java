@@ -3,7 +3,6 @@ package org.openinsula.arena.gwt.client.ui.suggest;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
@@ -65,15 +64,6 @@ public class BeanSuggestBox<T> extends Composite implements HasFocus, SourcesFoc
 
 		textBox = new TextBox();
 		suggestBox = new SuggestBox(oracle, textBox);
-		textBox.addFocusListener(new FocusListener() {
-			public void onFocus(Widget sender) {
-				GWT.log("textBox ganhou foco", null);
-			}
-
-			public void onLostFocus(Widget sender) {
-				GWT.log("textBox perdeu o foco", null);
-			}
-		});
 
 		suggestBox.addEventHandler(new SuggestionHandler() {
 			public void onSuggestionSelected(final SuggestionEvent event) {

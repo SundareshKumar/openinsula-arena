@@ -15,53 +15,6 @@ public class FocusComposite extends Composite implements HasFocus, SourcesFocusE
 
 	private static final FocusImpl impl = FocusImpl.getFocusImplForWidget();
 
-//	private FocusListenerCollection focusListeners;
-//
-//	private KeyboardListenerCollection keyboardListeners;
-
-//	@Override
-//	public void onBrowserEvent(Event event) {
-//		switch (DOM.eventGetType(event)) {
-//		case Event.ONCLICK:
-//			break;
-//		case Event.ONBLUR:
-//		case Event.ONFOCUS:
-//			GWT.log("onFocus: " + DOM.eventGetType(event), null);
-//			focusListeners().fireFocusEvent(this, event);
-//			break;
-//		case Event.ONKEYDOWN:
-//		case Event.ONKEYUP:
-//		case Event.ONKEYPRESS:
-//			keyboardListeners().fireKeyboardEvent(this, event);
-//			break;
-//		case Event.ONCHANGE:
-//			break;
-////		default:
-////			if (this instanceof GroupFormItem<?>) {
-//////TODO rever esse problema com os eventos do GROUP				for (Widget widget : ((GroupFormItem<?>) this).getWidgets()) {
-//////					widget.onBrowserEvent(event);
-//////				}
-////			} else {
-////				getWidget().onBrowserEvent(event);
-////			}
-//		}
-//	}
-
-//	private FocusListenerCollection focusListeners() {
-//		if (focusListeners == null) {
-//			focusListeners = new FocusListenerCollection();
-//		}
-//		return focusListeners;
-//	}
-//
-//	private KeyboardListenerCollection keyboardListeners() {
-//		if (keyboardListeners == null) {
-//			keyboardListeners = new KeyboardListenerCollection();
-//			sinkEvents(Event.KEYEVENTS);
-//		}
-//		return keyboardListeners;
-//	}
-
 	public int getTabIndex() {
 		return impl.getTabIndex(getWidget().getElement());
 	}

@@ -107,94 +107,6 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 		return widgets;
 	}
 
-	/*
-	 * trecho experimental do validator
-
-	@Override
-	@Deprecated
-	public void addFormItemValidator(FormItemValidator<T> validator) {
-		throw new IllegalArgumentException("Use GroupFormItem.addFormItemValidator(T widget, FormItemValidator<T> validator) instead!");
-	}
-
-
-	@SuppressWarnings("unchecked")
-	private Map<T, List<FormItemValidator>> validatorMap;
-
-	@SuppressWarnings("unchecked")
-	private Map<T, List<FormItemValidator>> validatorMap() {
-		if (validatorMap == null) {
-			validatorMap = new HashMap<T, List<FormItemValidator>>();
-		}
-		return validatorMap;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <W extends T> void addFormItemValidator(W widget, FormItemValidator<W> validator) {
-		List<FormItemValidator> validators = validatorMap().get(widget);
-		if (validators == null) {
-			validators = new ArrayList<FormItemValidator>();
-			validatorMap.put(widget, validators);
-		}
-
-		validators.add(validator);
-	}
-
-	@SuppressWarnings("unchecked")
-	public <W extends T, R> void addFormItemValidator(W widget, FormItemAsyncCallbackValidator<W, R> validator) {
-		List<FormItemValidator> validators = validatorMap().get(widget);
-		if (validators == null) {
-			validators = new ArrayList<FormItemValidator>();
-			validatorMap.put(widget, validators);
-		}
-
-		validators.add(validator);
-		validator.setFormItem(this);
-	}
-
-	@SuppressWarnings("unchecked")
-	protected void validate() {
-		valid = true;
-		setErrorMessage("");
-		for (T widget : getWidgets()) {
-			List<FormItemValidator> validators = validatorMap.get(widget);
-			if (validators != null) {
-				for (FormItemValidator validator : validators) {
-					if (!validator.validate(widget)) {
-						setErrorMessage(validator.getInvalidValueMessage());
-						setValid(false);
-						break;
-					}
-				}
-			}
-		}
-		refresh();
-	}
-
-//	@SuppressWarnings("unchecked")
-//	public boolean isValidated() {
-//		valid = true;
-//		setErrorMessage("");
-//		for (T widget : getWidgets()) {
-//			List<FormItemValidator> validators = validatorMap.get(widget);
-//			if (validators != null) {
-//				for (FormItemValidator validator : validators) {
-//					if (!validator.validate(widget)) {
-//						setErrorMessage(validator.getInvalidValueMessage());
-//						setValid(false);
-//						return false;
-//					}
-//				}
-//			}
-//		}
-//		setErrorMessage("");
-//		setValid(true);
-//
-//		return true;
-//	}
-
-	/*
-	 * trecho experimental
-	 */
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -238,7 +150,6 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 
 	@Override
 	public void addFocusListener(FocusListener listener) {
-//		super.addFocusListener(listener);
 		for (T widget : getWidgets()) {
 			if (widget instanceof SourcesFocusEvents) {
 				((SourcesFocusEvents) widget).addFocusListener(listener);
