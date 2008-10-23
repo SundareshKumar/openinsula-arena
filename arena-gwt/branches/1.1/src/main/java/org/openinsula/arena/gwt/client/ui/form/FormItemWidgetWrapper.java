@@ -1,14 +1,15 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
+import org.openinsula.arena.gwt.client.ui.MouseEventPanel;
+
 import com.google.gwt.user.client.ui.FocusListener;
-import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.MouseListenerAdapter;
 import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Adds a listener to its parent (FocusPanel) and itself.
- * 
+ *
  * @param <T>
  */
 public class FormItemWidgetWrapper<T extends Widget> {
@@ -17,13 +18,13 @@ public class FormItemWidgetWrapper<T extends Widget> {
 
 	private FormItemHintManager<Widget> hintManager;
 
-	private FocusPanel parent;
+	private MouseEventPanel parent;
 
 	private boolean hasFocus;
 
 	private boolean hasMouse;
 
-	public FormItemWidgetWrapper(T w, FocusPanel parentFocusPanel, String hint) {
+	public FormItemWidgetWrapper(T w, MouseEventPanel parentFocusPanel, String hint) {
 		widget = w;
 		parent = parentFocusPanel;
 		hintManager = new FormItemHintManager<Widget>(parentFocusPanel, hint);
@@ -41,8 +42,8 @@ public class FormItemWidgetWrapper<T extends Widget> {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	public class FormItemFocusedListener implements FocusListener {
 		public void onFocus(Widget sender) {
@@ -60,8 +61,8 @@ public class FormItemWidgetWrapper<T extends Widget> {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	public class FormItemParentMouseListener extends MouseListenerAdapter {
 		public void onMouseEnter(Widget sender) {

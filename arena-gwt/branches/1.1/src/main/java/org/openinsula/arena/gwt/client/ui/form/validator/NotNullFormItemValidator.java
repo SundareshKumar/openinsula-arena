@@ -1,17 +1,28 @@
 package org.openinsula.arena.gwt.client.ui.form.validator;
 
-import com.google.gwt.user.client.ui.TextBoxBase;
+import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchFormTemplate;
+import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
 
-public class NotNullFormItemValidator<T extends TextBoxBase> implements FormItemValidator<T> {
+import com.google.gwt.user.client.ui.TextBoxBase;
+import com.google.gwt.user.client.ui.Widget;
+
+public class NotNullFormItemValidator extends SyncFormItemValidator<Widget> {
 
 	public String getInvalidValueMessage() {
 		return "Campo obrigatório";
 	}
 
-	public boolean validate(T widget) {
-		return widget.getText().trim().length() > 0;
+	@Override
+	protected boolean evaluate(Widget widget) {
+		if (widget instanceof TextBoxBase) {
+			return ((TextBoxBase) widget).getText().trim().length() > 0;
+		} else if (widget instanceof BeanListBox) {
+			return ((BeanListBox<?>) widget).getSelectedItem() != null;
+		} else if (widget instanceof AbstractSearchFormTemplate) {
+			return ((AbstractSearchFormTemplate<?>) widget).getEditInstance() != null;
+		}
+
+		throw new IllegalArgumentException("Não é possível verificar conteúdo de componentes do tipo: " + widget.getClass().getName());
 	}
-
-
 
 }

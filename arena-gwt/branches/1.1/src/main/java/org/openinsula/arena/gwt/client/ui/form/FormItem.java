@@ -1,16 +1,16 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openinsula.arena.gwt.client.ui.FocusComposite;
-import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
+import org.openinsula.arena.gwt.client.ui.MouseEventPanel;
+import org.openinsula.arena.gwt.client.ui.form.validator.DefaultValidatorChainImpl;
+import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidatorNew;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
+import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FocusListener;
-import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -25,23 +25,23 @@ import com.google.gwt.user.client.ui.Widget;
  * @see FormBuilder
  * @see FormItemWidgetWrapper
  * @see GroupFormItem
- * @param <T>
+ * @param <W>
  */
-public class FormItem<T extends Widget> extends FocusComposite {
+public class FormItem<W extends Widget> extends FocusComposite {
 
-	private FocusPanel mainPanel;
+	private MouseEventPanel mainPanel;
 
 	protected Panel contentPanel;
 
 	private Label label;
 
-	private FormItemWidgetWrapper<T> widgetWrapper;
+	private FormItemWidgetWrapper<W> widgetWrapper;
 
 	private String hint;
 
 	private boolean optional;
 
-	private boolean valid = true;
+	protected boolean valid = true;
 
 	private Label errorLabel;
 
@@ -54,19 +54,19 @@ public class FormItem<T extends Widget> extends FocusComposite {
 	protected FormItem() {
 	}
 
-	public FormItem(final String label, final T widget) {
+	public FormItem(final String label, final W widget) {
 		this(label, widget, null, false, null);
 	}
 
-	public FormItem(final String label, final T widget, final String hint) {
+	public FormItem(final String label, final W widget, final String hint) {
 		this(label, widget, hint, false, null);
 	}
 
-	public FormItem(final String label, final T widget, boolean optional) {
+	public FormItem(final String label, final W widget, boolean optional) {
 		this(label, widget, null, optional, null);
 	}
 
-	public FormItem(final String label, final T widget, final String hint, boolean optional) {
+	public FormItem(final String label, final W widget, final String hint, boolean optional) {
 		this(label, widget, hint, optional, null);
 	}
 
@@ -78,7 +78,7 @@ public class FormItem<T extends Widget> extends FocusComposite {
 	 * @param optional if the field is optional
 	 * @param suffixMessage the text that may appear after the widget
 	 */
-	public FormItem(final String label, final T widget, final String hint, boolean optional, final String suffixMessage) {
+	public FormItem(final String label, final W widget, final String hint, boolean optional, final String suffixMessage) {
 		createComponents(label, widget, hint, optional, suffixMessage);
 		pack();
 		initActions();
@@ -92,19 +92,20 @@ public class FormItem<T extends Widget> extends FocusComposite {
 				refresh();
 			}
 			public void onLostFocus(Widget sender) {
+				validate();//TODO experimental
 			}
 		});
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void createComponents(String label, final T widget, String hint, boolean optional, String suffixMessage) {
+	protected void createComponents(String label, final W widget, String hint, boolean optional, String suffixMessage) {
 		this.label = FormFactory.label(label);
 		this.errorLabel = FormFactory.errorLabel("");
 		this.optional = optional;
 		this.contentPanel = new VerticalPanel();
 		this.suffixMessage = suffixMessage;
 
-		this.mainPanel = new FocusPanel();
+		this.mainPanel = new MouseEventPanel();
 		mainPanel.add(contentPanel);
 
 		contentPanel.setTitle(label);
@@ -112,11 +113,12 @@ public class FormItem<T extends Widget> extends FocusComposite {
 		this.hint = hint;
 
 		if (widget != null) {
-			if (widget instanceof FormItemValidator) {
-				addFormItemValidator((FormItemValidator<T>) widget);
+			if (widget instanceof FormItemValidatorNew) {
+				((FormItemValidatorNew) widget).setFormItem(this);
+				addFormItemValidator((FormItemValidatorNew) widget);
 			}
 
-			this.widgetWrapper = new FormItemWidgetWrapper<T>(widget, mainPanel, hint);
+			this.widgetWrapper = new FormItemWidgetWrapper<W>(widget, mainPanel, hint);
 			setLabelClickListener(widget);
 		}
 
@@ -164,7 +166,7 @@ public class FormItem<T extends Widget> extends FocusComposite {
 	/**
 	 *
 	 */
-	protected void refresh() {
+	public void refresh() {
 		if (suffixMessage != null) {
 			contentPanel.add(suffixLabel);
 		}
@@ -194,7 +196,7 @@ public class FormItem<T extends Widget> extends FocusComposite {
 		return this.label;
 	}
 
-	public T getWidget() {
+	public W getWidget() {
 		return this.widgetWrapper.getWidget();
 	}
 
@@ -205,7 +207,6 @@ public class FormItem<T extends Widget> extends FocusComposite {
 	public void setValid(boolean valid) {
 		isNew = false;
 		this.valid = valid;
-		refresh();
 	}
 
 	public void setErrorMessage(String errorMessage) {
@@ -217,7 +218,7 @@ public class FormItem<T extends Widget> extends FocusComposite {
 		return hint;
 	}
 
-	protected FocusPanel getMainPanel() {
+	protected MouseEventPanel getMainPanel() {
 		return mainPanel;
 	}
 
@@ -227,7 +228,7 @@ public class FormItem<T extends Widget> extends FocusComposite {
 		refresh();
 	}
 
-	protected void clearWidget(T widget) {
+	protected void clearWidget(W widget) {
 		if (widget instanceof TextBoxBase) {
 			((TextBoxBase) widget).setText(null);
 		}
@@ -237,6 +238,9 @@ public class FormItem<T extends Widget> extends FocusComposite {
 		else if (widget instanceof BeanSuggestBox<?>) {
 			((BeanSuggestBox<?>) widget).getSuggestBox().setText(null);
 		}
+		else if (widget instanceof BeanListBox<?>) {
+			((BeanListBox<?>) widget).setSelectedItem(null);
+		}
 	}
 
 	/**
@@ -245,7 +249,7 @@ public class FormItem<T extends Widget> extends FocusComposite {
 	 *
 	 * @param widget
 	 */
-	protected void setLabelClickListener(final T widget) {
+	protected void setLabelClickListener(final W widget) {
 		this.label.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
 				if (widget instanceof FocusWidget) {
@@ -260,7 +264,6 @@ public class FormItem<T extends Widget> extends FocusComposite {
 
 	/*
 	 * trecho abaixo é experimental
-	 */
 	private List<FormItemValidator<T>> formItemValidators;
 
 	protected List<FormItemValidator<T>> formItemValidators() {
@@ -274,19 +277,70 @@ public class FormItem<T extends Widget> extends FocusComposite {
 		formItemValidators().add(validator);
 	}
 
-	public boolean isValidated() {
-		for (FormItemValidator<T> validator : formItemValidators()) {
-			if (!validator.validate(getWidget())) {
-				setErrorMessage(validator.getInvalidValueMessage());
-				setValid(false);
-				refresh();
-				return false;
-			}
+//	public boolean isValidated() {
+//		for (FormItemValidator<T> validator : formItemValidators()) {
+//			if (!validator.validate(getWidget())) {
+//				setErrorMessage(validator.getInvalidValueMessage());
+//				setValid(false);
+//				return false;
+//			}
+//		}
+//		setErrorMessage("");
+//		setValid(true);
+//		refresh();
+//		return true;
+//	}
+
+	/**
+	 *--------trecho abaixo é experimental
+	 */
+
+//	private void evaluateSyncValidators() {
+//		setValid(true);
+//		for (FormItemValidator<T> validator : formItemValidators()) {
+//			if (!validator.validate(getWidget())) {
+//				setErrorMessage(validator.getInvalidValueMessage());
+//				setValid(false);
+//				break;
+//			}
+//		}
+//		refresh();
+//	}
+//
+//	private void evaluateAsyncValidators() {
+//
+//	}
+//
+//
+//	protected void validate() {
+//		setValid(true);
+//		evaluateSyncValidators();
+//		if (isValid()) {
+//			evaluateAsyncValidators();
+//		}
+//	}
+
+	private ValidatorChain<W> validatorChain;
+
+	private ValidatorChain<W> validatorChain() {
+		if (validatorChain == null) {
+			validatorChain = new DefaultValidatorChainImpl<W>();
 		}
-		setErrorMessage("");
-		setValid(true);
-		refresh();
-		return true;
+		return validatorChain;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addFormItemValidator(FormItemValidatorNew validator) {
+		validator.setFormItem(this);
+		validatorChain().addValidator(validator);
+	}
+
+	public void validate() {
+		validatorChain().validate(getWidget());
+	}
+
+	public ValidatorChain<W> getValidatorChain() {
+		return validatorChain();
 	}
 
 }

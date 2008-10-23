@@ -1,16 +1,19 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
-import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.DefaultValidatorChainImpl;
+import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidatorNew;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FocusListener;
+import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -64,8 +67,9 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 		panel = !isSameLine() ? new VerticalPanel() : new HorizontalPanel();
 
 		for (T w : widgets) {
-			if (w instanceof FormItemValidator) {
-				addFormItemValidator(w, (FormItemValidator<T>) w);
+			if (w instanceof FormItemValidatorNew) {
+				((FormItemValidatorNew) w).setFormItem(this);
+				addFormItemValidator(w, (FormItemValidatorNew) w);
 			}
 
 			FormItemWidgetWrapper<T> wrapper = new FormItemWidgetWrapper<T>(w, getMainPanel(), getHint());
@@ -105,13 +109,13 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 
 	/*
 	 * trecho experimental do validator
-	 */
 
 	@Override
 	@Deprecated
 	public void addFormItemValidator(FormItemValidator<T> validator) {
 		throw new IllegalArgumentException("Use GroupFormItem.addFormItemValidator(T widget, FormItemValidator<T> validator) instead!");
 	}
+
 
 	@SuppressWarnings("unchecked")
 	private Map<T, List<FormItemValidator>> validatorMap;
@@ -136,26 +140,129 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public boolean isValidated() {
-		for (T widget : getWidgets()) {
-			GWT.log("validando widget do tipo: " + widget.getClass().getName(), null);
-			List<FormItemValidator> validators = validatorMap.get(widget);
+	public <W extends T, R> void addFormItemValidator(W widget, FormItemAsyncCallbackValidator<W, R> validator) {
+		List<FormItemValidator> validators = validatorMap().get(widget);
+		if (validators == null) {
+			validators = new ArrayList<FormItemValidator>();
+			validatorMap.put(widget, validators);
+		}
 
+		validators.add(validator);
+		validator.setFormItem(this);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void validate() {
+		valid = true;
+		setErrorMessage("");
+		for (T widget : getWidgets()) {
+			List<FormItemValidator> validators = validatorMap.get(widget);
 			if (validators != null) {
 				for (FormItemValidator validator : validators) {
 					if (!validator.validate(widget)) {
 						setErrorMessage(validator.getInvalidValueMessage());
 						setValid(false);
-						refresh();
-						return false;
+						break;
 					}
 				}
 			}
 		}
-		setErrorMessage("");
-		setValid(true);
 		refresh();
-		return true;
 	}
 
+//	@SuppressWarnings("unchecked")
+//	public boolean isValidated() {
+//		valid = true;
+//		setErrorMessage("");
+//		for (T widget : getWidgets()) {
+//			List<FormItemValidator> validators = validatorMap.get(widget);
+//			if (validators != null) {
+//				for (FormItemValidator validator : validators) {
+//					if (!validator.validate(widget)) {
+//						setErrorMessage(validator.getInvalidValueMessage());
+//						setValid(false);
+//						return false;
+//					}
+//				}
+//			}
+//		}
+//		setErrorMessage("");
+//		setValid(true);
+//
+//		return true;
+//	}
+
+	/*
+	 * trecho experimental
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Deprecated
+	public void addFormItemValidator(FormItemValidatorNew validator) {
+		throw new IllegalArgumentException("Use GroupFormItem.addFormItemValidator(T widget, FormItemAsyncCallbackValidator<T> validator) instead!");
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<T, ValidatorChain<T>> validatorMap;
+
+	@SuppressWarnings("unchecked")
+	private Map<T, ValidatorChain<T>> validatorMap() {
+		if (validatorMap == null) {
+			validatorMap = new HashMap<T, ValidatorChain<T>>();
+		}
+		return validatorMap;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <W extends T> void addFormItemValidator(W widget, FormItemValidatorNew validator) {
+		ValidatorChain<T> validatorChain = validatorMap().get(widget);
+		if (validatorChain == null) {
+			validatorChain = new DefaultValidatorChainImpl<T>();
+			validatorMap().put(widget, validatorChain);
+		}
+
+		validatorChain.addValidator(validator);
+	}
+
+	@Override
+	public void validate() {
+		Set<T> keySet = validatorMap().keySet();
+		Iterator<T> keyIterator = keySet.iterator();
+		while (keyIterator.hasNext()) {
+			T key = keyIterator.next();
+			ValidatorChain<T> chain = validatorMap().get(key);
+			chain.validate(key);
+		}
+	}
+
+	@Override
+	public void addFocusListener(FocusListener listener) {
+//		super.addFocusListener(listener);
+		for (T widget : getWidgets()) {
+			if (widget instanceof SourcesFocusEvents) {
+				((SourcesFocusEvents) widget).addFocusListener(listener);
+			}
+		}
+	}
+
+	@Override
+	public int getTabIndex() {
+		T widget = getWidgets()[0];
+		if (widget instanceof HasFocus) {
+			return ((HasFocus) widget).getTabIndex();
+		}
+
+		return super.getTabIndex();
+	}
+
+	@Override
+	public void setTabIndex(int index) {
+		T widget = getWidgets()[0];
+		if (widget instanceof HasFocus) {
+			((HasFocus) widget).setTabIndex(index);
+		} else {
+			super.setTabIndex(index);
+		}
+	}
 }

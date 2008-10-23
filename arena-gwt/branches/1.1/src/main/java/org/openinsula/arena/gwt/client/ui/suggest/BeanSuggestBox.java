@@ -3,6 +3,7 @@ package org.openinsula.arena.gwt.client.ui.suggest;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
@@ -11,6 +12,7 @@ import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
+import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestionEvent;
 import com.google.gwt.user.client.ui.SuggestionHandler;
@@ -19,7 +21,7 @@ import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
-public class BeanSuggestBox<T> extends Composite implements HasFocus {
+public class BeanSuggestBox<T> extends Composite implements HasFocus, SourcesFocusEvents {
 	private final SuggestBox suggestBox;
 
 	private final TextBoxBase textBox;
@@ -63,6 +65,15 @@ public class BeanSuggestBox<T> extends Composite implements HasFocus {
 
 		textBox = new TextBox();
 		suggestBox = new SuggestBox(oracle, textBox);
+		textBox.addFocusListener(new FocusListener() {
+			public void onFocus(Widget sender) {
+				GWT.log("textBox ganhou foco", null);
+			}
+
+			public void onLostFocus(Widget sender) {
+				GWT.log("textBox perdeu o foco", null);
+			}
+		});
 
 		suggestBox.addEventHandler(new SuggestionHandler() {
 			public void onSuggestionSelected(final SuggestionEvent event) {
@@ -144,23 +155,23 @@ public class BeanSuggestBox<T> extends Composite implements HasFocus {
 	}
 
 	public void addFocusListener(final FocusListener listener) {
-		suggestBox.addFocusListener(listener);
+		textBox.addFocusListener(listener);
 	}
 
 	public void removeFocusListener(final FocusListener listener) {
-		suggestBox.removeFocusListener(listener);
+		textBox.removeFocusListener(listener);
 	}
 
 	public void setText(String value) {
-		suggestBox.setText(value);
+		textBox.setText(value);
 	}
 
 	public void addKeyboardListener(KeyboardListener listener) {
-		suggestBox.addKeyboardListener(listener);
+		textBox.addKeyboardListener(listener);
 	}
 
 	public void removeKeyboardListener(KeyboardListener listener) {
-		suggestBox.removeKeyboardListener(listener);
+		textBox.removeKeyboardListener(listener);
 	}
 
 	public int getTabIndex() {

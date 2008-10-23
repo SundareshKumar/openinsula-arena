@@ -8,10 +8,9 @@ import org.openinsula.arena.gwt.client.ui.FocusComposite;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.Widget;
 
-public class BeanListBox<T> extends FocusComposite implements ListBoxModelListener, SourcesFocusEvents {
+public class BeanListBox<T> extends FocusComposite implements ListBoxModelListener {
 
 	private final ListBox listBox;
 

@@ -75,12 +75,12 @@ public class ClienteDetailSearchForm extends AbstractDetailsSearchFormTemplate<C
 
 	@Override
 	protected boolean validateView() {
-		return pessoaSearchFormItem.isValidated() && dataCadastroFormItem.isValidated();
+		return pessoaSearchFormItem.isValid() && dataCadastroFormItem.isValid();
 	}
 
 	@Override
 	protected void initValidators() {
-		dataCadastroFormItem.addFormItemValidator(new NotNullFormItemValidator<TextBox>());
+		dataCadastroFormItem.addFormItemValidator(new NotNullFormItemValidator());
 	}
 
 }

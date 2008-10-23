@@ -2,7 +2,7 @@ package org.openinsula.arena.gwt.client.ui.form.validator;
 
 import com.google.gwt.user.client.ui.TextBoxBase;
 
-public class RegexpFormItemValidator<T extends TextBoxBase> implements FormItemValidator<T> {
+public class RegexpFormItemValidator extends SyncFormItemValidator<TextBoxBase> {
 
 	private String pattern;
 
@@ -30,7 +30,8 @@ public class RegexpFormItemValidator<T extends TextBoxBase> implements FormItemV
 		return errorMessage;
 	}
 
-	public boolean validate(T widget) {
+	@Override
+	protected boolean evaluate(TextBoxBase widget) {
 		String text = widget.getText();
 		return text.trim().length() == 0 || text.matches(pattern);
 	}

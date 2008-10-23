@@ -6,8 +6,10 @@ import java.util.List;
 import org.openinsula.arena.gwt.client.ui.FocusComposite;
 import org.openinsula.arena.gwt.client.ui.FocusUtils;
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
+import org.openinsula.arena.gwt.client.ui.form.FormItem;
 import org.openinsula.arena.gwt.client.ui.form.GroupFormItem;
-import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidatorNew;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBoxListener;
 import org.openinsula.arena.gwt.client.ui.suggest.RemoteBeanSuggestOracle;
@@ -21,7 +23,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AbstractSearchFormTemplate<T> extends FocusComposite implements FormItemValidator<AbstractSearchFormTemplate<T>> {
+public abstract class AbstractSearchFormTemplate<T> extends FocusComposite implements FormItemValidatorNew<AbstractSearchFormTemplate<T>> {
 
 	private DeckPanel forms;
 
@@ -382,16 +384,38 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		return false;
 	}
 
-	public final String getInvalidValueMessage() {
-		switch (forms.getVisibleWidget()) {
-		case 0:
-			return getErrorMessage();
+	private FormItem<AbstractSearchFormTemplate<T>> formItem;
+
+	public void validate(AbstractSearchFormTemplate<T> widget, ValidatorChain<AbstractSearchFormTemplate<T>> chain) {
+		boolean valid = validateView();
+		if (valid) {
+			chain.doChain(widget);
 		}
-		return "";
+		else {
+			formItem.setErrorMessage(getInvalidValueMessage());
+		}
+		formItem.setValid(valid);
+		formItem.refresh();
 	}
 
-	public boolean validate(AbstractSearchFormTemplate<T> widget) {
-		return validateView();
+	public String getInvalidValueMessage() {
+		return "Campo obrigatório";
+	}
+
+	public void setFormItem(FormItem<AbstractSearchFormTemplate<T>> formItem) {
+		this.formItem = formItem;
+	}
+
+	public T getEditInstance() {
+		if (validateView()) {
+			switch (forms.getVisibleWidget()) {
+			case 0:
+				return editInstance;
+			case 1:
+				return mergeViewToModel();
+			}
+		}
+		return null;
 	}
 
 }
