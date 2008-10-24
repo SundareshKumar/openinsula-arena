@@ -2,7 +2,7 @@ package org.openinsula.arena.gwt.client.rest.xml.atom;
 
 import java.util.List;
 
-import org.openinsula.arena.gwt.client.rest.xml.AbstractMultipleNodeFactory;
+import org.openinsula.arena.gwt.client.xml.ListNodesFactory;
 
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -10,7 +10,7 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public class CategoriesNodesFactory extends AbstractMultipleNodeFactory<Category> {
+public class CategoriesNodesFactory extends ListNodesFactory<Category> {
 
 	public CategoriesNodesFactory(List<Category> categories) {
 		super(categories);

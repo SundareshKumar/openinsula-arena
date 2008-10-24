@@ -3,7 +3,7 @@ package org.openinsula.arena.gwt.client.rest.xml.atom;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openinsula.arena.gwt.client.rest.xml.AbstractMultipleNodeFactory;
+import org.openinsula.arena.gwt.client.xml.ListNodesFactory;
 
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -11,7 +11,7 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public class LinksNodesFactory extends AbstractMultipleNodeFactory<Link> {
+public class LinksNodesFactory extends ListNodesFactory<Link> {
 
 	public LinksNodesFactory(Link link) {
 		super(new ArrayList<Link>(1));

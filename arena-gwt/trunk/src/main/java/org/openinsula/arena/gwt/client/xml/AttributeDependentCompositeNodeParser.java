@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.rest.xml;
+package org.openinsula.arena.gwt.client.xml;
 
 import com.google.gwt.xml.client.NamedNodeMap;
 import com.google.gwt.xml.client.Node;
@@ -18,7 +18,7 @@ public class AttributeDependentCompositeNodeParser implements NodeParser {
 		compositeNodeParser = new CompositeNodeParser();
 	}
 
-	public void parse(Node node) {
+	public final void parse(Node node) {
 		final NamedNodeMap namedNodeMap = node.getAttributes();
 		final Node attributeNode = namedNodeMap.getNamedItem(attributeName);
 

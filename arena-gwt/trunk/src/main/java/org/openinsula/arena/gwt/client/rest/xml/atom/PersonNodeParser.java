@@ -1,8 +1,8 @@
 package org.openinsula.arena.gwt.client.rest.xml.atom;
 
-import org.openinsula.arena.gwt.client.rest.xml.CompositeNodeParser;
-import org.openinsula.arena.gwt.client.rest.xml.NodeParser;
-import org.openinsula.arena.gwt.client.rest.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.xml.NodeParser;
+import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
 
 import com.google.gwt.xml.client.Node;
 

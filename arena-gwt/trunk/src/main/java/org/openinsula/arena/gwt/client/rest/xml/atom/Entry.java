@@ -2,11 +2,10 @@ package org.openinsula.arena.gwt.client.rest.xml.atom;
 
 import java.util.Date;
 
-import org.openinsula.arena.gwt.client.rest.xml.CompositeNodeFactory;
-import org.openinsula.arena.gwt.client.rest.xml.CompositeNodeParser;
-import org.openinsula.arena.gwt.client.rest.xml.NodeParser;
-import org.openinsula.arena.gwt.client.rest.xml.SingleNodeFactory;
-import org.openinsula.arena.gwt.client.rest.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.CompositeNodeFactory;
+import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.xml.NodeParser;
+import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -16,7 +15,7 @@ import com.google.gwt.xml.client.XMLParser;
 /**
  * @author Lucas K Mogari
  */
-public class Entry extends AtomResource implements SingleNodeFactory {
+public class Entry extends AtomResource {
 
 	private Text summary;
 
@@ -24,9 +23,7 @@ public class Entry extends AtomResource implements SingleNodeFactory {
 
 	private Date published;
 
-	private Document document;
-
-	private EntryNodeFactory entryNodeFactory;
+	private CompositeNodeFactory entryNodeFactory;
 
 	private final CompositeNodeFactory contentNodeFactory = new ContentNodeFactory();
 
@@ -40,12 +37,14 @@ public class Entry extends AtomResource implements SingleNodeFactory {
 	}
 
 	{
-		addParser("summary", new SummaryNodeParser());
-		addParser("published", new PublishedNodeParser());
-		addParser("content", contentNodeParser);
+		final CompositeNodeParser rootNodeParser = getRootNodeParser();
+
+		rootNodeParser.addParser("summary", new SummaryNodeParser());
+		rootNodeParser.addParser("published", new PublishedNodeParser());
+		rootNodeParser.addParser("content", contentNodeParser);
 	}
 
-	public void parseContent(Node node) {
+	public final void parseContent(Node node) {
 		contentNodeParser.parse(node);
 	}
 
@@ -57,9 +56,17 @@ public class Entry extends AtomResource implements SingleNodeFactory {
 		return contentNodeParser;
 	}
 
+	public CompositeNodeFactory getEntryNodeFactory() {
+		return entryNodeFactory;
+	}
+
+	public void setEntryNodeFactory(CompositeNodeFactory entryNodeFactory) {
+		this.entryNodeFactory = entryNodeFactory;
+	}
+
 	public String toXml() {
-		document = XMLParser.createDocument();
-		final Node entryNode = createNode();
+		final Document document = XMLParser.createDocument();
+		final Node entryNode = createNode(document);
 
 		if (entryNode != null) {
 			document.appendChild(entryNode);
@@ -68,17 +75,13 @@ public class Entry extends AtomResource implements SingleNodeFactory {
 		return document.toString();
 	}
 
-	public Node createNode() {
+	public Node createNode(Document document) {
 		if (entryNodeFactory == null) {
 			entryNodeFactory = new EntryNodeFactory();
 		}
 		entryNodeFactory.setDocument(document);
 
 		return entryNodeFactory.createNode();
-	}
-
-	public void setDocument(Document document) {
-		this.document = document;
 	}
 
 	public Text getSummary() {

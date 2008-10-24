@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.rest.xml;
+package org.openinsula.arena.gwt.client.xml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,17 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public abstract class AbstractMultipleNodeFactory<T> extends AbstractNodeFactory implements MultipleNodeFactory {
+public abstract class ListNodesFactory<T> extends MultipleNodeFactory {
 
 	private List<T> list = new ArrayList<T>();
 
-	public AbstractMultipleNodeFactory(List<T> list) {
+	public ListNodesFactory(List<T> list) {
 		this.list = list;
 	}
 
 	protected abstract Node createNode(T T);
 
+	@Override
 	public Node[] createNodes() {
 		Node[] nodes = null;
 

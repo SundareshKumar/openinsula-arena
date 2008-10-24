@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.rest.xml;
+package org.openinsula.arena.gwt.client.xml;
 
 import com.google.gwt.xml.client.Node;
 

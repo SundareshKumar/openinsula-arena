@@ -3,8 +3,9 @@ package org.openinsula.arena.gwt.client.rest.xml.atom;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.openinsula.arena.gwt.client.rest.xml.NodeParser;
-import org.openinsula.arena.gwt.client.rest.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.xml.NodeParser;
+import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
 
 import com.google.gwt.xml.client.Node;
 
@@ -35,10 +36,12 @@ public class Feed<T extends Entry> extends AtomResource {
 	}
 
 	{
-		addParser("subtitle", new SubtitleNodeParser());
-		addParser("icon", new IconNodeParser());
-		addParser("logo", new LogoNodeParser());
-		addParser("entry", new EntryNodeParser());
+		final CompositeNodeParser rootNodeParser = getRootNodeParser();
+
+		rootNodeParser.addParser("subtitle", new SubtitleNodeParser());
+		rootNodeParser.addParser("icon", new IconNodeParser());
+		rootNodeParser.addParser("logo", new LogoNodeParser());
+		rootNodeParser.addParser("entry", new EntryNodeParser());
 	}
 
 	public void setEntryFactory(EntryFactory<T> entryFactory) {

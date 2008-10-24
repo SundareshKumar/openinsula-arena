@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.rest.xml;
+package org.openinsula.arena.gwt.client.xml;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,12 +8,13 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public abstract class CompositeNodeFactory extends AbstractNodeFactory implements SingleNodeFactory {
+public abstract class CompositeNodeFactory extends SingleNodeFactory {
 
 	private final List<NodeFactory> nodeFactories = new LinkedList<NodeFactory>();
 
 	protected abstract Node createBaseNode();
 
+	@Override
 	public final Node createNode() {
 		final Node node = createBaseNode();
 

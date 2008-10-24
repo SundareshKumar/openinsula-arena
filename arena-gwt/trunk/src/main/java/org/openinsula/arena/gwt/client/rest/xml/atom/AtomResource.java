@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.openinsula.arena.gwt.client.rest.xml.CompositeNodeParser;
-import org.openinsula.arena.gwt.client.rest.xml.NodeParser;
-import org.openinsula.arena.gwt.client.rest.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.xml.NodeParser;
+import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
 
 import com.google.gwt.xml.client.Node;
 
 /**
  * @author Lucas K Mogari
  */
-public abstract class AtomResource extends CompositeNodeParser {
+public abstract class AtomResource {
 
 	private Text title;
 
@@ -31,6 +31,8 @@ public abstract class AtomResource extends CompositeNodeParser {
 
 	private List<Link> links;
 
+	private final CompositeNodeParser rootNodeParser = new CompositeNodeParser();
+
 	public AtomResource() {
 	}
 
@@ -40,14 +42,22 @@ public abstract class AtomResource extends CompositeNodeParser {
 	}
 
 	{
-		addParser("id", new IdNodeParser());
-		addParser("title", new TitleNodeParser());
-		addParser("updated", new UpdatedNodeParser());
-		addParser("rights", new RightsNodeParser());
-		addParser("author", new AuthorNodeParser());
-		addParser("contributor", new ContributorNodeParser());
-		addParser("category", new CategoryNodeParser());
-		addParser("link", new EntryLinkNodeParser());
+		rootNodeParser.addParser("id", new IdNodeParser());
+		rootNodeParser.addParser("title", new TitleNodeParser());
+		rootNodeParser.addParser("updated", new UpdatedNodeParser());
+		rootNodeParser.addParser("rights", new RightsNodeParser());
+		rootNodeParser.addParser("author", new AuthorNodeParser());
+		rootNodeParser.addParser("contributor", new ContributorNodeParser());
+		rootNodeParser.addParser("category", new CategoryNodeParser());
+		rootNodeParser.addParser("link", new EntryLinkNodeParser());
+	}
+
+	public CompositeNodeParser getRootNodeParser() {
+		return rootNodeParser;
+	}
+
+	public void parse(Node node) {
+		rootNodeParser.parse(node);
 	}
 
 	public Text getTitle() {
