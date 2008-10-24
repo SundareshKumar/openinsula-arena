@@ -64,4 +64,8 @@ public abstract class AbstractDetailsSearchFormTemplate<T> extends Composite {
 		return searchFormTemplate;
 	}
 
+	HasFocus[] getFocusSequence() {
+		return focusSequence;
+	}
+
 }

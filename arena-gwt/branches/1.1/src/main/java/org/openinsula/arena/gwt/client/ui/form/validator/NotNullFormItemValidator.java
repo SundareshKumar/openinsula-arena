@@ -3,6 +3,7 @@ package org.openinsula.arena.gwt.client.ui.form.validator;
 import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchFormTemplate;
 import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -19,6 +20,8 @@ public class NotNullFormItemValidator extends SyncFormItemValidator<Widget> {
 		} else if (widget instanceof BeanListBox) {
 			return ((BeanListBox<?>) widget).getSelectedItem() != null;
 		} else if (widget instanceof AbstractSearchFormTemplate) {
+			GWT.log("validando not null de formItem: " + ((AbstractSearchFormTemplate<?>) widget).getEditInstance(), null);
+
 			return ((AbstractSearchFormTemplate<?>) widget).getEditInstance() != null;
 		}
 

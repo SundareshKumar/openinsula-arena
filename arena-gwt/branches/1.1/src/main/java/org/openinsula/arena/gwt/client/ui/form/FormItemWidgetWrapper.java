@@ -2,8 +2,8 @@ package org.openinsula.arena.gwt.client.ui.form;
 
 import org.openinsula.arena.gwt.client.ui.MouseEventPanel;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FocusListener;
-import com.google.gwt.user.client.ui.MouseListenerAdapter;
 import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -34,7 +34,7 @@ public class FormItemWidgetWrapper<T extends Widget> {
 		if (widget instanceof SourcesFocusEvents) {
 			((SourcesFocusEvents) widget).addFocusListener(new FormItemFocusedListener());
 		}
-		parent.addMouseListener(new FormItemParentMouseListener());
+//		parent.addMouseListener(new FormItemParentMouseListener());
 	}
 
 	public T getWidget() {
@@ -48,14 +48,17 @@ public class FormItemWidgetWrapper<T extends Widget> {
 	public class FormItemFocusedListener implements FocusListener {
 		public void onFocus(Widget sender) {
 			parent.setStyleName(FormFactory.getStyleFormItemFocused());
+			hintManager.showHint();
 			hasFocus = true;
 		}
 
 		public void onLostFocus(Widget sender) {
+			GWT.log("perdeu o foco do widget: " + widget.getClass().getName(), null);
 			parent.setStyleName(FormFactory.getStyleFormItem());
 			hasFocus = false;
+			hintManager.hideHint();
+
 			if (!hasMouse) {
-				hintManager.hideHint();
 			}
 		}
 	}
@@ -64,19 +67,19 @@ public class FormItemWidgetWrapper<T extends Widget> {
 	 *
 	 *
 	 */
-	public class FormItemParentMouseListener extends MouseListenerAdapter {
-		public void onMouseEnter(Widget sender) {
-			hintManager.showHint();
-			hasMouse = true;
-		}
-
-		public void onMouseLeave(Widget sender) {
-			hasMouse = false;
-			if (!hasFocus) {
-				hintManager.hideHint();
-			}
-		}
-	}
+//	public class FormItemParentMouseListener extends MouseListenerAdapter {
+//		public void onMouseEnter(Widget sender) {
+//			hintManager.showHint();
+//			hasMouse = true;
+//		}
+//
+//		public void onMouseLeave(Widget sender) {
+//			hasMouse = false;
+//			if (!hasFocus) {
+//				hintManager.hideHint();
+//			}
+//		}
+//	}
 
 	protected FormItemHintManager<Widget> getHintManager() {
 		return hintManager;

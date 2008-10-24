@@ -23,7 +23,8 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AbstractSearchFormTemplate<T> extends FocusComposite implements FormItemValidatorNew<AbstractSearchFormTemplate<T>> {
+public abstract class AbstractSearchFormTemplate<T> extends FocusComposite implements
+		FormItemValidatorNew<AbstractSearchFormTemplate<T>> {
 
 	private DeckPanel forms;
 
@@ -194,6 +195,10 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 	@Override
 	public void addFocusListener(FocusListener listener) {
 		searchForm.addFocusListener(listener);
+		HasFocus[] focusSequence = getDetailsForm().getFocusSequence();
+		if (focusSequence != null) {
+			focusSequence[focusSequence.length - 1].addFocusListener(listener);
+		}
 	}
 
 	@Override
@@ -226,11 +231,8 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 			editLink = new Hyperlink("Editar", "");
 			editLink.setVisible(false);
 
-			suggestFormItem = new GroupFormItem<Widget>(getSuggestBoxLabel(),
-					new Widget[] {suggestBox, editLink},
-					getSuggestBoxHint(),
-					false,
-					true);
+			suggestFormItem = new GroupFormItem<Widget>(getSuggestBoxLabel(), new Widget[] { suggestBox, editLink },
+					getSuggestBoxHint(), false, true);
 
 			FormBuilder formBuilder = new FormBuilder();
 			formBuilder.add(suggestFormItem);
