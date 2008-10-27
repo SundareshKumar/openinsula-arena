@@ -1,0 +1,122 @@
+/**
+ * Cascade Style Sheets for the FormItem classes
+ *
+*/
+.salto-FormItem {
+	background-color: none;
+	border: 1px solid #fff;
+	padding: 3px;
+	width: 100%;
+	/*
+	width: 350px;
+	*/
+}
+
+.salto-FormItem input,.salto-FormItem textarea, .salto-FormItem select {
+	font-style: normal;
+	color: #000;
+	padding: 2px;
+	border-style: solid;
+	background-color: #EAEAEA;
+	margin: 5px;
+}
+
+.salto-FormItemFocused { /**
+    background-color: #fff7c0;
+    background-color: #c0f2ff;
+    */
+	border: 1px solid #ccc;
+	background-color: #d7e9ed;
+	padding: 3px;
+	width: 100%;
+	/*
+	width: 350px;
+	*/
+}
+
+.salto-FormItemFocused input,.salto-FormItemFocused textarea, .salto-FormItemFocused select {
+	font-style: normal;
+	color: #000;
+	padding: 2px;
+	border-color: #ccb;
+	border-style: solid;
+	background-color: #fff;
+	margin: 5px;
+}
+
+.salto-FormItemTextBoxDisabled * {
+	background: #ccc;
+	boder: 1px solid #ccc;
+	boder-bottom: 1px solid #000;
+	color: #666;
+}
+
+.gwt-RadioButton * {
+    vertical-align: middle;
+}
+
+.gwt-RadioButton input {
+    padding: 5px;
+    margin: 1px 4px;
+}
+
+.salto-FormVerticalPanel {
+	width: 100%;
+	margin: 0 0 .5em 0;
+	background-color: #fff;
+}
+
+.salto-FormVerticalPanel tr td {
+	padding: 2px 3px 1px 2px;
+}
+
+.salto-FormItemPopupPanelHint {
+	border: 1px solid #CCC;
+	background-color: #EAEAEA;
+	padding: 8px;
+	width: 200px;
+	margin: 0 0 0 5px;
+}
+
+.salto-FormItemPopupPanelHint * {
+	color: #222;
+	font-size: 0.93em;
+}
+
+.salto-FormItemLabel {
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	padding-left: 2px;
+	padding-bottom: 3px;
+}
+
+.salto-FormItemLabelOptional {
+	color: #222;
+	font-style: italic;
+}
+
+.salto-FormItemLabelSuffix {
+	color: #555;
+}
+
+.salto-FormItemLabelH1 {
+	font-weight: bold;
+	font-size: 1.5em;
+	color: #000000;
+	border-bottom: 1px solid #eee;
+	padding: 8px;
+}
+
+.salto-FormItemValid {
+	/*border: 1px solid green;*/
+}
+
+.salto-FormItemInvalid {
+    /*border: 1px solid red;*/
+}
+
+.salto-FormItemLabelError {
+	color: #f00;
+	font-weight: bold;
+}
