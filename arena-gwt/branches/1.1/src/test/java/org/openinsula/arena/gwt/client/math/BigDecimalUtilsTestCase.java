@@ -1,6 +1,9 @@
 package org.openinsula.arena.gwt.client.math;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
@@ -37,7 +40,10 @@ public class BigDecimalUtilsTestCase {
 		BigDecimal zero = BigDecimalUtils.ZERO;
 		BigDecimal value1 = new BigDecimal("0.01");
 		BigDecimal value2 = new BigDecimal("1");
+		BigDecimal value3 = new BigDecimal("-1.0");
 
+
+		assertFalse(BigDecimalUtils.isPositive(value3));
 		assertFalse(BigDecimalUtils.isPositive(null));
 		assertFalse(BigDecimalUtils.isPositive(zero));
 		assertTrue(BigDecimalUtils.isPositive(value1));
