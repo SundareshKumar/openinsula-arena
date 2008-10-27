@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Lucas K Mogari
  */
-public class Feed<T extends Entry> extends AtomResource {
+public class Feed<T extends BaseEntry<T>> extends AtomResource {
 
 	private Text subtitle;
 

@@ -9,12 +9,12 @@ import com.google.gwt.http.client.Request;
  */
 public interface AtomService extends RestService {
 
-	public <T extends Entry> Request createEntry(String url, T entry, EntryRequestCallback<T> callback);
+	public <T extends BaseEntry<T>> Request createEntry(String url, T entry, EntryRequestCallback<T> callback);
 
-	public <T extends Entry> Request updateEntry(String url, T entry, EntryRequestCallback<T> callback);
+	public <T extends BaseEntry<T>> Request updateEntry(String url, T entry, EntryRequestCallback<T> callback);
 
-	public <T extends Entry> Request getEntry(String url, EntryRequestCallback<T> callback);
+	public <T extends BaseEntry<T>> Request getEntry(String url, EntryRequestCallback<T> callback);
 
-	public <T extends Entry> Request getFeed(String url, FeedRequestCallback<T> callback);
+	public <T extends BaseEntry<T>> Request getFeed(String url, FeedRequestCallback<T> callback);
 
 }

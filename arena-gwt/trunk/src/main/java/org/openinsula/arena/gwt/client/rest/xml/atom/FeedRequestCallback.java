@@ -2,7 +2,7 @@ package org.openinsula.arena.gwt.client.rest.xml.atom;
 
 import org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback;
 import org.openinsula.arena.gwt.client.xml.NodeParser;
-import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.ValueNodeParser;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
@@ -10,13 +10,7 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public abstract class FeedRequestCallback<T extends Entry> extends XmlRequestCallback {
-
-	private final EntryFactory<T> entryFactory;
-
-	public FeedRequestCallback(EntryFactory<T> entryFactory) {
-		this.entryFactory = entryFactory;
-	}
+public abstract class FeedRequestCallback<T extends BaseEntry<T>> extends XmlRequestCallback implements EntryFactory<T> {
 
 	protected abstract void onFeedParsed(Feed<T> feed);
 
@@ -29,70 +23,46 @@ public abstract class FeedRequestCallback<T extends Entry> extends XmlRequestCal
 	 */
 	@Override
 	protected final void onXmlParsed(Document document) {
-		final FeedParser feedParser = new FeedParser();
+		final FeedDocumentParser feedParser = new FeedDocumentParser();
+		final Feed<T> feed = feedParser.parse(document);
 
-		feedParser.parse(document);
-
-		onFeedParsed(feedParser.getAtomResource());
+		onFeedParsed(feed);
 	}
 
-	private final class FeedParser extends AtomResourceParser<Feed<T>> {
+	private final class FeedDocumentParser extends AtomResourceNodeParser<Feed<T>> {
 
-		private FeedParser() {
+		public FeedDocumentParser() {
 			super(new Feed<T>());
+		}
 
-			addParser("subtitle", new TextNodeParser() {
+		@Override
+		protected void initParsers() {
+			super.initParsers();
+
+			addNodeParser("subtitle", new TextNodeParser() {
 				public void onNodeParsed(Text text) {
 					getAtomResource().setSubtitle(text);
 				}
 			});
-			addParser("icon", new IconNodeParser());
-			addParser("logo", new LogoNodeParser());
-			addParser("entry", new EntryNodeParser());
-		}
-
-		private final class SubtitleNodeParser extends TextNodeParser {
-
-			@Override
-			public T parse(Node node) {
-				super.parse(node);
-
-				getAtomResource().setSubtitle(getText());
-			}
-
-		}
-
-		private final class IconNodeParser implements NodeParser {
-
-			public T parse(Node node) {
-				getAtomResource().setIcon(XmlParserUtils.getText(node));
-			}
-
-		}
-
-		private final class LogoNodeParser implements NodeParser {
-
-			public T parse(Node node) {
-				getAtomResource().setLogo(XmlParserUtils.getText(node));
-			}
-
-		}
-
-		private final class EntryNodeParser implements NodeParser {
-
-			@SuppressWarnings("unchecked")
-			public T parse(Node node) {
-				T entry = entryFactory.createEntry();
-
-				if (entry == null) {
-					entry = (T) new Entry();
+			addNodeParser("icon", new ValueNodeParser() {
+				public void onNodeParsed(String value) {
+					getAtomResource().setIcon(value);
 				}
+			});
+			addNodeParser("logo", new ValueNodeParser() {
+				public void onNodeParsed(String value) {
+					getAtomResource().setLogo(value);
+				}
+			});
+			addNodeParser("entry", new NodeParser<T>() {
+				public T parse(Node node) {
+					final T entry = createEntry();
 
-				// entry.parse(node);
+					getAtomResource().addEntry(entry);
 
-				getAtomResource().addEntry(entry);
-			}
-
+					return entry.parse(node);
+				}
+			});
 		}
 
 	}

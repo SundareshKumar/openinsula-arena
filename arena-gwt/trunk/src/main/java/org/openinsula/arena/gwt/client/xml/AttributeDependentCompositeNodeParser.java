@@ -30,12 +30,13 @@ public class AttributeDependentCompositeNodeParser<T> implements NodeParser<T> {
 		return null;
 	}
 
-	public void addParser(String attributeValue, NodeParser parser) {
-		compositeNodeParser.addParser(attributeValue, parser);
+	public AttributeDependentCompositeNodeParser<T> addParser(String attributeValue, NodeParser parser) {
+		compositeNodeParser.addNodeParser(attributeValue, parser);
+		return this;
 	}
 
 	public void removeParser(String attributeValue) {
-		compositeNodeParser.removeParser(attributeValue);
+		compositeNodeParser.removeNodeParser(attributeValue);
 	}
 
 }

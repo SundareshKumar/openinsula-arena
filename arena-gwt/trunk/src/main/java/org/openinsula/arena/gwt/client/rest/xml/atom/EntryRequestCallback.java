@@ -7,7 +7,7 @@ import com.google.gwt.xml.client.Document;
 /**
  * @author Lucas K Mogari
  */
-public abstract class EntryRequestCallback<T extends Entry> extends XmlRequestCallback {
+public abstract class EntryRequestCallback<T extends BaseEntry<T>> extends XmlRequestCallback {
 
 	private T entry;
 
@@ -34,9 +34,7 @@ public abstract class EntryRequestCallback<T extends Entry> extends XmlRequestCa
 			entry = (T) new Entry();
 		}
 
-		entry.parse(document);
-
-		onEntryParsed(entry);
+		onEntryParsed(entry.parse(document));
 	}
 
 	public void setEntry(T entry) {

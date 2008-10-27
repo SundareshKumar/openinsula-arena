@@ -1,46 +1,49 @@
 package org.openinsula.arena.gwt.client.rest.json;
 
-import org.openinsula.arena.gwt.client.rest.xml.atom.Entry;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openinsula.arena.gwt.client.rest.xml.atom.BaseEntry;
 import org.openinsula.arena.gwt.client.xml.AttributeDependentCompositeNodeParser;
-import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
-import org.openinsula.arena.gwt.client.xml.MultipleNodeFactory;
 import org.openinsula.arena.gwt.client.xml.NodeParser;
-import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.ValueNodeParser;
 
 import com.google.gwt.xml.client.Node;
 
 /**
  * @author Lucas K Mogari
  */
-public class Transacao extends Entry {
+public class Transacao extends BaseEntry<Transacao> {
 
 	private String numero;
 
 	private String estado;
 
+	private List<Guia> guias = new ArrayList<Guia>();
+
 	public Transacao() {
-		final CompositeNodeParser contentNodeParser = getContentNodeParser();
+		final AttributeDependentCompositeNodeParser<Guia> parser = new AttributeDependentCompositeNodeParser<Guia>(
+				"tipo");
 
-		contentNodeParser.addParser("nome", new NodeParser() {
-			public T parse(Node node) {
-				numero = XmlParserUtils.getText(node);
+		addNodeParser("guias", parser);
+		addNodeParser("numero", new ValueNodeParser() {
+			public void onNodeParsed(String value) {
+				numero = value;
 			}
 		});
-		contentNodeParser.addParser("senha", new NodeParser() {
-			public T parse(Node node) {
-				estado = XmlParserUtils.getText(node);
+		addNodeParser("estado", new ValueNodeParser() {
+			public void onNodeParsed(String value) {
+				estado = value;
 			}
 		});
-		final AttributeDependentCompositeNodeParser parser = new AttributeDependentCompositeNodeParser("tipo");
 
-		parser.addParser("consulta", new Consulta().getContentNodeParser());
+		parser.addParser("consulta", new NodeParser<Consulta>() {
+			public Consulta parse(Node node) {
+				final Consulta consulta = new Consulta();
 
-		contentNodeParser.addParser("guias", parser);
+				guias.add(consulta);
 
-		getContentNodeFactory().addNodeFactory(new MultipleNodeFactory() {
-			@Override
-			public Node[] createNodes() {
-				return new Node[] { createTextElement("nome", numero), createTextElement("senha", estado) };
+				return consulta.parse(node);
 			}
 		});
 	}
@@ -59,6 +62,14 @@ public class Transacao extends Entry {
 
 	public void setEstado(String senha) {
 		estado = senha;
+	}
+
+	public List<Guia> getGuias() {
+		return guias;
+	}
+
+	public void setGuias(List<Guia> guias) {
+		this.guias = guias;
 	}
 
 }

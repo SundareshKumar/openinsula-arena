@@ -41,11 +41,12 @@ public class CompositeNodeParser<T> implements NodeParser<T> {
 		return !parsers.isEmpty();
 	}
 
-	public void addParser(String nodeName, NodeParser<?> parser) {
+	public CompositeNodeParser<T> addNodeParser(String nodeName, NodeParser<?> parser) {
 		parsers.put(nodeName, parser);
+		return this;
 	}
 
-	public void removeParser(String nodeName) {
+	public void removeNodeParser(String nodeName) {
 		parsers.remove(nodeName);
 	}
 

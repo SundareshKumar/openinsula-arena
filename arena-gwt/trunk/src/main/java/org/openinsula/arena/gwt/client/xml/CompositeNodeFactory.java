@@ -45,8 +45,9 @@ public abstract class CompositeNodeFactory extends SingleNodeFactory {
 		return node;
 	}
 
-	public void addNodeFactory(NodeFactory nodeFactory) {
+	public CompositeNodeFactory addNodeFactory(NodeFactory nodeFactory) {
 		nodeFactories.add(nodeFactory);
+		return this;
 	}
 
 	public void removeNodeFactory(NodeFactory nodeFactory) {
