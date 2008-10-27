@@ -3,9 +3,9 @@ package org.openinsula.arena.gwt.client.form;
 import java.util.Iterator;
 
 import org.openinsula.arena.gwt.client.form.field.SimpleField;
-import org.openinsula.arena.gwt.client.user.ui.Paragraph;
-import org.openinsula.arena.gwt.client.user.ui.Title;
-import org.openinsula.arena.gwt.client.user.ui.UnorderedList;
+import org.openinsula.arena.gwt.client.ui.Paragraph;
+import org.openinsula.arena.gwt.client.ui.Title;
+import org.openinsula.arena.gwt.client.ui.UnorderedList;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;

@@ -1,9 +1,9 @@
 package org.openinsula.arena.gwt.client.form;
 
 import org.openinsula.arena.gwt.client.application.Application;
-import org.openinsula.arena.gwt.client.application.history.HistoryDispatcher;
 import org.openinsula.arena.gwt.client.application.history.HistoryChangeInterceptor;
-import org.openinsula.arena.gwt.client.user.ui.ConfirmationRequiredHyperlink;
+import org.openinsula.arena.gwt.client.application.history.HistoryDispatcher;
+import org.openinsula.arena.gwt.client.ui.ConfirmationRequiredHyperlink;
 
 import com.google.gwt.user.client.Window;
 

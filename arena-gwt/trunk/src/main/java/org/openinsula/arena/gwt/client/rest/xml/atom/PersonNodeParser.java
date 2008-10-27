@@ -9,29 +9,35 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public class PersonNodeParser extends CompositeNodeParser {
-
-	private final Person person = new Person();
+public class PersonNodeParser extends CompositeNodeParser<Person> {
 
 	public PersonNodeParser() {
 		addParser("name", new NodeParser() {
-			public void parse(Node node) {
+			@Override
+			protected void parseWithNoReturn(Node node) {
 				person.setName(XmlParserUtils.getText(node));
 			}
 		});
 		addParser("uri", new NodeParser() {
-			public void parse(Node node) {
+			@Override
+			protected void parseWithNoReturn(Node node) {
 				person.setUri(XmlParserUtils.getText(node));
 			}
 		});
 		addParser("email", new NodeParser() {
-			public void parse(Node node) {
+			@Override
+			protected void parseWithNoReturn(Node node) {
 				person.setEmail(XmlParserUtils.getText(node));
 			}
 		});
 	}
 
-	public final Person getPerson() {
+	@Override
+	public Person parse(Node node) {
+		final Person person = new Person();
+
+		super.parse(node);
+
 		return person;
 	}
 

@@ -5,8 +5,8 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public interface NodeParser {
+public interface NodeParser<T> {
 
-	public void parse(Node node);
+	public T parse(Node node);
 
 }

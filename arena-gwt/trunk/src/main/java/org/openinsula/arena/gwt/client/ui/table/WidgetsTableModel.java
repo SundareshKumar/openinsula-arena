@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.user.ui.table;
+package org.openinsula.arena.gwt.client.ui.table;
 
 import java.util.LinkedList;
 import java.util.List;

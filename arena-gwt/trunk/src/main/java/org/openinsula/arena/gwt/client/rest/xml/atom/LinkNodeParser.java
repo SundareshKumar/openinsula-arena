@@ -8,24 +8,16 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public class LinkNodeParser implements NodeParser {
+public class LinkNodeParser implements NodeParser<Link> {
 
-	private final Link link;
-
-	public LinkNodeParser() {
-		this(new Link());
-	}
-
-	public LinkNodeParser(Link link) {
-		this.link = link;
-	}
-
-	public void parse(Node node) {
+	public Link parse(Node node) {
 		final String href = XmlParserUtils.getAttribute(node, "href");
 
 		if (href == null) {
 			throw new NullPointerException("");
 		}
+
+		final Link link = new Link();
 
 		link.setHref(href);
 		link.setHreflang(XmlParserUtils.getAttribute(node, "hreflang"));
@@ -38,9 +30,7 @@ public class LinkNodeParser implements NodeParser {
 		if (length != null) {
 			link.setLength(Byte.valueOf(length));
 		}
-	}
 
-	public final Link getLink() {
 		return link;
 	}
 

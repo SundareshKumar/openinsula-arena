@@ -8,8 +8,8 @@ import java.util.Map;
 import org.openinsula.arena.gwt.client.form.field.Field;
 import org.openinsula.arena.gwt.client.form.field.FieldUtils;
 import org.openinsula.arena.gwt.client.form.field.SimpleField;
-import org.openinsula.arena.gwt.client.user.ui.ListItem;
-import org.openinsula.arena.gwt.client.user.ui.Paragraph;
+import org.openinsula.arena.gwt.client.ui.ListItem;
+import org.openinsula.arena.gwt.client.ui.Paragraph;
 import org.openinsula.arena.gwt.client.validation.ValidationResult;
 
 import com.google.gwt.user.client.DOM;

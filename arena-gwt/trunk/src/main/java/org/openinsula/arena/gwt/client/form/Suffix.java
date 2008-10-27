@@ -1,7 +1,7 @@
 package org.openinsula.arena.gwt.client.form;
 
-import org.openinsula.arena.gwt.client.user.ui.Label;
-import org.openinsula.arena.gwt.client.user.ui.Span;
+import org.openinsula.arena.gwt.client.ui.Label;
+import org.openinsula.arena.gwt.client.ui.Span;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;

@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.user.ui;
+package org.openinsula.arena.gwt.client.ui;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HasText;

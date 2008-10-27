@@ -1,7 +1,6 @@
 package org.openinsula.arena.gwt.client.form;
 
 import org.openinsula.arena.gwt.client.form.field.FieldValueHandler;
-import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 
 /**
  * @author Lucas K Mogari

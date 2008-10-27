@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
-import org.openinsula.arena.gwt.client.xml.NodeParser;
-import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
-
-import com.google.gwt.xml.client.Node;
-
 /**
  * @author Lucas K Mogari
  */
@@ -31,33 +25,12 @@ public abstract class AtomResource {
 
 	private List<Link> links;
 
-	private final CompositeNodeParser rootNodeParser = new CompositeNodeParser();
-
 	public AtomResource() {
 	}
 
 	public AtomResource(String id, String title) {
 		this.title = new Text(title);
 		this.id = id;
-	}
-
-	{
-		rootNodeParser.addParser("id", new IdNodeParser());
-		rootNodeParser.addParser("title", new TitleNodeParser());
-		rootNodeParser.addParser("updated", new UpdatedNodeParser());
-		rootNodeParser.addParser("rights", new RightsNodeParser());
-		rootNodeParser.addParser("author", new AuthorNodeParser());
-		rootNodeParser.addParser("contributor", new ContributorNodeParser());
-		rootNodeParser.addParser("category", new CategoryNodeParser());
-		rootNodeParser.addParser("link", new EntryLinkNodeParser());
-	}
-
-	public CompositeNodeParser getRootNodeParser() {
-		return rootNodeParser;
-	}
-
-	public void parse(Node node) {
-		rootNodeParser.parse(node);
 	}
 
 	public Text getTitle() {
@@ -184,100 +157,6 @@ public abstract class AtomResource {
 
 	public void setRights(Text rights) {
 		this.rights = rights;
-	}
-
-	private final class IdNodeParser implements NodeParser {
-
-		public void parse(Node node) {
-			final Node firstChild = node.getFirstChild();
-
-			if (firstChild != null) {
-				setId(firstChild.getNodeValue());
-			}
-		}
-
-	}
-
-	private final class TitleNodeParser extends TextNodeParser {
-
-		@Override
-		public void parse(Node node) {
-			super.parse(node);
-
-			title = getText();
-		}
-
-	}
-
-	private final class UpdatedNodeParser implements NodeParser {
-
-		public void parse(Node node) {
-			updated = XmlParserUtils.getDate(node);
-		}
-
-	}
-
-	private final class RightsNodeParser extends TextNodeParser {
-
-		@Override
-		public void parse(Node node) {
-			super.parse(node);
-
-			rights = getText();
-		}
-
-	}
-
-	private final class AuthorNodeParser extends PersonNodeParser {
-
-		@Override
-		public void parse(Node node) {
-			super.parse(node);
-
-			addAuthor(getPerson());
-		}
-
-	}
-
-	private final class ContributorNodeParser extends PersonNodeParser {
-
-		@Override
-		public void parse(Node node) {
-			super.parse(node);
-
-			addContributor(getPerson());
-		}
-
-	}
-
-	private final class CategoryNodeParser implements NodeParser {
-
-		public void parse(Node node) {
-			final String term = XmlParserUtils.getAttribute(node, "term");
-
-			if (term == null) {
-				throw new NullPointerException("");
-			}
-
-			final Category category = new Category();
-			category.setTerm(term);
-			category.setScheme(XmlParserUtils.getAttribute(node, "scheme"));
-			category.setLabel(XmlParserUtils.getAttribute(node, "label"));
-
-			addCategory(category);
-		}
-
-	}
-
-	private final class EntryLinkNodeParser extends LinkNodeParser {
-
-		@Override
-		public void parse(Node node) {
-			super.parse(node);
-
-			addLink(getLink());
-		}
-
 	}
 
 }

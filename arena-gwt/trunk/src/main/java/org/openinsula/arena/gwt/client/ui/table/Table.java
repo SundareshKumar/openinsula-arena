@@ -1,6 +1,4 @@
-package org.openinsula.arena.gwt.client.user.ui.table;
-
-import br.com.insula.libertas.gwt.component.ui.util.EqualsUtils;
+package org.openinsula.arena.gwt.client.ui.table;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.widgetideas.table.client.overrides.HTMLTable;

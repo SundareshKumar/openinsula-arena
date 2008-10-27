@@ -1,18 +1,18 @@
-package org.openinsula.arena.gwt.client.user.ui;
+package org.openinsula.arena.gwt.client.ui;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * Represents the tag &lt;li&gt;.
+ * Represents the tag &lt;span&gt;.
  * 
  * @author Lucas K Mogari
  */
-public class ListItem extends ComplexPanel {
+public class Span extends ComplexPanel {
 
-	public ListItem() {
-		setElement(DOM.createElement("li"));
+	public Span() {
+		setElement(DOM.createSpan());
 	}
 
 	@Override

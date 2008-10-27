@@ -3,7 +3,7 @@ package org.openinsula.arena.gwt.client.form.field;
 import org.openinsula.arena.gwt.client.form.DefaultSimpleField;
 import org.openinsula.arena.gwt.client.form.SectionBreak;
 import org.openinsula.arena.gwt.client.form.Suffix;
-import org.openinsula.arena.gwt.client.user.ui.ListItem;
+import org.openinsula.arena.gwt.client.ui.ListItem;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;

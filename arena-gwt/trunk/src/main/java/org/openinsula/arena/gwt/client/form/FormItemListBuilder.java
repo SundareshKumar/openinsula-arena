@@ -3,7 +3,6 @@ package org.openinsula.arena.gwt.client.form;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.Widget;
 

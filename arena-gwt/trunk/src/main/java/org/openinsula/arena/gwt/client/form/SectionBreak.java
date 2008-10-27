@@ -1,7 +1,7 @@
 package org.openinsula.arena.gwt.client.form;
 
-import org.openinsula.arena.gwt.client.user.ui.ListItem;
-import org.openinsula.arena.gwt.client.user.ui.Paragraph;
+import org.openinsula.arena.gwt.client.ui.ListItem;
+import org.openinsula.arena.gwt.client.ui.Paragraph;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;

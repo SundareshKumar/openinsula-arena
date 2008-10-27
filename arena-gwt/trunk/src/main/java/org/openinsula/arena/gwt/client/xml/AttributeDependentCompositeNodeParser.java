@@ -6,19 +6,18 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public class AttributeDependentCompositeNodeParser implements NodeParser {
+@SuppressWarnings("unchecked")
+public class AttributeDependentCompositeNodeParser<T> implements NodeParser<T> {
 
-	private final CompositeNodeParser compositeNodeParser;
+	private final CompositeNodeParser compositeNodeParser = new CompositeNodeParser();
 
 	private final String attributeName;
 
 	public AttributeDependentCompositeNodeParser(String attributeName) {
 		this.attributeName = attributeName;
-
-		compositeNodeParser = new CompositeNodeParser();
 	}
 
-	public final void parse(Node node) {
+	public T parse(Node node) {
 		final NamedNodeMap namedNodeMap = node.getAttributes();
 		final Node attributeNode = namedNodeMap.getNamedItem(attributeName);
 
@@ -26,8 +25,9 @@ public class AttributeDependentCompositeNodeParser implements NodeParser {
 			final String nodeName = XmlParserUtils.getText(attributeNode);
 			final NodeParser nodeParser = compositeNodeParser.getNodeParser(nodeName);
 
-			nodeParser.parse(node);
+			compositeNodeParser.parseNode(nodeParser, node);
 		}
+		return null;
 	}
 
 	public void addParser(String attributeValue, NodeParser parser) {

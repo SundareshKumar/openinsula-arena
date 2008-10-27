@@ -7,7 +7,6 @@ import org.openinsula.arena.gwt.client.form.BeanSuggestBoxValueHandler;
 import org.openinsula.arena.gwt.client.form.CheckBoxValueHandler;
 import org.openinsula.arena.gwt.client.form.HasTextValueHandler;
 import org.openinsula.arena.gwt.client.form.ListBoxValueHandler;
-import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Label;

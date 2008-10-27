@@ -9,20 +9,31 @@ import com.google.gwt.xml.client.NodeList;
 /**
  * @author Lucas K Mogari
  */
-public class CompositeNodeParser implements NodeParser {
+public class CompositeNodeParser<T> implements NodeParser<T> {
 
-	private final Map<String, NodeParser> parsers = new HashMap<String, NodeParser>();
+	private final Map<String, NodeParser<?>> parsers = new HashMap<String, NodeParser<?>>();
 
-	public void parse(Node node) {
+	public T parse(Node node) {
 		final NodeList childNodes = node.getChildNodes();
 
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			final Node childNode = childNodes.item(i);
-			final NodeParser nodeParser = parsers.get(childNode.getNodeName());
+			final String nodeName = childNode.getNodeName();
+			final NodeParser<?> nodeParser = parsers.get(nodeName);
 
 			if (nodeParser != null) {
-				nodeParser.parse(childNode);
+				parseNode(nodeParser, childNode);
 			}
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	void parseNode(NodeParser<?> nodeParser, Node node) {
+		final Object parsed = nodeParser.parse(node);
+
+		if (parsed != null && nodeParser instanceof AwareNodeParser) {
+			((AwareNodeParser) nodeParser).onNodeParsed(parsed);
 		}
 	}
 
@@ -30,7 +41,7 @@ public class CompositeNodeParser implements NodeParser {
 		return !parsers.isEmpty();
 	}
 
-	public void addParser(String nodeName, NodeParser parser) {
+	public void addParser(String nodeName, NodeParser<?> parser) {
 		parsers.put(nodeName, parser);
 	}
 
@@ -38,7 +49,7 @@ public class CompositeNodeParser implements NodeParser {
 		parsers.remove(nodeName);
 	}
 
-	public NodeParser getNodeParser(String nodeName) {
+	public NodeParser<?> getNodeParser(String nodeName) {
 		return parsers.get(nodeName);
 	}
 

@@ -36,13 +36,13 @@ public class Entry extends AtomResource {
 		super(id, title);
 	}
 
-	{
-		final CompositeNodeParser rootNodeParser = getRootNodeParser();
-
-		rootNodeParser.addParser("summary", new SummaryNodeParser());
-		rootNodeParser.addParser("published", new PublishedNodeParser());
-		rootNodeParser.addParser("content", contentNodeParser);
-	}
+	// {
+	// final CompositeNodeParser rootNodeParser = getRootNodeParser();
+	//
+	// rootNodeParser.addParser("summary", new SummaryNodeParser());
+	// rootNodeParser.addParser("published", new PublishedNodeParser());
+	// rootNodeParser.addParser("content", contentNodeParser);
+	// }
 
 	public final void parseContent(Node node) {
 		contentNodeParser.parse(node);
@@ -115,7 +115,7 @@ public class Entry extends AtomResource {
 	private final class SummaryNodeParser extends TextNodeParser {
 
 		@Override
-		public void parse(Node node) {
+		public T parse(Node node) {
 			super.parse(node);
 
 			summary = getText();
@@ -126,7 +126,7 @@ public class Entry extends AtomResource {
 	private final class ContentNodeParser extends CompositeNodeParser {
 
 		@Override
-		public final void parse(Node node) {
+		public final T parse(Node node) {
 			if (hasParsers()) {
 				super.parse(node);
 			}
@@ -151,7 +151,7 @@ public class Entry extends AtomResource {
 
 	private final class PublishedNodeParser implements NodeParser {
 
-		public void parse(Node node) {
+		public T parse(Node node) {
 			published = XmlParserUtils.getDate(node);
 		}
 

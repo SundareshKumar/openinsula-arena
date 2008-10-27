@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.user.ui;
+package org.openinsula.arena.gwt.client.ui;
 
 import org.openinsula.arena.gwt.client.application.Application;
 import org.openinsula.arena.gwt.client.application.ApplicationContext;

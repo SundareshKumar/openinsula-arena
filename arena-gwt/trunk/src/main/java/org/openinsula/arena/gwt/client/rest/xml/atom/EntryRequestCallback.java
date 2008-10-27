@@ -39,4 +39,8 @@ public abstract class EntryRequestCallback<T extends Entry> extends XmlRequestCa
 		onEntryParsed(entry);
 	}
 
+	public void setEntry(T entry) {
+		this.entry = entry;
+	}
+
 }

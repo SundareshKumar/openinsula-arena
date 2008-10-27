@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.user.ui.table;
+package org.openinsula.arena.gwt.client.ui.table;
 
 /**
  * @author Lucas K Mogari

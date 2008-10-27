@@ -1,6 +1,6 @@
 package org.openinsula.arena.gwt.client.form;
 
-import org.openinsula.arena.gwt.client.user.ui.ListItem;
+import org.openinsula.arena.gwt.client.ui.ListItem;
 
 
 /**

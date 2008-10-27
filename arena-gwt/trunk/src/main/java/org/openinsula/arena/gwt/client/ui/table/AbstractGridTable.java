@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.user.ui.table;
+package org.openinsula.arena.gwt.client.ui.table;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.table.client.overrides.Grid;
