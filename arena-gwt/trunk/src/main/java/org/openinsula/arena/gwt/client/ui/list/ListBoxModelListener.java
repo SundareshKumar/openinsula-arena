@@ -2,8 +2,8 @@ package org.openinsula.arena.gwt.client.ui.list;
 
 public interface ListBoxModelListener {
 
-	void onListDataChange();
+	public void dataChanged();
 
-	void onListSelectionChange();
+	public void selectionChanged();
 
 }

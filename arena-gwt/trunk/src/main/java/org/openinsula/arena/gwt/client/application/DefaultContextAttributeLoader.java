@@ -10,8 +10,8 @@ public class DefaultContextAttributeLoader implements ContextAttributeLoader {
 		final T attribute = applicationContext.<T> getAttribute(attributeName);
 
 		if (attribute == null) {
-			applicationContext.addContextAttributeListener(new SettingApplicationAttributeListener<T>(
-					attributeName, attributeLoadNotifier));
+			applicationContext.addContextAttributeListener(new SettingApplicationAttributeListener<T>(attributeName,
+					attributeLoadNotifier));
 		}
 		else {
 			attributeLoadNotifier.notifyAttributeLoaded(attribute);

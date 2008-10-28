@@ -5,7 +5,7 @@ package org.openinsula.arena.gwt.client.validation;
  */
 public class ValidationResult {
 
-	private boolean valid;
+	private boolean valid = true;
 
 	private String message;
 

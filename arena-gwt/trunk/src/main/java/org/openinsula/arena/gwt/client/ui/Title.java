@@ -1,7 +1,6 @@
 package org.openinsula.arena.gwt.client.ui;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -17,13 +16,13 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Lucas K Mogari
  */
-public class Title extends Widget implements HasText {
+public class Title extends FlowPanel implements HasText {
 
 	public static final String STYLE_CLASS_NAME = "Title";
 
-	private final Element h2;
+	private final Header h2;
 
-	private final Element p;
+	private final Paragraph p;
 
 	public Title() {
 		this(null, null);
@@ -34,34 +33,29 @@ public class Title extends Widget implements HasText {
 	}
 
 	public Title(String text, String description) {
-		final Element div = DOM.createDiv();
-		h2 = DOM.createElement("h2");
-		p = DOM.createElement("p");
+		h2 = new Header(text, 2);
+		p = new Paragraph(description);
 
-		setElement(div);
 		setStyleName(STYLE_CLASS_NAME);
 
-		div.appendChild(h2);
-		div.appendChild(p);
-
-		setText(text);
-		setDescription(description);
+		add(h2);
+		add(p);
 	}
 
 	public String getText() {
-		return h2.getInnerText();
+		return h2.getText();
 	}
 
 	public void setText(String text) {
-		h2.setInnerText(text);
+		h2.setText(text);
 	}
 
 	public String getDescription() {
-		return p.getInnerText();
+		return p.getText();
 	}
 
 	public void setDescription(String description) {
-		p.setInnerText(description);
+		p.setText(description);
 	}
 
 }

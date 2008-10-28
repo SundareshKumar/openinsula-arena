@@ -1,39 +1,36 @@
 package org.openinsula.arena.gwt.client.application.display;
 
-import org.openinsula.arena.gwt.client.application.history.HistoryController;
-
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
  */
-public class DeckPanelDisplayer extends Composite implements WidgetDisplayer {
+public class DeckPanelDisplayer extends AbstractWidgetDisplayer {
 
-	private DeckPanel deckPanel;
-
-	private HistoryController historyController;
+	private final DeckPanel deckPanel = new DeckPanel();
 
 	public DeckPanelDisplayer() {
-		initPanel();
-	}
-
-	private void initPanel() {
-		deckPanel = new DeckPanel();
-
 		initWidget(deckPanel);
 	}
 
-	public void show(Widget widget) {
+	@Override
+	protected boolean showWidget(Widget widget) {
+		final int index = deckPanel.getWidgetIndex(widget);
+
+		if (index > -1) {
+			deckPanel.showWidget(index);
+			return true;
+		}
+		return false;
 	}
 
-	public HistoryController getHistoryController() {
-		return historyController;
+	public void addWidget(Widget widget) {
+		deckPanel.add(widget);
 	}
 
-	public void setHistoryController(HistoryController historyController) {
-		this.historyController = historyController;
+	public void removeWidget(Widget widget) {
+		deckPanel.remove(widget);
 	}
 
 }

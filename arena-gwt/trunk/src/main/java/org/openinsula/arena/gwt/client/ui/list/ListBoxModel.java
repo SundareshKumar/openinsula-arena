@@ -22,6 +22,6 @@ public interface ListBoxModel<T> {
 
 	void removeListBoxModelListener(ListBoxModelListener listener);
 
-	String renderBean(T bean);
+	String getValue(int index);
 
 }

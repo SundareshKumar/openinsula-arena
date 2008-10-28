@@ -53,11 +53,9 @@ public class DefaultApplicationContext implements ApplicationContext {
 		listeners.remove(listener);
 	}
 
-	/**
-	 */
 	public String getStringAttribute(String name) {
-		final Object attribute = attributes.get(name);
-		return attribute instanceof String ? attribute.toString() : null;
+		final Object attribute = getAttribute(name);
+		return attribute instanceof String ? (String) attribute : null;
 	}
 
 	@SuppressWarnings("unchecked")

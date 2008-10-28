@@ -1,7 +1,5 @@
 package org.openinsula.arena.gwt.client.filter;
 
-import org.openinsula.arena.gwt.client.form.KeyboardFilteringListener;
-
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -9,6 +7,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class CommonAllowedKeysKeyboardListener extends KeyboardFilteringListener {
 
+	/**
+	 * Common allowed keys like arrow keys, home, end and backspace.
+	 */
 	private static final char[] ALLOWED_KEYS = new char[] { 8, 9, 13, 35, 36, 37, 38, 39, 40, 46 };
 
 	private static final char[] CTRL_ALLOWED_KEYS = new char[] { 8, 46, 97, 99, 118, 122 };

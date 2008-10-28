@@ -9,4 +9,8 @@ public interface WidgetDisplayer {
 
 	public void show(Widget widget);
 
+	public void addWidgetDisplayListener(WidgetDisplayListener widgetDisplayListener);
+
+	public void removeWidgetDisplayListener(WidgetDisplayListener widgetDisplayListener);
+
 }

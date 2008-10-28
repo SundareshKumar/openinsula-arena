@@ -15,16 +15,30 @@ public abstract class AbstractHistoryController implements HistoryController {
 
 	private final Set<HistoryItem> historyItems = new HashSet<HistoryItem>();
 
-	protected List<HistoryChangeInterceptor> getHistoryChangeInterceptors() {
-		return new LinkedList<HistoryChangeInterceptor>(historyChangeInterceptors);
-	}
-
 	public final void addHistoryChangeInterceptor(HistoryChangeInterceptor interceptor) {
 		historyChangeInterceptors.add(interceptor);
 	}
 
 	public final void removeHistoryChangeInterceptor(HistoryChangeInterceptor interceptor) {
 		historyChangeInterceptors.remove(interceptor);
+	}
+
+	protected boolean doPreHistoryChange(String historyToken) {
+		boolean sucess = true;
+
+		for (final HistoryChangeInterceptor interceptor : historyChangeInterceptors) {
+			if (!interceptor.preHistoryChange(historyToken)) {
+				sucess = false;
+				break;
+			}
+		}
+		return sucess;
+	}
+
+	protected void doPostHistoryChange(String historyToken, boolean success) {
+		for (final HistoryChangeInterceptor interceptor : historyChangeInterceptors) {
+			interceptor.postHistoryChange(historyToken, success);
+		}
 	}
 
 	public void addTarget(String historyToken, LazyHistoryTargetProvider targetProvider, int scope) {

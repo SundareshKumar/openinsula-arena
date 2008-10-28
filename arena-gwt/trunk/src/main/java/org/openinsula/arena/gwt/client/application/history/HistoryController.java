@@ -21,8 +21,6 @@ public interface HistoryController extends HistoryListener {
 
 	public boolean containsTarget(String historyToken);
 
-	public Object getTarget(String historyToken);
-
 	public void addTarget(String historyToken, Object target);
 
 	public void addTarget(String historyToken, LazyHistoryTargetProvider provider);
@@ -30,5 +28,7 @@ public interface HistoryController extends HistoryListener {
 	public void addTarget(String historyToken, LazyHistoryTargetProvider provider, int scope);
 
 	public Object removeTarget(String historyToken);
+
+	public Object getTarget(String historyToken);
 
 }

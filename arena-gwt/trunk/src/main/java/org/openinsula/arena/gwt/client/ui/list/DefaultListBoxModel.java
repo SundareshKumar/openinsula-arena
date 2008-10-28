@@ -60,7 +60,7 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 	}
 
 	private boolean sort() {
-		boolean willSort = comparator != null && values != null && values.size() > 1;
+		final boolean willSort = comparator != null && values != null && values.size() > 1;
 
 		if (willSort) {
 			Collections.sort(values, comparator);
@@ -70,15 +70,15 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 	}
 
 	private void fireOnListDataChange() {
-		for (ListBoxModelListener listener : listeners) {
-			listener.onListDataChange();
-			listener.onListSelectionChange();
+		for (final ListBoxModelListener listener : listeners) {
+			listener.dataChanged();
+			listener.selectionChanged();
 		}
 	}
 
 	private void fireOnListSelectionChange() {
-		for (ListBoxModelListener listener : listeners) {
-			listener.onListSelectionChange();
+		for (final ListBoxModelListener listener : listeners) {
+			listener.selectionChanged();
 		}
 	}
 
@@ -130,8 +130,9 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 		return values == null ? 0 : values.size();
 	}
 
-	public String renderBean(final T bean) {
-		return String.valueOf(bean);
+	public String getValue(int index) {
+		final T t = getElementAt(index);
+		return String.valueOf(t);
 	}
 
 }

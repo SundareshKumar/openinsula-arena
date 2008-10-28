@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.client.application;
 
+import org.openinsula.arena.gwt.client.application.history.DefaultHistoryController;
 import org.openinsula.arena.gwt.client.application.history.HistoryController;
 
 /**
@@ -17,7 +18,7 @@ public final class Application {
 
 	private Application() {
 		context = new DefaultApplicationContext();
-		historyController = new ApplicationHistoryController();
+		historyController = new DefaultHistoryController();
 		attributeLoader = new DefaultContextAttributeLoader();
 	}
 
@@ -26,6 +27,14 @@ public final class Application {
 			instance = new Application();
 		}
 		return instance;
+	}
+
+	public void setAttribute(String name, Object attribute) {
+		context.setAttribute(name, attribute);
+	}
+
+	public <T> T getAttribute(String name) {
+		return context.<T> getAttribute(name);
 	}
 
 	public ApplicationContext getContext() {
