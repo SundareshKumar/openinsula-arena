@@ -1,0 +1,12 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name='com.googlecode.gwt.math.Math' />
+	<inherits name="com.google.gwt.http.HTTP" />
+	<inherits name='com.google.gwt.json.JSON' />
+	
+	<stylesheet src='Default.css' />
+	
+	<entry-point class='org.openinsula.arena.gwt.client.Main' />
+	
+	<servlet path="/HTTPProxy" class="org.openinsula.arena.gwt.server.HTTPProxy" />
+</module>
