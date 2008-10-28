@@ -4,7 +4,6 @@ import org.openinsula.arena.gwt.client.components.test.search.cliente.ClienteSea
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
 import org.openinsula.arena.gwt.client.ui.form.validator.NotNullFormItemValidator;
-import org.openinsula.arena.gwt.client.ui.form.validator.RegexpFormItemValidator;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
 import org.openinsula.arena.gwt.client.ui.list.DefaultListBoxModel;
@@ -112,8 +111,8 @@ public class Main implements EntryPoint {
 
 		final FormItem<TextBox> textBoxFormItem = new FormItem<TextBox>("Teste", new TextBox());
 		textBoxFormItem.addFormItemValidator(new NotNullFormItemValidator());
-		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.SOMENTE_NUMEROS, "somente numeros"));
-		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator("[123]", "valor monetario"));
+//		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.SOMENTE_NUMEROS, "somente numeros"));
+//		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator("[123]", "valor monetario"));
 
 		Button button = new Button("teste");
 		button.addClickListener(new ClickListener() {

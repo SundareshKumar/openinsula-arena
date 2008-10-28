@@ -30,10 +30,13 @@ public class RegexpFormItemValidator extends SyncFormItemValidator<TextBoxBase> 
 		return errorMessage;
 	}
 
-	@Override
-	protected boolean evaluate(TextBoxBase widget) {
+	protected void evaluate(TextBoxBase widget, EvaluateCallback callback) {
 		String text = widget.getText();
-		return text.trim().length() == 0 || text.matches(pattern);
+		if (text.trim().length() == 0 || text.matches(pattern)) {
+			callback.success();
+		} else {
+			callback.fail();
+		}
 	}
 
 }

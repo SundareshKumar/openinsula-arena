@@ -12,17 +12,23 @@ public class NotNullFormItemValidator extends SyncFormItemValidator<Widget> {
 		return "Campo obrigatório";
 	}
 
-	@Override
-	protected boolean evaluate(Widget widget) {
+	protected void evaluate(Widget widget, EvaluateCallback callback) {
+		boolean valid = false;
 		if (widget instanceof TextBoxBase) {
-			return ((TextBoxBase) widget).getText().trim().length() > 0;
+			valid = ((TextBoxBase) widget).getText().trim().length() > 0;
 		} else if (widget instanceof BeanListBox) {
-			return ((BeanListBox<?>) widget).getSelectedItem() != null;
+			valid = ((BeanListBox<?>) widget).getSelectedItem() != null;
 		} else if (widget instanceof AbstractSearchFormTemplate) {
-			return !((AbstractSearchFormTemplate<?>) widget).isEmpty();
+			valid = !((AbstractSearchFormTemplate<?>) widget).isEmpty();
+		} else {
+			throw new IllegalArgumentException("Não é possível verificar conteúdo de componentes do tipo: " + widget.getClass().getName());
 		}
 
-		throw new IllegalArgumentException("Não é possível verificar conteúdo de componentes do tipo: " + widget.getClass().getName());
+		if (valid) {
+			callback.success();
+		} else {
+			callback.fail();
+		}
 	}
 
 }

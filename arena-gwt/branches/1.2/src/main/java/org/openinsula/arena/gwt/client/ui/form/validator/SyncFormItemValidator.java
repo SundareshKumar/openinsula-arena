@@ -9,27 +9,33 @@ public abstract class SyncFormItemValidator<W extends Widget> implements FormIte
 
 	private FormItem<W> formItem;
 
-	protected abstract boolean evaluate(W widget);
+	protected abstract void evaluate(W widget, EvaluateCallback callback);
 
 	public void setFormItem(FormItem<W> formItem) {
 		this.formItem = formItem;
 	}
 
-	public void validate(W widget, ValidatorChain<W> chain, ValidatorAction action) {
+	public void validate(final W widget, final ValidatorChain<W> chain, final ValidatorAction action) {
 		GWT.log("validator do tipo: " + getClass().getName(), null);
-		if (evaluate(widget)) {
-			if (chain.isLastNode()) {
-				GWT.log("lastNode", null);
-				action.onSuccess();
-			} else {
-				chain.doChain(widget, action);
+
+		evaluate(widget, new EvaluateCallback() {
+			public void fail() {
+				formItem.setValid(false);
+				formItem.setErrorMessage(getInvalidValueMessage());
+				action.onFail();
 			}
-		} else {
-			formItem.setValid(false);
-			formItem.setErrorMessage(getInvalidValueMessage());
-			formItem.refresh();
-			action.onFail();
-		}
+
+			public void success() {
+				if (chain.isLastNode()) {
+					GWT.log("lastNode", null);
+					action.onSuccess();
+					formItem.setValid(true);
+				} else {
+					chain.doChain(widget, action);
+				}
+			}
+		});
+		formItem.refresh();
 	}
 
 }

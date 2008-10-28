@@ -15,7 +15,7 @@ public abstract class AsyncFormItemValidator<W extends Widget, T> implements For
 
 	private ValidatorAction action;
 
-	protected abstract boolean evaluateResult(T result);
+	protected abstract void evaluateResult(T result, EvaluateCallback callback);
 
 	protected abstract void validate(W widget, AsyncCallback<T> callback);
 
@@ -27,19 +27,21 @@ public abstract class AsyncFormItemValidator<W extends Widget, T> implements For
 	}
 
 	public void onSuccess(T result) {
-		boolean valid = evaluateResult(result);
-		if (valid) {
-			if (validatorChain.isLastNode()) {
-				action.onSuccess();
-			} else {
-				validatorChain.doChain(widget, action);
+		evaluateResult(result, new EvaluateCallback() {
+			public void fail() {
+				formItem.setErrorMessage(getInvalidValueMessage());
+				action.onFail();
+				formItem.setValid(false);
 			}
-		}
-		else {
-			formItem.setErrorMessage(getInvalidValueMessage());
-			action.onFail();
-		}
-		formItem.setValid(valid);
+			public void success() {
+				if (validatorChain.isLastNode()) {
+					action.onSuccess();
+					formItem.setValid(true);
+				} else {
+					validatorChain.doChain(widget, action);
+				}
+			}
+		});
 		formItem.refresh();
 	}
 
