@@ -6,39 +6,32 @@ import com.google.gwt.xml.client.Document;
 
 /**
  * @author Lucas K Mogari
+ * @author Eduardo Rebola
  */
 public abstract class EntryRequestCallback<T extends BaseEntry<T>> extends XmlRequestCallback {
 
-	private T entry;
+	private final T entry;
 
+	@SuppressWarnings("unchecked")
 	public EntryRequestCallback() {
+		this((T) new Entry());
 	}
 
-	public EntryRequestCallback(T entry) {
+	public EntryRequestCallback(final T entry) {
 		this.entry = entry;
 	}
-
-	protected abstract void onEntryParsed(T entry);
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback#onXmlParsed
+	 * org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback#doWithXml
 	 * (com.google.gwt.xml.client.Document)
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	protected final void onXmlParsed(Document document) {
-		if (entry == null) {
-			entry = (T) new Entry();
-		}
-
-		onEntryParsed(entry.parse(document));
+	protected final void doWithXml(final Document document) {
+		doWithEntry(entry.parse(document));
 	}
 
-	public void setEntry(T entry) {
-		this.entry = entry;
-	}
+	protected abstract void doWithEntry(T entry);
 
 }

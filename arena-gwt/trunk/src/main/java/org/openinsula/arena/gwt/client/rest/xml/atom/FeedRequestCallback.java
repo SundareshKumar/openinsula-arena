@@ -12,21 +12,17 @@ import com.google.gwt.xml.client.Node;
  */
 public abstract class FeedRequestCallback<T extends BaseEntry<T>> extends XmlRequestCallback implements EntryFactory<T> {
 
-	protected abstract void onFeedParsed(Feed<T> feed);
+	protected abstract void doWithFeed(Feed<T> feed);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback#onXmlParsed
-	 * (com.google.gwt.xml.client.Document)
+	/* (non-Javadoc)
+	 * @see org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback#doWithXml(com.google.gwt.xml.client.Document)
 	 */
 	@Override
-	protected final void onXmlParsed(Document document) {
+	protected void doWithXml(final Document document) {
 		final FeedDocumentParser feedParser = new FeedDocumentParser();
 		final Feed<T> feed = feedParser.parse(document);
 
-		onFeedParsed(feed);
+		doWithFeed(feed);
 	}
 
 	private final class FeedDocumentParser extends AtomResourceNodeParser<Feed<T>> {
@@ -40,22 +36,22 @@ public abstract class FeedRequestCallback<T extends BaseEntry<T>> extends XmlReq
 			super.initParsers();
 
 			addNodeParser("subtitle", new TextNodeParser() {
-				public void onNodeParsed(Text text) {
+				public void onNodeParsed(final Text text) {
 					getAtomResource().setSubtitle(text);
 				}
 			});
 			addNodeParser("icon", new ValueNodeParser() {
-				public void onNodeParsed(String value) {
+				public void onNodeParsed(final String value) {
 					getAtomResource().setIcon(value);
 				}
 			});
 			addNodeParser("logo", new ValueNodeParser() {
-				public void onNodeParsed(String value) {
+				public void onNodeParsed(final String value) {
 					getAtomResource().setLogo(value);
 				}
 			});
 			addNodeParser("entry", new NodeParser<T>() {
-				public T parse(Node node) {
+				public T parse(final Node node) {
 					final T entry = createEntry();
 
 					getAtomResource().addEntry(entry);

@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.client.rest;
 
-import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 
 /**
@@ -8,12 +7,12 @@ import com.google.gwt.http.client.RequestCallback;
  */
 public interface RestService {
 
-	public Request create(String url, String createData, RequestCallback callback);
+	public void create(String url, Object data, RequestCallback callback);
 
-	public Request delete(String url, RequestCallback callback);
+	public void delete(String url, RequestCallback callback);
 
-	public Request read(String url, RequestCallback callback);
+	public void read(String url, RequestCallback callback);
 
-	public Request update(String url, String updateData, RequestCallback callback);
+	public void update(String url, Object data, RequestCallback callback);
 
 }
