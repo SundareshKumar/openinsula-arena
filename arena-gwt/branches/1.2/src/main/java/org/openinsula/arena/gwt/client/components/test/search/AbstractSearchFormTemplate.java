@@ -8,7 +8,8 @@ import org.openinsula.arena.gwt.client.ui.FocusUtils;
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
 import org.openinsula.arena.gwt.client.ui.form.GroupFormItem;
-import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidatorNew;
+import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBoxListener;
@@ -24,7 +25,7 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AbstractSearchFormTemplate<T> extends FocusComposite implements
-		FormItemValidatorNew<AbstractSearchFormTemplate<T>> {
+		FormItemValidator<AbstractSearchFormTemplate<T>> {
 
 	private DeckPanel forms;
 
@@ -77,19 +78,6 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		});
 
 		showSearchForm();
-	}
-
-	public T mergeViewToModel() {
-		if (!validateView()) {
-			GWT.log("validateView() falhou no mergeViewToModel()", null);
-			return null;
-		}
-
-		if (forms.getVisibleWidget() == 0) {
-			return editInstance;
-		}
-
-		return detailsForm.viewToModel(editInstance);
 	}
 
 	/**
@@ -250,6 +238,7 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		void modelToView() {
 			if (editInstance == null) {
 				suggestBox.getSuggestBox().setText(null);
+				editLink.setVisible(false);
 			}
 			else {
 				editLink.setVisible(isEditionAllowed());
@@ -385,28 +374,36 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		searchForm.setEditionAllowed(editionAllowed);
 	}
 
-	public boolean validateView() {
+	public void validateView(ValidatorAction action) {
 		switch (forms.getVisibleWidget()) {
 		case 0:
-			return editInstance != null;
+			if (editInstance != null) {
+				action.onSuccess();
+			} else {
+				action.onFail();
+			}
+			break;
 		case 1:
-			return detailsForm.validateView();
+			detailsForm.validateView(action);
+			break;
 		}
-
-		return false;
 	}
 
 	private FormItem<AbstractSearchFormTemplate<T>> formItem;
 
-	public void validate(AbstractSearchFormTemplate<T> widget, ValidatorChain<AbstractSearchFormTemplate<T>> chain) {
-		boolean valid = validateView();
-		if (valid) {
-			chain.doChain(widget);
-		}
-		else {
-			formItem.setErrorMessage(getInvalidValueMessage());
-		}
-		formItem.setValid(valid);
+	public void validate(final AbstractSearchFormTemplate<T> widget, final ValidatorChain<AbstractSearchFormTemplate<T>> chain,
+			final ValidatorAction action) {
+
+		validateView(new ValidatorAction() {
+			public void onFail() {
+				formItem.setErrorMessage(getInvalidValueMessage());
+				formItem.setValid(false);
+			}
+			public void onSuccess() {
+				chain.doChain(widget, action);
+				formItem.setValid(true);
+			}
+		});
 		formItem.refresh();
 	}
 
@@ -418,16 +415,28 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		this.formItem = formItem;
 	}
 
-	public T getEditInstance() {
-		if (validateView()) {
-			switch (forms.getVisibleWidget()) {
-			case 0:
-				return editInstance;
-			case 1:
-				return mergeViewToModel();
+	public void getEditInstance(final GetValueAction<T> action) {
+		validateView(new ValidatorAction() {
+			public void onFail() {
+				action.processValue(null);
 			}
-		}
-		return null;
+			public void onSuccess() {
+				switch (forms.getVisibleWidget()) {
+				case 0:
+					action.processValue(editInstance);
+					break;
+				case 1:
+					T value = detailsForm.viewToModel(editInstance);
+					action.processValue(value);
+					break;
+				}
+			}
+		});
+	}
+
+	public boolean isEmpty() {
+		return editInstance == null ||
+				detailsForm.viewToModel(editInstance) == null;
 	}
 
 }

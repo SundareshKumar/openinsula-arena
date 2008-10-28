@@ -8,18 +8,18 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class DefaultValidatorChainImpl<W extends Widget> implements ValidatorChain<W> {
 
-	private List<FormItemValidatorNew<W>> chainList;
+	private List<FormItemValidator<W>> chainList;
 
-	private Iterator<FormItemValidatorNew<W>> chainIterator;
+	private Iterator<FormItemValidator<W>> chainIterator;
 
-	private List<FormItemValidatorNew<W>> chainList() {
+	private List<FormItemValidator<W>> chainList() {
 		if (chainList == null) {
-			chainList = new ArrayList<FormItemValidatorNew<W>>();
+			chainList = new ArrayList<FormItemValidator<W>>();
 		}
 		return chainList;
 	}
 
-	private Iterator<FormItemValidatorNew<W>> chainIterator() {
+	private Iterator<FormItemValidator<W>> chainIterator() {
 		if (chainIterator == null) {
 			chainIterator = chainList().iterator();
 		}
@@ -30,31 +30,35 @@ public class DefaultValidatorChainImpl<W extends Widget> implements ValidatorCha
 		chainIterator = null;
 	}
 
-	private FormItemValidatorNew<W> nextValidator() {
-		Iterator<FormItemValidatorNew<W>> iterator = chainIterator();
+	private FormItemValidator<W> nextValidator() {
+		Iterator<FormItemValidator<W>> iterator = chainIterator();
 		return iterator.hasNext() ? iterator.next() : null;
 	}
 
-	public <T> void doChain(W widget) {
-		FormItemValidatorNew<W> nextValidator = nextValidator();
+	public <T> void doChain(W widget, ValidatorAction action) {
+		FormItemValidator<W> nextValidator = nextValidator();
 		if (nextValidator != null) {
-			nextValidator.validate(widget, this);
+			nextValidator.validate(widget, this, action);
 		}
 	}
 
-	public void validate(W widget) {
+	public boolean isLastNode() {
+		return !chainIterator().hasNext();
+	}
+
+	public void validate(W widget, ValidatorAction action) {
 		resetChainIterator();
-		FormItemValidatorNew<W> nextValidator = nextValidator();
+		FormItemValidator<W> nextValidator = nextValidator();
 		if (nextValidator != null) {
-			nextValidator.validate(widget, this);
+			nextValidator.validate(widget, this, action);
 		}
 	}
 
-	public void addValidator(FormItemValidatorNew<W> validator) {
+	public void addValidator(FormItemValidator<W> validator) {
 		chainList().add(validator);
 	}
 
-	public void removeValidator(FormItemValidatorNew<W> validator) {
+	public void removeValidator(FormItemValidator<W> validator) {
 		chainList().remove(validator);
 	}
 

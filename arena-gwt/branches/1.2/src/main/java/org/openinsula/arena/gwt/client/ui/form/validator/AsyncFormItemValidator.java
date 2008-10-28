@@ -5,7 +5,7 @@ import org.openinsula.arena.gwt.client.ui.form.FormItem;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AsyncFormItemValidator<W extends Widget, T> implements FormItemValidatorNew<W>, AsyncCallback<T> {
+public abstract class AsyncFormItemValidator<W extends Widget, T> implements FormItemValidator<W>, AsyncCallback<T> {
 
 	private FormItem<W> formItem;
 
@@ -13,23 +13,31 @@ public abstract class AsyncFormItemValidator<W extends Widget, T> implements For
 
 	private W widget;
 
+	private ValidatorAction action;
+
 	protected abstract boolean evaluateResult(T result);
 
 	protected abstract void validate(W widget, AsyncCallback<T> callback);
 
-	public void validate(W widget, ValidatorChain<W> chain) {
+	public void validate(W widget, ValidatorChain<W> chain, ValidatorAction action) {
 		validatorChain = chain;
 		this.widget = widget;
+		this.action = action;
 		validate(widget, this);
 	}
 
 	public void onSuccess(T result) {
 		boolean valid = evaluateResult(result);
 		if (valid) {
-			validatorChain.doChain(widget);
+			if (validatorChain.isLastNode()) {
+				action.onSuccess();
+			} else {
+				validatorChain.doChain(widget, action);
+			}
 		}
 		else {
 			formItem.setErrorMessage(getInvalidValueMessage());
+			action.onFail();
 		}
 		formItem.setValid(valid);
 		formItem.refresh();

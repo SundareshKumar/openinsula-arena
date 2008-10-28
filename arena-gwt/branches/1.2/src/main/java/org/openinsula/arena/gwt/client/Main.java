@@ -3,13 +3,19 @@ package org.openinsula.arena.gwt.client;
 import org.openinsula.arena.gwt.client.components.test.search.cliente.ClienteSearchForm;
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
+import org.openinsula.arena.gwt.client.ui.form.validator.NotNullFormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.RegexpFormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
 import org.openinsula.arena.gwt.client.ui.list.DefaultListBoxModel;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 
 public class Main implements EntryPoint {
 
@@ -44,14 +50,10 @@ public class Main implements EntryPoint {
 //		});
 //
 //
-		final FormItem<ClienteSearchForm> clienteSearchFormItem = new FormItem<ClienteSearchForm>("CLiente", clienteSearchForm) {
-			@Override
-			public void validate() {
-				GWT.log("chamou validate dor formItem", null);
-				super.validate();
-			}
-		};
+		final FormItem<ClienteSearchForm> clienteSearchFormItem = new FormItem<ClienteSearchForm>("CLiente", clienteSearchForm);
+//		clienteSearchFormItem.addFormItemValidator(new NotNullFormItemValidator());
 		final FormItem<BeanListBox<String>> listBoxFormItem = new FormItem<BeanListBox<String>>("strings", listBox);
+		listBoxFormItem.addFormItemValidator(new NotNullFormItemValidator());
 //		listBoxFormItem.addFormItemValidator(new BeanListBoxNotNullFormItemValidator<String>());
 //
 //		final FormItem<TextBox> dataFormItem = new FormItem<TextBox>("Data", dataTextBox);
@@ -108,7 +110,29 @@ public class Main implements EntryPoint {
 //		FocusUtils.nextOnEnter(data, list);
 //		FocusUtils.nextOnEnter(list, data2);
 
-		RootPanel.get("main").add(builder.toPanel());
+		final FormItem<TextBox> textBoxFormItem = new FormItem<TextBox>("Teste", new TextBox());
+		textBoxFormItem.addFormItemValidator(new NotNullFormItemValidator());
+		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.SOMENTE_NUMEROS, "somente numeros"));
+		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator("[123]", "valor monetario"));
+
+		Button button = new Button("teste");
+		button.addClickListener(new ClickListener() {
+			public void onClick(Widget arg0) {
+				textBoxFormItem.validate(new ValidatorAction() {
+					public void onFail() {
+						GWT.log("invalido!!!", null);
+					}
+
+					public void onSuccess() {
+						GWT.log("valido!!!", null);
+					}
+				});
+			}
+		});
+
+//		RootPanel.get("main").add(builder.toPanel());
+		RootPanel.get("main").add(textBoxFormItem);
+		RootPanel.get("main").add(button);
 
 //		RootPanel.get("main").add(button);
 	}

@@ -2,7 +2,6 @@ package org.openinsula.arena.gwt.client.ui.form;
 
 import org.openinsula.arena.gwt.client.ui.MouseEventPanel;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.SourcesFocusEvents;
 import com.google.gwt.user.client.ui.Widget;
@@ -53,7 +52,6 @@ public class FormItemWidgetWrapper<T extends Widget> {
 		}
 
 		public void onLostFocus(Widget sender) {
-			GWT.log("perdeu o foco do widget: " + widget.getClass().getName(), null);
 			parent.setStyleName(FormFactory.getStyleFormItem());
 			hasFocus = false;
 			hintManager.hideHint();

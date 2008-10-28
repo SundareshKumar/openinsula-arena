@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openinsula.arena.gwt.client.ui.form.validator.DefaultValidatorChainImpl;
-import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidatorNew;
+import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
 
 import com.google.gwt.user.client.ui.FocusListener;
@@ -67,9 +68,9 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 		panel = !isSameLine() ? new VerticalPanel() : new HorizontalPanel();
 
 		for (T w : widgets) {
-			if (w instanceof FormItemValidatorNew) {
-				((FormItemValidatorNew) w).setFormItem(this);
-				addFormItemValidator(w, (FormItemValidatorNew) w);
+			if (w instanceof FormItemValidator) {
+				((FormItemValidator) w).setFormItem(this);
+				addFormItemValidator(w, (FormItemValidator) w);
 			}
 
 			FormItemWidgetWrapper<T> wrapper = new FormItemWidgetWrapper<T>(w, getMainPanel(), getHint());
@@ -111,7 +112,7 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Deprecated
-	public void addFormItemValidator(FormItemValidatorNew validator) {
+	public void addFormItemValidator(FormItemValidator validator) {
 		throw new IllegalArgumentException("Use GroupFormItem.addFormItemValidator(T widget, FormItemAsyncCallbackValidator<T> validator) instead!");
 	}
 
@@ -127,7 +128,7 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <W extends T> void addFormItemValidator(W widget, FormItemValidatorNew validator) {
+	public <W extends T> void addFormItemValidator(W widget, FormItemValidator validator) {
 		ValidatorChain<T> validatorChain = validatorMap().get(widget);
 		if (validatorChain == null) {
 			validatorChain = new DefaultValidatorChainImpl<T>();
@@ -138,13 +139,13 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 	}
 
 	@Override
-	public void validate() {
+	public void validate(ValidatorAction action) {
 		Set<T> keySet = validatorMap().keySet();
 		Iterator<T> keyIterator = keySet.iterator();
 		while (keyIterator.hasNext()) {
 			T key = keyIterator.next();
 			ValidatorChain<T> chain = validatorMap().get(key);
-			chain.validate(key);
+			chain.validate(key, action);
 		}
 	}
 

@@ -5,6 +5,7 @@ import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchForm
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormFactory;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 
 import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.TextBox;
@@ -70,8 +71,8 @@ public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pe
 	}
 
 	@Override
-	protected boolean validateView() {
-		return true;
+	protected void validateView(ValidatorAction action) {
+		action.onSuccess();
 	}
 
 	@Override

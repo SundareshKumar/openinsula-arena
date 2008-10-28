@@ -4,9 +4,9 @@ import org.openinsula.arena.gwt.client.ui.form.FormItem;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public interface FormItemValidatorNew<W extends Widget> {
+public interface FormItemValidator<W extends Widget> {
 
-	void validate(W widget, ValidatorChain<W> chain);
+	void validate(W widget, ValidatorChain<W> chain, ValidatorAction action);
 
 	void setFormItem(FormItem<W> formItem);
 

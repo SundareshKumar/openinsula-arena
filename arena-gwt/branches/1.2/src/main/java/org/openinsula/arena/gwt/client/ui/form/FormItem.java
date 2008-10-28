@@ -3,14 +3,15 @@ package org.openinsula.arena.gwt.client.ui.form;
 import org.openinsula.arena.gwt.client.ui.FocusComposite;
 import org.openinsula.arena.gwt.client.ui.MouseEventPanel;
 import org.openinsula.arena.gwt.client.ui.form.validator.DefaultValidatorChainImpl;
-import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidatorNew;
+import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
 import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -85,16 +86,16 @@ public class FormItem<W extends Widget> extends FocusComposite {
 	}
 
 	private void initActions() {
-		addFocusListener(new FocusListener() {
-			public void onFocus(Widget sender) {
-				setErrorMessage("");
-				setValid(true);
-				refresh();
-			}
-			public void onLostFocus(Widget sender) {
-				validate();
-			}
-		});
+//		addFocusListener(new FocusListener() {
+//			public void onFocus(Widget sender) {
+//				setErrorMessage("");
+//				setValid(true);
+//				refresh();
+//			}
+//			public void onLostFocus(Widget sender) {
+//				validate();
+//			}
+//		});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -113,9 +114,9 @@ public class FormItem<W extends Widget> extends FocusComposite {
 		this.hint = hint;
 
 		if (widget != null) {
-			if (widget instanceof FormItemValidatorNew) {
-				((FormItemValidatorNew) widget).setFormItem(this);
-				addFormItemValidator((FormItemValidatorNew) widget);
+			if (widget instanceof FormItemValidator) {
+				((FormItemValidator) widget).setFormItem(this);
+				addFormItemValidator((FormItemValidator) widget);
 			}
 
 			this.widgetWrapper = new FormItemWidgetWrapper<W>(widget, mainPanel, hint);
@@ -200,10 +201,6 @@ public class FormItem<W extends Widget> extends FocusComposite {
 		return this.widgetWrapper.getWidget();
 	}
 
-	public boolean isValid() {
-		return valid;
-	}
-
 	public void setValid(boolean valid) {
 		isNew = false;
 		this.valid = valid;
@@ -272,17 +269,18 @@ public class FormItem<W extends Widget> extends FocusComposite {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void addFormItemValidator(FormItemValidatorNew validator) {
+	public void addFormItemValidator(FormItemValidator validator) {
 		validator.setFormItem(this);
 		validatorChain().addValidator(validator);
 	}
 
-	public void validate() {
-		validatorChain().validate(getWidget());
+	public void validate(ValidatorAction action) {
+		GWT.log("quantidade de validadores no momento do validate(): " + validatorChain.size(), null);
+		validatorChain().validate(getWidget(), action);
 	}
 
-	public ValidatorChain<W> getValidatorChain() {
-		return validatorChain();
-	}
+//	public ValidatorChain<W> getValidatorChain() {
+//		return validatorChain();
+//	}
 
 }
