@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-gwt</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2-m1</version>
 	<description>Common Google GWT components and tools.</description>
 	<packaging>jar</packaging>
 	<organization>
@@ -25,11 +25,24 @@
 				<role>Java Developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>rebola</id>
+			<name>Eduardo Rebola</name>
+			<email>erdanielli@insula.com.br</email>
+			<url>http://www.insula.com.br/team/rebola</url>
+			<organization>Ínsula Tecnologia da Informação</organization>
+			<organizationUrl>http://www.insula.com.br</organizationUrl>
+			<timezone>-3</timezone>
+			<roles>
+				<role>Project Leader</role>
+				<role>Java Developer</role>
+			</roles>
+		</developer>
 	</developers>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/trunk</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-gwt/trunk</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-gwt/trunk</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/branches/1.2m1</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-gwt/branches/1.2m1</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-gwt/branches/1.2m1</url>
 	</scm>
 	<repositories>
 		<repository>
@@ -86,13 +99,11 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-math-user</artifactId>
 			<version>2.0.1</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-math-server</artifactId>
 			<version>2.0.1</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -118,12 +129,12 @@
 				<version>2.0-beta24</version>
 				<configuration>
 					<logLevel>INFO</logLevel>
-					<runTarget>org.openinsula.arena.gwt.ArenaGwt/Main.html</runTarget>
+					<runTarget>org.openinsula.arena.gwt.http.HTTP/Main.html</runTarget>
 					<compileTargets>
-						<param>org.openinsula.arena.gwt.ArenaGwt</param>
+						<param>org.openinsula.arena.gwt.http.HTTP</param>
 					</compileTargets>
 					<extraJvmArgs>-Xmx256M -Xms64M</extraJvmArgs>
-					<noServer>false</noServer>
+					<noServer>true</noServer>
 					<gwtVersion>${gwt.version}</gwtVersion>
 				</configuration>
 				<executions>

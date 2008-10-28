@@ -1,0 +1,10 @@
+<module>
+	<!-- FIX -->
+	<inherits name='com.googlecode.gwt.math.Math' />
+	
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name='com.google.gwt.json.JSON' />
+	<inherits name='com.google.gwt.xml.XML' />
+	
+	<entry-point class='org.openinsula.arena.gwt.http.client.Main' />
+</module>
