@@ -3,16 +3,39 @@ package org.openinsula.arena.gwt.client.xml;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openinsula.arena.gwt.client.rest.xml.atom.Text;
+
 import com.google.gwt.xml.client.Node;
 
 /**
  * @author Lucas K Mogari
  */
-public abstract class CompositeNodeFactory extends SingleNodeFactory {
+public class CompositeNodeFactory extends SingleNodeProvider {
 
 	private final List<NodeFactory> nodeFactories = new LinkedList<NodeFactory>();
 
-	protected abstract Node createBaseNode();
+	public CompositeNodeFactory() {
+	}
+
+	public CompositeNodeFactory(Node node) {
+		super(node);
+	}
+
+	public CompositeNodeFactory(String tagName, String value) {
+		super(tagName, value);
+	}
+
+	public CompositeNodeFactory(String tagName, Text text) {
+		super(tagName, text);
+	}
+
+	public CompositeNodeFactory(String tagName) {
+		super(tagName);
+	}
+
+	protected Node createBaseNode() {
+		return super.createNode();
+	}
 
 	@Override
 	public final Node createNode() {
@@ -22,9 +45,9 @@ public abstract class CompositeNodeFactory extends SingleNodeFactory {
 			for (final NodeFactory nodeFactory : nodeFactories) {
 				nodeFactory.setDocument(getDocument());
 
-				if (nodeFactory instanceof SingleNodeFactory) {
-					final SingleNodeFactory singleNodeFactory = (SingleNodeFactory) nodeFactory;
-					final Node createdNode = singleNodeFactory.createNode();
+				if (nodeFactory instanceof SingleNodeProvider) {
+					final SingleNodeProvider singleNodeProvider = (SingleNodeProvider) nodeFactory;
+					final Node createdNode = singleNodeProvider.createNode();
 
 					if (createdNode != null) {
 						node.appendChild(createdNode);

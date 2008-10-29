@@ -1,8 +1,7 @@
 package org.openinsula.arena.gwt.client.rest.xml.atom;
 
 import org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback;
-import org.openinsula.arena.gwt.client.xml.NodeParser;
-import org.openinsula.arena.gwt.client.xml.ValueNodeParser;
+import org.openinsula.arena.gwt.client.xml.parse.NodeParser;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
@@ -35,7 +34,7 @@ public abstract class FeedRequestCallback<T extends BaseEntry<T>> extends XmlReq
 		protected void initParsers() {
 			super.initParsers();
 
-			addNodeParser("subtitle", new TextNodeParser() {
+			addNodeParser("subtitle", new TextNodeParser<Feed<T>>() {
 				public void onNodeParsed(final Text text) {
 					getAtomResource().setSubtitle(text);
 				}

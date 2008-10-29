@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.xml;
+package org.openinsula.arena.gwt.client.xml.parse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,11 +9,27 @@ import com.google.gwt.xml.client.NodeList;
 /**
  * @author Lucas K Mogari
  */
-public class CompositeNodeParser<T> implements NodeParser<T> {
+public class CompositeNodeParser<R> extends AbstractNodeParser<R> {
 
 	private final Map<String, NodeParser<?>> parsers = new HashMap<String, NodeParser<?>>();
 
-	public T parse(Node node) {
+	private R appendable;
+
+	public CompositeNodeParser() {
+	}
+
+	public CompositeNodeParser(R appendable) {
+		this.appendable = appendable;
+	}
+
+	@Override
+	public final R parse(Node node) {
+		return super.parse(node);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R parseNode(Node node) {
 		final NodeList childNodes = node.getChildNodes();
 
 		for (int i = 0; i < childNodes.getLength(); i++) {
@@ -22,26 +38,21 @@ public class CompositeNodeParser<T> implements NodeParser<T> {
 			final NodeParser<?> nodeParser = parsers.get(nodeName);
 
 			if (nodeParser != null) {
-				parseNode(nodeParser, childNode);
+				if (appendable != null && nodeParser instanceof NodeAppender) {
+					((NodeAppender) nodeParser).setAppendable(appendable);
+				}
+
+				nodeParser.parse(node);
 			}
 		}
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	void parseNode(NodeParser<?> nodeParser, Node node) {
-		final Object parsed = nodeParser.parse(node);
-
-		if (parsed != null && nodeParser instanceof AwareNodeParser) {
-			((AwareNodeParser) nodeParser).onNodeParsed(parsed);
-		}
+		return appendable;
 	}
 
 	public boolean hasParsers() {
 		return !parsers.isEmpty();
 	}
 
-	public CompositeNodeParser<T> addNodeParser(String nodeName, NodeParser<?> parser) {
+	public CompositeNodeParser<R> addNodeParser(String nodeName, NodeParser<?> parser) {
 		parsers.put(nodeName, parser);
 		return this;
 	}

@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.xml;
+package org.openinsula.arena.gwt.client.xml.parse;
 
 import java.util.Date;
 

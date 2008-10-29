@@ -19,9 +19,9 @@ public class EntryNodeFactory<T extends BaseEntry<T>> extends CompositeNodeFacto
 	public EntryNodeFactory(T entry) {
 		this.entry = entry;
 
-		addNodeFactory(new CategoriesNodesFactory(entry.getCategories()));
 		addNodeFactory(new PeopleNodesFactory("author", entry.getAuthors()));
 		addNodeFactory(new PeopleNodesFactory("contributor", entry.getContributors()));
+		addNodeFactory(new CategoriesNodesFactory(entry.getCategories()));
 		addNodeFactory(new LinksNodesFactory(entry.getLinks()));
 	}
 
@@ -53,7 +53,7 @@ public class EntryNodeFactory<T extends BaseEntry<T>> extends CompositeNodeFacto
 			final String term = category.getTerm();
 
 			if (term == null || term.trim().length() == 0) {
-				throw new IllegalArgumentException("");
+				throw new IllegalArgumentException("'term' must not b null.");
 			}
 
 			final Element categoryElement = createElement("category");
@@ -88,7 +88,7 @@ public class EntryNodeFactory<T extends BaseEntry<T>> extends CompositeNodeFacto
 			final String name = person.getName();
 
 			if (name == null || name.trim().length() == 0) {
-				throw new IllegalArgumentException("");
+				throw new IllegalArgumentException("'name' must not b null.");
 			}
 
 			final Element personElement = createElement(nodeName);
@@ -125,7 +125,7 @@ public class EntryNodeFactory<T extends BaseEntry<T>> extends CompositeNodeFacto
 			final String href = link.getHref();
 
 			if (href == null || href.trim().length() == 0) {
-				throw new IllegalArgumentException("");
+				throw new IllegalArgumentException("'href' must not b null.");
 			}
 
 			final Element linkElement = createElement("link");

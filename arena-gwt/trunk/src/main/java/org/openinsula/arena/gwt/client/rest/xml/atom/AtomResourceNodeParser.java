@@ -1,9 +1,8 @@
 package org.openinsula.arena.gwt.client.rest.xml.atom;
 
-import org.openinsula.arena.gwt.client.xml.AwareNodeParser;
-import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
-import org.openinsula.arena.gwt.client.xml.ValueNodeParser;
-import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.parse.AbstractNodeParser;
+import org.openinsula.arena.gwt.client.xml.parse.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.xml.parse.TextNodeAppender;
 
 import com.google.gwt.xml.client.Node;
 
@@ -12,37 +11,36 @@ import com.google.gwt.xml.client.Node;
  */
 class AtomResourceNodeParser<T extends AtomResource> extends CompositeNodeParser<T> {
 
-	private T atomResource;
-
 	public AtomResourceNodeParser() {
-		this(null);
 	}
 
-	public AtomResourceNodeParser(final T atomResource) {
-		this.atomResource = atomResource;
-
-		initParsers();
+	public AtomResourceNodeParser(T appendable) {
+		super(appendable);
 	}
 
 	protected void initParsers() {
-		addNodeParser("id", new ValueNodeParser() {
-			public void onNodeParsed(String value) {
-				atomResource.setId(value);
+		addNodeParser("id", new TextNodeAppender<T>() {
+			@Override
+			public void appendTo(T appendable, String returned) {
+				appendable.setId(returned);
 			}
 		});
-		addNodeParser("title", new TextNodeParser() {
-			public void onNodeParsed(Text text) {
-				atomResource.setTitle(text);
+		addNodeParser("title", new TextNodeParser<T>() {
+			@Override
+			public void appendTo(T appendable, Text returned) {
+				appendable.setTitle(returned);
 			}
 		});
-		addNodeParser("updated", new ValueNodeParser() {
-			public void onNodeParsed(String value) {
-				atomResource.setUpdated(null); // FIXME
+		addNodeParser("updated", new TextNodeAppender<T>() {
+			@Override
+			public void appendTo(T appendable, String returned) {
+				appendable.setUpdated(null); // FIXME
 			}
 		});
-		addNodeParser("rights", new TextNodeParser() {
-			public void onNodeParsed(Text text) {
-				atomResource.setRights(text);
+		addNodeParser("rights", new TextNodeParser<T>() {
+			@Override
+			public void appendTo(T appendable, Text returned) {
+				appendable.setRights(returned);
 			}
 		});
 		addNodeParser("author", new PersonNodeParser() {
@@ -75,10 +73,11 @@ class AtomResourceNodeParser<T extends AtomResource> extends CompositeNodeParser
 		this.atomResource = atomResource;
 	}
 
-	private abstract class CategoryNodeParser implements AwareNodeParser<Category> {
+	private abstract class CategoryNodeParser extends AbstractNodeParser<Category> {
 
-		public Category parse(Node node) {
-			final String term = XmlParserUtils.getAttribute(node, "term");
+		@Override
+		public Category parseNode(Node node) {
+			final String term = getNodeAttribute("term");
 
 			if (term == null) {
 				throw new NullPointerException("");
@@ -86,23 +85,23 @@ class AtomResourceNodeParser<T extends AtomResource> extends CompositeNodeParser
 
 			final Category category = new Category();
 			category.setTerm(term);
-			category.setScheme(XmlParserUtils.getAttribute(node, "scheme"));
-			category.setLabel(XmlParserUtils.getAttribute(node, "label"));
+			category.setScheme(getNodeAttribute("scheme"));
+			category.setLabel(getNodeAttribute("label"));
 
 			atomResource.addCategory(category);
-
 			return category;
 		}
 
 	}
 
-	private abstract class PersonNodeParser extends CompositeNodeParser<Person> implements AwareNodeParser<Person> {
-
-		private final Person person = new Person();
+	private abstract class PersonNodeParser extends CompositeNodeParser<Person> {
 
 		public PersonNodeParser() {
-			addNodeParser("name", new ValueNodeParser() {
-				public void onNodeParsed(String value) {
+			super(new Person());
+
+			addNodeParser("name", new TextNodeAppender<Person>() {
+				@Override
+				public void appendTo(Person person, String value) {
 					person.setName(value);
 				}
 			});
@@ -118,19 +117,13 @@ class AtomResourceNodeParser<T extends AtomResource> extends CompositeNodeParser
 			});
 		}
 
-		@Override
-		public Person parse(Node node) {
-			super.parse(node);
-
-			return person;
-		}
-
 	}
 
-	private abstract class LinkNodeParser implements AwareNodeParser<Link> {
+	private abstract class LinkNodeParser extends AbstractNodeParser<Link> {
 
-		public Link parse(Node node) {
-			final String href = XmlParserUtils.getAttribute(node, "href");
+		@Override
+		public Link parseNode(Node node) {
+			final String href = getNodeAttribute("href");
 
 			if (href == null) {
 				throw new NullPointerException("");
@@ -138,12 +131,12 @@ class AtomResourceNodeParser<T extends AtomResource> extends CompositeNodeParser
 			final Link link = new Link();
 
 			link.setHref(href);
-			link.setHreflang(XmlParserUtils.getAttribute(node, "hreflang"));
-			link.setRel(XmlParserUtils.getAttribute(node, "rel"));
-			link.setType(XmlParserUtils.getAttribute(node, "type"));
-			link.setTitle(XmlParserUtils.getAttribute(node, "title"));
+			link.setHreflang(getNodeAttribute("hreflang"));
+			link.setRel(getNodeAttribute("rel"));
+			link.setType(getNodeAttribute("type"));
+			link.setTitle(getNodeAttribute("title"));
 
-			final String length = XmlParserUtils.getAttribute(node, "length");
+			final String length = getNodeAttribute("length");
 
 			if (length != null) {
 				link.setLength(Byte.valueOf(length));

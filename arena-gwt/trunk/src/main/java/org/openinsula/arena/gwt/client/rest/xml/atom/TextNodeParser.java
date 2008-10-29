@@ -1,25 +1,25 @@
 package org.openinsula.arena.gwt.client.rest.xml.atom;
 
-import org.openinsula.arena.gwt.client.xml.AwareNodeParser;
-import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.parse.NodeAppender;
 
 import com.google.gwt.xml.client.Node;
 
 /**
  * @author Lucas K Mogari
  */
-public abstract class TextNodeParser implements AwareNodeParser<Text> {
+public abstract class TextNodeParser<A> extends NodeAppender<A, Text> {
 
-	public Text parse(Node node) {
-		final String value = XmlParserUtils.getText(node);
+	@Override
+	public Text parseNode(Node node) {
+		final String value = getNodeText();
 
 		if (value == null) {
-			throw new NullPointerException("");
+			throw new NullPointerException("Node value must not be null.");
 		}
 		final Text text = new Text();
 
 		text.setValue(value);
-		text.setType(XmlParserUtils.getAttribute(node, "type"));
+		text.setType(getNodeAttribute("type"));
 
 		return text;
 	}

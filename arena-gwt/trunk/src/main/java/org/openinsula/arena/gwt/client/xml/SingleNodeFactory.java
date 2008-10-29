@@ -5,8 +5,8 @@ import com.google.gwt.xml.client.Node;
 /**
  * @author Lucas K Mogari
  */
-public abstract class SingleNodeFactory extends ElementFactory {
+public interface SingleNodeFactory extends NodeFactory {
 
-	public abstract Node createNode();
+	public Node createNode();
 
 }

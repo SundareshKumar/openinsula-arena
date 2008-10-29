@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openinsula.arena.gwt.client.rest.xml.atom.BaseEntry;
-import org.openinsula.arena.gwt.client.xml.AttributeDependentCompositeNodeParser;
-import org.openinsula.arena.gwt.client.xml.NodeParser;
+import org.openinsula.arena.gwt.client.xml.CompositeNodeFactory;
 import org.openinsula.arena.gwt.client.xml.ValueNodeParser;
+import org.openinsula.arena.gwt.client.xml.parse.AttributeDependentNodeParser;
+import org.openinsula.arena.gwt.client.xml.parse.NodeParser;
 
+import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 
 /**
@@ -22,8 +24,16 @@ public class Transacao extends BaseEntry<Transacao> {
 	private List<Guia> guias = new ArrayList<Guia>();
 
 	public Transacao() {
-		final AttributeDependentCompositeNodeParser<Guia> parser = new AttributeDependentCompositeNodeParser<Guia>(
+		final AttributeDependentNodeParser<Guia> parser = new AttributeDependentNodeParser<Guia>(
 				"tipo");
+
+		addNodeFactory(new CompositeNodeFactory() {
+			@Override
+			protected Node createBaseNode() {
+				final Element guiasElement = createElement("guias");
+				return guiasElement;
+			}
+		});
 
 		addNodeParser("guias", parser);
 		addNodeParser("numero", new ValueNodeParser() {
@@ -37,7 +47,7 @@ public class Transacao extends BaseEntry<Transacao> {
 			}
 		});
 
-		parser.addParser("consulta", new NodeParser<Consulta>() {
+		parser.addNodeParser("consulta", new NodeParser<Consulta>() {
 			public Consulta parse(Node node) {
 				final Consulta consulta = new Consulta();
 

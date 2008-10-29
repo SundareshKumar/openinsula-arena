@@ -1,8 +1,8 @@
 package org.openinsula.arena.gwt.client.rest.xml.atom;
 
-import org.openinsula.arena.gwt.client.xml.AwareNodeParser;
 import org.openinsula.arena.gwt.client.xml.CompositeNodeFactory;
-import org.openinsula.arena.gwt.client.xml.XmlParserUtils;
+import org.openinsula.arena.gwt.client.xml.parse.NodeAppender;
+import org.openinsula.arena.gwt.client.xml.parse.XmlParserUtils;
 
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -26,7 +26,7 @@ public class Entry extends BaseEntry<Entry> {
 		addNodeFactory(new ContentNodeFactory());
 	}
 
-	private abstract class ContentNodeParser implements AwareNodeParser<Content> {
+	private abstract class ContentNodeParser implements NodeAppender<Content> {
 
 		public Content parse(Node node) {
 			final String value = XmlParserUtils.getText(node);

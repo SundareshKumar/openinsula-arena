@@ -3,10 +3,10 @@ package org.openinsula.arena.gwt.client.rest.xml.atom;
 import java.util.Date;
 
 import org.openinsula.arena.gwt.client.xml.CompositeNodeFactory;
-import org.openinsula.arena.gwt.client.xml.CompositeNodeParser;
 import org.openinsula.arena.gwt.client.xml.NodeFactory;
-import org.openinsula.arena.gwt.client.xml.NodeParser;
 import org.openinsula.arena.gwt.client.xml.ValueNodeParser;
+import org.openinsula.arena.gwt.client.xml.parse.CompositeNodeParser;
+import org.openinsula.arena.gwt.client.xml.parse.NodeParser;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
