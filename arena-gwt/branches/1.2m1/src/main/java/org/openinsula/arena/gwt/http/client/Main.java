@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client;
+package org.openinsula.arena.gwt.http.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Label;
