@@ -129,18 +129,16 @@
 				<version>2.0-beta24</version>
 				<configuration>
 					<logLevel>INFO</logLevel>
-					<runTarget>org.openinsula.arena.gwt.http.HTTP/Main.html</runTarget>
+					<runTarget>org.openinsula.arena.gwt.http.HTTP/_HTTP.html</runTarget>
 					<compileTargets>
 						<param>org.openinsula.arena.gwt.http.HTTP</param>
 					</compileTargets>
 					<extraJvmArgs>-Xmx256M -Xms64M</extraJvmArgs>
-					<noServer>true</noServer>
+					<noServer>false</noServer>
 					<gwtVersion>${gwt.version}</gwtVersion>
 				</configuration>
 				<executions>
 					<execution>
-						<id>compile</id>
-						<phase>process-classes</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
