@@ -21,6 +21,8 @@ public class RegexpFormItemValidator extends SyncFormItemValidator<TextBoxBase> 
 
 	public final static String MOEDA = "^\\$?(\\d{1,3},?(\\d{3},?)*\\d{3}(\\.\\d{0,2})?|\\d{1,3}(\\.\\d{0,2})?|\\.\\d{1,2}?)$";
 
+	public final static String DECIMAL = "^(\\d*|\\d+(\\.|\\,)\\d+)$";
+
 	public RegexpFormItemValidator(String pattern, String errorMessage) {
 		super();
 		this.pattern = pattern;
