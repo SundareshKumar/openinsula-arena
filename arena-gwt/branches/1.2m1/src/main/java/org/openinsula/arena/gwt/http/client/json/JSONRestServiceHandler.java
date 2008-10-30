@@ -10,7 +10,7 @@ public class JSONRestServiceHandler extends AbstractRestServiceHandler {
 	public boolean matches(final String url, final Object data) {
 		return data instanceof JSONValue;
 	}
-	
+
 	@Override
 	protected void afterHandle(final RequestBuilder requestBuilder) {
 		super.afterHandle(requestBuilder);

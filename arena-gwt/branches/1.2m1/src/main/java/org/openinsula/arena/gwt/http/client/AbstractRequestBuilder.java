@@ -6,6 +6,8 @@ import java.util.Map;
 import com.google.gwt.http.client.RequestCallback;
 
 /**
+ * Abstract implementation.
+ * 
  * @author Lucas K Mogari
  */
 public abstract class AbstractRequestBuilder implements RequestBuilder {

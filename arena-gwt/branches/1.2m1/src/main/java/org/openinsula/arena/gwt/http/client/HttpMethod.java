@@ -2,7 +2,6 @@ package org.openinsula.arena.gwt.http.client;
 
 /**
  * @author Joao Galli
- * 
  */
 public enum HttpMethod {
 

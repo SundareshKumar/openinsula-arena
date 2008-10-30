@@ -17,5 +17,5 @@ public class XmlRestServiceHandler extends AbstractRestServiceHandler {
 		super.afterHandle(requestBuilder);
 		requestBuilder.setHeader("Content-Type", "application/xml");
 	}
-	
+
 }

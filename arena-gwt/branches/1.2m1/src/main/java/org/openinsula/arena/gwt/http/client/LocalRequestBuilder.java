@@ -8,6 +8,8 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.RequestBuilder.Method;
 
 /**
+ * Class used to make asynchronous requests in the same client domain.
+ * 
  * @author Lucas K Mogari
  */
 public class LocalRequestBuilder extends AbstractRequestBuilder {

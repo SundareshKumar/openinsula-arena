@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.http.client;
 
-
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;

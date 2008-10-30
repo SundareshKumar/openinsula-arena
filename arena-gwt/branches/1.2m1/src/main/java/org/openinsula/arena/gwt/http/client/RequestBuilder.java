@@ -4,6 +4,8 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 
 /**
+ * Wrapper interface for {@link com.google.gwt.http.client.RequestBuilder}.
+ * 
  * @author Lucas K Mogari
  */
 public interface RequestBuilder {

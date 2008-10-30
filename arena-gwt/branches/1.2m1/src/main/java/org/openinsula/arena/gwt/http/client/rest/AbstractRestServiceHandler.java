@@ -7,6 +7,7 @@ import org.openinsula.arena.gwt.http.client.RequestBuilderFactory;
 import com.google.gwt.http.client.RequestCallback;
 
 public abstract class AbstractRestServiceHandler implements RestServiceHandler {
+
 	private RequestBuilderFactory requestBuilderFactory;
 
 	public AbstractRestServiceHandler() {
@@ -22,7 +23,7 @@ public abstract class AbstractRestServiceHandler implements RestServiceHandler {
 	public final RequestBuilder handle(final String url, final HttpMethod method, final Object data,
 			final RequestCallback callback) {
 
-		RequestBuilder requestBuilder = requestBuilderFactory.createRequestBuilder();
+		final RequestBuilder requestBuilder = requestBuilderFactory.createRequestBuilder();
 		requestBuilder.setUrl(url);
 		requestBuilder.setHttpMethod(method);
 		requestBuilder.setCallback(callback);

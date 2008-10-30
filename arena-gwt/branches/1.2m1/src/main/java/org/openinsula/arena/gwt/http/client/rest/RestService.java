@@ -4,9 +4,10 @@ import com.google.gwt.http.client.RequestCallback;
 
 /**
  * @author Lucas K Mogari
+ * @author Eduardo Rebola
  */
 public interface RestService {
-	
+
 	public void create(String url, Object data, RequestCallback callback);
 
 	public void delete(String url, RequestCallback callback);

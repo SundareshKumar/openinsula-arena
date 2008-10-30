@@ -12,6 +12,8 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 
 /**
+ * Class used to make asynchronous cross-domain requests.
+ * 
  * @author Lucas K Mogari
  */
 public class RemoteRequestBuilder extends AbstractRequestBuilder {
