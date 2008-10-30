@@ -261,7 +261,7 @@ public class FormItem<W extends Widget> extends FocusComposite {
 
 	private ValidatorChain<W> validatorChain;
 
-	private ValidatorChain<W> validatorChain() {
+	protected ValidatorChain<W> validatorChain() {
 		if (validatorChain == null) {
 			validatorChain = new DefaultValidatorChainImpl<W>();
 		}
@@ -271,11 +271,14 @@ public class FormItem<W extends Widget> extends FocusComposite {
 	@SuppressWarnings("unchecked")
 	public void addFormItemValidator(FormItemValidator validator) {
 		validator.setFormItem(this);
-		validatorChain().addValidator(validator);
+		validatorChain().addValidator(null, validator);
 	}
 
 	public void validate(ValidatorAction action) {
-		GWT.log("quantidade de validadores no momento do validate(): " + validatorChain.size(), null);
+		if (widgetWrapper != null && widgetWrapper.getWidget() != null) {
+			GWT.log("widget validado: " + widgetWrapper.getWidget().getClass().getName(), null);
+		}
+		GWT.log("label do widget: " + label.getText(), null);
 		validatorChain().validate(getWidget(), action);
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DefaultValidatorChainImpl<W extends Widget> implements ValidatorChain<W> {
@@ -35,10 +36,12 @@ public class DefaultValidatorChainImpl<W extends Widget> implements ValidatorCha
 		return iterator.hasNext() ? iterator.next() : null;
 	}
 
-	public <T> void doChain(W widget, ValidatorAction action) {
+	public void doChain(W widget, ValidatorAction action) {
 		FormItemValidator<W> nextValidator = nextValidator();
 		if (nextValidator != null) {
 			nextValidator.validate(widget, this, action);
+		} else {
+			GWT.log("nao foi encontrado um novo elemento para o doChain()", null);
 		}
 	}
 
@@ -48,13 +51,19 @@ public class DefaultValidatorChainImpl<W extends Widget> implements ValidatorCha
 
 	public void validate(W widget, ValidatorAction action) {
 		resetChainIterator();
-		FormItemValidator<W> nextValidator = nextValidator();
-		if (nextValidator != null) {
-			nextValidator.validate(widget, this, action);
+		if (chainList().isEmpty()) {
+			GWT.log("chainList Vazio... executando o action, tipo do action: " + action.getClass().getName(), null);
+			action.onSuccess();
+		} else {
+			GWT.log("delegando a execucao para o proximo node", null);
+			FormItemValidator<W> nextValidator = nextValidator();
+			if (nextValidator != null) {
+				nextValidator.validate(widget, this, action);
+			}
 		}
 	}
 
-	public void addValidator(FormItemValidator<W> validator) {
+	public void addValidator(W widget, FormItemValidator<W> validator) {
 		chainList().add(validator);
 	}
 

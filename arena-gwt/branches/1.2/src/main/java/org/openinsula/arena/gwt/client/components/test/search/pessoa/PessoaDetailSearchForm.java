@@ -2,9 +2,12 @@ package org.openinsula.arena.gwt.client.components.test.search.pessoa;
 
 import org.openinsula.arena.gwt.client.components.test.search.AbstractDetailsSearchFormTemplate;
 import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchFormTemplate;
+import org.openinsula.arena.gwt.client.components.test.search.ViewToModelCallback;
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormFactory;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
+import org.openinsula.arena.gwt.client.ui.form.validator.NotNullFormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.RegexpFormItemValidator;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 
 import com.google.gwt.user.client.ui.HasFocus;
@@ -12,6 +15,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pessoa> {
+
+	private FormItem<TextBox> cpfFormItem;
 
 	private TextBox nomeTextBox;
 
@@ -29,9 +34,11 @@ public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pe
 		cpfTextBox = FormFactory.textBox();
 		cidadeTextBox = FormFactory.textBox();
 
+		cpfFormItem = new FormItem<TextBox>("cpf", cpfTextBox);
+
 		FormBuilder builder = new FormBuilder();
 		builder.add(new FormItem<TextBox>("Nome", nomeTextBox));
-		builder.add(new FormItem<TextBox>("Cpf", cpfTextBox));
+		builder.add(cpfFormItem);
 		builder.add(new FormItem<TextBox>("Cidade", cidadeTextBox));
 
 		return builder.toPanel();
@@ -63,20 +70,23 @@ public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pe
 	}
 
 	@Override
-	protected Pessoa viewToModel(Pessoa editInstance) {
+	protected void viewToModel(Pessoa editInstance, ViewToModelCallback<Pessoa> callback) {
 		editInstance.setNome(nomeTextBox.getText());
 		editInstance.setCpf(cpfTextBox.getText());
 		editInstance.setCidade(cidadeTextBox.getText());
-		return editInstance;
+
+		callback.processValue(editInstance);
 	}
 
 	@Override
 	protected void validateView(ValidatorAction action) {
-		action.onSuccess();
+		cpfFormItem.validate(action);
 	}
 
 	@Override
 	protected void initValidators() {
+		cpfFormItem.addFormItemValidator(new NotNullFormItemValidator());
+		cpfFormItem.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.SOMENTE_NUMEROS, "somente numeros"));
 	}
 
 }

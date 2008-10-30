@@ -377,13 +377,18 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 	public void validateView(ValidatorAction action) {
 		switch (forms.getVisibleWidget()) {
 		case 0:
+			GWT.log("================validando suggest", null);
 			if (editInstance != null) {
+				GWT.log("executou o actoin no validateView() do abstractSearchForm, tipo do action: "
+						+ action.getClass().getName(), null);
 				action.onSuccess();
-			} else {
+			}
+			else {
 				action.onFail();
 			}
 			break;
 		case 1:
+			GWT.log("================validando details", null);
 			detailsForm.validateView(action);
 			break;
 		}
@@ -391,16 +396,24 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 
 	private FormItem<AbstractSearchFormTemplate<T>> formItem;
 
-	public void validate(final AbstractSearchFormTemplate<T> widget, final ValidatorChain<AbstractSearchFormTemplate<T>> chain,
-			final ValidatorAction action) {
+	public void validate(final AbstractSearchFormTemplate<T> widget,
+			final ValidatorChain<AbstractSearchFormTemplate<T>> chain, final ValidatorAction action) {
 
 		validateView(new ValidatorAction() {
 			public void onFail() {
 				formItem.setErrorMessage(getInvalidValueMessage());
 				formItem.setValid(false);
 			}
+
 			public void onSuccess() {
-				chain.doChain(widget, action);
+				if (chain.isLastNode()) {
+					GWT.log("executou o action dentro do validate() do SearchForm, tipo do action: "
+							+ action.getClass().getName(), null);
+					action.onSuccess();
+				}
+				else {
+					chain.doChain(widget, action);
+				}
 				formItem.setValid(true);
 			}
 		});
@@ -416,27 +429,22 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 	}
 
 	public void getEditInstance(final GetValueAction<T> action) {
-		validateView(new ValidatorAction() {
-			public void onFail() {
-				action.processValue(null);
-			}
-			public void onSuccess() {
-				switch (forms.getVisibleWidget()) {
-				case 0:
-					action.processValue(editInstance);
-					break;
-				case 1:
-					T value = detailsForm.viewToModel(editInstance);
+		switch (forms.getVisibleWidget()) {
+		case 0:
+			action.processValue(editInstance);
+			break;
+		case 1:
+			detailsForm.viewToModel(editInstance, new ViewToModelCallback<T>() {
+				public void processValue(T value) {
 					action.processValue(value);
-					break;
 				}
-			}
-		});
+			});
+			break;
+		}
 	}
 
 	public boolean isEmpty() {
-		return editInstance == null ||
-				detailsForm.viewToModel(editInstance) == null;
+		return editInstance == null;
 	}
 
 }

@@ -1,12 +1,8 @@
 package org.openinsula.arena.gwt.client;
 
-import org.openinsula.arena.gwt.client.components.test.search.cliente.ClienteSearchForm;
-import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
-import org.openinsula.arena.gwt.client.ui.form.FormItem;
-import org.openinsula.arena.gwt.client.ui.form.validator.NotNullFormItemValidator;
-import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
-import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
-import org.openinsula.arena.gwt.client.ui.list.DefaultListBoxModel;
+import org.openinsula.arena.gwt.client.ui.form.GroupFormItem;
+import org.openinsula.arena.gwt.client.ui.form.validator.RegexpFormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorActionAdapter;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -29,111 +25,83 @@ public class Main implements EntryPoint {
 //
 //		entity.setId(10);
 
-		DefaultListBoxModel<String> model = new DefaultListBoxModel<String>("123", "34", "asb", "teste");
 
-		final BeanListBox<String> listBox = new BeanListBox<String>(model);
-
-		TextBox dataTextBox = new TextBox();
-
-		final ClienteSearchForm clienteSearchForm = new ClienteSearchForm(listBox);
-		clienteSearchForm.setEditionAllowed(true);
-		clienteSearchForm.setInsertionAllowed(true);
-//		clienteSearchForm.addTransitionListener(new SearchFormTransitionListener<Cliente>() {
-//			public boolean beforeDetailFormShow(AbstractDetailsSearchFormTemplate<Cliente> detailForm, boolean editionMode) {
-//				return "123".equals(listBox.getModel().getSelectedItem());
-//			}
+//		TextBox textBox = new TextBox();
+//		final ClienteSearchForm clienteSearchForm = new ClienteSearchForm(textBox);
+//		clienteSearchForm.setInsertionAllowed(true);
+//		clienteSearchForm.setEditionAllowed(true);
 //
-//			public boolean beforeSearchFormShow(AbstractSearchFormTemplate<Cliente> searchForm) {
-//				return true;
-//			}
-//		});
+//		final FormItem<ClienteSearchForm> clienteSearchFormItem = new FormItem<ClienteSearchForm>("cliente", clienteSearchForm);
+//		final FormItem<TextBox> textBoxFormItem = new FormItem<TextBox>("textBox", textBox);
 //
-//
-		final FormItem<ClienteSearchForm> clienteSearchFormItem = new FormItem<ClienteSearchForm>("CLiente", clienteSearchForm);
 //		clienteSearchFormItem.addFormItemValidator(new NotNullFormItemValidator());
-		final FormItem<BeanListBox<String>> listBoxFormItem = new FormItem<BeanListBox<String>>("strings", listBox);
-		listBoxFormItem.addFormItemValidator(new NotNullFormItemValidator());
-//		listBoxFormItem.addFormItemValidator(new BeanListBoxNotNullFormItemValidator<String>());
+//		clienteSearchFormItem.addFormItemValidator(new AsyncFormItemValidator<ClienteSearchForm, Cliente>() {
+//			@Override
+//			protected void evaluateResult(Cliente result, EvaluateCallback callback) {
+//				callback.success();
+//			}
 //
-//		final FormItem<TextBox> dataFormItem = new FormItem<TextBox>("Data", dataTextBox);
-//		dataFormItem.addFormItemValidator(new RegexpFormItemValidator<TextBox>(RegexpFormItemValidator.DATA, "data invalida"));
+//			@Override
+//			protected void validate(ClienteSearchForm widget, AsyncCallback<Cliente> callback) {
+//				callback.onSuccess(null);
+//			}
 //
-		FormBuilder builder = new FormBuilder();
-		builder.add(clienteSearchFormItem);
-		builder.add(listBoxFormItem);
-//		builder.add(new FormItem<TextBox>("data", dataTextBox));
-//		builder.add(new GroupFormItem<Widget>("Endereço/Número", new Widget[] {FormFactory.textBox(), FormFactory.textBox()}, "", true, true));
-//
-//
-//		Button button = new Button("123", new ClickListener() {
-//			public void onClick(Widget sender) {
-////				GWT.log("selecionado: " + listBox.getSelectedItem(), null);
-//				GWT.log("valid: " + dataFormItem.isValid(), null);
+//			public String getInvalidValueMessage() {
+//				return "erro";
 //			}
 //		});
 //
+//		Button button = new Button("teste");
+//		button.addClickListener(new ClickListener() {
+//			public void onClick(Widget arg0) {
+//				clienteSearchFormItem.validate(new ValidatorAction() {
+//					public void onFail() {
+//						GWT.log("invalido!!!", null);
+//					}
 //
-//		FocusUtils.nextOnEnter(listBox, dataTextBox);
-//
-//		RootPanel.get("main").add(builder.toPanel());
-////		RootPanel.get("main").add(combo);
-//
-//		TextBox txt = new TextBox();
-//		txt.addFocusListener(new FocusListener() {
-//			public void onFocus(Widget sender) {
-//				GWT.log("ganhou foco", null);
-//			}
-//
-//			public void onLostFocus(Widget sender) {
-//				GWT.log("perdeu o foco", null);
+//					public void onSuccess() {
+//						GWT.log("valido!!!", null);
+//						clienteSearchForm.getEditInstance(new GetValueAction<Cliente>() {
+//							public void processValue(Cliente value) {
+//								GWT.log("cliente: " + value, null);
+//								GWT.log("pessoa: " + value.getPessoa(), null);
+//								GWT.log("nome: " + value.getPessoa().getNome(), null);
+//								GWT.log("cpf: " + value.getPessoa().getCpf(), null);
+//							}
+//						});
+//					}
+//				});
 //			}
 //		});
+//
+//		RootPanel.get("main").add(clienteSearchFormItem);
+//		RootPanel.get("main").add(textBoxFormItem);
+//		RootPanel.get("main").add(button);
 
-//		TextBox data = new TextBox();
-//		FormItem<TextBox> formItem = new FormItem<TextBox>("data:", data);
-//		formItem.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.DATA, "data invalida"));
-//
-//		BeanListBox<String> list = new BeanListBox<String>(new DefaultListBoxModel<String>("1", "2", "3"));
-//		FormItem<BeanListBox<String>> listFormItem = new FormItem<BeanListBox<String>>("list", list);
-//
-//		TextBox data2 = new TextBox();
-//		FormItem<TextBox> formItem2 = new FormItem<TextBox>("data:", data2);
-//		formItem2.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.DATA, "data invalida"));
-//
-//
-//		FormBuilder builder = new FormBuilder();
-//		builder.add(formItem);
-//		builder.add(listFormItem);
-//		builder.add(formItem2);
-//
-//		FocusUtils.nextOnEnter(data, list);
-//		FocusUtils.nextOnEnter(list, data2);
+//		RootPanel.get("main").add(button);
 
-		final FormItem<TextBox> textBoxFormItem = new FormItem<TextBox>("Teste", new TextBox());
-		textBoxFormItem.addFormItemValidator(new NotNullFormItemValidator());
-//		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.SOMENTE_NUMEROS, "somente numeros"));
-//		textBoxFormItem.addFormItemValidator(new RegexpFormItemValidator("[123]", "valor monetario"));
+
+
+		final TextBox letras = new TextBox();
+		final TextBox numeros = new TextBox();
+
+		final GroupFormItem<TextBox> group = new GroupFormItem<TextBox>("letras/numeros", new TextBox[] {letras, numeros}, "", false, true);
+		group.addFormItemValidator(letras, new RegexpFormItemValidator("[a,b,c,d]", "digite somente letras"));
+		group.addFormItemValidator(numeros, new RegexpFormItemValidator(RegexpFormItemValidator.SOMENTE_NUMEROS, "somente numeros"));
 
 		Button button = new Button("teste");
 		button.addClickListener(new ClickListener() {
-			public void onClick(Widget arg0) {
-				textBoxFormItem.validate(new ValidatorAction() {
-					public void onFail() {
-						GWT.log("invalido!!!", null);
-					}
-
+			public void onClick(Widget sender) {
+				group.validate(new ValidatorActionAdapter() {
 					public void onSuccess() {
-						GWT.log("valido!!!", null);
+						GWT.log("conteudo do group valido!", null);
 					}
 				});
 			}
 		});
 
-//		RootPanel.get("main").add(builder.toPanel());
-		RootPanel.get("main").add(textBoxFormItem);
+		RootPanel.get("main").add(group);
 		RootPanel.get("main").add(button);
-
-//		RootPanel.get("main").add(button);
 	}
 
 }

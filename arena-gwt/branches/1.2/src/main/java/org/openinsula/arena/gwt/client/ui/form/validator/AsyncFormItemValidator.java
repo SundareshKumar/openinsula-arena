@@ -2,6 +2,7 @@ package org.openinsula.arena.gwt.client.ui.form.validator;
 
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -27,6 +28,7 @@ public abstract class AsyncFormItemValidator<W extends Widget, T> implements For
 	}
 
 	public void onSuccess(T result) {
+		GWT.log("executando onSuccess() do asyncCallback", null);
 		evaluateResult(result, new EvaluateCallback() {
 			public void fail() {
 				formItem.setErrorMessage(getInvalidValueMessage());
@@ -35,6 +37,7 @@ public abstract class AsyncFormItemValidator<W extends Widget, T> implements For
 			}
 			public void success() {
 				if (validatorChain.isLastNode()) {
+					GWT.log("isLastNode()... executando onSuccess() do action do AsyncFormItemValidator, action: " + action.getClass().getName(), null);
 					action.onSuccess();
 					formItem.setValid(true);
 				} else {

@@ -51,7 +51,7 @@ public abstract class AbstractDetailsSearchFormTemplate<T> extends Composite {
 
 	protected abstract void modelToView(T bean, boolean editionMode);
 
-	protected abstract T viewToModel(T editInstance);
+	protected abstract void viewToModel(T editInstance, ViewToModelCallback<T> callback);
 
 	protected abstract void clear();
 

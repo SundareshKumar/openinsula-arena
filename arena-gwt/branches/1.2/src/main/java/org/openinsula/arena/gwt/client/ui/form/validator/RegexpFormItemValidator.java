@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.client.ui.form.validator;
 
+
 import com.google.gwt.user.client.ui.TextBoxBase;
 
 public class RegexpFormItemValidator extends SyncFormItemValidator<TextBoxBase> {

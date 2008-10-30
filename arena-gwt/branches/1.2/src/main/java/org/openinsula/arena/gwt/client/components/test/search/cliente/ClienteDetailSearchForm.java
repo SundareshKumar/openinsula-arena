@@ -3,12 +3,14 @@ package org.openinsula.arena.gwt.client.components.test.search.cliente;
 import org.openinsula.arena.gwt.client.components.test.search.AbstractDetailsSearchFormTemplate;
 import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchFormTemplate;
 import org.openinsula.arena.gwt.client.components.test.search.GetValueAction;
+import org.openinsula.arena.gwt.client.components.test.search.ViewToModelCallback;
 import org.openinsula.arena.gwt.client.components.test.search.pessoa.Pessoa;
 import org.openinsula.arena.gwt.client.components.test.search.pessoa.PessoaSearchForm;
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormFactory;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
 import org.openinsula.arena.gwt.client.ui.form.validator.NotNullFormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.RegexpFormItemValidator;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorActionAdapter;
 
@@ -34,6 +36,8 @@ public class ClienteDetailSearchForm extends AbstractDetailsSearchFormTemplate<C
 	protected Widget buildForm() {
 		dataCadastroTextBox = FormFactory.textBox();
 		pessoaSearchForm = new PessoaSearchForm(dataCadastroTextBox);
+		pessoaSearchForm.setEditionAllowed(true);
+		pessoaSearchForm.setInsertionAllowed(true);
 
 		pessoaSearchFormItem = new FormItem<PessoaSearchForm>("Nome", pessoaSearchForm);
 		dataCadastroFormItem = new FormItem<TextBox>("Data do cadastro", dataCadastroTextBox);
@@ -68,15 +72,14 @@ public class ClienteDetailSearchForm extends AbstractDetailsSearchFormTemplate<C
 	}
 
 	@Override
-	protected Cliente viewToModel(final Cliente editInstance) {
+	protected void viewToModel(final Cliente editInstance, final ViewToModelCallback<Cliente> callback) {
 		pessoaSearchForm.getEditInstance(new GetValueAction<Pessoa>() {
-			public void processValue(Pessoa value) {
-				editInstance.setPessoa(value);
+			public void processValue(Pessoa pessoa) {
+				editInstance.setPessoa(pessoa);
+				editInstance.setDataCadastro(dataCadastroTextBox.getText());
+				callback.processValue(editInstance);
 			}
 		});
-		editInstance.setDataCadastro(dataCadastroTextBox.getText());
-
-		return editInstance;
 	}
 
 	@Override
@@ -90,7 +93,11 @@ public class ClienteDetailSearchForm extends AbstractDetailsSearchFormTemplate<C
 
 	@Override
 	protected void initValidators() {
+		pessoaSearchFormItem.addFormItemValidator(new NotNullFormItemValidator());
+
 		dataCadastroFormItem.addFormItemValidator(new NotNullFormItemValidator());
+		dataCadastroFormItem.addFormItemValidator(new RegexpFormItemValidator(RegexpFormItemValidator.DATA, "data invalida"));
+
 	}
 
 }

@@ -27,7 +27,7 @@ public abstract class SyncFormItemValidator<W extends Widget> implements FormIte
 
 			public void success() {
 				if (chain.isLastNode()) {
-					GWT.log("lastNode", null);
+					GWT.log("executou onSuccess() no syncFormItemValidator", null);
 					action.onSuccess();
 					formItem.setValid(true);
 				} else {
