@@ -22,7 +22,7 @@ public class NotNullFormItemValidator extends SyncFormItemValidator<Widget> {
 		} else if (widget instanceof AbstractSearchFormTemplate) {
 			valid = !((AbstractSearchFormTemplate<?>) widget).isEmpty();
 		} else if (widget instanceof BeanSuggestBox) {
-			valid = ((BeanSuggestBox<?>) widget).getSelection() != null;
+			valid = ((BeanSuggestBox<?>) widget).getText().trim().length() > 0;
 		} else {
 			throw new IllegalArgumentException("Não é possível verificar conteúdo de componentes do tipo: " + widget.getClass().getName());
 		}
