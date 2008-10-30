@@ -2,6 +2,7 @@ package org.openinsula.arena.gwt.client.ui.form.validator;
 
 import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchFormTemplate;
 import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
+import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
 
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
@@ -20,6 +21,8 @@ public class NotNullFormItemValidator extends SyncFormItemValidator<Widget> {
 			valid = ((BeanListBox<?>) widget).getSelectedItem() != null;
 		} else if (widget instanceof AbstractSearchFormTemplate) {
 			valid = !((AbstractSearchFormTemplate<?>) widget).isEmpty();
+		} else if (widget instanceof BeanSuggestBox) {
+			valid = ((BeanSuggestBox<?>) widget).getSelection() != null;
 		} else {
 			throw new IllegalArgumentException("Não é possível verificar conteúdo de componentes do tipo: " + widget.getClass().getName());
 		}
