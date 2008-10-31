@@ -275,10 +275,7 @@ public class FormItem<W extends Widget> extends FocusComposite {
 	}
 
 	public void validate(ValidatorAction action) {
-		if (widgetWrapper != null && widgetWrapper.getWidget() != null) {
-			GWT.log("widget validado: " + widgetWrapper.getWidget().getClass().getName(), null);
-		}
-		GWT.log("label do widget: " + label.getText(), null);
+		GWT.log("validando widget: " + label.getText(), null);
 		validatorChain().validate(getWidget(), action);
 	}
 

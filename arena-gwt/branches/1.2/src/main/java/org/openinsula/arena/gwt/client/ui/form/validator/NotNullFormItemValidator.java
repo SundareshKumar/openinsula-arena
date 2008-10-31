@@ -9,8 +9,20 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class NotNullFormItemValidator extends SyncFormItemValidator<Widget> {
 
+	private final static String DEFAULT_ERROR_MESSAGE = "Campo Obrigatório";
+
+	private String errorMessage;
+
+	public NotNullFormItemValidator() {
+		errorMessage = DEFAULT_ERROR_MESSAGE;
+	}
+
+	public NotNullFormItemValidator(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
 	public String getInvalidValueMessage() {
-		return "Campo obrigatório";
+		return errorMessage;
 	}
 
 	protected void evaluate(Widget widget, EvaluateCallback callback) {

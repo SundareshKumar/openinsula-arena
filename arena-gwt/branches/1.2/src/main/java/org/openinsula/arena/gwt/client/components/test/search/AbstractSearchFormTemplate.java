@@ -69,7 +69,6 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 
 		searchForm.addEditListener(new ClickListener() {
 			public void onClick(Widget sender) {
-				GWT.log("editInstance: " + editInstance, null);
 				if (editInstance != null) {
 					getDetailsForm().modelToView(editInstance, true);
 					showDetailForm(true);
