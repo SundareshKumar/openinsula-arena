@@ -15,7 +15,7 @@ public abstract class EntryRequestCallback<T extends BaseEntry<T>> extends XmlRe
 	public EntryRequestCallback() {
 	}
 
-	public EntryRequestCallback(final T entry) {
+	public EntryRequestCallback(T entry) {
 		this.entry = entry;
 	}
 
@@ -28,8 +28,13 @@ public abstract class EntryRequestCallback<T extends BaseEntry<T>> extends XmlRe
 	 * org.openinsula.arena.gwt.client.rest.xml.XmlRequestCallback#doWithXml
 	 * (com.google.gwt.xml.client.Document)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	protected final void doWithXml(final Document document) {
+	protected void doWithXml(Document document) {
+		if (entry == null) {
+			entry = (T) new Entry();
+		}
+
 		doWithEntry(entry.parse(document));
 	}
 

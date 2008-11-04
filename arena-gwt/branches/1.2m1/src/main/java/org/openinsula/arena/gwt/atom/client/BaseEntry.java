@@ -3,6 +3,7 @@ package org.openinsula.arena.gwt.atom.client;
 import java.util.Date;
 
 import org.openinsula.arena.gwt.http.client.rest.RestService;
+import org.openinsula.arena.gwt.util.client.Assert;
 import org.openinsula.arena.gwt.xml.client.AbstractParsedNodeResultAppender;
 import org.openinsula.arena.gwt.xml.client.CompositeNodeParser;
 import org.openinsula.arena.gwt.xml.client.NodeParser;
@@ -32,10 +33,6 @@ public abstract class BaseEntry<T extends BaseEntry<T>> extends AtomResource imp
 	public BaseEntry(String title, String id) {
 		super(id, title);
 
-		initParsers();
-	}
-
-	protected void initParsers() {
 		addNodeParser("summary", new AtomTextNodeAppender<T>() {
 			@Override
 			public void appendResultTo(T entry, Text summary) {
@@ -55,24 +52,22 @@ public abstract class BaseEntry<T extends BaseEntry<T>> extends AtomResource imp
 	}
 
 	public void addNodeParser(String nodeName, NodeParser<?> parser) {
-		entryNodeParser.addNodeParser(nodeName, parser);
+		entryNodeParser.add(nodeName, parser);
 	}
 
 	public void addNodeParser(String nodeName, AbstractParsedNodeResultAppender<T, ?> parser) {
-		entryNodeParser.addNodeParser(nodeName, parser);
+		entryNodeParser.add(nodeName, parser);
 	}
 
 	public void removeNodeParser(String nodeName) {
-		entryNodeParser.removeNodeParser(nodeName);
+		entryNodeParser.remove(nodeName);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void getSelf(EntryRequestCallback<T> callback) {
 		final String url = getSelfUrl();
 
-		if (url == null || url.trim().isEmpty()) {
-			throw new NullPointerException("Self link must not be null.");
-		}
+		Assert.notEmpty(url, "Self link must not be null.");
 
 		callback.setEntry((T) this);
 

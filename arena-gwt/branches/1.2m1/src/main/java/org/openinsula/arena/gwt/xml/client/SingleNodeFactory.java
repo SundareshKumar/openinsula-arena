@@ -24,6 +24,9 @@ public class SingleNodeFactory extends AbstractSingleNodeFactory {
 		this.node = node;
 	}
 
+	/*
+	 * Overwrite this method for custom node creation.
+	 */
 	@Override
 	public Node createNode() {
 		return node;

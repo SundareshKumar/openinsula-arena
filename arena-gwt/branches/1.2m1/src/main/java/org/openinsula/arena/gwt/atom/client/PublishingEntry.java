@@ -3,8 +3,10 @@ package org.openinsula.arena.gwt.atom.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openinsula.arena.gwt.util.client.Assert;
 import org.openinsula.arena.gwt.xml.client.CompositeNodeFactory;
 import org.openinsula.arena.gwt.xml.client.ListNodesFactory;
+import org.openinsula.arena.gwt.xml.client.NodeFactorySupport;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -19,15 +21,11 @@ public abstract class PublishingEntry<T extends PublishingEntry<T>> extends Base
 	private final CompositeNodeFactory entryNodeFactory = new EntryNodeFactory();
 
 	public PublishingEntry() {
+		this(null, null);
 	}
 
 	public PublishingEntry(String title, String id) {
 		super(title, id);
-	}
-
-	@Override
-	protected void initParsers() {
-		super.initParsers();
 
 		entryNodeFactory.add(new PeopleNodesFactory("author", getAuthors()));
 		entryNodeFactory.add(new PeopleNodesFactory("contributor", getContributors()));
@@ -35,14 +33,27 @@ public abstract class PublishingEntry<T extends PublishingEntry<T>> extends Base
 		entryNodeFactory.add(new LinksNodesFactory(getLinks()));
 	}
 
+	public void addNodeFactory(NodeFactorySupport nodeFactory) {
+		entryNodeFactory.add(nodeFactory);
+	}
+
+	public void removeNodeFactory(NodeFactorySupport nodeFactory) {
+		entryNodeFactory.remove(nodeFactory);
+	}
+
 	public String toXml() {
 		final Document document = XMLParser.createDocument();
-		entryNodeFactory.setDocument(document);
-		final Node node = entryNodeFactory.createNode();
 
-		document.appendChild(node);
+		entryNodeFactory.setDocument(document);
+
+		document.appendChild(entryNodeFactory.createNode());
 
 		return document.toString();
+	}
+
+	@Override
+	public String toString() {
+		return toXml();
 	}
 
 	private final class EntryNodeFactory extends CompositeNodeFactory {
@@ -67,9 +78,7 @@ public abstract class PublishingEntry<T extends PublishingEntry<T>> extends Base
 		protected Node createNode(Category category) {
 			final String term = category.getTerm();
 
-			if (term == null || term.trim().length() == 0) {
-				throw new IllegalArgumentException("'term' must not b null.");
-			}
+			Assert.notEmpty(term, "'term' must not be null.");
 
 			final Element categoryElement = createElement("category");
 			final String label = category.getLabel();
@@ -102,9 +111,7 @@ public abstract class PublishingEntry<T extends PublishingEntry<T>> extends Base
 		protected Node createNode(Person person) {
 			final String name = person.getName();
 
-			if (name == null || name.trim().length() == 0) {
-				throw new IllegalArgumentException("'name' must not b null.");
-			}
+			Assert.notEmpty(name, "'name' must not b null.");
 
 			final Element personElement = createElement(nodeName);
 			final String email = person.getEmail();
@@ -139,9 +146,7 @@ public abstract class PublishingEntry<T extends PublishingEntry<T>> extends Base
 		protected Node createNode(Link link) {
 			final String href = link.getHref();
 
-			if (href == null || href.trim().length() == 0) {
-				throw new IllegalArgumentException("'href' must not b null.");
-			}
+			Assert.notEmpty(href, "'href' must not b null.");
 
 			final Element linkElement = createElement("link");
 			final String title = link.getTitle();

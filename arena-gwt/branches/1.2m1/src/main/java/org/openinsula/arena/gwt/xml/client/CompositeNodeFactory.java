@@ -10,7 +10,7 @@ import com.google.gwt.xml.client.Node;
  */
 public class CompositeNodeFactory extends SingleNodeFactory {
 
-	private final List<NodeFactorySupport> nodeFactorySupports = new LinkedList<NodeFactorySupport>();
+	private final List<NodeFactorySupport> nodeFactories = new LinkedList<NodeFactorySupport>();
 
 	public CompositeNodeFactory() {
 	}
@@ -38,26 +38,28 @@ public class CompositeNodeFactory extends SingleNodeFactory {
 	public final Node createNode() {
 		final Node node = createBaseNode();
 
-		if (node != null) {
-			for (final NodeFactorySupport nodeFactorySupport : nodeFactorySupports) {
-				nodeFactorySupport.setDocument(getDocument());
+		if (node == null) {
+			throw new NullPointerException("'node' must not be null.");
+		}
 
-				if (nodeFactorySupport instanceof SingleNodeFactory) {
-					final SingleNodeFactory singleNodeFactory = (SingleNodeFactory) nodeFactorySupport;
-					final Node createdNode = singleNodeFactory.createNode();
+		for (final NodeFactorySupport nodeFactorySupport : nodeFactories) {
+			nodeFactorySupport.setDocument(getDocument());
 
-					if (createdNode != null) {
-						node.appendChild(createdNode);
-					}
+			if (nodeFactorySupport instanceof SingleNodeFactory) {
+				final SingleNodeFactory singleNodeFactory = (SingleNodeFactory) nodeFactorySupport;
+				final Node createdNode = singleNodeFactory.createNode();
+
+				if (createdNode != null) {
+					node.appendChild(createdNode);
 				}
-				else if (nodeFactorySupport instanceof MultipleNodeFactory) {
-					final MultipleNodeFactory multipleNodeFactory = (MultipleNodeFactory) nodeFactorySupport;
-					final Node[] createdNodes = multipleNodeFactory.createNodes();
+			}
+			else if (nodeFactorySupport instanceof MultipleNodeFactory) {
+				final MultipleNodeFactory multipleNodeFactory = (MultipleNodeFactory) nodeFactorySupport;
+				final Node[] createdNodes = multipleNodeFactory.createNodes();
 
-					if (createdNodes != null) {
-						for (final Node createdNode : createdNodes) {
-							node.appendChild(createdNode);
-						}
+				if (createdNodes != null) {
+					for (final Node createdNode : createdNodes) {
+						node.appendChild(createdNode);
 					}
 				}
 			}
@@ -66,11 +68,11 @@ public class CompositeNodeFactory extends SingleNodeFactory {
 	}
 
 	public void add(NodeFactorySupport nodeFactorySupport) {
-		nodeFactorySupports.add(nodeFactorySupport);
+		nodeFactories.add(nodeFactorySupport);
 	}
 
 	public void remove(NodeFactorySupport nodeFactorySupport) {
-		nodeFactorySupports.remove(nodeFactorySupport);
+		nodeFactories.remove(nodeFactorySupport);
 	}
 
 }

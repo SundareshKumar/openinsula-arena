@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.atom.client;
 
+import org.openinsula.arena.gwt.util.client.Assert;
 import org.openinsula.arena.gwt.xml.client.AbstractParsedNodeResultAppender;
 
 import com.google.gwt.xml.client.Node;
@@ -13,9 +14,8 @@ public abstract class LinkNodeParser<T> extends AbstractParsedNodeResultAppender
 	public Link parseNode(Node node) {
 		final String href = getNodeAttribute("href");
 
-		if (href == null) {
-			throw new NullPointerException("");
-		}
+		Assert.notEmpty(href, "'href' must not be null.");
+
 		final Link link = new Link();
 
 		link.setHref(href);

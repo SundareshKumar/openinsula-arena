@@ -18,44 +18,44 @@ class AtomResourceNodeParser<T extends AtomResource> extends CompositeNodeParser
 	}
 
 	protected void initParsers() {
-		addNodeParser("id", new NodeTextAppender<T>() {
+		add("id", new NodeTextAppender<T>() {
 			@Override
 			public void appendResultTo(T atomResource, String id) {
 				atomResource.setId(id);
 			}
 		});
-		addNodeParser("title", new AtomTextNodeAppender<T>() {
+		add("title", new AtomTextNodeAppender<T>() {
 			@Override
 			public void appendResultTo(T atomResource, Text title) {
 				atomResource.setTitle(title);
 			}
 		});
-		addNodeParser("updated", new NodeTextAppender<T>() {
+		add("updated", new NodeTextAppender<T>() {
 			@Override
 			public void appendResultTo(T appendable, String returned) {
 				appendable.setUpdated(null); // FIXME
 			}
 		});
-		addNodeParser("rights", new AtomTextNodeAppender<T>() {
+		add("rights", new AtomTextNodeAppender<T>() {
 			@Override
 			public void appendResultTo(T atomResource, Text rights) {
 				atomResource.setRights(rights);
 			}
 		});
-		addNodeParser("author", new ParsedNodeResultAppender<T, Person>(new PersonNodeParser()) {
+		add("author", new ParsedNodeResultAppender<T, Person>(new PersonNodeParser()) {
 			@Override
 			public void appendResultTo(T atomResource, Person person) {
 				atomResource.addAuthor(person);
 			}
 		});
-		addNodeParser("contributor", new ParsedNodeResultAppender<T, Person>(new PersonNodeParser()) {
+		add("contributor", new ParsedNodeResultAppender<T, Person>(new PersonNodeParser()) {
 			@Override
 			public void appendResultTo(T atomResource, Person person) {
 				atomResource.addContributor(person);
 			}
 		});
-		addNodeParser("category", new CategoryNodeParser());
-		addNodeParser("link", new LinkNodeParser<T>() {
+		add("category", new CategoryNodeParser());
+		add("link", new LinkNodeParser<T>() {
 			@Override
 			public void appendResultTo(T atomResource, Link link) {
 				atomResource.addLink(link);
@@ -97,19 +97,19 @@ class AtomResourceNodeParser<T extends AtomResource> extends CompositeNodeParser
 				}
 			});
 
-			addNodeParser("name", new NodeTextAppender<Person>() {
+			add("name", new NodeTextAppender<Person>() {
 				@Override
 				public void appendResultTo(Person person, String value) {
 					person.setName(value);
 				}
 			});
-			addNodeParser("uri", new NodeTextAppender<Person>() {
+			add("uri", new NodeTextAppender<Person>() {
 				@Override
 				public void appendResultTo(Person person, String value) {
 					person.setUri(value);
 				}
 			});
-			addNodeParser("email", new NodeTextAppender<Person>() {
+			add("email", new NodeTextAppender<Person>() {
 				@Override
 				public void appendResultTo(Person person, String value) {
 					person.setEmail(value);

@@ -39,7 +39,7 @@ public class CompositeNodeParser<T> extends AbstractNodeParser<T> {
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			final Node childNode = childNodes.item(i);
 			final String nodeName = childNode.getNodeName();
-			final NodeParser<?> parser = getNodeParser(nodeName);
+			final NodeParser<?> parser = get(nodeName);
 
 			if (parser != null) {
 				if (appendable != null && parser instanceof AbstractParsedNodeResultAppender) {
@@ -55,19 +55,19 @@ public class CompositeNodeParser<T> extends AbstractNodeParser<T> {
 		return !nodeParses.isEmpty();
 	}
 
-	public void addNodeParser(String nodeName, NodeParser<?> parser) {
+	public void add(String nodeName, NodeParser<?> parser) {
 		nodeParses.put(nodeName, parser);
 	}
 
-	public void addNodeParser(String nodeName, AbstractParsedNodeResultAppender<T, ?> parser) {
+	public void add(String nodeName, AbstractParsedNodeResultAppender<T, ?> parser) {
 		nodeParses.put(nodeName, parser);
 	}
 
-	public void removeNodeParser(String nodeName) {
+	public void remove(String nodeName) {
 		nodeParses.remove(nodeName);
 	}
 
-	public NodeParser<?> getNodeParser(String nodeName) {
+	public NodeParser<?> get(String nodeName) {
 		return nodeParses.get(nodeName);
 	}
 

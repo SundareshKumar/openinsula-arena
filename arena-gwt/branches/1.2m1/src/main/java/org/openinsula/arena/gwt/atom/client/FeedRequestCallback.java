@@ -22,7 +22,7 @@ public abstract class FeedRequestCallback<T extends BaseEntry<T>> extends XmlReq
 	 * (com.google.gwt.xml.client.Document)
 	 */
 	@Override
-	protected void doWithXml(final Document document) {
+	protected void doWithXml(Document document) {
 		final FeedDocumentParser feedParser = new FeedDocumentParser();
 		final Feed<T> feed = feedParser.parse(document);
 
@@ -39,33 +39,38 @@ public abstract class FeedRequestCallback<T extends BaseEntry<T>> extends XmlReq
 		protected void initParsers() {
 			super.initParsers();
 
-			addNodeParser("subtitle", new AtomTextNodeAppender<Feed<T>>() {
+			add("subtitle", new AtomTextNodeAppender<Feed<T>>() {
 				@Override
 				public void appendResultTo(Feed<T> feed, Text text) {
 					feed.setSubtitle(text);
 				}
 			});
-			addNodeParser("icon", new NodeTextAppender<Feed<T>>() {
+			add("icon", new NodeTextAppender<Feed<T>>() {
 				@Override
 				public void appendResultTo(Feed<T> feed, String icon) {
 					feed.setIcon(icon);
 				}
 			});
-			addNodeParser("logo", new NodeTextAppender<Feed<T>>() {
+			add("logo", new NodeTextAppender<Feed<T>>() {
 				@Override
 				public void appendResultTo(Feed<T> feed, String logo) {
 					feed.setLogo(logo);
 				}
 			});
-			addNodeParser("entry", new AbstractParsedNodeResultAppender<Feed<T>, T>() {
+			add("entry", new AbstractParsedNodeResultAppender<Feed<T>, T>() {
 				@Override
 				public void appendResultTo(Feed<T> feed, T entry) {
 					feed.addEntry(entry);
 				}
 
+				@SuppressWarnings("unchecked")
 				@Override
 				public T parseNode(Node node) {
-					final T entry = createEntry();
+					T entry = createEntry();
+
+					if (entry == null) {
+						entry = (T) new Entry();
+					}
 
 					return entry.parse(node);
 				}

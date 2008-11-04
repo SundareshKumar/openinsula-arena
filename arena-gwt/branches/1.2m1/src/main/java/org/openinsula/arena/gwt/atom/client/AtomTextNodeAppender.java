@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.atom.client;
 
+import org.openinsula.arena.gwt.util.client.Assert;
 import org.openinsula.arena.gwt.xml.client.AbstractParsedNodeResultAppender;
 
 import com.google.gwt.xml.client.Node;
@@ -13,9 +14,8 @@ public abstract class AtomTextNodeAppender<A> extends AbstractParsedNodeResultAp
 	public Text parseNode(Node node) {
 		final String value = getNodeText();
 
-		if (value == null) {
-			throw new NullPointerException("Node value must not be null.");
-		}
+		Assert.notNull(value, "Node value must not be null.");
+
 		final Text text = new Text();
 
 		text.setValue(value);
