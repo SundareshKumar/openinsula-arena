@@ -86,16 +86,6 @@ public class FormItem<W extends Widget> extends FocusComposite {
 	}
 
 	private void initActions() {
-//		addFocusListener(new FocusListener() {
-//			public void onFocus(Widget sender) {
-//				setErrorMessage("");
-//				setValid(true);
-//				refresh();
-//			}
-//			public void onLostFocus(Widget sender) {
-//				validate();
-//			}
-//		});
 	}
 
 	@SuppressWarnings("unchecked")

@@ -43,7 +43,7 @@ public class ApplicationView extends NavigationSupport {
 	protected Widget getApplicationTitle() {
 		return title;
 	}
-	
+
 	public void pack() {
 		super.pack();
 
@@ -52,7 +52,6 @@ public class ApplicationView extends NavigationSupport {
 		titlePanel.setStyleName("ApplicationViewTitleBar");
 		titlePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
-//		titlePanel.add(title);
 		titlePanel.add(getApplicationTitle());
 
 		FlowPanel menuPanel = new FlowPanel();

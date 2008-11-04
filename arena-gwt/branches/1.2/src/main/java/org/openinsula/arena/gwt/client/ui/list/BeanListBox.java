@@ -67,7 +67,7 @@ public class BeanListBox<T> extends FocusComposite implements ListBoxModelListen
 				listBoxIdx++;
 			}
 
-			for (int rows = listBox.getItemCount() -1; listBoxIdx < rows; listBoxIdx++, modelIdx++) {
+			for (int rows = listBox.getItemCount(); listBoxIdx < rows; listBoxIdx++, modelIdx++) {
 				if (listBox.isItemSelected(listBoxIdx)) {
 					selection.add(model.getElementAt(modelIdx));
 				}

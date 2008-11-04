@@ -8,7 +8,11 @@ import java.util.Map;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DeckPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Widget;
 
 public abstract class NavigationSupport extends Composite implements
 		HistoryListener {
@@ -89,10 +93,6 @@ public abstract class NavigationSupport extends Composite implements
 	protected String getHistoryToken(final String linkLabel, Widget view) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(view.hashCode());
-		
-//		sb.append(hashCode());
-//		sb.append('-');
-//		sb.append(linkLabel.replaceAll("\\s", "").toUpperCase());
 
 		return sb.toString();
 	}

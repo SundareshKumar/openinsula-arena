@@ -124,19 +124,6 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 		return validatorChain;
 	}
 
-//	@Override
-//	public void validate(ValidatorAction action) {
-//		validatorChain().validate(null, action);
-//
-//		Set<T> keySet = validatorMap().keySet();
-//		Iterator<T> keyIterator = keySet.iterator();
-//		while (keyIterator.hasNext()) {
-//			T key = keyIterator.next();
-//			ValidatorChain<T> chain = validatorMap().get(key);
-//			chain.validate(key, action);
-//		}
-//	}
-
 	@Override
 	public void addFocusListener(FocusListener listener) {
 		for (T widget : getWidgets()) {

@@ -19,7 +19,6 @@ public class FormItemWidgetWrapper<T extends Widget> {
 
 	private MouseEventPanel parent;
 
-	private boolean hasFocus;
 
 	private boolean hasMouse;
 
@@ -27,13 +26,11 @@ public class FormItemWidgetWrapper<T extends Widget> {
 		widget = w;
 		parent = parentFocusPanel;
 		hintManager = new FormItemHintManager<Widget>(parentFocusPanel, hint);
-		hasFocus = false;
 		hasMouse = false;
 
 		if (widget instanceof SourcesFocusEvents) {
 			((SourcesFocusEvents) widget).addFocusListener(new FormItemFocusedListener());
 		}
-//		parent.addMouseListener(new FormItemParentMouseListener());
 	}
 
 	public T getWidget() {
@@ -48,36 +45,16 @@ public class FormItemWidgetWrapper<T extends Widget> {
 		public void onFocus(Widget sender) {
 			parent.setStyleName(FormFactory.getStyleFormItemFocused());
 			hintManager.showHint();
-			hasFocus = true;
 		}
 
 		public void onLostFocus(Widget sender) {
 			parent.setStyleName(FormFactory.getStyleFormItem());
-			hasFocus = false;
 			hintManager.hideHint();
 
 			if (!hasMouse) {
 			}
 		}
 	}
-
-	/**
-	 *
-	 *
-	 */
-//	public class FormItemParentMouseListener extends MouseListenerAdapter {
-//		public void onMouseEnter(Widget sender) {
-//			hintManager.showHint();
-//			hasMouse = true;
-//		}
-//
-//		public void onMouseLeave(Widget sender) {
-//			hasMouse = false;
-//			if (!hasFocus) {
-//				hintManager.hideHint();
-//			}
-//		}
-//	}
 
 	protected FormItemHintManager<Widget> getHintManager() {
 		return hintManager;
