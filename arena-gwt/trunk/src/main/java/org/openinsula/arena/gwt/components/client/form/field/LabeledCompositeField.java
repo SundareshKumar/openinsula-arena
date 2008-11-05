@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.openinsula.arena.gwt.client.validation.ValidationResult;
+import org.openinsula.arena.gwt.components.client.form.field.value.FieldUtils;
+import org.openinsula.arena.gwt.components.client.form.validation.ValidationResult;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
@@ -41,7 +42,7 @@ public class LabeledCompositeField extends Composite implements CompositeField {
 		simpleField.setAttribute(name, attribute);
 	}
 
-	public Widget toWidget() {
+	public Widget asWidget() {
 		return this;
 	}
 
@@ -97,7 +98,7 @@ public class LabeledCompositeField extends Composite implements CompositeField {
 		return valid;
 	}
 
-	public Widget[] getComponents() {
+	public Widget[] getFieldWidgets() {
 		return widgets;
 	}
 

@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
-import org.openinsula.arena.gwt.components.client.form.DefaultSimpleField;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -35,7 +34,7 @@ public class LabeledSimpleField extends DefaultSimpleField {
 	}
 
 	public void setLabel(String label) {
-		final Widget widget = getComponent();
+		final Widget widget = getFieldWidget();
 
 		if (widget == null) {
 			throw new NullPointerException("'component' must not be null.");

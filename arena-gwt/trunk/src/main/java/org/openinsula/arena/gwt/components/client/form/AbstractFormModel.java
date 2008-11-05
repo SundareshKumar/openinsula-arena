@@ -3,13 +3,13 @@ package org.openinsula.arena.gwt.components.client.form;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.openinsula.arena.gwt.client.validation.ValidationResult;
-import org.openinsula.arena.gwt.client.validation.Validator;
+import org.openinsula.arena.gwt.components.client.form.validation.ValidationResult;
+import org.openinsula.arena.gwt.components.client.form.validation.Validator;
 
 /**
  * @author Lucas K Mogari
  */
-public abstract class AbstractFormModel implements FormModel {
+public abstract class AbstractFormModel implements NewFormProvider {
 
 	private String title;
 

@@ -16,23 +16,6 @@ public class Action {
 
 	private ClickListener[] clickListeners;
 
-	private boolean enabled = true;
-
-	public Action(String text, ClickListener... clickListeners) {
-		this(text, null, null, clickListeners);
-	}
-
-	public Action(String text, String historyToken, ClickListener... clickListeners) {
-		this(text, historyToken, null, clickListeners);
-	}
-
-	public Action(String text, String historyToken, Image image, ClickListener... clickListeners) {
-		this.text = text;
-		this.historyToken = historyToken;
-		this.image = image;
-		this.clickListeners = clickListeners;
-	}
-
 	public String getText() {
 		return text;
 	}
@@ -63,14 +46,6 @@ public class Action {
 
 	public void setHistoryToken(String historyToken) {
 		this.historyToken = historyToken;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 
 }

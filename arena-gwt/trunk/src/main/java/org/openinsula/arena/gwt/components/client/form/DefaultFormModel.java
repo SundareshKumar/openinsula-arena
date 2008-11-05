@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.openinsula.arena.gwt.client.validation.ValidationResult;
 import org.openinsula.arena.gwt.components.client.form.field.Field;
-import org.openinsula.arena.gwt.components.client.form.field.FieldUtils;
+import org.openinsula.arena.gwt.components.client.form.field.value.FieldUtils;
+import org.openinsula.arena.gwt.components.client.form.validation.ValidationResult;
 
 /**
  * @author Lucas K Mogari
@@ -59,7 +59,7 @@ public class DefaultFormModel extends AbstractFormModel {
 		formItems.add(formItem);
 	}
 
-	public void appendFormItems(FormItemProvider formItemProvider) {
+	public void appendFormItems(FormItemsProvider formItemProvider) {
 		formItems.addAll(formItemProvider.getFormItems());
 	}
 

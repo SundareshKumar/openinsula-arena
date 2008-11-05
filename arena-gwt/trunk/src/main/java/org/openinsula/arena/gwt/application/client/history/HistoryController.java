@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.application.client.history;
 
+
 import com.google.gwt.user.client.HistoryListener;
 
 /**
@@ -9,26 +10,10 @@ import com.google.gwt.user.client.HistoryListener;
  */
 public interface HistoryController extends HistoryListener {
 
-	public static final int NO_SCOPE = 0;
+	public void addHistoryFilter(HistoryFilter filter);
 
-	public static final int SESSION_SCOPE = 1;
+	public void removeHistoryFilter(HistoryFilter filter);
 
-	public static final int APPLICATION_SCOPE = 2;
-
-	public void addHistoryChangeInterceptor(HistoryChangeInterceptor interceptor);
-
-	public void removeHistoryChangeInterceptor(HistoryChangeInterceptor interceptor);
-
-	public boolean containsTarget(String historyToken);
-
-	public void addTarget(String historyToken, Object target);
-
-	public void addTarget(String historyToken, LazyHistoryTargetProvider provider);
-
-	public void addTarget(String historyToken, LazyHistoryTargetProvider provider, int scope);
-
-	public Object removeTarget(String historyToken);
-
-	public Object getTarget(String historyToken);
+	public void setHistoryTargetResolver(HistoryTargetResolver historyTargetResolver);
 
 }

@@ -1,63 +1,72 @@
 package org.openinsula.arena.gwt.application.client.history;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
-
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
  */
-public class DefaultHistoryController extends AbstractHistoryController {
+public class DefaultHistoryController implements HistoryController {
 
-	final HistoryTokens historyTokens = GWT.create(HistoryTokens.class);
+	private final List<HistoryFilter> historyFilters = new LinkedList<HistoryFilter>();
+
+	private HistoryTargetResolver historyTargetResolver;
 
 	public final void onHistoryChanged(String historyToken) {
 		if (historyToken == null || historyToken.trim().length() == 0) {
-			showPage(historyTokens.startPageToken());
-		}
-		else if (!containsTarget(historyToken)) {
-			showPage(historyTokens.pageNotFoundToken());
-		}
-		else {
-			final List<HistoryChangeInterceptor> historyChangeInterceptors = getHistoryChangeInterceptors();
+			final HistoryTokens historyTokens = GWT.create(HistoryTokens.class);
 
-			for (final HistoryChangeInterceptor interceptor : historyChangeInterceptors) {
-				if (!interceptor.preHistoryChange(historyToken)) {
-					return;
-				}
-			}
-
-			final boolean changed = changeHistoryTarget(historyToken);
-
-			for (final HistoryChangeInterceptor interceptor : historyChangeInterceptors) {
-				interceptor.postHistoryChange(historyToken, changed);
-			}
+			historyToken = historyTokens.startPageToken();
 		}
+
+		new DefaultHistoryFilterChain().doFilter(historyToken);
 	}
 
-	protected boolean changeHistoryTarget(String historyToken) {
-		final Object target = getTarget(historyToken);
+	private void changeHistoryTarget(String historyToken) {
+		final Widget target = historyTargetResolver.resolve(historyToken);
 
-		if (target instanceof HistoryDispatcher) {
-			final HistoryDispatcher dispatcher = (HistoryDispatcher) target;
-
-			dispatcher.forwardHistoryChanged(historyToken);
+		if (target == null) {
 		}
-		else if (target instanceof Widget) {
+		else {
 			// Application.getInstance().getNavigationController().show((Widget)
 			// target);
 		}
-		else {
-			return false;
-		}
-		return true;
 	}
 
-	private void showPage(String token) {
-		History.newItem(token);
+	public final void addHistoryFilter(HistoryFilter interceptor) {
+		historyFilters.add(interceptor);
+	}
+
+	public final void removeHistoryFilter(HistoryFilter interceptor) {
+		historyFilters.remove(interceptor);
+	}
+
+	public void setHistoryTargetResolver(HistoryTargetResolver historyTargetResolver) {
+		this.historyTargetResolver = historyTargetResolver;
+	}
+
+	private final class DefaultHistoryFilterChain implements HistoryFilterChain {
+
+		private final Iterator<HistoryFilter> iterator;
+
+		public DefaultHistoryFilterChain() {
+			iterator = new LinkedList<HistoryFilter>(historyFilters).iterator();
+		}
+
+		public void doFilter(String historyToken) {
+			if (iterator.hasNext()) {
+				iterator.next().doFilter(historyToken, this);
+				iterator.remove();
+			}
+			else {
+				changeHistoryTarget(historyToken);
+			}
+		}
+
 	}
 
 }

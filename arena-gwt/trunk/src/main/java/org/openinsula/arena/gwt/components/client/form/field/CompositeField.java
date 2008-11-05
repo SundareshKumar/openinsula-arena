@@ -1,6 +1,8 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
-import org.openinsula.arena.gwt.client.validation.Validator;
+import java.util.List;
+
+import org.openinsula.arena.gwt.components.client.form.validation.Validator;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -9,9 +11,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public interface CompositeField extends Field {
 
-	public Widget[] getComponents();
+	public List<Widget> getFieldWidgets();
 
-	public void addValidator(Widget widget, Validator... validators);
+	public void addValidator(Widget widget, Validator validator);
 
 	public void removeValidator(Widget widget, Validator validator);
 

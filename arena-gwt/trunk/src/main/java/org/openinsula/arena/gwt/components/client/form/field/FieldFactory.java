@@ -1,7 +1,6 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
 import org.openinsula.arena.gwt.components.client.ListItem;
-import org.openinsula.arena.gwt.components.client.form.DefaultSimpleField;
 import org.openinsula.arena.gwt.components.client.form.SectionBreak;
 import org.openinsula.arena.gwt.components.client.form.Suffix;
 
@@ -26,15 +25,15 @@ public final class FieldFactory {
 	private FieldFactory() {
 	}
 
-	public static SimpleField field(String label, Widget widget) {
+	public static SingleField field(String label, Widget widget) {
 		return new LabeledSimpleField(label, widget);
 	}
 
-	public static SimpleField field(Widget widget) {
+	public static SingleField field(Widget widget) {
 		return new DefaultSimpleField(widget);
 	}
 
-	public static SimpleField disabledField(String label, FocusWidget widget) {
+	public static SingleField disabledField(String label, FocusWidget widget) {
 		widget.setEnabled(false);
 		return field(label, widget);
 	}

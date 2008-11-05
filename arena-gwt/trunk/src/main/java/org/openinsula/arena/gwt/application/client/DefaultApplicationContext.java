@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * @author Lucas K Mogari
  */
-public class DefaultApplicationContext implements ApplicationContext {
+class DefaultApplicationContext implements ApplicationContext {
 
 	private final Map<String, Object> attributes = new HashMap<String, Object>();
 

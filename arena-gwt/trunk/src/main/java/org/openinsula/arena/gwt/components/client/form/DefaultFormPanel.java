@@ -3,9 +3,8 @@ package org.openinsula.arena.gwt.components.client.form;
 import java.util.Iterator;
 
 import org.openinsula.arena.gwt.components.client.Paragraph;
-import org.openinsula.arena.gwt.components.client.Title;
 import org.openinsula.arena.gwt.components.client.UnorderedList;
-import org.openinsula.arena.gwt.components.client.form.field.SimpleField;
+import org.openinsula.arena.gwt.components.client.form.field.SingleField;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -33,7 +32,7 @@ public class DefaultFormPanel extends AbstractFormPanel {
 	public DefaultFormPanel() {
 	}
 
-	public DefaultFormPanel(FormModel formModel) {
+	public DefaultFormPanel(NewFormProvider formModel) {
 		super(formModel);
 	}
 
@@ -43,7 +42,7 @@ public class DefaultFormPanel extends AbstractFormPanel {
 		sinkEvents(Event.ONKEYPRESS);
 	}
 
-	public Widget toWidget() {
+	public Widget asWidget() {
 		return this;
 	}
 
@@ -103,14 +102,14 @@ public class DefaultFormPanel extends AbstractFormPanel {
 	}
 
 	private Widget getWidget(FormItem formItem) {
-		Widget widget = formItem.toWidget();
+		Widget widget = formItem.asWidget();
 
 		if (widget == null) {
 			if (formItem instanceof Widget) {
 				widget = (Widget) formItem;
 			}
-			else if (formItem instanceof SimpleField) {
-				widget = ((SimpleField) formItem).getComponent();
+			else if (formItem instanceof SingleField) {
+				widget = ((SingleField) formItem).getFieldWidget();
 			}
 		}
 

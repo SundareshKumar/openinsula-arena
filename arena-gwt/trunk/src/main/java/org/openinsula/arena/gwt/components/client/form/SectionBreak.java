@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.components.client.form;
 
+import org.openinsula.arena.gwt.components.client.Header;
 import org.openinsula.arena.gwt.components.client.ListItem;
 import org.openinsula.arena.gwt.components.client.Paragraph;
 
@@ -38,7 +39,7 @@ public class SectionBreak extends Composite implements FormItem, HasText {
 		listItem.add(titleHeader);
 	}
 
-	public Widget toWidget() {
+	public Widget asWidget() {
 		return this;
 	}
 

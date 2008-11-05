@@ -3,7 +3,7 @@ package org.openinsula.arena.gwt.application.client;
 /**
  * @author Lucas K Mogari
  */
-public class DefaultContextAttributeLoader implements ContextAttributeLoader {
+class DefaultContextAttributeLoader implements ContextAttributeLoader {
 
 	public <T> void loadAttribute(String attributeName, AttributeLoadingNotifier<T> attributeLoadNotifier) {
 		final ApplicationContext applicationContext = Application.getInstance().getContext();
@@ -18,7 +18,7 @@ public class DefaultContextAttributeLoader implements ContextAttributeLoader {
 		}
 	}
 
-	private final class SettingApplicationAttributeListener<T> extends ContextAttributeListenerAdapter {
+	private final class SettingApplicationAttributeListener<T> extends NullContextAttributeListener {
 
 		private final String attributeName;
 

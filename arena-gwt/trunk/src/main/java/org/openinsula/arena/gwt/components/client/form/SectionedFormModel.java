@@ -36,7 +36,7 @@ public class SectionedFormModel extends DefaultFormModel {
 	}
 
 	@Override
-	public void appendFormItems(FormItemProvider formItemProvider) {
+	public void appendFormItems(FormItemsProvider formItemProvider) {
 		if (formItemProvider instanceof Section) {
 			appendSection((Section) formItemProvider);
 		}
