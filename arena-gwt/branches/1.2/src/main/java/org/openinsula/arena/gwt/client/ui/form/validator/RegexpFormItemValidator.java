@@ -19,7 +19,8 @@ public class RegexpFormItemValidator extends SyncFormItemValidator<TextBoxBase> 
 			"[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|" +
 			"1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
-	public final static String MOEDA = "^\\$?(\\d{1,3},?(\\d{3},?)*\\d{3}(\\.\\d{0,2})?|\\d{1,3}(\\.\\d{0,2})?|\\.\\d{1,2}?)$";
+	public final static String MOEDA = "^(?!\\u00a2)\\p{Sc}?(?!0,?\\d)(?:\\d{1,3}(?:([, .])\\d{3})" +
+			"?(?:\\1\\d{3})*|(?:\\d+))((?!\\1)[,.]\\d{2})?$";
 
 	public final static String DECIMAL = "^(\\d*|\\d+(\\.|\\,)\\d+)$";
 

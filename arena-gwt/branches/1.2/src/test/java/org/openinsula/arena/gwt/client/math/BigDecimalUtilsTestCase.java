@@ -87,6 +87,7 @@ public class BigDecimalUtilsTestCase {
 		assertEquals(new BigDecimal("1000.0"), BigDecimalUtils.newBigDecimal("1000,0"));
 		assertEquals(new BigDecimal("1000"), BigDecimalUtils.newBigDecimal("1000."));
 		assertEquals(new BigDecimal("1000"), BigDecimalUtils.newBigDecimal("1000,"));
+		assertEquals(new BigDecimal("1000.5"), BigDecimalUtils.newBigDecimal("1000,5"));
 	}
 
 }

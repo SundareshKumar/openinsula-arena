@@ -47,9 +47,9 @@ public class RegexpFormItemValidatorTestCase {
 		assertTrue("0.01".matches(RegexpFormItemValidator.MOEDA));
 		assertTrue("0.00".matches(RegexpFormItemValidator.MOEDA));
 		assertTrue("100.00".matches(RegexpFormItemValidator.MOEDA));
-		assertTrue("$100.00".matches(RegexpFormItemValidator.MOEDA));
-		assertFalse("100.000".matches(RegexpFormItemValidator.MOEDA));
-		assertFalse("100,00".matches(RegexpFormItemValidator.MOEDA));
+		assertTrue("100.00".matches(RegexpFormItemValidator.MOEDA));
+		assertTrue("100,00".matches(RegexpFormItemValidator.MOEDA));
+		assertTrue("100.000".matches(RegexpFormItemValidator.MOEDA));
 		assertFalse("0.10.00".matches(RegexpFormItemValidator.MOEDA));
 		assertFalse("a100.00".matches(RegexpFormItemValidator.MOEDA));
 		assertFalse("#100.00".matches(RegexpFormItemValidator.MOEDA));
