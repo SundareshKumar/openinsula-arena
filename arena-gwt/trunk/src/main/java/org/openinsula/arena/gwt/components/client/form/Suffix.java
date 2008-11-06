@@ -1,6 +1,6 @@
 package org.openinsula.arena.gwt.components.client.form;
 
-import org.openinsula.arena.gwt.components.client.Label;
+import org.openinsula.arena.gwt.components.client.ForLabel;
 import org.openinsula.arena.gwt.components.client.Span;
 
 import com.google.gwt.user.client.DOM;
@@ -16,22 +16,22 @@ public class Suffix extends Composite implements HasText {
 
 	public static final String LABEL_STYLE_NAME = "Suffix";
 
-	private final Label label;
+	private final ForLabel forLabel;
 
 	private final Widget component;
 
 	public Suffix(String suffix, Widget component) {
 		final Span span = new Span();
 		final String id = getId(component);
-		label = new Label(suffix, id);
+		forLabel = new ForLabel(suffix, id);
 		this.component = component;
 
-		label.setStyleName(LABEL_STYLE_NAME);
+		forLabel.setStyleName(LABEL_STYLE_NAME);
 
 		initWidget(span);
 
 		span.add(component);
-		span.add(label);
+		span.add(forLabel);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -40,11 +40,11 @@ public class Suffix extends Composite implements HasText {
 	}
 
 	public String getText() {
-		return label.getText();
+		return forLabel.getText();
 	}
 
 	public void setText(String text) {
-		label.setText(text);
+		forLabel.setText(text);
 	}
 
 	private String getId(Widget widget) {

@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.application.client;
+package org.openinsula.arena.gwt.application.client.context;
 
 /**
  * @author Lucas K Mogari

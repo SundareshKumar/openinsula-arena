@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.application.client.history;
 
-
 import com.google.gwt.user.client.HistoryListener;
 
 /**

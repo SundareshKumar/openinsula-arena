@@ -1,0 +1,4 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<entry-point class='org.openinsula.arena.gwt.application.client.Main' />
+</module>

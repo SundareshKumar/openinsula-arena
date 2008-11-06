@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author Lucas K Mogari
  */
-public class DeckPanelDisplayer extends AbstractWidgetDisplayer {
+public class DeckPanelDisplayer extends WidgetDisplayer {
 
 	private final DeckPanel deckPanel = new DeckPanel();
 
@@ -15,7 +15,7 @@ public class DeckPanelDisplayer extends AbstractWidgetDisplayer {
 	}
 
 	@Override
-	protected boolean showWidget(Widget widget) {
+	protected boolean doShow(Widget widget) {
 		final int index = deckPanel.getWidgetIndex(widget);
 
 		if (index > -1) {
@@ -25,11 +25,15 @@ public class DeckPanelDisplayer extends AbstractWidgetDisplayer {
 		return false;
 	}
 
-	public void addWidget(Widget widget) {
+	public void clear() {
+		deckPanel.clear();
+	}
+
+	public void add(Widget widget) {
 		deckPanel.add(widget);
 	}
 
-	public void removeWidget(Widget widget) {
+	public void remove(Widget widget) {
 		deckPanel.remove(widget);
 	}
 

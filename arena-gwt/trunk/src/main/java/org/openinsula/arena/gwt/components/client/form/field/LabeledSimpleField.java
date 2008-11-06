@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class LabeledSimpleField extends DefaultSimpleField {
 
-	private Label label;
+	private ForLabel forLabel;
 
 	public LabeledSimpleField() {
 	}
@@ -40,16 +40,16 @@ public class LabeledSimpleField extends DefaultSimpleField {
 			throw new NullPointerException("'component' must not be null.");
 		}
 
-		if (this.label == null) {
+		if (this.forLabel == null) {
 			final String id = AttributeUtils.findFirstFocusWidgetId(widget.getElement());
-			this.label = new Label(label, id);
+			this.forLabel = new ForLabel(label, id);
 
-			this.label.setStyleName(LABEL_STYLE_NAME);
+			this.forLabel.setStyleName(LABEL_STYLE_NAME);
 
-			insert(0, this.label);
+			insert(0, this.forLabel);
 		}
 
-		this.label.setText(label);
+		this.forLabel.setText(label);
 	}
 
 }

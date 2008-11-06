@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.application.client;
+package org.openinsula.arena.gwt.application.client.context;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * @author Lucas K Mogari
  */
-class DefaultApplicationContext implements ApplicationContext {
+public class DefaultApplicationContext implements ApplicationContext {
 
 	private final Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -53,11 +53,6 @@ class DefaultApplicationContext implements ApplicationContext {
 		listeners.remove(listener);
 	}
 
-	public String getStringAttribute(String name) {
-		final Object attribute = getAttribute(name);
-		return attribute instanceof String ? (String) attribute : null;
-	}
-
 	@SuppressWarnings("unchecked")
 	public <T> T getAttribute(String name) {
 		return (T) attributes.get(name);
@@ -65,6 +60,46 @@ class DefaultApplicationContext implements ApplicationContext {
 
 	public Set<String> getAttributeNames() {
 		return attributes.keySet();
+	}
+
+	public <T> void loadAttribute(String name, AttributeLoadingNotifier<T> attributeLoadNotifier) {
+		final T attribute = this.<T> getAttribute(name);
+
+		if (attribute == null) {
+			addContextAttributeListener(new SettingApplicationAttributeListener<T>(name, attributeLoadNotifier));
+		}
+		else {
+			attributeLoadNotifier.notifyAttributeLoaded(attribute);
+		}
+	}
+
+	public String getStringAttribute(String name) {
+		final Object attribute = getAttribute(name);
+		return attribute instanceof String ? (String) attribute : null;
+	}
+
+	private final class SettingApplicationAttributeListener<T> extends NullContextAttributeListener {
+
+		private final String attributeName;
+
+		private final AttributeLoadingNotifier<T> attributeLoadNotifier;
+
+		public SettingApplicationAttributeListener(String attributeName,
+				AttributeLoadingNotifier<T> attributeLoadNotifier) {
+			this.attributeName = attributeName;
+			this.attributeLoadNotifier = attributeLoadNotifier;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void attributeAdded(String name, Object attribute) {
+			if (attributeName.equals(name)) {
+				removeContextAttributeListener(this);
+
+				attributeLoadNotifier.notifyAttributeLoaded((T) attribute);
+			}
+		}
+
 	}
 
 }

@@ -7,15 +7,15 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author Lucas K Mogari
  */
-public class Label extends Widget implements HasText {
+public class ForLabel extends Widget implements HasText {
 
 	private static final String FOR_ATTRIBUTE = "for";
 
-	public Label() {
+	public ForLabel() {
 		this(null, null);
 	}
 
-	public Label(String label, String id) {
+	public ForLabel(String label, String id) {
 		setElement(DOM.createLabel());
 
 		if (id != null && !id.trim().isEmpty()) {

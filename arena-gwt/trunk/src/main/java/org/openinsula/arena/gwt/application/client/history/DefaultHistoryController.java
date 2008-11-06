@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openinsula.arena.gwt.application.client.Application;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -29,11 +31,8 @@ public class DefaultHistoryController implements HistoryController {
 	private void changeHistoryTarget(String historyToken) {
 		final Widget target = historyTargetResolver.resolve(historyToken);
 
-		if (target == null) {
-		}
-		else {
-			// Application.getInstance().getNavigationController().show((Widget)
-			// target);
+		if (target != null) {
+			Application.getInstance().getWidgetDisplayer().show(target);
 		}
 	}
 

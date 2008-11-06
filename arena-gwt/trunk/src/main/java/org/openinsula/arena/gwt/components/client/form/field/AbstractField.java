@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.openinsula.arena.gwt.components.client.Label;
+import org.openinsula.arena.gwt.components.client.ForLabel;
 import org.openinsula.arena.gwt.components.client.Paragraph;
 import org.openinsula.arena.gwt.components.client.form.validation.Validator;
 
@@ -18,7 +18,7 @@ public abstract class AbstractField extends Composite implements Field {
 
 	private final List<Validator> validators = new ArrayList<Validator>();
 
-	private final Label fieldLabel;
+	private final ForLabel fieldForLabel;
 
 	private Paragraph errorMessageParagraph;
 
@@ -29,12 +29,12 @@ public abstract class AbstractField extends Composite implements Field {
 	}
 
 	public AbstractField(String label) {
-		fieldLabel = new Label();
+		fieldForLabel = new ForLabel();
 
 		initWidget(listItem);
 		setStyleName(StyleNames.FIELD);
 
-		listItem.add(fieldLabel);
+		listItem.add(fieldForLabel);
 	}
 
 	public Widget asWidget() {
@@ -81,7 +81,7 @@ public abstract class AbstractField extends Composite implements Field {
 	}
 
 	public void setLabel(String text) {
-		fieldLabel.setText(text);
+		fieldForLabel.setText(text);
 	}
 
 }

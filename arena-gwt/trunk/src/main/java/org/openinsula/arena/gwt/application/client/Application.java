@@ -1,5 +1,9 @@
 package org.openinsula.arena.gwt.application.client;
 
+import org.openinsula.arena.gwt.application.client.context.ApplicationContext;
+import org.openinsula.arena.gwt.application.client.context.DefaultApplicationContext;
+import org.openinsula.arena.gwt.application.client.display.DeckPanelDisplayer;
+import org.openinsula.arena.gwt.application.client.display.WidgetDisplayer;
 import org.openinsula.arena.gwt.application.client.history.DefaultHistoryController;
 import org.openinsula.arena.gwt.application.client.history.HistoryController;
 
@@ -10,16 +14,16 @@ public final class Application {
 
 	private ApplicationContext context;
 
-	private ContextAttributeLoader attributeLoader;
-
 	private HistoryController historyController;
+
+	private WidgetDisplayer widgetDisplayer;
 
 	private static Application instance;
 
 	private Application() {
 		context = new DefaultApplicationContext();
 		historyController = new DefaultHistoryController();
-		attributeLoader = new DefaultContextAttributeLoader();
+		widgetDisplayer = new DeckPanelDisplayer();
 	}
 
 	public static Application getInstance() {
@@ -53,12 +57,12 @@ public final class Application {
 		this.historyController = historyController;
 	}
 
-	public ContextAttributeLoader getAttributeLoader() {
-		return attributeLoader;
+	public WidgetDisplayer getWidgetDisplayer() {
+		return widgetDisplayer;
 	}
 
-	public void setAttributeLoader(ContextAttributeLoader attributeLoader) {
-		this.attributeLoader = attributeLoader;
+	public void setWidgetDisplayer(WidgetDisplayer widgetDisplayer) {
+		this.widgetDisplayer = widgetDisplayer;
 	}
 
 }

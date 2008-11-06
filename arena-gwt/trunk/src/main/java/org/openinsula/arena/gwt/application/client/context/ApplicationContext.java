@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.application.client;
+package org.openinsula.arena.gwt.application.client.context;
 
 import java.util.Set;
 
@@ -6,6 +6,8 @@ import java.util.Set;
  * @author Lucas K Mogari
  */
 public interface ApplicationContext {
+
+	public <T> void loadAttribute(String attributeName, AttributeLoadingNotifier<T> attributeLoadNotifier);
 
 	public void setAttribute(String name, Object attribute);
 
