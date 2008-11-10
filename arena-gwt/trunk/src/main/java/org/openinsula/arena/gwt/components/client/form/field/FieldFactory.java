@@ -25,21 +25,21 @@ public final class FieldFactory {
 	private FieldFactory() {
 	}
 
-	public static SingleField field(String label, Widget widget) {
-		return new LabeledSimpleField(label, widget);
+	public static SimpleField field(String label, Widget widget) {
+		return new DefaultSimpleField(label, widget);
 	}
 
-	public static SingleField field(Widget widget) {
+	public static SimpleField field(Widget widget) {
 		return new DefaultSimpleField(widget);
 	}
 
-	public static SingleField disabledField(String label, FocusWidget widget) {
+	public static SimpleField disabledField(String label, FocusWidget widget) {
 		widget.setEnabled(false);
 		return field(label, widget);
 	}
 
-	public static CompositeField field(String label, Widget... widgets) {
-		return new LabeledCompositeField(label, widgets);
+	public static ComplexField field(String label, Widget... widgets) {
+		return new DefaultComplexField(label, widgets);
 	}
 
 	public static Suffix suffix(String suffix, Widget widget) {

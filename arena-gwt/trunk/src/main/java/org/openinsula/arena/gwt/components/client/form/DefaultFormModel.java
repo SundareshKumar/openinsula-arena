@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.openinsula.arena.gwt.components.client.form.field.Field;
-import org.openinsula.arena.gwt.components.client.form.field.value.FieldUtils;
 import org.openinsula.arena.gwt.components.client.form.validation.ValidationResult;
+import org.openinsula.arena.gwt.components.client.util.value.FieldUtils;
 
 /**
  * @author Lucas K Mogari

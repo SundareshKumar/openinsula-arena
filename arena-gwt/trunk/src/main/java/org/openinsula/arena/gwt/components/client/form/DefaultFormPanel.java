@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.openinsula.arena.gwt.components.client.Paragraph;
 import org.openinsula.arena.gwt.components.client.UnorderedList;
-import org.openinsula.arena.gwt.components.client.form.field.SingleField;
+import org.openinsula.arena.gwt.components.client.form.field.SimpleField;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -108,8 +108,8 @@ public class DefaultFormPanel extends AbstractFormPanel {
 			if (formItem instanceof Widget) {
 				widget = (Widget) formItem;
 			}
-			else if (formItem instanceof SingleField) {
-				widget = ((SingleField) formItem).getFieldWidget();
+			else if (formItem instanceof SimpleField) {
+				widget = ((SimpleField) formItem).getFieldWidget();
 			}
 		}
 

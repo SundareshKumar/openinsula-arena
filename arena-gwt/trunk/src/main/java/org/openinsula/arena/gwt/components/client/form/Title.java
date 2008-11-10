@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Create a {@link Widget} in this format:
  * 
  * <pre>
- * 	&lt;div class=&quot;Title&quot;&gt;
+ * 	&lt;div class=&quot;arena-Title&quot;&gt;
  * 		&lt;h2&gt;title&lt;/h2&gt;
  * 		&lt;p&gt;description&lt;/p&gt;
  * 	&lt;/div&gt;
@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Title extends FlowPanel implements HasText, FormItem {
 
-	public static final String STYLE_CLASS_NAME = "Title";
+	public static final String STYLE_CLASS_NAME = "arena-Title";
 
 	private final Header h2;
 

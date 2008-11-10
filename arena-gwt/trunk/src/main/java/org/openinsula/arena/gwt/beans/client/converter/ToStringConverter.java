@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.client.beans.converter;
+package org.openinsula.arena.gwt.beans.client.converter;
 
 public class ToStringConverter<T> implements Converter<T, String> {
 

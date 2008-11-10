@@ -5,7 +5,7 @@ package org.openinsula.arena.gwt.components.client.form.validation;
  */
 public class ValidationResult {
 
-	private final Validator validator;
+	private Validator validator;
 
 	private boolean valid;
 
@@ -27,6 +27,10 @@ public class ValidationResult {
 
 	public Validator getValidator() {
 		return validator;
+	}
+
+	void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 
 	public boolean isValid() {

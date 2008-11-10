@@ -1,4 +1,4 @@
-package org.openinsula.arena.gwt.components.client.form.field.value;
+package org.openinsula.arena.gwt.components.client.util.value;
 
 
 import com.google.gwt.user.client.ui.ListBox;
@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.ListBox;
 /**
  * @author Lucas K Mogari
  */
-public class ListBoxValueHandler implements FieldValueHandler<ListBox> {
+public class ListBoxValueHandler implements ValueHandler<ListBox> {
 
 	@SuppressWarnings("unchecked")
 	public <V> V getValue(ListBox listbox) {

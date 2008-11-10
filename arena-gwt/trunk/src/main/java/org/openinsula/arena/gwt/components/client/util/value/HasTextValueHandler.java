@@ -1,12 +1,11 @@
-package org.openinsula.arena.gwt.components.client.form.field.value;
-
+package org.openinsula.arena.gwt.components.client.util.value;
 
 import com.google.gwt.user.client.ui.HasText;
 
 /**
  * @author Lucas K Mogari
  */
-public class HasTextValueHandler implements FieldValueHandler<HasText> {
+public class HasTextValueHandler implements ValueHandler<HasText> {
 
 	@SuppressWarnings("unchecked")
 	public <V> V getValue(HasText hasText) {

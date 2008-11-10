@@ -5,6 +5,6 @@ package org.openinsula.arena.gwt.components.client.form.validation;
  */
 public interface Validator {
 
-	public ValidationResult validate(Object value);
+	public void validate(Object value, ValidationCallback callback);
 
 }

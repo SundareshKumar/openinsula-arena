@@ -1,6 +1,7 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
 import org.openinsula.arena.gwt.components.client.form.FormItem;
+import org.openinsula.arena.gwt.components.client.form.validation.ValidationCallback;
 import org.openinsula.arena.gwt.components.client.form.validation.Validator;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -38,6 +39,6 @@ public interface Field extends FormItem {
 
 	public void removeValidator(Validator validator);
 
-	public boolean isValid();
+	public void validate(ValidationCallback callback);
 
 }

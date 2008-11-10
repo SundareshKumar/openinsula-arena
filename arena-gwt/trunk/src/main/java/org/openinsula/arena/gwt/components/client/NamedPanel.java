@@ -25,6 +25,8 @@ public class NamedPanel extends FlowPanel {
 		title = new Title(name, description);
 
 		add(title);
+
+		setStyleName("arena-Panel");
 	}
 
 	public void setName(String name) {

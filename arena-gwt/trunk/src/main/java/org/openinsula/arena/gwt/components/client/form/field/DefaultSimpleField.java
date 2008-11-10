@@ -1,230 +1,73 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import org.openinsula.arena.gwt.components.client.form.validation.ValidationCallback;
+import org.openinsula.arena.gwt.components.client.util.value.FieldUtils;
 
-import org.openinsula.arena.gwt.components.client.ListItem;
-import org.openinsula.arena.gwt.components.client.Paragraph;
-import org.openinsula.arena.gwt.components.client.form.Suffix;
-import org.openinsula.arena.gwt.components.client.form.field.value.FieldUtils;
-import org.openinsula.arena.gwt.components.client.form.validation.ValidationResult;
-import org.openinsula.arena.gwt.components.client.form.validation.Validator;
-
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FocusListener;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
  */
-public class DefaultSimpleField extends Composite implements SingleField {
+public class DefaultSimpleField extends ListItemField implements SimpleField {
 
-	private final ListItem listItem = new ListItem();
-
-	private Widget widget;
-
-	private Paragraph errorParagraph;
-
-	private HTML instructionHtml;
-
-	private final Map<String, Object> attributes = new HashMap<String, Object>();
-
-	private final List<Validator> validators = new LinkedList<Validator>();
+	private Widget fieldWidget;
 
 	public DefaultSimpleField() {
 	}
 
-	public DefaultSimpleField(Widget widget) {
-		setComponent(widget);
+	public DefaultSimpleField(Widget fieldWidget) {
+		this(fieldWidget, null);
 	}
 
-	{
-		initWidget(listItem);
+	public DefaultSimpleField(Widget fieldWidget, String label) {
+		super(label);
 
-		setStyleName(FIELD_STYLE_NAME);
+		setFieldWidget(fieldWidget);
 	}
 
-	public void setErrorMessage(String errorMessage) {
-	}
+	public void setFieldWidget(Widget fieldWidget) {
+		if (fieldWidget == null) {
+			throw new IllegalArgumentException("'fieldWidget' must not be null.");
+		}
 
-	public void setInstruction(String text) {
-	}
+		final Widget oldFieldWidget = this.fieldWidget;
 
-	public void setLabel(String text) {
-	}
+		if (oldFieldWidget == null || !oldFieldWidget.equals(fieldWidget)) {
+			this.fieldWidget = fieldWidget;
 
-	public void addValidator(Validator validator) {
-		validators.add(validator);
-	}
+			if (oldFieldWidget != null) {
+				remove(oldFieldWidget);
+			}
 
-	public void removeValidator(Validator validator) {
-		validators.remove(validator);
-	}
-
-	public boolean isValid() {
-		boolean valid = true;
-
-		for (final Validator validator : validators) {
-			final Object value = FieldUtils.getValue(widget);
-			final ValidationResult result = validator.validate(value);
-
-			if (result != null && !result.isValid()) {
-				final String message = result.getMessage();
-				valid = false;
-
-				setAttribute(ERROR_MESSAGE_ATTRIBUTE, message);
+			switch (getWidgetCount()) {
+			case 0:
+				add(fieldWidget);
 				break;
-			}
-		}
 
-		if (valid) {
-			setAttribute(ERROR_MESSAGE_ATTRIBUTE, null);
-		}
-
-		return valid;
-	}
-
-	public Widget asWidget() {
-		return this;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <A> A getAttribute(String name) {
-		return (A) attributes.get(name);
-	}
-
-	public void setAttribute(String name, Object attribute) {
-		final Object oldAttribute = getAttribute(name);
-
-		if (EqualsUtils.isDifferent(oldAttribute, attribute)) {
-			attributes.put(name, attribute);
-
-			if (Field.INSTRUCTION_ATTRIBUTE.equals(name)) {
-				setInstruction((String) attribute);
-			}
-			else if (Field.ERROR_MESSAGE_ATTRIBUTE.equals(name)) {
-				setErrorMessage((String) attribute);
+			default:
+				insert(fieldWidget, 1);
+				break;
 			}
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T extends Widget> T getFieldWidget() {
-		return (T) widget;
+		return (T) fieldWidget;
 	}
 
-	public void setComponent(Widget widget) {
-		this.widget = widget;
-
-		add(widget);
+	public <T> T getValue() {
+		return FieldUtils.getValue(fieldWidget);
 	}
 
-	protected List<Validator> getValidators() {
-		return validators;
+	public void setValue(Object value) {
+		FieldUtils.setValue(fieldWidget, value);
 	}
 
-	protected void add(Widget widget) {
-		if (widget instanceof HasFocus) {
-			addFocusListener(widget);
-		}
-		else if (widget instanceof Suffix) {
-			final Suffix suffix = (Suffix) widget;
-			final Object component = suffix.getComponent();
+	public void validate(ValidationCallback callback) {
+		final Object value = null; // TODO
 
-			if (component instanceof HasFocus) {
-				addFocusListener(component);
-			}
-		}
-		listItem.add(widget);
-	}
-
-	protected void insert(int index, Widget widget) {
-		if (widget instanceof HasFocus) {
-			addFocusListener(widget);
-		}
-		else if (widget instanceof Suffix) {
-			final Suffix suffix = (Suffix) widget;
-			final Object component = suffix.getComponent();
-
-			if (component instanceof HasFocus) {
-				addFocusListener(component);
-			}
-		}
-		listItem.insert(widget, index);
-	}
-
-	private final FocusListener focusListener = new FocusListener() {
-		public void onLostFocus(Widget sender) {
-			if (instructionHtml != null) {
-				instructionHtml.setVisible(false);
-			}
-
-			removeStyleName(ON_FOCUS_STYLE_NAME);
-		}
-
-		public void onFocus(Widget sender) {
-			if (instructionHtml != null) {
-				instructionHtml.setVisible(true);
-			}
-
-			if (errorParagraph == null) {
-				addStyleName(ON_FOCUS_STYLE_NAME);
-			}
-		}
-	};
-
-	private void addFocusListener(Object widget) {
-		final HasFocus hasFocus = (HasFocus) widget;
-
-		hasFocus.addFocusListener(focusListener);
-	}
-
-	private void setInstruction(String instruction) {
-		if (instruction == null || instruction.length() == 0) {
-			if (instructionHtml != null) {
-				listItem.remove(instructionHtml);
-
-				instructionHtml = null;
-			}
-			return;
-		}
-
-		if (instructionHtml == null) {
-			instructionHtml = new HTML();
-
-			instructionHtml.setStyleName(INSTRUCTION_STYLE_NAME);
-
-			listItem.add(instructionHtml);
-		}
-
-		instructionHtml.setHTML(instruction);
-	}
-
-	private void setErrorMessage(String errorMessage) {
-		if (errorMessage == null || errorMessage.length() == 0) {
-			if (errorParagraph != null) {
-				listItem.remove(errorParagraph);
-
-				removeStyleName(ERROR_STYLE_NAME);
-
-				errorParagraph = null;
-			}
-		}
-		else {
-			if (errorParagraph == null) {
-				errorParagraph = new Paragraph(errorMessage);
-
-				listItem.add(errorParagraph);
-			}
-
-			addStyleName(ERROR_STYLE_NAME);
-
-			errorParagraph.setText(errorMessage);
-		}
+		getValidators().validate(value, callback);
 	}
 
 }

@@ -1,15 +1,13 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.openinsula.arena.gwt.components.client.ForLabel;
 import org.openinsula.arena.gwt.components.client.ListItem;
 import org.openinsula.arena.gwt.components.client.Paragraph;
+import org.openinsula.arena.gwt.components.client.form.validation.CompositeValidator;
 import org.openinsula.arena.gwt.components.client.form.validation.Validator;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -21,11 +19,11 @@ public abstract class ListItemField extends Composite implements Field {
 
 	private final ListItem listItem = new ListItem();
 
-	private final List<Validator> validators = new ArrayList<Validator>();
+	private final CompositeValidator validators = new CompositeValidator();
 
-	private final ForLabel fieldForLabel;
+	private final ForLabel forLabel;
 
-	private Paragraph errorMessageParagraph;
+	private Paragraph erroMessageParagraph;
 
 	private Widget instructionWidget;
 
@@ -34,15 +32,17 @@ public abstract class ListItemField extends Composite implements Field {
 	}
 
 	public ListItemField(String label) {
-		fieldForLabel = new ForLabel();
+		forLabel = new ForLabel();
 
 		initWidget(listItem);
 		setStyleName(StyleNames.FIELD);
 
-		listItem.add(fieldForLabel);
+		forLabel.setText(label);
+
+		listItem.add(forLabel);
 	}
 
-	public Widget asWidget() {
+	public final Widget asWidget() {
 		return this;
 	}
 
@@ -54,39 +54,85 @@ public abstract class ListItemField extends Composite implements Field {
 		validators.remove(validator);
 	}
 
-	protected List<Validator> getValidators() {
-		return new LinkedList<Validator>(validators);
+	protected CompositeValidator getValidators() {
+		return validators;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		errorMessageParagraph.setText(errorMessage);
+	protected int getWidgetCount() {
+		return listItem.getWidgetCount() - 1;
+	}
+
+	public void setErrorMessage(String text) {
+		if (text == null || text.trim().isEmpty()) {
+			if (erroMessageParagraph != null) {
+				remove(erroMessageParagraph);
+			}
+		}
+		else {
+			if (erroMessageParagraph == null) {
+				erroMessageParagraph = new Paragraph();
+
+				add(erroMessageParagraph);
+			}
+			erroMessageParagraph.setText(text);
+		}
 	}
 
 	public void setInstruction(String text) {
-		if (text == null || text.trim().length() == 0) {
+		if (text == null || text.trim().isEmpty()) {
 			setInstruction((Widget) null);
 		}
-		else if (instructionWidget instanceof com.google.gwt.user.client.ui.Label) {
-			((com.google.gwt.user.client.ui.Label) instructionWidget).setText(text);
-		}
 		else {
-			setInstruction(new com.google.gwt.user.client.ui.Label(text));
+			Label label = null;
+
+			if (instructionWidget instanceof Label) {
+				label = (Label) instructionWidget;
+			}
+			else {
+				label = new Label();
+				instructionWidget = label;
+
+				add(label);
+			}
+			label.setText(text);
 		}
 	}
 
 	public void setInstruction(Widget instructionWidget) {
-		this.instructionWidget = instructionWidget;
-
 		if (instructionWidget == null) {
-			listItem.remove(instructionWidget);
+			if (this.instructionWidget != null) {
+				remove(this.instructionWidget);
+			}
 		}
 		else {
-			listItem.add(instructionWidget);
+			final Widget oldInstructionWidget = this.instructionWidget;
+			this.instructionWidget = instructionWidget;
+
+			if (oldInstructionWidget != null) {
+				remove(oldInstructionWidget);
+			}
+			add(instructionWidget);
 		}
 	}
 
 	public void setLabel(String text) {
-		fieldForLabel.setText(text);
+		forLabel.setText(text);
+	}
+
+	protected void add(Widget widget) {
+		listItem.add(widget);
+	}
+
+	protected void remove(Widget widget) {
+		listItem.remove(widget);
+	}
+
+	protected void remove(int index) {
+		listItem.remove(++index);
+	}
+
+	protected void insert(Widget widget, int beforeIndex) {
+		listItem.insert(widget, ++beforeIndex);
 	}
 
 }

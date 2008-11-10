@@ -6,10 +6,11 @@ import java.util.Map;
 /**
  * @author Lucas K Mogari
  */
-public class RequiredValidator implements Validator {
+public class RequiredValidator extends SynchronousValidator {
 
-	public ValidationResult validate(Object value) {
-		final ValidationResult result = new ValidationResult(this);
+	@SuppressWarnings("unchecked")
+	@Override
+	protected boolean isValid(Object value) {
 		boolean valid = true;
 
 		if (value == null) {
@@ -21,24 +22,17 @@ public class RequiredValidator implements Validator {
 		else if (Boolean.class == value.getClass()) {
 			valid = (Boolean) value;
 		}
-		else {
-			int length = 1;
-
-			if (value instanceof Collection) {
-				length = ((Collection) value).size();
-			}
-			else if (value instanceof Map) {
-				length = ((Map) value).size();
-			}
-
-			valid = length > 0;
+		else if (value instanceof Collection) {
+			valid = !((Collection) value).isEmpty();
+		}
+		else if (value instanceof Map) {
+			valid = !((Map) value).isEmpty();
 		}
 
 		if (!valid) {
-			result.setValid(false);
-			result.setMessage("Campo obrigatório");// TODO change message
+			setMessage("Campo obrigatório");// TODO change message
 		}
-		return result;
+		return valid;
 	}
 
 }
