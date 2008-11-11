@@ -11,8 +11,12 @@ public class ValidationResult {
 
 	private String message;
 
-	public ValidationResult(Validator validator) {
-		this(validator, true, null);
+	public ValidationResult() {
+		this(null, true, null);
+	}
+
+	public ValidationResult(boolean valid) {
+		this(null, valid, null);
 	}
 
 	public ValidationResult(Validator validator, boolean valid) {

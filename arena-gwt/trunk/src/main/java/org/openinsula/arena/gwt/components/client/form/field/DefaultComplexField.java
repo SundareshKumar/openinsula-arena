@@ -6,7 +6,7 @@ import java.util.List;
 import org.openinsula.arena.gwt.components.client.form.validation.CompositeValidator;
 import org.openinsula.arena.gwt.components.client.form.validation.ValidationCallback;
 import org.openinsula.arena.gwt.components.client.form.validation.Validator;
-import org.openinsula.arena.gwt.components.client.util.value.FieldUtils;
+import org.openinsula.arena.gwt.components.client.util.WidgetUtils;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -45,11 +45,11 @@ public class DefaultComplexField extends ListItemField implements ComplexField {
 	}
 
 	public <T> T getValue(Widget fieldWidget) {
-		return FieldUtils.<T> getValue(fieldWidget);
+		return WidgetUtils.<T> getValue(fieldWidget);
 	}
 
 	public void setValue(Widget fieldWidget, Object value) {
-		FieldUtils.setValue(fieldWidget, value);
+		WidgetUtils.setValue(fieldWidget, value);
 	}
 
 	public void addFieldWidget(Widget fieldWidget) {
@@ -78,6 +78,12 @@ public class DefaultComplexField extends ListItemField implements ComplexField {
 	}
 
 	public void addValidator(Widget widget, Validator validator) {
+		if (widgetsValidator == null) {
+			widgetsValidator = new CompositeValidator();
+
+			addValidator(widgetsValidator);
+		}
+
 		final int index = widgets.indexOf(widget);
 		CompositeValidator widgetValidator = (CompositeValidator) widgetsValidator.get(index);
 
@@ -90,6 +96,10 @@ public class DefaultComplexField extends ListItemField implements ComplexField {
 	}
 
 	public void removeValidator(Widget widget, Validator validator) {
+		if (widgetsValidator == null) {
+			return;
+		}
+
 		final int index = widgets.indexOf(widget);
 		final CompositeValidator widgetValidator = (CompositeValidator) widgetsValidator.get(index);
 
@@ -99,13 +109,17 @@ public class DefaultComplexField extends ListItemField implements ComplexField {
 	}
 
 	public void removeValidators(Widget widget) {
+		if (widgetsValidator == null) {
+			return;
+		}
+
 		final int index = widgets.indexOf(widget);
 
 		widgetsValidator.remove(index);
 	}
 
 	public void validate(ValidationCallback callback) {
-		// TODO
+		getValidators().validate(this, callback);
 	}
 
 }

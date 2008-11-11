@@ -18,6 +18,8 @@ public class DefaultHistoryController implements HistoryController {
 
 	private HistoryTargetResolver historyTargetResolver;
 
+	private final HistoryFilterChain historyFilterChain = new DefaultHistoryFilterChain();
+
 	public final void onHistoryChanged(String historyToken) {
 		if (historyToken == null || historyToken.trim().length() == 0) {
 			final HistoryTokens historyTokens = GWT.create(HistoryTokens.class);
@@ -25,7 +27,7 @@ public class DefaultHistoryController implements HistoryController {
 			historyToken = historyTokens.startPageToken();
 		}
 
-		new DefaultHistoryFilterChain().doFilter(historyToken);
+		historyFilterChain.doFilter(historyToken);
 	}
 
 	private void changeHistoryTarget(String historyToken) {
@@ -50,13 +52,11 @@ public class DefaultHistoryController implements HistoryController {
 
 	private final class DefaultHistoryFilterChain implements HistoryFilterChain {
 
-		private final Iterator<HistoryFilter> iterator;
-
-		public DefaultHistoryFilterChain() {
-			iterator = new LinkedList<HistoryFilter>(historyFilters).iterator();
-		}
+		private Iterator<HistoryFilter> iterator;
 
 		public void doFilter(String historyToken) {
+			iterator = new LinkedList<HistoryFilter>(historyFilters).iterator();
+
 			if (iterator.hasNext()) {
 				iterator.next().doFilter(historyToken, this);
 				iterator.remove();
@@ -64,6 +64,7 @@ public class DefaultHistoryController implements HistoryController {
 			else {
 				changeHistoryTarget(historyToken);
 			}
+			iterator = null;
 		}
 
 	}

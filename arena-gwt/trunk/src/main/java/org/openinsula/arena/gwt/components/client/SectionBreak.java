@@ -1,8 +1,5 @@
-package org.openinsula.arena.gwt.components.client.form;
+package org.openinsula.arena.gwt.components.client;
 
-import org.openinsula.arena.gwt.components.client.Header;
-import org.openinsula.arena.gwt.components.client.ListItem;
-import org.openinsula.arena.gwt.components.client.Paragraph;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
@@ -20,9 +17,9 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Lucas K Mogari
  */
-public class SectionBreak extends Composite implements FormItem, HasText {
+public class SectionBreak extends Composite implements HasText {
 
-	public static final String STYLE_CLASS_NAME = "Section";
+	public static final String STYLE_CLASS_NAME = "arena-Section";
 
 	private final ListItem listItem = new ListItem();
 
@@ -37,10 +34,6 @@ public class SectionBreak extends Composite implements FormItem, HasText {
 		setStyleName(STYLE_CLASS_NAME);
 
 		listItem.add(titleHeader);
-	}
-
-	public Widget asWidget() {
-		return this;
 	}
 
 	public void setText(String text) {

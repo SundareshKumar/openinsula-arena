@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.components.client.util.value;
 
-
 import com.google.gwt.user.client.ui.ListBox;
 
 /**
@@ -15,7 +14,6 @@ public class ListBoxValueHandler implements ValueHandler<ListBox> {
 		if (selectedIndex > -1) {
 			return (V) listbox.getItemText(selectedIndex);
 		}
-
 		return null;
 	}
 

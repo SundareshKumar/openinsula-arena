@@ -1,7 +1,7 @@
 package org.openinsula.arena.gwt.components.client.table;
 
-import com.google.gwt.widgetideas.table.client.overrides.HTMLTable;
-import com.google.gwt.widgetideas.table.client.overrides.HTMLTable.CellFormatter;
+import com.google.gwt.user.client.ui.HTMLTable;
+import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 
 /**
  * Table with style options.

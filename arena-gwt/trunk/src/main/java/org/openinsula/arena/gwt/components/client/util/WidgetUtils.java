@@ -1,7 +1,12 @@
-package org.openinsula.arena.gwt.components.client.util.value;
+package org.openinsula.arena.gwt.components.client.util;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.openinsula.arena.gwt.components.client.util.value.CheckBoxValueBean;
+import org.openinsula.arena.gwt.components.client.util.value.HasTextValueHandler;
+import org.openinsula.arena.gwt.components.client.util.value.ListBoxValueHandler;
+import org.openinsula.arena.gwt.components.client.util.value.ValueHandler;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Label;
@@ -14,11 +19,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Lucas K Mogari
  */
 @SuppressWarnings("unchecked")
-public abstract class FieldUtils {
+public abstract class WidgetUtils {
 
 	private static final Map<Class<?>, ValueHandler<?>> VALUE_HANDLERS = new HashMap<Class<?>, ValueHandler<?>>();
 
-	public FieldUtils() {
+	public WidgetUtils() {
 		final HasTextValueHandler hasTextValueHandler = new HasTextValueHandler();
 
 		registerValueHandler(Label.class, hasTextValueHandler);

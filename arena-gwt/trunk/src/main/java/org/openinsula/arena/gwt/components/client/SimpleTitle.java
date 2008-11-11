@@ -1,7 +1,4 @@
-package org.openinsula.arena.gwt.components.client.form;
-
-import org.openinsula.arena.gwt.components.client.Header;
-import org.openinsula.arena.gwt.components.client.Paragraph;
+package org.openinsula.arena.gwt.components.client;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasText;
@@ -11,7 +8,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Create a {@link Widget} in this format:
  * 
  * <pre>
- * 	&lt;div class=&quot;arena-Title&quot;&gt;
+ * 	&lt;div class=&quot;arena-SimpleTitle&quot;&gt;
  * 		&lt;h2&gt;title&lt;/h2&gt;
  * 		&lt;p&gt;description&lt;/p&gt;
  * 	&lt;/div&gt;
@@ -19,23 +16,23 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Lucas K Mogari
  */
-public class Title extends FlowPanel implements HasText, FormItem {
+public class SimpleTitle extends FlowPanel implements HasText {
 
-	public static final String STYLE_CLASS_NAME = "arena-Title";
+	public static final String STYLE_CLASS_NAME = "arena-SimpleTitle";
 
 	private final Header h2;
 
 	private Paragraph p;
 
-	public Title() {
+	public SimpleTitle() {
 		this(null, null);
 	}
 
-	public Title(String titleText) {
+	public SimpleTitle(String titleText) {
 		this(titleText, null);
 	}
 
-	public Title(String titleText, String description) {
+	public SimpleTitle(String titleText, String description) {
 		h2 = new Header(titleText, 2);
 
 		setStyleName(STYLE_CLASS_NAME);
@@ -45,10 +42,6 @@ public class Title extends FlowPanel implements HasText, FormItem {
 		if (description != null && description.length() > 0) {
 			setDescription(description);
 		}
-	}
-
-	public Widget asWidget() {
-		return this;
 	}
 
 	public String getText() {

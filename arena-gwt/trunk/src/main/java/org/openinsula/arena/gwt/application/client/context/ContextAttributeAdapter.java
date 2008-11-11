@@ -3,7 +3,7 @@ package org.openinsula.arena.gwt.application.client.context;
 /**
  * @author Lucas K Mogari
  */
-public abstract class NullContextAttributeListener implements ContextAttributeListener {
+public abstract class ContextAttributeAdapter implements ContextAttributeListener {
 
 	public void attributeAdded(String name, Object attribute) {
 	}

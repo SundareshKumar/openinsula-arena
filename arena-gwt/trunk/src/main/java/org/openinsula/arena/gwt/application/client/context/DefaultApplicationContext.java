@@ -78,7 +78,7 @@ public class DefaultApplicationContext implements ApplicationContext {
 		return attribute instanceof String ? (String) attribute : null;
 	}
 
-	private final class SettingApplicationAttributeListener<T> extends NullContextAttributeListener {
+	private final class SettingApplicationAttributeListener<T> extends ContextAttributeAdapter {
 
 		private final String attributeName;
 

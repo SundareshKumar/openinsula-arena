@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.components.client;
 
-import org.openinsula.arena.gwt.components.client.form.Title;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -10,7 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class NamedPanel extends FlowPanel {
 
-	private final Title title;
+	private final SimpleTitle simpleTitle;
 
 	public NamedPanel() {
 		this(null, null);
@@ -22,19 +21,19 @@ public class NamedPanel extends FlowPanel {
 	}
 
 	public NamedPanel(String name, String description) {
-		title = new Title(name, description);
+		simpleTitle = new SimpleTitle(name, description);
 
-		add(title);
+		add(simpleTitle);
 
 		setStyleName("arena-Panel");
 	}
 
 	public void setName(String name) {
-		title.setText(name);
+		simpleTitle.setText(name);
 	}
 
 	public void setDescription(String description) {
-		title.setDescription(description);
+		simpleTitle.setDescription(description);
 	}
 
 	@Override

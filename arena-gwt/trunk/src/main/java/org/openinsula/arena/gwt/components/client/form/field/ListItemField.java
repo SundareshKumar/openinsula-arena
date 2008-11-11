@@ -19,9 +19,9 @@ public abstract class ListItemField extends Composite implements Field {
 
 	private final ListItem listItem = new ListItem();
 
-	private final CompositeValidator validators = new CompositeValidator();
-
 	private final ForLabel forLabel;
+
+	private CompositeValidator validators;
 
 	private Paragraph erroMessageParagraph;
 
@@ -42,19 +42,20 @@ public abstract class ListItemField extends Composite implements Field {
 		listItem.add(forLabel);
 	}
 
-	public final Widget asWidget() {
-		return this;
-	}
-
 	public void addValidator(Validator validator) {
-		validators.add(validator);
+		getValidators().add(validator);
 	}
 
 	public void removeValidator(Validator validator) {
-		validators.remove(validator);
+		if (validators != null) {
+			validators.remove(validator);
+		}
 	}
 
 	protected CompositeValidator getValidators() {
+		if (validators == null) {
+			validators = new CompositeValidator();
+		}
 		return validators;
 	}
 

@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
-import org.openinsula.arena.gwt.components.client.form.FormItem;
 import org.openinsula.arena.gwt.components.client.form.validation.ValidationCallback;
 import org.openinsula.arena.gwt.components.client.form.validation.Validator;
 
@@ -9,7 +8,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author Lucas K Mogari
  */
-public interface Field extends FormItem {
+public interface Field {
 
 	public static interface StyleNames {
 

@@ -1,7 +1,7 @@
 package org.openinsula.arena.gwt.components.client.form.field;
 
 import org.openinsula.arena.gwt.components.client.form.validation.ValidationCallback;
-import org.openinsula.arena.gwt.components.client.util.value.FieldUtils;
+import org.openinsula.arena.gwt.components.client.util.WidgetUtils;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -57,17 +57,15 @@ public class DefaultSimpleField extends ListItemField implements SimpleField {
 	}
 
 	public <T> T getValue() {
-		return FieldUtils.getValue(fieldWidget);
+		return WidgetUtils.getValue(fieldWidget);
 	}
 
 	public void setValue(Object value) {
-		FieldUtils.setValue(fieldWidget, value);
+		WidgetUtils.setValue(fieldWidget, value);
 	}
 
 	public void validate(ValidationCallback callback) {
-		final Object value = null; // TODO
-
-		getValidators().validate(value, callback);
+		getValidators().validate(this.<Object> getValue(), callback);
 	}
 
 }

@@ -1,7 +1,7 @@
 package org.openinsula.arena.gwt.components.client.table;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.widgetideas.table.client.overrides.HTMLTable;
+import com.google.gwt.user.client.ui.HTMLTable;
 
 /**
  * @author Lucas K Mogari

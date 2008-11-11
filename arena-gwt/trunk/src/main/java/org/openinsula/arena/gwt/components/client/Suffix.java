@@ -1,7 +1,4 @@
-package org.openinsula.arena.gwt.components.client.form;
-
-import org.openinsula.arena.gwt.components.client.ForLabel;
-import org.openinsula.arena.gwt.components.client.Span;
+package org.openinsula.arena.gwt.components.client;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -14,29 +11,29 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Suffix extends Composite implements HasText {
 
-	public static final String LABEL_STYLE_NAME = "Suffix";
+	public static final String LABEL_STYLE_NAME = "arena-Suffix";
 
 	private final ForLabel forLabel;
 
-	private final Widget component;
+	private final Widget suffixWidget;
 
-	public Suffix(String suffix, Widget component) {
+	public Suffix(String suffix, Widget suffixWidget) {
 		final Span span = new Span();
-		final String id = getId(component);
+		final String id = getId(suffixWidget);
 		forLabel = new ForLabel(suffix, id);
-		this.component = component;
+		this.suffixWidget = suffixWidget;
 
 		forLabel.setStyleName(LABEL_STYLE_NAME);
 
 		initWidget(span);
 
-		span.add(component);
+		span.add(suffixWidget);
 		span.add(forLabel);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Widget> T getComponent() {
-		return (T) component;
+	public <T extends Widget> T getAuffixWidget() {
+		return (T) suffixWidget;
 	}
 
 	public String getText() {
@@ -59,7 +56,6 @@ public class Suffix extends Composite implements HasText {
 
 			widgetElement.setAttribute("id", id);
 		}
-
 		return id;
 	}
 

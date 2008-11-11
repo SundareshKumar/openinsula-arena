@@ -1,23 +1,32 @@
 package org.openinsula.arena.gwt.components.client.form.validation;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Lucas K Mogari
  */
-public class CompositeValidator implements Validator {
+public class CompositeValidator extends AbstractValidator {
 
 	private final List<Validator> validators = new LinkedList<Validator>();
 
 	private CompositeValidationSupport support;
 
-	public void validate(Object value, ValidationCallback callback) {
-		if (support != null) {
-			support.running = false;
-		}
+	public CompositeValidator() {
+	}
 
+	public CompositeValidator(int timeout) {
+		super(timeout);
+	}
+
+	@Override
+	protected void doValidation(Object value, ValidationCallback callback) {
+		if (support != null) {
+			support.stop();
+		}
 		support = new CompositeValidationSupport();
 
 		support.validate(value, callback);
@@ -43,22 +52,32 @@ public class CompositeValidator implements Validator {
 		return validators.get(index);
 	}
 
+	@Override
+	protected void stopValidation(ValidationCallback callback) {
+		super.stopValidation(callback);
+
+		support.stop();
+	}
+
 	private final class CompositeValidationSupport implements ValidationCallback {
 
 		private ValidationCallback callback;
 
-		private List<Validator> usedValidators;
-
 		private boolean running;
+
+		private final Set<Validator> toUseValidators;
+
+		public CompositeValidationSupport() {
+			toUseValidators = new HashSet<Validator>(validators);
+		}
 
 		public void validate(Object value, ValidationCallback callback) {
 			this.callback = callback;
 			running = true;
-			usedValidators = new LinkedList<Validator>(validators);
-			final Iterator<Validator> iterator = validators.iterator();
+			final Iterator<Validator> validatorIterator = new LinkedList<Validator>(validators).iterator();
 
-			while (running && iterator.hasNext()) {
-				iterator.next().validate(value, this);
+			while (running && validatorIterator.hasNext()) {
+				validatorIterator.next().validate(value, this);
 			}
 		}
 
@@ -67,14 +86,14 @@ public class CompositeValidator implements Validator {
 				return;
 			}
 
-			if (result.isValid()) {
-				if (!usedValidators.remove(result.getValidator())) {
-					throw new ValidationException();
-				}
+			final Validator validator = result.getValidator();
 
-				if (usedValidators.isEmpty()) {
+			if (validator == null) {
+				throw new ValidationException("'validator' from result must not be null.");
+			}
+			else if (result.isValid()) {
+				if (toUseValidators.remove(validator) && toUseValidators.isEmpty()) {
 					result.setValidator(CompositeValidator.this);
-					result.setMessage(null);
 
 					notifyResult(result);
 				}
@@ -85,10 +104,17 @@ public class CompositeValidator implements Validator {
 		}
 
 		private void notifyResult(ValidationResult result) {
-			running = false;
-			support = null;
+			if (!running) {
+				return;
+			}
+
+			stop();
 
 			callback.onValueValidated(result);
+		}
+
+		private void stop() {
+			running = false;
 		}
 
 	}
