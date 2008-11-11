@@ -1,0 +1,10 @@
+<module>
+	<inherits name="com.google.gwt.user.theme.standard.Standard" />
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="org.openinsula.arena.gwt.http.HTTP" />
+	<inherits name="org.openinsula.arena.gwt.serialization.Serialization" />
+	
+	<entry-point class="org.openinsula.arena.gwt.samples.client.Main" />
+	
+	<servlet path="/RequestDispatcherServlet" class="org.openinsula.arena.gwt.http.RequestDispatcherServlet" />
+</module>

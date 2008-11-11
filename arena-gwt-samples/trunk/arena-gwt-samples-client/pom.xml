@@ -33,9 +33,9 @@
 				<version>2.0-beta24</version>
 				<configuration>
 					<logLevel>INFO</logLevel>
-					<runTarget>org.openinsula.arena.gwt.samples.client.Main/Main.html</runTarget>
+					<runTarget>org.openinsula.arena.gwt.samples.Main/index.html</runTarget>
 					<compileTargets>
-						<param>org.openinsula.arena.gwt.samples.client.Main</param>
+						<param>org.openinsula.arena.gwt.samples.Main</param>
 					</compileTargets>
 					<noServer>false</noServer>
 					<extraJvmArgs>-Xmx256M -Xms64M</extraJvmArgs>
