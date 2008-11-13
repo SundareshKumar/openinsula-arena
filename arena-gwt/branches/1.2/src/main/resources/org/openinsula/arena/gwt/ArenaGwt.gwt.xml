@@ -7,6 +7,7 @@
 
 	<stylesheet src='Default.css'/>
 	<stylesheet src='FormItem.css'/>
+	<stylesheet src='dataGrid-style.css'/>
 
 	<entry-point class='org.openinsula.arena.gwt.client.Main' />
 
