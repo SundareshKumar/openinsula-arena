@@ -41,7 +41,7 @@ public class DataGrid<R, C> extends Composite implements DataGridModelListener {
 		}
 	};
 
-	private TitleRender<Widget, C> defaultColumnTitleRenderer = new TitleRender<Widget, C>() {
+	private TitleRender<C> defaultColumnTitleRenderer = new TitleRender<C>() {
 		public Widget render(C value) {
 			Label label = new Label(value.toString());
 			label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -49,7 +49,7 @@ public class DataGrid<R, C> extends Composite implements DataGridModelListener {
 		}
 	};
 
-	private TitleRender<Widget, R> defaultRowTitleRenderer = new TitleRender<Widget, R>() {
+	private TitleRender<R> defaultRowTitleRenderer = new TitleRender<R>() {
 		public Widget render(R value) {
 			return new Label(value.toString());
 		}
@@ -203,9 +203,6 @@ public class DataGrid<R, C> extends Composite implements DataGridModelListener {
 		setBlockSelectionAllowed(multipleColumnSelectionAllowed || multipleRowSelectionAllowed);
 	}
 
-	/**
-	 * //TODO método construtor
-	 */
 	public DataGrid() {
 		panel = new HorizontalPanel();
 		initWidget(panel);
@@ -240,8 +237,11 @@ public class DataGrid<R, C> extends Composite implements DataGridModelListener {
 	}
 
 	private void renderGrid() {
-		int rowCount = model().getRowList().size() + 1;
-		int colCount = model().getColumnList().size() + 1;
+		List<R> rowList = model().getRowList();
+		List<C> columnList = model().getColumnList();
+
+		int rowCount = rowList != null ? rowList.size() + 1 : 1;
+		int colCount = columnList != null ? columnList.size() + 1 : 1;
 
 		grid = new ColorGrid(rowCount, colCount);
 		panel.clear();
@@ -299,19 +299,19 @@ public class DataGrid<R, C> extends Composite implements DataGridModelListener {
 		renderGrid();
 	}
 
-	public TitleRender<Widget, C> getDefaultColumnTitleRenderer() {
+	public TitleRender<C> getDefaultColumnTitleRenderer() {
 		return defaultColumnTitleRenderer;
 	}
 
-	public void setDefaultColumnTitleRenderer(TitleRender<Widget, C> defaultColumnTitleRenderer) {
+	public void setDefaultColumnTitleRenderer(TitleRender<C> defaultColumnTitleRenderer) {
 		this.defaultColumnTitleRenderer = defaultColumnTitleRenderer;
 	}
 
-	public TitleRender<Widget, R> getDefaultRowTitleRenderer() {
+	public TitleRender<R> getDefaultRowTitleRenderer() {
 		return defaultRowTitleRenderer;
 	}
 
-	public void setDefaultRowTitleRenderer(TitleRender<Widget, R> defaultRowTitleRenderer) {
+	public void setDefaultRowTitleRenderer(TitleRender<R> defaultRowTitleRenderer) {
 		this.defaultRowTitleRenderer = defaultRowTitleRenderer;
 	}
 

@@ -11,9 +11,27 @@ public class DefaultDataGridModel<R, C> implements DataGridModel<R, C> {
 
 	private List<C> columnDataList;
 
+	public DefaultDataGridModel(List<R> rowDataList, List<C> columnDataList) {
+		setData(rowDataList, columnDataList);
+	}
+
+	public DefaultDataGridModel() {
+		this(new ArrayList<R>(), new ArrayList<C>());
+	}
+
 	public void setData(List<R> rowDataList, List<C> columnDataList) {
 		this.rowDataList = rowDataList;
 		this.columnDataList = columnDataList;
+		fireDataChanged();
+	}
+
+	public void setColumns(List<C> columnDataList) {
+		this.columnDataList = columnDataList;
+		fireDataChanged();
+	}
+
+	public void setRows(List<R> rowDataList) {
+		this.rowDataList = rowDataList;
 		fireDataChanged();
 	}
 
@@ -65,7 +83,5 @@ public class DefaultDataGridModel<R, C> implements DataGridModel<R, C> {
 	public void removeDataGridListener(DataGridModelListener listener) {
 		listeners().remove(listener);
 	}
-
-
 
 }

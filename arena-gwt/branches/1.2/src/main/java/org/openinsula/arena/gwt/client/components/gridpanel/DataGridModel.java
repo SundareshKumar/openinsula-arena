@@ -21,6 +21,10 @@ public interface DataGridModel<R, C> {
 
 	void setData(List<R> rowDataList, List<C> columnDataList);
 
+	void setRows(List<R> rowDataList);
+
+	void setColumns(List<C> columnDataList);
+
 	R getRowValueAt(int index);
 
 	C getColumnValueAt(int index);
