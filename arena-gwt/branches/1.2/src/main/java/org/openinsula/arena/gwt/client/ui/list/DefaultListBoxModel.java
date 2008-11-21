@@ -114,6 +114,10 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 		return Collections.unmodifiableCollection(selection);
 	}
 
+	public Collection<T> getValues() {
+		return Collections.unmodifiableCollection(values);
+	}
+
 	public T getSelectedItem() {
 		return selection.isEmpty() ? null : selection.get(0);
 	}

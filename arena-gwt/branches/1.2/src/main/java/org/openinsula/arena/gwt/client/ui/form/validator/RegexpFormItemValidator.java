@@ -24,6 +24,10 @@ public class RegexpFormItemValidator extends SyncFormItemValidator<TextBoxBase> 
 
 	public final static String DECIMAL = "^(\\d*|\\d+(\\.|\\,)\\d+)$";
 
+	public final static String DECIMAL_COM_SINAL = "^(\\+|\\-)?(\\d*|\\d+(\\.|\\,)\\d+)$";
+
+	public final static String ALGUM_DIGITO = ".*\\d+.*";
+
 	public RegexpFormItemValidator(String pattern, String errorMessage) {
 		super();
 		this.pattern = pattern;
