@@ -37,11 +37,6 @@ public class ClienteSearchForm extends AbstractSearchFormTemplate<Cliente> {
 	}
 
 	@Override
-	protected String getSuggestBoxLabel() {
-		return "Pessoa";
-	}
-
-	@Override
 	protected RemoteBeanSuggestOracle<Cliente> getSuggestOracle() {
 		return new ClienteSuggestOracle();
 	}

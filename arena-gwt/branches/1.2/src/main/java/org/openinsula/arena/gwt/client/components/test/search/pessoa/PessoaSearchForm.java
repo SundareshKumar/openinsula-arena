@@ -33,11 +33,6 @@ public class PessoaSearchForm extends AbstractSearchFormTemplate<Pessoa> {
 	}
 
 	@Override
-	protected String getSuggestBoxLabel() {
-		return "Pessoa";
-	}
-
-	@Override
 	protected RemoteBeanSuggestOracle<Pessoa> getSuggestOracle() {
 		return new PessoaSuggestOracle();
 	}

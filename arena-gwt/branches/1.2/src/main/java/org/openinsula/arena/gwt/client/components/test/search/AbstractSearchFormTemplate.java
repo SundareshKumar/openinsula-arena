@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.openinsula.arena.gwt.client.ui.FocusComposite;
 import org.openinsula.arena.gwt.client.ui.FocusUtils;
-import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
-import org.openinsula.arena.gwt.client.ui.form.GroupFormItem;
 import org.openinsula.arena.gwt.client.ui.form.validator.FormItemValidator;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorAction;
 import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
@@ -20,6 +18,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HasFocus;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
@@ -32,8 +31,6 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 	private T editInstance;
 
 	private SearchForm searchForm;
-
-	protected abstract String getSuggestBoxLabel();
 
 	protected abstract String getSuggestBoxHint();
 
@@ -52,9 +49,6 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 	protected abstract AbstractDetailsSearchFormTemplate<T> createDetailsSearchForm(HasFocus nextFocusableComponent);
 
 	protected abstract String getErrorMessage();
-
-	protected void customizeSearchForm(FormBuilder formBuilder) {
-	}
 
 	public AbstractSearchFormTemplate(HasFocus nextFocusableComponent) {
 		forms = new DeckPanel();
@@ -197,8 +191,6 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 
 		protected final BeanSuggestBox<T> suggestBox;
 
-		private GroupFormItem<Widget> suggestFormItem;
-
 		private Hyperlink editLink;
 
 		private boolean insertionAllowed = false;
@@ -218,20 +210,18 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 			editLink = new Hyperlink("Editar", "");
 			editLink.setVisible(false);
 
-			suggestFormItem = new GroupFormItem<Widget>(getSuggestBoxLabel(), new Widget[] { suggestBox, editLink },
-					getSuggestBoxHint(), false, true);
+			HorizontalPanel panel = new HorizontalPanel();
+			panel.add(suggestBox);
+			panel.add(editLink);
 
-			FormBuilder formBuilder = new FormBuilder();
-			formBuilder.add(suggestFormItem);
-			customizeSearchForm(formBuilder);
-			initWidget(formBuilder.toPanel());
+			initWidget(panel);
 			setInsertionAllowed(false);
 
 			modelToView();
 		}
 
 		public void clear() {
-			suggestFormItem.clear();
+			suggestBox.setText("");
 		}
 
 		void modelToView() {
@@ -296,10 +286,6 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 
 		public void setText(String value) {
 			suggestBox.setText(value);
-		}
-
-		public void setSuggestLabel(String label) {
-			suggestFormItem.getLabel().setText(label);
 		}
 
 		public void showSuggestions() {

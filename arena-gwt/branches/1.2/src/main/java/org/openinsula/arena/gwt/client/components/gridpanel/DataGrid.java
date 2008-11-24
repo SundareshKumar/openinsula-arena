@@ -297,6 +297,7 @@ public class DataGrid<R, C> extends Composite implements DataGridModelListener {
 
 	public void onDataChange() {
 		renderGrid();
+		blockSelectionBaseCell = null;
 	}
 
 	public TitleRender<C> getDefaultColumnTitleRenderer() {

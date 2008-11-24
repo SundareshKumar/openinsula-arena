@@ -4,35 +4,76 @@ import java.util.Date;
 
 public class GwtDateUtils {
 
-	private final static long MILLISECONDS_BY_SECOND = 1000;
-
-	private final static long SECONDS_BY_MINUTE = 60;
-
-	private final static long MINUTES_BY_HOUR = 60;
-
-	private final static long HOUS_BY_DAY = 24;
+	private GwtDateUtils() {
+	}
 
 	public enum DateField {
-		HOUR,
-		DATE;
-	}
+		SECOND(1000),
+		MINUTE(60 * 1000),
+		HOUR(60 * 60 * 1000),
+		DATE(24 * 60 * 60 * 1000),
+		MONTH(30 * 24 * 60 * 60 * 1000),
+		YEAR(365 * 24 * 60 * 60 * 1000);
 
-	public static Date add(Date baseDate, DateField field, int amount) {
-		long time = baseDate.getTime();
-		time = time + totalMillisecondsForField(field, amount);
+		private long milliseconds;
 
-		return new Date(time);
-	}
-
-	private static long totalMillisecondsForField(DateField field, int amount) {
-		switch (field) {
-		case HOUR :
-			return amount * MILLISECONDS_BY_SECOND * SECONDS_BY_MINUTE * MINUTES_BY_HOUR;
-		case DATE :
-			return amount * MILLISECONDS_BY_SECOND * SECONDS_BY_MINUTE * MINUTES_BY_HOUR * HOUS_BY_DAY;
-		default:
-			throw new IllegalArgumentException("Invalid field " + field);
+		private DateField(long milliseconds) {
+			this.milliseconds = milliseconds;
 		}
+
+		public long getMilliseconds() {
+			return milliseconds;
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public static Date add(Date baseDate, DateField field, int amount) {
+		Date date = new Date(baseDate.getTime());
+		switch (field) {
+		case YEAR:
+			int year = date.getYear();
+			date.setYear(year + amount);
+			return date;
+		case MONTH:
+			int month = date.getMonth();
+			date.setMonth(month + amount);
+			return date;
+		case DATE:
+			int day = date.getDate();
+			date.setDate(day + amount);
+			return date;
+		case HOUR:
+			int hour = date.getHours();
+			date.setHours(hour + amount);
+			return date;
+		case MINUTE:
+			int min = date.getMinutes();
+			date.setMinutes(min + amount);
+			return date;
+		case SECOND:
+			int sec = date.getSeconds();
+			date.setSeconds(sec + amount);
+			return date;
+		}
+		return null;
+	}
+
+	public static Date lowerLimit(Date date) {
+		return updateTime(date, 0, 0, 0);
+	}
+
+	public static Date upperLimit(Date date) {
+		return updateTime(date, 23, 59, 59);
+	}
+
+	@SuppressWarnings("deprecation")
+	private static Date updateTime(Date date, int hour, int min, int sec) {
+		return new Date(date.getYear(), date.getMonth(), date.getDate(), hour, min, sec);
+	}
+
+	public static long difference(Date dataInicial, Date dataFinal, DateField timeUnit) {
+		long diff = dataFinal.getTime() - dataInicial.getTime();
+		return diff / timeUnit.getMilliseconds();
 	}
 
 }

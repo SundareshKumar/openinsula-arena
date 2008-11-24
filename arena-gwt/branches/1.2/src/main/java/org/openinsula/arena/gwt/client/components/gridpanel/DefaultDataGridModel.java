@@ -84,4 +84,10 @@ public class DefaultDataGridModel<R, C> implements DataGridModel<R, C> {
 		listeners().remove(listener);
 	}
 
+	public void clear() {
+		columnDataList = new ArrayList<C>();
+		rowDataList = new ArrayList<R>();
+		fireDataChanged();
+	}
+
 }
