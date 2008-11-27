@@ -77,7 +77,7 @@ public class DefaultComplexField extends ListItemField implements ComplexField {
 		widgets.remove(fieldWidget);
 	}
 
-	public void addValidator(Widget widget, Validator validator) {
+	public void addValidator(final Widget widget, Validator validator) {
 		if (widgetsValidator == null) {
 			widgetsValidator = new CompositeValidator();
 
@@ -88,7 +88,14 @@ public class DefaultComplexField extends ListItemField implements ComplexField {
 		CompositeValidator widgetValidator = (CompositeValidator) widgetsValidator.get(index);
 
 		if (widgetValidator == null) {
-			widgetValidator = new CompositeValidator();
+			widgetValidator = new CompositeValidator() {
+				@Override
+				protected void doValidation(Object value, ValidationCallback callback) {
+					value = getValue(widget);
+
+					super.doValidation(value, callback);
+				}
+			};
 
 			widgetsValidator.set(index, widgetValidator);
 		}

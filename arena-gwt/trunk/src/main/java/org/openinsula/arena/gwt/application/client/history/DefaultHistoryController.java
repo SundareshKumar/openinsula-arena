@@ -14,11 +14,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class DefaultHistoryController implements HistoryController {
 
-	private final List<HistoryFilter> historyFilters = new LinkedList<HistoryFilter>();
+	private List<HistoryFilter> historyFilters;
 
 	private HistoryTargetResolver historyTargetResolver;
-
-	private final HistoryFilterChain historyFilterChain = new DefaultHistoryFilterChain();
 
 	public final void onHistoryChanged(String historyToken) {
 		if (historyToken == null || historyToken.trim().length() == 0) {
@@ -27,7 +25,14 @@ public class DefaultHistoryController implements HistoryController {
 			historyToken = historyTokens.startPageToken();
 		}
 
-		historyFilterChain.doFilter(historyToken);
+		if (historyFilters == null || historyFilters.isEmpty()) {
+			changeHistoryTarget(historyToken);
+		}
+		else {
+			final DefaultHistoryFilterChain historyFilterChain = new DefaultHistoryFilterChain();
+
+			historyFilterChain.doFilter(historyToken);
+		}
 	}
 
 	private void changeHistoryTarget(String historyToken) {
@@ -39,11 +44,16 @@ public class DefaultHistoryController implements HistoryController {
 	}
 
 	public final void addHistoryFilter(HistoryFilter interceptor) {
+		if (historyFilters == null) {
+			historyFilters = new LinkedList<HistoryFilter>();
+		}
 		historyFilters.add(interceptor);
 	}
 
 	public final void removeHistoryFilter(HistoryFilter interceptor) {
-		historyFilters.remove(interceptor);
+		if (historyFilters != null) {
+			historyFilters.remove(interceptor);
+		}
 	}
 
 	public void setHistoryTargetResolver(HistoryTargetResolver historyTargetResolver) {
@@ -52,19 +62,19 @@ public class DefaultHistoryController implements HistoryController {
 
 	private final class DefaultHistoryFilterChain implements HistoryFilterChain {
 
-		private Iterator<HistoryFilter> iterator;
+		private final Iterator<HistoryFilter> iterator;
+
+		public DefaultHistoryFilterChain() {
+			iterator = new LinkedList<HistoryFilter>(historyFilters).iterator();
+		}
 
 		public void doFilter(String historyToken) {
-			iterator = new LinkedList<HistoryFilter>(historyFilters).iterator();
-
 			if (iterator.hasNext()) {
 				iterator.next().doFilter(historyToken, this);
-				iterator.remove();
 			}
 			else {
 				changeHistoryTarget(historyToken);
 			}
-			iterator = null;
 		}
 
 	}

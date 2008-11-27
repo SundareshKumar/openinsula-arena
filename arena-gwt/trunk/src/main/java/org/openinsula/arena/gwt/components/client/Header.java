@@ -20,7 +20,7 @@ public class Header extends Widget implements HasText {
 	}
 
 	public Header(String text, int size) {
-		final String tagName = String.format("h%d", size);
+		final String tagName = new StringBuilder("h").append(size).toString();
 
 		setElement(DOM.createElement(tagName));
 

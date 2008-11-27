@@ -3,29 +3,24 @@ package org.openinsula.arena.gwt.components.client.form;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openinsula.arena.gwt.components.client.NamedPanel;
 import org.openinsula.arena.gwt.components.client.Paragraph;
-import org.openinsula.arena.gwt.components.client.SimpleTitle;
 import org.openinsula.arena.gwt.components.client.form.field.ComplexField;
 import org.openinsula.arena.gwt.components.client.form.field.DefaultComplexField;
 import org.openinsula.arena.gwt.components.client.form.field.DefaultSimpleField;
 import org.openinsula.arena.gwt.components.client.form.field.Field;
 import org.openinsula.arena.gwt.components.client.form.field.SimpleField;
 import org.openinsula.arena.gwt.components.client.form.validation.CompositeValidator;
+import org.openinsula.arena.gwt.components.client.form.validation.ValidationCallback;
+import org.openinsula.arena.gwt.components.client.form.validation.ValidationResult;
 import org.openinsula.arena.gwt.components.client.form.validation.Validator;
 
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
  */
-public class SimpleForm extends Composite {
-
-	private Panel formPanel;
-
-	private SimpleTitle title;
+public class SimpleForm extends NamedPanel {
 
 	private Paragraph errorMessageParagraph;
 
@@ -34,6 +29,16 @@ public class SimpleForm extends Composite {
 	private final List<Field> fields = new LinkedList<Field>();
 
 	public SimpleForm() {
+		this(null);
+	}
+
+	public SimpleForm(String name) {
+		this(name, null);
+	}
+
+	public SimpleForm(String name, String description) {
+		super(name, description);
+
 		initComponents();
 	}
 
@@ -50,14 +55,6 @@ public class SimpleForm extends Composite {
 				}
 			}
 		}
-	}
-
-	public void setName(String name) {
-		title.setText(name);
-	}
-
-	public void setDescription(String description) {
-		title.setDescription(description);
 	}
 
 	public void setErrorMessage(String errorMessage) {
@@ -78,30 +75,52 @@ public class SimpleForm extends Composite {
 	}
 
 	private void initComponents() {
-		title = new SimpleTitle();
 		errorMessageParagraph = new Paragraph();
-		formPanel = new FlowPanel();
 
-		initWidget(formPanel);
-
-		formPanel.add(title);
-		formPanel.add(errorMessageParagraph);
+		add(errorMessageParagraph);
 	}
 
+	public void validate(ValidationCallback callback) {
+		if (formValidator == null) {
+			callback.onValueValidated(new ValidationResult(true));
+		}
+		else {
+			formValidator.validate(this, callback);
+		}
+	}
+
+	@Override
 	public void add(Widget widget) {
-		formPanel.add(widget);
+		super.add(widget);
 
 		if (widget instanceof Field) {
 			fields.add((Field) widget);
 		}
 	}
 
-	public void remove(Widget widget) {
-		formPanel.remove(widget);
+	@Override
+	public void insert(Widget widget, int beforeIndex) {
+		super.insert(widget, beforeIndex);
 
 		if (widget instanceof Field) {
+			fields.set(beforeIndex, (Field) widget);
+		}
+	}
+
+	@Override
+	public boolean remove(Widget widget) {
+		final boolean removed = super.remove(widget);
+
+		if (removed && widget instanceof Field) {
 			fields.remove(widget);
 		}
+		return removed;
+	}
+
+	@Override
+	public boolean remove(int index) {
+		final Widget widget = getWidget(++index);
+		return remove(widget);
 	}
 
 	public SimpleField addField(String name, Widget widget) {

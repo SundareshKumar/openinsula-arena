@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.components.client;
 
-
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 

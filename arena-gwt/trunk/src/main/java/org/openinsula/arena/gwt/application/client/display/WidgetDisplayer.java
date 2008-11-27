@@ -17,6 +17,12 @@ public abstract class WidgetDisplayer extends Composite {
 
 	protected abstract boolean doShow(Widget widget);
 
+	public abstract void add(Widget widget);
+
+	public abstract void remove(Widget widget);
+
+	public abstract boolean constains(Widget widget);
+
 	public final void show(Widget widget) {
 		final Widget oldWidget = currentWidget;
 

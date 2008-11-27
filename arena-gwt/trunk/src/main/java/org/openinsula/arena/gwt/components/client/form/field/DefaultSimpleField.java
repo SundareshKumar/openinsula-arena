@@ -57,7 +57,7 @@ public class DefaultSimpleField extends ListItemField implements SimpleField {
 	}
 
 	public <T> T getValue() {
-		return WidgetUtils.getValue(fieldWidget);
+		return WidgetUtils.<T> getValue(fieldWidget);
 	}
 
 	public void setValue(Object value) {

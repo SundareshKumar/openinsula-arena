@@ -7,6 +7,8 @@ import org.openinsula.arena.gwt.application.client.display.WidgetDisplayer;
 import org.openinsula.arena.gwt.application.client.history.DefaultHistoryController;
 import org.openinsula.arena.gwt.application.client.history.HistoryController;
 
+import com.google.gwt.user.client.History;
+
 /**
  * @author Lucas K Mogari
  */
@@ -22,8 +24,9 @@ public final class Application {
 
 	private Application() {
 		context = new DefaultApplicationContext();
-		historyController = new DefaultHistoryController();
 		widgetDisplayer = new DeckPanelDisplayer();
+
+		setHistoryController(new DefaultHistoryController());
 	}
 
 	public static Application getInstance() {
@@ -54,7 +57,16 @@ public final class Application {
 	}
 
 	public void setHistoryController(HistoryController historyController) {
-		this.historyController = historyController;
+		final HistoryController oldHistoryController = this.historyController;
+
+		if (oldHistoryController == null || !oldHistoryController.equals(historyController)) {
+			this.historyController = historyController;
+
+			if (oldHistoryController != null) {
+				History.removeHistoryListener(oldHistoryController);
+			}
+			History.addHistoryListener(historyController);
+		}
 	}
 
 	public WidgetDisplayer getWidgetDisplayer() {

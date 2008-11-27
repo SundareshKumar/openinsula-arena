@@ -29,10 +29,17 @@ public class DeckPanelDisplayer extends WidgetDisplayer {
 		deckPanel.clear();
 	}
 
+	@Override
+	public boolean constains(Widget widget) {
+		return deckPanel.getWidgetIndex(widget) > -1;
+	}
+
+	@Override
 	public void add(Widget widget) {
 		deckPanel.add(widget);
 	}
 
+	@Override
 	public void remove(Widget widget) {
 		deckPanel.remove(widget);
 	}
