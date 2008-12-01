@@ -20,7 +20,7 @@ public class AESCryptProvider implements CryptProvider {
 			return cipher.doFinal(crypted);
 		}
 		catch (GeneralSecurityException ex) {
-			throw new IllegalArgumentException("", ex);
+			throw new IllegalArgumentException("Unable to get AES cipher.", ex);
 		}
 	}
 
@@ -35,7 +35,7 @@ public class AESCryptProvider implements CryptProvider {
 			return cipher.doFinal(content);
 		}
 		catch (GeneralSecurityException ex) {
-			throw new IllegalArgumentException("", ex);
+			throw new IllegalArgumentException("Unable to get AES cipher.", ex);
 		}
 	}
 
