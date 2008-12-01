@@ -14,20 +14,36 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.openinsula.arena.tokenauth.TokenAuthenticator;
 import org.springframework.beans.factory.BeanFactoryUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class TokenAuthenticationFilter implements Filter {
 
+	protected static final String CONFIG_DELIMITERS = " \t\n";
+
 	private TokenAuthenticator tokenAuthenticator;
+
+	private String[] exceptionUrls;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
+		this.exceptionUrls = getExceptionUrls(filterConfig);
+
 		ServletContext servletContext = filterConfig.getServletContext();
+		this.tokenAuthenticator = getTokenAuthenticator(servletContext);
+	}
+
+	protected String[] getExceptionUrls(FilterConfig filterConfig) {
+		String[] urls = StringUtils.tokenizeToStringArray(filterConfig.getInitParameter("exceptionUrls"),
+				CONFIG_DELIMITERS);
+		return urls == null ? new String[] {} : urls;
+	}
+
+	protected TokenAuthenticator getTokenAuthenticator(ServletContext servletContext) {
 		WebApplicationContext applicationContext = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(servletContext);
-		tokenAuthenticator = (TokenAuthenticator) BeanFactoryUtils.beanOfType(applicationContext,
-				TokenAuthenticator.class);
+		return (TokenAuthenticator) BeanFactoryUtils.beanOfType(applicationContext, TokenAuthenticator.class);
 	}
 
 	@Override
@@ -35,6 +51,11 @@ public class TokenAuthenticationFilter implements Filter {
 			ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+		if (isExceptionUri(httpRequest.getRequestURI())) {
+			chain.doFilter(request, response);
+			return;
+		}
 
 		String tokenHeader = httpRequest.getHeader(TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER);
 
@@ -46,6 +67,16 @@ public class TokenAuthenticationFilter implements Filter {
 		else {
 			httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
 		}
+	}
+
+	protected boolean isExceptionUri(String uri) {
+		for (String exceptionUrl : exceptionUrls) {
+			if (uri.matches(exceptionUrl)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
