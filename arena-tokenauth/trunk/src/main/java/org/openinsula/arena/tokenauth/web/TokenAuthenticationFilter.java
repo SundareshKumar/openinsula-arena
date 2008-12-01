@@ -63,6 +63,11 @@ public class TokenAuthenticationFilter implements Filter {
 
 		String tokenHeader = httpRequest.getHeader(TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER);
 
+		if (tokenHeader == null) {
+			httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		
 		String newToken = tokenAuthenticator.isAuthenticated(tokenHeader);
 		if (newToken != null) {
 			chain.doFilter(request, response);
