@@ -48,7 +48,7 @@ public class TokenAuthenticationFilterTest {
 		};
 
 		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("exceptionUrls", "/rest/test.* /rest/auth.* /rest/login.*");
+		filterConfig.addInitParameter("exceptionUris", "/rest/test.* /rest/auth.* /rest/login.*");
 
 		filter.init(filterConfig);
 

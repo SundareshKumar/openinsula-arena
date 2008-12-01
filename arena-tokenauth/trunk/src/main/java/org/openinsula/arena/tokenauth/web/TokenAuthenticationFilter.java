@@ -12,6 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.tokenauth.TokenAuthenticator;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.util.StringUtils;
@@ -20,22 +22,24 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class TokenAuthenticationFilter implements Filter {
 
+	protected final Log logger = LogFactory.getLog(getClass());
+	
 	protected static final String CONFIG_DELIMITERS = " \t\n";
 
 	private TokenAuthenticator tokenAuthenticator;
 
-	private String[] exceptionUrls;
+	private String[] exceptionUris;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		this.exceptionUrls = getExceptionUrls(filterConfig);
+		this.exceptionUris = getExceptionUrls(filterConfig);
 
 		ServletContext servletContext = filterConfig.getServletContext();
 		this.tokenAuthenticator = getTokenAuthenticator(servletContext);
 	}
 
 	protected String[] getExceptionUrls(FilterConfig filterConfig) {
-		String[] urls = StringUtils.tokenizeToStringArray(filterConfig.getInitParameter("exceptionUrls"),
+		String[] urls = StringUtils.tokenizeToStringArray(filterConfig.getInitParameter("exceptionUris"),
 				CONFIG_DELIMITERS);
 		return urls == null ? new String[] {} : urls;
 	}
@@ -70,8 +74,16 @@ public class TokenAuthenticationFilter implements Filter {
 	}
 
 	protected boolean isExceptionUri(String uri) {
-		for (String exceptionUrl : exceptionUrls) {
-			if (uri.matches(exceptionUrl)) {
+		if (logger.isDebugEnabled()) {
+			logger.debug(String.format("Verifying URI '%s' as exception URI.", uri));
+		}
+		
+		for (String exceptionUri : exceptionUris) {
+			if (uri.matches(exceptionUri)) {
+				if (logger.isDebugEnabled()) {
+					logger.debug(String.format("URI '%s' matched exception URI '%s'", uri, exceptionUri));
+				}
+				
 				return true;
 			}
 		}
