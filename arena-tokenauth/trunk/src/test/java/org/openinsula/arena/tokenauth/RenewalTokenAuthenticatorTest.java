@@ -31,6 +31,18 @@ public class RenewalTokenAuthenticatorTest {
 		key = skey.getEncoded();
 
 	}
+	
+	@Test
+	public void testAuthenticate() {
+		RenewalTokenAuthenticator tokenAuthenticator = buidAESRenewalTokenAuthenticator();
+		
+		Token token = new Token("Luke Skywalker");
+		String header = tokenAuthenticator.authenticate(token);
+		
+		String newHeader = tokenAuthenticator.isAuthenticated(header);
+		
+		assertNotNull(newHeader);
+	}
 
 	@Test
 	public void testDoIsAuthenticatedAndRenewal() throws Exception {

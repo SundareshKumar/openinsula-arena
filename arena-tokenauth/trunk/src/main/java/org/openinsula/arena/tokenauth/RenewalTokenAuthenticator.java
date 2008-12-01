@@ -59,5 +59,13 @@ public class RenewalTokenAuthenticator implements TokenAuthenticator {
 			}
 		}, decodeHex);
 	}
+	
+	@Override
+	public String authenticate(Token token) {
+		byte[] key = keyProvider.getCryptoKey();
+		byte[] encryptContent = cryptProvider.encryptContent(token.getBytes(), key);
+
+		return new String(Hex.encodeHex(encryptContent));
+	}
 
 }
