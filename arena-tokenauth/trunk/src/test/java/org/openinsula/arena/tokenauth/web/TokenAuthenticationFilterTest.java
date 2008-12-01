@@ -74,6 +74,7 @@ public class TokenAuthenticationFilterTest {
 		filter.init(new MockFilterConfig());
 
 		MockHttpServletRequest request = new MockHttpServletRequest();
+		request.addHeader(TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER, "abcd");
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		MockFilterChain chain = new MockFilterChain();
 
@@ -98,4 +99,24 @@ public class TokenAuthenticationFilterTest {
 		assertEquals(403, response.getStatus());
 	}
 
+	@Test
+	public void testMissingHeader() throws ServletException, IOException {
+		TokenAuthenticationFilter filter = new TokenAuthenticationFilter() {
+			@Override
+			protected TokenAuthenticator getTokenAuthenticator(ServletContext servletContext) {
+				TokenAuthenticator authenticator = createStrictMock(TokenAuthenticator.class);
+				expect(authenticator.isAuthenticated((String) anyObject())).andReturn(null).atLeastOnce();
+				replay(authenticator);
+				return authenticator;
+			}
+		};
+		filter.init(new MockFilterConfig());
+
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		MockFilterChain chain = new MockFilterChain();
+
+		filter.doFilter(request, response, chain);
+		assertEquals(403, response.getStatus());
+	}
 }
