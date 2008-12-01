@@ -56,7 +56,7 @@ public class TokenAuthenticationFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		if (isExceptionUri(httpRequest.getRequestURI())) {
+		if (isExceptionUri(getUri(httpRequest))) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -72,7 +72,20 @@ public class TokenAuthenticationFilter implements Filter {
 			httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
 		}
 	}
-
+	
+	protected String getUri(HttpServletRequest request) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(request.getServletPath());
+		
+		String pathInfo = request.getPathInfo();
+		if (pathInfo != null) {
+			sb.append(pathInfo);
+		}
+		
+		return sb.toString();
+	}
+	
 	protected boolean isExceptionUri(String uri) {
 		if (logger.isDebugEnabled()) {
 			logger.debug(String.format("Verifying URI '%s' as exception URI.", uri));
