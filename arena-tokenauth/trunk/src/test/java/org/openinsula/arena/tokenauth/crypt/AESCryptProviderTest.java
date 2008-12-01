@@ -14,7 +14,7 @@ public class AESCryptProviderTest {
 	@Test
 	public void testEncryptDecrypt() throws Exception {
 		KeyGenerator kgen = KeyGenerator.getInstance("AES");
-		kgen.init(256);
+		kgen.init(128);
 		SecretKey skey = kgen.generateKey();
 		byte[] key = skey.getEncoded();
 

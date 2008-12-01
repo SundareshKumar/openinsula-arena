@@ -26,7 +26,7 @@ public class RenewalTokenAuthenticatorTest {
 	@BeforeClass
 	public static void init() throws NoSuchAlgorithmException {
 		KeyGenerator kgen = KeyGenerator.getInstance("AES");
-		kgen.init(256);
+		kgen.init(128);
 		SecretKey skey = kgen.generateKey();
 		key = skey.getEncoded();
 
