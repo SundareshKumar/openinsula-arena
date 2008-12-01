@@ -146,8 +146,4 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 		return values == null ? 0 : values.size();
 	}
 
-	public String renderBean(final T bean) {
-		return String.valueOf(bean);
-	}
-
 }

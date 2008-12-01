@@ -17,6 +17,12 @@ public class BeanListBox<T> extends FocusComposite implements ListBoxModelListen
 	private final ListBoxModel<T> model;
 
 	private boolean emptySelectionAllowed = true;
+	
+	private ListBoxCellRender<T> cellRender = new ListBoxCellRender<T>() {
+		public String render(T item) {
+			return item.toString();
+		}
+	};
 
 	public BeanListBox(final ListBoxModel<T> listBoxModel) {
 		this(new ListBox(), listBoxModel);
@@ -94,7 +100,7 @@ public class BeanListBox<T> extends FocusComposite implements ListBoxModelListen
 
 		if (rows > 0) {
 			for (int i = 0; i < rows; i++) {
-				listBox.addItem(model.renderBean(model.getElementAt(i)));
+				listBox.addItem(cellRender.render(model.getElementAt(i)));
 			}
 		}
 	}
@@ -150,4 +156,13 @@ public class BeanListBox<T> extends FocusComposite implements ListBoxModelListen
 	public ListBoxModel<T> getModel() {
 		return model;
 	}
+	
+	public ListBoxCellRender<T> getCellRender() {
+		return cellRender;
+	}
+
+	public void setCellRender(ListBoxCellRender<T> cellRender) {
+		this.cellRender = cellRender;
+	}
+
 }
