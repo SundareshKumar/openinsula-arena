@@ -163,7 +163,7 @@ public class BeanListBox<T> extends FocusComposite implements ListBoxModelListen
 
 	public void setCellRender(ListBoxCellRender<T> cellRender) {
 		this.cellRender = cellRender;
-		onListBoxChange();
+		onListDataChange();
 	}
 
 }
