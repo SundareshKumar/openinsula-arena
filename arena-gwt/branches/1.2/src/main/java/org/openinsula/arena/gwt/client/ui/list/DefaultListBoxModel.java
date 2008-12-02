@@ -26,16 +26,22 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 		this(comparator, (T[]) null);
 	}
 
+	public DefaultListBoxModel(List<T> list) {
+		this(null, list);
+	}
+
 	public DefaultListBoxModel(T ... values) {
 		this(null, values);
 	}
 
 	public DefaultListBoxModel(final Comparator<T> comparator, T ... values) {
-		this.comparator = comparator;
+		this(comparator, (values != null ? Arrays.asList(values) : null));
+	}
+
+	public DefaultListBoxModel(Comparator<T> comparator, List<T> list) {
 		this.selection = new ArrayList<T>();
-		if (values != null) {
-			this.values = Arrays.asList(values);
-		}
+		this.comparator = comparator;
+		this.values = list;
 
 		listeners = new ArrayList<ListBoxModelListener>();
 	}
