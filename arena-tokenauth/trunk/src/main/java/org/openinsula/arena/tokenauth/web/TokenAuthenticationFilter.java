@@ -23,7 +23,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class TokenAuthenticationFilter implements Filter {
 
 	protected final Log logger = LogFactory.getLog(getClass());
-	
+
 	protected static final String CONFIG_DELIMITERS = " \t\n";
 
 	private TokenAuthenticator tokenAuthenticator;
@@ -56,7 +56,8 @@ public class TokenAuthenticationFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		if (isExceptionUri(getUri(httpRequest))) {
+		String uri = getUri(httpRequest);
+		if (isExceptionUri(uri)) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -64,44 +65,55 @@ public class TokenAuthenticationFilter implements Filter {
 		String tokenHeader = httpRequest.getHeader(TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER);
 
 		if (tokenHeader == null) {
+			if (logger.isDebugEnabled()) {
+				logger.debug(String.format("Token Header not found for request: %s", uri));
+			}
 			httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
 			return;
 		}
-		
+
 		String newToken = tokenAuthenticator.isAuthenticated(tokenHeader);
 		if (newToken != null) {
 			chain.doFilter(request, response);
+
+			if (logger.isDebugEnabled()) {
+				logger.debug(String.format("Setting Header '%s' to value '%s'",
+						TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER, newToken));
+			}
 			httpResponse.setHeader(TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER, newToken);
 		}
 		else {
+			if (logger.isDebugEnabled()) {
+				logger.debug(String.format("Could not renewal token '%s'. Forbidding access.", tokenHeader));
+			}
 			httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
 		}
 	}
-	
+
 	protected String getUri(HttpServletRequest request) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(request.getServletPath());
-		
+
 		String pathInfo = request.getPathInfo();
 		if (pathInfo != null) {
 			sb.append(pathInfo);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	protected boolean isExceptionUri(String uri) {
 		if (logger.isDebugEnabled()) {
 			logger.debug(String.format("Verifying URI '%s' as exception URI.", uri));
 		}
-		
+
 		for (String exceptionUri : exceptionUris) {
 			if (uri.matches(exceptionUri)) {
 				if (logger.isDebugEnabled()) {
 					logger.debug(String.format("URI '%s' matched exception URI '%s'", uri, exceptionUri));
 				}
-				
+
 				return true;
 			}
 		}
