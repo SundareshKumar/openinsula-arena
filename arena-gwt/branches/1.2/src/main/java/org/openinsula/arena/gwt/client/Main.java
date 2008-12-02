@@ -15,14 +15,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Main implements EntryPoint {
 
 	public void onModuleLoad() {
-		RootPanel.get().add(new TesteDateWidget());
+//		RootPanel.get().add(new TesteDateWidget());
 	}
 
 	private class TesteDateWidget extends Composite {
