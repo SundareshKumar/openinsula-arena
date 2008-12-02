@@ -66,7 +66,8 @@ public class TokenAuthenticationFilter implements Filter {
 
 		if (tokenHeader == null) {
 			if (logger.isDebugEnabled()) {
-				logger.debug(String.format("Token Header not found for request: %s", uri));
+				logger.debug(String.format("Header '%s' not found for request: '%s'. Forbidding access.",
+						TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER, uri));
 			}
 			httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
 			return;
@@ -77,7 +78,7 @@ public class TokenAuthenticationFilter implements Filter {
 			chain.doFilter(request, response);
 
 			if (logger.isDebugEnabled()) {
-				logger.debug(String.format("Setting Header '%s' to value '%s'",
+				logger.debug(String.format("Token renewed. Setting Header '%s' to value '%s'",
 						TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER, newToken));
 			}
 			httpResponse.setHeader(TokenAuthenticator.TOKEN_AUTHENTICATOR_HEADER, newToken);
