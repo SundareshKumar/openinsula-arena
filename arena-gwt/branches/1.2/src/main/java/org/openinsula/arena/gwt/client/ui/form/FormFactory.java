@@ -1,6 +1,10 @@
 package org.openinsula.arena.gwt.client.ui.form;
 
 import org.openinsula.arena.gwt.client.StyleBuilder;
+import org.openinsula.arena.gwt.client.ui.form.util.DateFormItem;
+import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget;
+import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget.LabelAlignment;
+import org.openinsula.arena.gwt.client.ui.form.validator.DateFormItemValidator;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -220,5 +224,32 @@ public abstract class FormFactory {
 		}
 
 		return formBuilder.toPanel();
+	}
+
+	public static DateFormItem newDateFormItem() {
+		return newDateFormItem("Data");
+	}
+
+	public static DateFormItem newDateFormItem(String label) {
+		return newDateFormItem("Data", null, false, true);
+	}
+
+	public static DateFormItem newDateFormItem(String label, String hint, boolean optional, boolean hasLabels) {
+		SimpleDateWidget widget;
+
+		if (hasLabels) {
+			widget = new SimpleDateWidget(LabelAlignment.LEFT, "ano", "mês", "dia");
+		}
+		else {
+			widget = new SimpleDateWidget();
+		}
+
+		DateFormItem formItem = new DateFormItem(label, widget, hint, optional);
+
+		if (!optional) {
+			formItem.addFormItemValidator(new DateFormItemValidator());
+		}
+
+		return formItem;
 	}
 }

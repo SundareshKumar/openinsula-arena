@@ -2,18 +2,16 @@ package org.openinsula.arena.gwt.client.util;
 
 import java.util.Date;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
+
 public class GwtDateUtils {
 
 	private GwtDateUtils() {
 	}
 
 	public enum DateField {
-		SECOND(1000),
-		MINUTE(60 * 1000),
-		HOUR(60 * 60 * 1000),
-		DATE(24 * 60 * 60 * 1000),
-		MONTH(30 * 24 * 60 * 60 * 1000),
-		YEAR(365 * 24 * 60 * 60 * 1000);
+		SECOND(1000), MINUTE(60 * 1000), HOUR(60 * 60 * 1000), DATE(24 * 60 * 60 * 1000), MONTH(30 * 24 * 60 * 60
+				* 1000), YEAR(365 * 24 * 60 * 60 * 1000);
 
 		private long milliseconds;
 
@@ -74,6 +72,47 @@ public class GwtDateUtils {
 	public static long difference(Date dataInicial, Date dataFinal, DateField timeUnit) {
 		long diff = dataFinal.getTime() - dataInicial.getTime();
 		return diff / timeUnit.getMilliseconds();
+	}
+
+	/**
+	 *
+	 * @param date
+	 * @return <code>-1</code> if the date is <code>null</code> or a
+	 * <code>int</code> between 1 and 31 depending on the month and year
+	 */
+	public static int getDay(Date date) {
+		if (date == null) {
+			return -1;
+		}
+
+		return Integer.valueOf(DateTimeFormat.getFormat("dd").format(date));
+	}
+
+	/**
+	 *
+	 * @param date
+	 * @return <code>-1</code> if the date is <code>null</code> or a
+	 * <code>int</code> between 1 and 12
+	 */
+	public static int getMonth(Date date) {
+		if (date == null) {
+			return -1;
+		}
+
+		return Integer.valueOf(DateTimeFormat.getFormat("MM").format(date));
+	}
+
+	/**
+	 *
+	 * @param date
+	 * @return
+	 */
+	public static int getYear(Date date) {
+		if (date == null) {
+			return -1;
+		}
+
+		return Integer.valueOf(DateTimeFormat.getFormat("yyyy").format(date));
 	}
 
 }
