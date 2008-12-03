@@ -22,4 +22,6 @@ public interface ListBoxModel<T> {
 
 	void removeListBoxModelListener(ListBoxModelListener listener);
 
+	boolean remove(T item);
+
 }

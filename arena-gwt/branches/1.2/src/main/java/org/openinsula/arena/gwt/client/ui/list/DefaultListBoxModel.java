@@ -6,7 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
+
+import com.google.gwt.core.client.GWT;
 
 public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 
@@ -101,19 +102,11 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 	}
 
 	public T getElementAt(final int index) {
-		if (values == null) {
-			throw new NoSuchElementException("Model is Empty");
-		}
-
-		return values.get(index);
+		return values().get(index);
 	}
 
 	public int indexOf(final T element) {
-		if (values == null) {
-			return -1;
-		}
-
-		return values.indexOf(element);
+		return values().indexOf(element);
 	}
 
 	public Collection<T> getSelectedItems() {
@@ -149,7 +142,23 @@ public class DefaultListBoxModel<T> implements ListBoxModel<T> {
 	}
 
 	public int getSize() {
-		return values == null ? 0 : values.size();
+		return values().size();
 	}
 
+	public boolean remove(T item) {
+		GWT.log("Removendo um item do BeanListBox -> Item: " + item.toString(), null);
+
+		boolean result = values().remove(item);
+		fireOnListDataChange();
+
+		return result;
+	}
+
+	private List<T> values() {
+		if (values == null) {
+			values = new ArrayList<T>();
+		}
+
+		return values;
+	}
 }
