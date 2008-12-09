@@ -238,7 +238,7 @@ public abstract class FormFactory {
 		SimpleDateWidget widget;
 
 		if (hasLabels) {
-			widget = new SimpleDateWidget(LabelAlignment.LEFT, "ano", "mês", "dia");
+			widget = new SimpleDateWidget(LabelAlignment.LEFT, "ano", "m\u00eas", "dia");
 		}
 		else {
 			widget = new SimpleDateWidget();
