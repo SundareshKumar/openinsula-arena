@@ -25,4 +25,10 @@ public class DateFormItem extends FormItem<SimpleDateWidget> {
 	public void setDate(Date date) {
 		getWidget().setDate(date);
 	}
+
+	@Override
+	public void clear() {
+		super.clear();
+		getWidget().clear();
+	}
 }

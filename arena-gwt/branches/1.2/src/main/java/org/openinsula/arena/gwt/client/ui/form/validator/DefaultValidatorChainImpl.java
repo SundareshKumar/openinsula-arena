@@ -67,6 +67,10 @@ public class DefaultValidatorChainImpl<W extends Widget> implements ValidatorCha
 		chainList().add(validator);
 	}
 
+	public void clearValidator(W widget) {
+		chainList().clear();
+	}
+
 	public void removeValidator(FormItemValidator<W> validator) {
 		chainList().remove(validator);
 	}

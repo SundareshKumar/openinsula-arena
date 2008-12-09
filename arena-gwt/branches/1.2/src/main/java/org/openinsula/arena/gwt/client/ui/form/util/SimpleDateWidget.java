@@ -111,6 +111,12 @@ public class SimpleDateWidget extends FocusComposite {
 		yearTextBox.setEnabled(enabled);
 	}
 
+	public void clear() {
+		dayTextBox.setText("");
+		monthTextBox.setText("");
+		yearTextBox.setText("");
+	}
+
 	public boolean isEnabled() {
 		return dayTextBox.isEnabled();
 	}

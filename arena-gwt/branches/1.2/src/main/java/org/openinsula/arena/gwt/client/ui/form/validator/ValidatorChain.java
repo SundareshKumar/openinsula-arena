@@ -10,6 +10,8 @@ public interface ValidatorChain<W extends Widget> {
 
 	public void addValidator(W widget, FormItemValidator<W> validator);
 
+	public void clearValidator(W widget);
+
 	public boolean isLastNode();
 
 	public int size();

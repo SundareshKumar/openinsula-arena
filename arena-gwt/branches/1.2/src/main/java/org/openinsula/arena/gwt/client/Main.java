@@ -1,112 +1,98 @@
 package org.openinsula.arena.gwt.client;
 
-import java.util.Date;
-
-import org.openinsula.arena.gwt.client.ui.FocusUtils;
-import org.openinsula.arena.gwt.client.ui.form.util.DateFormItem;
-import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget;
-import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget.LabelAlignment;
-import org.openinsula.arena.gwt.client.ui.form.validator.DateFormItemValidator;
-import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorActionAdapter;
-
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 public class Main implements EntryPoint {
 
 	public void onModuleLoad() {
-//		RootPanel.get().add(new TesteDateWidget());
+		//RootPanel.get().add(new TesteDateWidget());
 	}
 
-	private class TesteDateWidget extends Composite {
-
-		public TesteDateWidget() {
-			VerticalPanel content = new VerticalPanel();
-			content.setSpacing(5);
-			initWidget(content);
-
-			content.add(new Label("Oie"));
-			final DateFormItem dateFormItem = new DateFormItem();
-
-			content.add(dateFormItem);
-
-			dateFormItem.addFormItemValidator(new DateFormItemValidator());
-
-			Button validaDataButton = new Button("data ?");
-
-			validaDataButton.addClickListener(new ClickListener() {
-				public void onClick(Widget arg0) {
-					dateFormItem.validate(new ValidatorActionAdapter() {
-						public void onSuccess() {
-							Window.alert("data = " + dateFormItem.getDate());
-						}
-
-						public void onFail() {
-							super.onFail();
-							Window.alert("falhou");
-						}
-					});
-				}
-			});
-
-			content.add(validaDataButton);
-
-			SimpleDateWidget widgetHoje = new SimpleDateWidget();
-			widgetHoje.setDate(new Date());
-
-			content.add(widgetHoje);
-
-			SimpleDateWidget widgetHoje2 = new SimpleDateWidget(LabelAlignment.LEFT, "ano", "m\u00eas", "dia");
-			content.add(new DateFormItem("Data bacaninha", widgetHoje2, null, false));
-
-			content.add(new Label("Focus...[ENTER]* para o proximo campo"));
-
-			final SimpleDateWidget widgetFocus = new SimpleDateWidget();
-
-			Button focusButton = new Button("Foca no dia ?");
-			focusButton.addClickListener(new ClickListener(){
-				public void onClick(Widget arg0) {
-					FocusUtils.deferredFocus(widgetFocus);
-				}
-			});
-
-			content.add(widgetFocus);
-			content.add(focusButton);
-
-			content.add(new Label("Enable..."));
-
-			final SimpleDateWidget widgetEnabling = new SimpleDateWidget();
-
-			//*
-			FocusUtils.nextOnEnter(widgetFocus, widgetEnabling);
-
-			Button ativaButton = new Button("Ativa ?");
-			Button desativaButton = new Button("DESAtiva ?");
-
-			ativaButton.addClickListener(new ClickListener(){
-				public void onClick(Widget arg0) {
-					widgetEnabling.setEnabled(true);
-				}
-			});
-
-			desativaButton.addClickListener(new ClickListener(){
-				public void onClick(Widget arg0) {
-					widgetEnabling.setEnabled(false);
-				}
-			});
-
-			content.add(widgetEnabling);
-			content.add(ativaButton);
-			content.add(desativaButton);
-		}
-
-	}
+	// private class TesteDateWidget extends Composite {
+	//
+	// public TesteDateWidget() {
+	// VerticalPanel content = new VerticalPanel();
+	// content.setSpacing(5);
+	// initWidget(content);
+	//
+	// content.add(new Label("Oie"));
+	// final DateFormItem dateFormItem = new DateFormItem();
+	//
+	// content.add(dateFormItem);
+	//
+	// dateFormItem.addFormItemValidator(new DateFormItemValidator());
+	//
+	// Button validaDataButton = new Button("data ?");
+	//
+	// validaDataButton.addClickListener(new ClickListener() {
+	// public void onClick(Widget arg0) {
+	// dateFormItem.validate(new ValidatorActionAdapter() {
+	// public void onSuccess() {
+	// Window.alert("data = " + dateFormItem.getDate());
+	// }
+	//
+	// public void onFail() {
+	// super.onFail();
+	// Window.alert("falhou");
+	// }
+	// });
+	// }
+	// });
+	//
+	// content.add(validaDataButton);
+	//
+	// SimpleDateWidget widgetHoje = new SimpleDateWidget();
+	// widgetHoje.setDate(new Date());
+	//
+	// content.add(widgetHoje);
+	//
+	// SimpleDateWidget widgetHoje2 = new SimpleDateWidget(LabelAlignment.LEFT,
+	// "ano", "m\u00eas", "dia");
+	// content.add(new DateFormItem("Data bacaninha", widgetHoje2, null,
+	// false));
+	//
+	// content.add(new Label("Focus...[ENTER]* para o proximo campo"));
+	//
+	// final SimpleDateWidget widgetFocus = new SimpleDateWidget();
+	//
+	// Button focusButton = new Button("Foca no dia ?");
+	// focusButton.addClickListener(new ClickListener(){
+	// public void onClick(Widget arg0) {
+	// FocusUtils.deferredFocus(widgetFocus);
+	// }
+	// });
+	//
+	// content.add(widgetFocus);
+	// content.add(focusButton);
+	//
+	// content.add(new Label("Enable..."));
+	//
+	// final SimpleDateWidget widgetEnabling = new SimpleDateWidget();
+	//
+	// //*
+	// FocusUtils.nextOnEnter(widgetFocus, widgetEnabling);
+	//
+	// Button ativaButton = new Button("Ativa ?");
+	// Button desativaButton = new Button("DESAtiva ?");
+	//
+	// ativaButton.addClickListener(new ClickListener(){
+	// public void onClick(Widget arg0) {
+	// widgetEnabling.setEnabled(true);
+	// }
+	// });
+	//
+	// desativaButton.addClickListener(new ClickListener(){
+	// public void onClick(Widget arg0) {
+	// widgetEnabling.setEnabled(false);
+	// }
+	// });
+	//
+	// content.add(widgetEnabling);
+	//			content.add(ativaButton);
+	//			content.add(desativaButton);
+	//		}
+	//
+	//	}
 
 	// private class Apartamento {
 	// List<Integer> diasOcupado;

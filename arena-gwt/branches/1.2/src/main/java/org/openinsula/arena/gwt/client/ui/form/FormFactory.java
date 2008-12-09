@@ -226,15 +226,15 @@ public abstract class FormFactory {
 		return formBuilder.toPanel();
 	}
 
-	public static DateFormItem newDateFormItem() {
-		return newDateFormItem("Data");
+	public static DateFormItem dateFormItem() {
+		return dateFormItem("Data");
 	}
 
-	public static DateFormItem newDateFormItem(String label) {
-		return newDateFormItem("Data", null, false, true);
+	public static DateFormItem dateFormItem(String label) {
+		return dateFormItem("Data", null, false, true);
 	}
 
-	public static DateFormItem newDateFormItem(String label, String hint, boolean optional, boolean hasLabels) {
+	public static DateFormItem dateFormItem(String label, String hint, boolean optional, boolean hasLabels) {
 		SimpleDateWidget widget;
 
 		if (hasLabels) {

@@ -94,6 +94,11 @@ public class DefaultGroupValidatorChainImpl<W extends Widget> implements Validat
 		widgetList().add(widget);
 	}
 
+	public void clearValidator(W widget) {
+		chainList().clear();
+		widgetList().clear();
+	}
+
 	public void removeValidator(FormItemValidator<W> validator) {
 		chainList().remove(validator);
 	}
