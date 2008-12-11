@@ -41,8 +41,13 @@ public class Main implements EntryPoint {
 	//
 	// content.add(validaDataButton);
 	//
-	// SimpleDateWidget widgetHoje = new SimpleDateWidget();
+	// FormFactory.setModulePrefix("salto");
+	//
+	// SimpleDateWidget widgetHoje = FormFactory.simpleDateWidget();//new
+	// SimpleDateWidget();
 	// widgetHoje.setDate(new Date());
+	//
+	// GWT.log("oie = " + widgetHoje.toString(), null);
 	//
 	// content.add(widgetHoje);
 	//
@@ -56,7 +61,7 @@ public class Main implements EntryPoint {
 	// final SimpleDateWidget widgetFocus = new SimpleDateWidget();
 	//
 	// Button focusButton = new Button("Foca no dia ?");
-	// focusButton.addClickListener(new ClickListener(){
+	// focusButton.addClickListener(new ClickListener() {
 	// public void onClick(Widget arg0) {
 	// FocusUtils.deferredFocus(widgetFocus);
 	// }
@@ -69,19 +74,19 @@ public class Main implements EntryPoint {
 	//
 	// final SimpleDateWidget widgetEnabling = new SimpleDateWidget();
 	//
-	// //*
+	// // *
 	// FocusUtils.nextOnEnter(widgetFocus, widgetEnabling);
 	//
 	// Button ativaButton = new Button("Ativa ?");
 	// Button desativaButton = new Button("DESAtiva ?");
 	//
-	// ativaButton.addClickListener(new ClickListener(){
+	// ativaButton.addClickListener(new ClickListener() {
 	// public void onClick(Widget arg0) {
 	// widgetEnabling.setEnabled(true);
 	// }
 	// });
 	//
-	// desativaButton.addClickListener(new ClickListener(){
+	// desativaButton.addClickListener(new ClickListener() {
 	// public void onClick(Widget arg0) {
 	// widgetEnabling.setEnabled(false);
 	// }

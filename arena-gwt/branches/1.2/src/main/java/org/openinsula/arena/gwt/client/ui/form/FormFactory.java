@@ -55,6 +55,8 @@ public abstract class FormFactory {
 
 	static final String STYLE_FORM_ITEM = "FormItem";
 
+	static final String STYLE_FORM_SIMPLE_DATE_WIDGET = "SimpleDateWidget";
+
 	public static final String getStyleFormItem() {
 		return styleBuilder.getRule(STYLE_FORM_ITEM);
 	}
@@ -238,7 +240,7 @@ public abstract class FormFactory {
 		SimpleDateWidget widget;
 
 		if (hasLabels) {
-			widget = new SimpleDateWidget(LabelAlignment.LEFT, "ano", "m\u00eas", "dia");
+			widget = simpleDateWidget();
 		}
 		else {
 			widget = new SimpleDateWidget();
@@ -251,5 +253,15 @@ public abstract class FormFactory {
 		}
 
 		return formItem;
+	}
+
+	public static SimpleDateWidget simpleDateWidget(String ano, String mes, String dia) {
+		final SimpleDateWidget simpleDateWidget = new SimpleDateWidget(LabelAlignment.LEFT, "ano", "m\u00eas", "dia");
+		simpleDateWidget.setStyleName(styleBuilder.getRule(STYLE_FORM_SIMPLE_DATE_WIDGET));
+		return simpleDateWidget;
+	}
+
+	public static SimpleDateWidget simpleDateWidget() {
+		return simpleDateWidget("ano", "m\u00eas", "dia");
 	}
 }
