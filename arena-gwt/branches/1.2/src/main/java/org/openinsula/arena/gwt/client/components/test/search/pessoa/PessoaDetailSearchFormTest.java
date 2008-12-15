@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pessoa> {
+public class PessoaDetailSearchFormTest extends AbstractDetailsSearchFormTemplate<PessoaTest> {
 
 	private FormItem<TextBox> cpfFormItem;
 
@@ -24,7 +24,7 @@ public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pe
 
 	private TextBox cidadeTextBox;
 
-	public PessoaDetailSearchForm(AbstractSearchFormTemplate<Pessoa> parent, HasFocus nextFocusableComponent) {
+	public PessoaDetailSearchFormTest(AbstractSearchFormTemplate<PessoaTest> parent, HasFocus nextFocusableComponent) {
 		super(parent, nextFocusableComponent);
 	}
 
@@ -61,7 +61,7 @@ public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pe
 	}
 
 	@Override
-	protected void modelToView(Pessoa bean, boolean editionMode) {
+	protected void modelToView(PessoaTest bean, boolean editionMode) {
 		nomeTextBox.setText(bean.getNome());
 		cpfTextBox.setText(bean.getCpf());
 		cidadeTextBox.setText(bean.getCidade());
@@ -70,7 +70,7 @@ public class PessoaDetailSearchForm extends AbstractDetailsSearchFormTemplate<Pe
 	}
 
 	@Override
-	protected void viewToModel(Pessoa editInstance, ViewToModelCallback<Pessoa> callback) {
+	protected void viewToModel(PessoaTest editInstance, ViewToModelCallback<PessoaTest> callback) {
 		editInstance.setNome(nomeTextBox.getText());
 		editInstance.setCpf(cpfTextBox.getText());
 		editInstance.setCidade(cidadeTextBox.getText());

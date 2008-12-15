@@ -1,18 +1,18 @@
 package org.openinsula.arena.gwt.client.components.test.search.cliente;
 
-import org.openinsula.arena.gwt.client.components.test.search.pessoa.Pessoa;
+import org.openinsula.arena.gwt.client.components.test.search.pessoa.PessoaTest;
 
-public class Cliente {
+public class ClienteTest {
 
-	private Pessoa pessoa;
+	private PessoaTest pessoa;
 
 	private String dataCadastro;
 
-	public Pessoa getPessoa() {
+	public PessoaTest getPessoa() {
 		return pessoa;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(PessoaTest pessoa) {
 		this.pessoa = pessoa;
 	}
 

@@ -6,24 +6,24 @@ import org.openinsula.arena.gwt.client.ui.suggest.RemoteBeanSuggestOracle;
 
 import com.google.gwt.user.client.ui.HasFocus;
 
-public class PessoaSearchForm extends AbstractSearchFormTemplate<Pessoa> {
+public class PessoaSearchFormTest extends AbstractSearchFormTemplate<PessoaTest> {
 
-	public PessoaSearchForm(HasFocus nextFocusableComponent) {
+	public PessoaSearchFormTest(HasFocus nextFocusableComponent) {
 		super(nextFocusableComponent);
 	}
 
 	@Override
-	protected AbstractDetailsSearchFormTemplate<Pessoa> createDetailsSearchForm(HasFocus nextFocusableComponent) {
-		return new PessoaDetailSearchForm(this, nextFocusableComponent);
+	protected AbstractDetailsSearchFormTemplate<PessoaTest> createDetailsSearchForm(HasFocus nextFocusableComponent) {
+		return new PessoaDetailSearchFormTest(this, nextFocusableComponent);
 	}
 
 	@Override
-	protected Pessoa createNewEditableInstance(String suggestBoxContent) {
-		return new Pessoa();
+	protected PessoaTest createNewEditableInstance(String suggestBoxContent) {
+		return new PessoaTest();
 	}
 
 	@Override
-	protected String getSuggestBoxContent(Pessoa bean) {
+	protected String getSuggestBoxContent(PessoaTest bean) {
 		return bean.getNome();
 	}
 
@@ -33,8 +33,8 @@ public class PessoaSearchForm extends AbstractSearchFormTemplate<Pessoa> {
 	}
 
 	@Override
-	protected RemoteBeanSuggestOracle<Pessoa> getSuggestOracle() {
-		return new PessoaSuggestOracle();
+	protected RemoteBeanSuggestOracle<PessoaTest> getSuggestOracle() {
+		return new PessoaSuggestOracleTest();
 	}
 
 	@Override

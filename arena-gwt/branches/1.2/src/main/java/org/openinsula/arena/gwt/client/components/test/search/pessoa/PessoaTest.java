@@ -1,6 +1,6 @@
 package org.openinsula.arena.gwt.client.components.test.search.pessoa;
 
-public class Pessoa {
+public class PessoaTest {
 
 	private String nome;
 

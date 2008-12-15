@@ -8,27 +8,27 @@ import org.openinsula.arena.gwt.client.ui.suggest.RemoteBeanSuggestOracle;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class PessoaSuggestOracle extends RemoteBeanSuggestOracle<Pessoa> {
+public class PessoaSuggestOracleTest extends RemoteBeanSuggestOracle<PessoaTest> {
 
-	private List<Pessoa> model;
+	private List<PessoaTest> model;
 
 
 	@Override
-	protected void getRemoteCandidates(Request request, AsyncCallback<List<Pessoa>> callback) {
+	protected void getRemoteCandidates(Request request, AsyncCallback<List<PessoaTest>> callback) {
 		if (model == null) {
-			Pessoa pessoa = new Pessoa();
+			PessoaTest pessoa = new PessoaTest();
 			pessoa.setNome("fabiano");
 			pessoa.setCpf("1");
 
-			Pessoa pessoa2 = new Pessoa();
+			PessoaTest pessoa2 = new PessoaTest();
 			pessoa2.setNome("maeda");
 			pessoa2.setCpf("2");
 
-			Pessoa pessoa3 = new Pessoa();
+			PessoaTest pessoa3 = new PessoaTest();
 			pessoa3.setNome("marcelo");
 			pessoa3.setCpf("3");
 
-			model = new ArrayList<Pessoa>();
+			model = new ArrayList<PessoaTest>();
 			model.add(pessoa);
 			model.add(pessoa2);
 			model.add(pessoa3);
@@ -41,20 +41,20 @@ public class PessoaSuggestOracle extends RemoteBeanSuggestOracle<Pessoa> {
 		return true;
 	}
 
-	protected BeanSuggestion<Pessoa> getBeanSuggestionFor(final Pessoa bean, final Request request) {
+	protected BeanSuggestion<PessoaTest> getBeanSuggestionFor(final PessoaTest bean, final Request request) {
 		return new PessoaSuggestion(bean, request.getQuery());
 	}
 
-	private class PessoaSuggestion extends BeanSuggestion<Pessoa> {
-		public PessoaSuggestion(final Pessoa bean, final String query) {
+	private class PessoaSuggestion extends BeanSuggestion<PessoaTest> {
+		public PessoaSuggestion(final PessoaTest bean, final String query) {
 			super(bean, query);
 		}
 
-		protected String getBeanDisplayString(final Pessoa bean) {
+		protected String getBeanDisplayString(final PessoaTest bean) {
 			return bean.getNome();
 		}
 
-		protected String getBeanReplacementString(final Pessoa bean) {
+		protected String getBeanReplacementString(final PessoaTest bean) {
 			return bean.getNome();
 		}
 	}

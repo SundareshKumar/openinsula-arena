@@ -4,8 +4,8 @@ import org.openinsula.arena.gwt.client.components.test.search.AbstractDetailsSea
 import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchFormTemplate;
 import org.openinsula.arena.gwt.client.components.test.search.GetValueAction;
 import org.openinsula.arena.gwt.client.components.test.search.ViewToModelCallback;
-import org.openinsula.arena.gwt.client.components.test.search.pessoa.Pessoa;
-import org.openinsula.arena.gwt.client.components.test.search.pessoa.PessoaSearchForm;
+import org.openinsula.arena.gwt.client.components.test.search.pessoa.PessoaTest;
+import org.openinsula.arena.gwt.client.components.test.search.pessoa.PessoaSearchFormTest;
 import org.openinsula.arena.gwt.client.ui.form.FormBuilder;
 import org.openinsula.arena.gwt.client.ui.form.FormFactory;
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
@@ -18,28 +18,28 @@ import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ClienteDetailSearchForm extends AbstractDetailsSearchFormTemplate<Cliente> {
+public class ClienteDetailSearchFormTest extends AbstractDetailsSearchFormTemplate<ClienteTest> {
 
-	private FormItem<PessoaSearchForm> pessoaSearchFormItem;
+	private FormItem<PessoaSearchFormTest> pessoaSearchFormItem;
 
 	private FormItem<TextBox> dataCadastroFormItem;
 
-	private PessoaSearchForm pessoaSearchForm;
+	private PessoaSearchFormTest pessoaSearchForm;
 
 	private TextBox dataCadastroTextBox;
 
-	public ClienteDetailSearchForm(AbstractSearchFormTemplate<Cliente> parent, HasFocus nextFocusableComponent) {
+	public ClienteDetailSearchFormTest(AbstractSearchFormTemplate<ClienteTest> parent, HasFocus nextFocusableComponent) {
 		super(parent, nextFocusableComponent);
 	}
 
 	@Override
 	protected Widget buildForm() {
 		dataCadastroTextBox = FormFactory.textBox();
-		pessoaSearchForm = new PessoaSearchForm(dataCadastroTextBox);
+		pessoaSearchForm = new PessoaSearchFormTest(dataCadastroTextBox);
 		pessoaSearchForm.setEditionAllowed(true);
 		pessoaSearchForm.setInsertionAllowed(true);
 
-		pessoaSearchFormItem = new FormItem<PessoaSearchForm>("Nome", pessoaSearchForm);
+		pessoaSearchFormItem = new FormItem<PessoaSearchFormTest>("Nome", pessoaSearchForm);
 		dataCadastroFormItem = new FormItem<TextBox>("Data do cadastro", dataCadastroTextBox);
 
 		FormBuilder builder = new FormBuilder();
@@ -64,7 +64,7 @@ public class ClienteDetailSearchForm extends AbstractDetailsSearchFormTemplate<C
 	}
 
 	@Override
-	protected void modelToView(Cliente bean, boolean editionMode) {
+	protected void modelToView(ClienteTest bean, boolean editionMode) {
 		pessoaSearchForm.setText(bean.getPessoa().getNome());
 		dataCadastroTextBox.setText(bean.getDataCadastro());
 
@@ -72,9 +72,9 @@ public class ClienteDetailSearchForm extends AbstractDetailsSearchFormTemplate<C
 	}
 
 	@Override
-	protected void viewToModel(final Cliente editInstance, final ViewToModelCallback<Cliente> callback) {
-		pessoaSearchForm.getEditInstance(new GetValueAction<Pessoa>() {
-			public void processValue(Pessoa pessoa) {
+	protected void viewToModel(final ClienteTest editInstance, final ViewToModelCallback<ClienteTest> callback) {
+		pessoaSearchForm.getEditInstance(new GetValueAction<PessoaTest>() {
+			public void processValue(PessoaTest pessoa) {
 				editInstance.setPessoa(pessoa);
 				editInstance.setDataCadastro(dataCadastroTextBox.getText());
 				callback.processValue(editInstance);
