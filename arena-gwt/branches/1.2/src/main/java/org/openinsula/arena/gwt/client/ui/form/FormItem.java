@@ -52,6 +52,8 @@ public class FormItem<W extends Widget> extends FocusComposite {
 
 	protected boolean isNew;
 
+	private ValidatorChain<W> validatorChain;
+
 	protected FormItem() {
 	}
 
@@ -249,8 +251,6 @@ public class FormItem<W extends Widget> extends FocusComposite {
 		});
 	}
 
-	private ValidatorChain<W> validatorChain;
-
 	protected ValidatorChain<W> validatorChain() {
 		if (validatorChain == null) {
 			validatorChain = new DefaultValidatorChainImpl<W>();
@@ -262,6 +262,10 @@ public class FormItem<W extends Widget> extends FocusComposite {
 	public void addFormItemValidator(FormItemValidator validator) {
 		validator.setFormItem(this);
 		validatorChain().addValidator(null, validator);
+	}
+
+	public void removeFormItemValidator(W widget) {
+		validatorChain().clearValidator(widget);
 	}
 
 	public void validate(ValidatorAction action) {
