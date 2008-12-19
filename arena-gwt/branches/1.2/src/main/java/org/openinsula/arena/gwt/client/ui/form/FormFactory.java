@@ -5,6 +5,7 @@ import org.openinsula.arena.gwt.client.ui.form.util.DateFormItem;
 import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget;
 import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget.LabelAlignment;
 import org.openinsula.arena.gwt.client.ui.form.validator.DateFormItemValidator;
+import org.openinsula.arena.gwt.client.ui.form.validator.NotNullFormItemValidator;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -132,6 +133,12 @@ public abstract class FormFactory {
 		return textBox("250px");
 	}
 
+	/**
+	 * Usar {@link FormFactory#dateFormItem()}
+	 *
+	 * @return
+	 */
+	@Deprecated
 	public static TextBox textBoxDate() {
 		TextBox box = textBox("80px");
 		box.setMaxLength(10);
@@ -233,7 +240,7 @@ public abstract class FormFactory {
 	}
 
 	public static DateFormItem dateFormItem(String label) {
-		return dateFormItem("Data", null, false, true);
+		return dateFormItem(label, null, false, true);
 	}
 
 	public static DateFormItem dateFormItem(String label, String hint, boolean optional, boolean hasLabels) {
@@ -264,4 +271,39 @@ public abstract class FormFactory {
 	public static SimpleDateWidget simpleDateWidget() {
 		return simpleDateWidget("ano", "m\u00eas", "dia");
 	}
+
+	public static FormItem<TextBox> formItemTextBox(String label) {
+		return formItemTextBox(label, false);
+	}
+
+	public static FormItem<TextBox> formItemTextBox(String label, boolean mandatory) {
+		return formItemTextBox(label, FormFactory.textBox(), mandatory);
+	}
+
+	public static FormItem<TextBox> formItemTextBoxSmall(String label) {
+		return formItemTextBoxSmall(label, false);
+	}
+
+	public static FormItem<TextBox> formItemTextBoxSmall(String label, boolean mandatory) {
+		return formItemTextBox(label, FormFactory.textBoxSmall(), mandatory);
+	}
+
+	public static FormItem<TextBox> formItemTextBoxBig(String label) {
+		return formItemTextBoxBig(label, false);
+	}
+
+	public static FormItem<TextBox> formItemTextBoxBig(String label, boolean mandatory) {
+		return formItemTextBox(label, FormFactory.textBoxBig(), mandatory);
+	}
+
+	private static FormItem<TextBox> formItemTextBox(String label, TextBox widget, boolean mandatory) {
+		FormItem<TextBox> formItem = new FormItem<TextBox>(label, widget);
+
+		if (mandatory) {
+			formItem.addFormItemValidator(new NotNullFormItemValidator());
+		}
+
+		return formItem;
+	}
+
 }
