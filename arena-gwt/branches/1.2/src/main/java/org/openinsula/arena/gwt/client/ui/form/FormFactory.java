@@ -184,6 +184,12 @@ public abstract class FormFactory {
 		return textArea("150px", "75px");
 	}
 
+	public static TextArea disabledTextArea() {
+		TextArea textArea = textArea();
+		textArea.setEnabled(false);
+		return textArea;
+	}
+
 	/**
 	 * Cria um {@link Hyperlink} e gera um "token" automatico, baseado no label
 	 * fornecido (concatenando com um numero aleatorio).
@@ -207,6 +213,12 @@ public abstract class FormFactory {
 
 	public static Hyperlink hyperlink(String label, String targetHistoryToken) {
 		return new Hyperlink(label, targetHistoryToken);
+	}
+
+	public static HorizontalPanel horizontalPanel() {
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel.setSpacing(5);
+		return horizontalPanel;
 	}
 
 	public static HorizontalPanel actionPanel() {
