@@ -1,53 +1,50 @@
 package org.openinsula.arena.gwt.components.client.ui.form;
 
+import org.openinsula.arena.gwt.components.client.ui.form.builder.FormPanelBuilder;
 import org.openinsula.arena.gwt.components.client.ui.form.event.FormChangeListener;
-import org.openinsula.arena.gwt.components.client.ui.form.event.FormEvent;
-import org.openinsula.arena.gwt.components.client.ui.utils.EqualsUtils;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author Lucas K Mogari
  */
-public abstract class AbstractFormPanel extends FlowPanel implements Form, FormChangeListener {
+public abstract class AbstractFormPanel extends Composite implements Form, FormChangeListener {
 
 	public static final String STYLE_CLASS_NAME = "Form";
 
-	private FormModel formModel;
+	private FormPanelBuilder formPanelBuilder;
 
 	public AbstractFormPanel() {
 		this(null);
 	}
 
 	public AbstractFormPanel(FormModel formModel) {
-		if (formModel != null) {
-			setModel(formModel);
-		}
+		setFormPanelBuilder(new FormPanelBuilder(formModel));
+
+		getFormPanelBuilder().setFormChangeListener(this);
+
+		initWidget(getPanel());
+
 		setStyleName(STYLE_CLASS_NAME);
 	}
 
+	public abstract Panel getPanel();
+
 	public void setModel(FormModel formModel) {
-		if (formModel == null) {
-			throw new IllegalArgumentException("'formModel' must not be null");
-		}
-
-		final FormModel oldFormModel = this.formModel;
-
-		if (EqualsUtils.isDifferent(oldFormModel, formModel)) {
-			this.formModel = formModel;
-
-			if (oldFormModel != null) {
-				oldFormModel.removeFormListener(this);
-			}
-
-			formModel.addFormListener(this);
-
-			formChanged(new FormEvent(formModel, FormEvent.NEW_FORM));
-		}
+		getFormPanelBuilder().setFormModel(formModel);
 	}
 
 	public FormModel getModel() {
-		return formModel;
+		return getFormPanelBuilder().getFormModel();
+	}
+
+	public void setFormPanelBuilder(FormPanelBuilder formPanelBuilder) {
+		this.formPanelBuilder = formPanelBuilder;
+	}
+
+	public FormPanelBuilder getFormPanelBuilder() {
+		return formPanelBuilder;
 	}
 
 }
