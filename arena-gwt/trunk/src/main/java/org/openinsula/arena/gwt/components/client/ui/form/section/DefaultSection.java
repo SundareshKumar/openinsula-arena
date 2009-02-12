@@ -5,10 +5,6 @@ import java.util.List;
 import org.openinsula.arena.gwt.components.client.ui.form.FormItem;
 import org.openinsula.arena.gwt.components.client.ui.form.FormItemListBuilder;
 
-/**
- * @author João Galli
- *
- */
 public abstract class DefaultSection extends AbstractSection {
 
 	
