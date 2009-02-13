@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
+ * @deprecated Use {@link HTMLWidgetFactory#p()} instead.
  */
 public class Paragraph extends Widget implements HasText {
 
@@ -13,7 +14,7 @@ public class Paragraph extends Widget implements HasText {
 		this(null);
 	}
 
-	public Paragraph(String text) {
+	public Paragraph(final String text) {
 		setElement(DOM.createElement("P"));
 
 		if (text != null) {
@@ -25,7 +26,7 @@ public class Paragraph extends Widget implements HasText {
 		return getElement().getInnerText();
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		getElement().setInnerText(text);
 	}
 

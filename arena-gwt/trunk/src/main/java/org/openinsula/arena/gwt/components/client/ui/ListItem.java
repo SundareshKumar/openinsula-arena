@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
+ * @deprecated Use {@link HTMLWidgetFactory#li()} instead.
  */
 public class ListItem extends ComplexPanel {
 
@@ -14,11 +15,11 @@ public class ListItem extends ComplexPanel {
 	}
 
 	@Override
-	public void add(Widget w) {
+	public void add(final Widget w) {
 		super.add(w, getElement());
 	}
 
-	public void insert(Widget w, int beforeIndex) {
+	public void insert(final Widget w, final int beforeIndex) {
 		super.insert(w, getElement(), beforeIndex, true);
 	}
 

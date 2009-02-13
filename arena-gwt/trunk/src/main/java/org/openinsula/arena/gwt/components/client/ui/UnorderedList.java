@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
+ * @deprecated Use {@link HTMLWidgetFactory#ul()} instead.
  */
 public class UnorderedList extends ComplexPanel {
 
@@ -15,7 +16,7 @@ public class UnorderedList extends ComplexPanel {
 	}
 
 	@Override
-	public void add(Widget widget) {
+	public void add(final Widget widget) {
 		final Element li = widget.getElement();
 
 		if ("LI".equals(li.getTagName())) {

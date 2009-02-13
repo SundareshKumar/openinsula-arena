@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
+ * @deprecated Use {@link HTMLWidgetFactory#span()} instead.
  */
 public class Span extends ComplexPanel implements HasText {
 

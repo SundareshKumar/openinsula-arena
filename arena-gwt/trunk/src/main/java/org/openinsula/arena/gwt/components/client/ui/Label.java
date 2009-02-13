@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Lucas K Mogari
+ * @deprecated Use {@link HTMLWidgetFactory#label()} instead.
  */
 public class Label extends ComplexPanel implements HasText {
 

@@ -1,0 +1,9 @@
+<module>
+	<inherits name="org.openinsula.arena.gwt.form.Form" />
+	<stylesheet src="fix.css" />
+
+	<replace-with class="org.openinsula.arena.gwt.form.wufoo.client.WufooUIModelFactory">
+		<when-type-is class="org.openinsula.arena.gwt.form.client.UIModelFactoryImpl" />
+	</replace-with>
+
+</module>
