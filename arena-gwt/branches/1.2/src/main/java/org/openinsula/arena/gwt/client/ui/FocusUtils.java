@@ -35,8 +35,7 @@ public abstract class FocusUtils {
 
 	public static void nextOnKeyUp(final int keyCode, final SourcesKeyboardEvents source, final HasFocus target) {
 		source.addKeyboardListener(new KeyboardListenerAdapter() {
-			@Override
-			public void onKeyUp(final Widget sender, final char key, final int modifiers) {
+			public void onKeyPress(Widget sender, char key, int modifiers) {
 				if (key == keyCode) {
 					deferredFocus(target);
 				}
