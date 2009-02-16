@@ -113,5 +113,5 @@ public abstract class HTMLWidget<T extends Element> extends ComplexPanel impleme
 	public Widget toWidget() {
 		return this;
 	}
-
+	
 }

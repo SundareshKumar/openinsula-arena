@@ -85,8 +85,9 @@ public class PropertyChangeSupport {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T getProperty(final String name) {
-		return nullSafeGet(properties, name);
+		return (T) nullSafeGet(properties, name);
 	}
 
 	public PropertyChangeCallback<?> getCallback(final String property) {

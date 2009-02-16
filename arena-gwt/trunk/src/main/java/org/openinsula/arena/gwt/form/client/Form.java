@@ -24,8 +24,8 @@ public class Form extends AbstractUIModel<FormRenderer> {
 
 	private List<Action> secondaryActionList;
 
-	Form(final FormRenderer renderer) {
-		setRenderer(renderer);
+	public Form() {
+		super(UIModelRendererProvider.get().createFormRenderer());
 	}
 	
 	@Override
@@ -47,7 +47,6 @@ public class Form extends AbstractUIModel<FormRenderer> {
 				renderer.onPrimaryActionChange(oldValue, newValue);
 			}
 		});
-
 	}
 
 	public Form title(final String title) {
@@ -75,7 +74,7 @@ public class Form extends AbstractUIModel<FormRenderer> {
 			}
 
 			if (sectionList.add(section)) {
-				getRenderer().onFormSectionAdded(section, sectionList.indexOf(section));
+				getRenderer().onFormSectionAdded(sections(), section);
 			}
 		}
 		return this;

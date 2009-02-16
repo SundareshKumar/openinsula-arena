@@ -1,5 +1,7 @@
 package org.openinsula.arena.gwt.form.client;
 
+import java.util.List;
+
 public interface FormRenderer extends UIModelRenderer {
 
 	void onTitleChange(String oldValue, String newValue);
@@ -10,8 +12,8 @@ public interface FormRenderer extends UIModelRenderer {
 
 	void onSecondaryActionAdded(Action action, int position);
 
-	void onFormSectionAdded(FormSection formSection, int position);
+	void onFormSectionAdded(List<FormSection> sectionList, FormSection formSection);
 
-	void onFormSectionRemoved(FormSection formSection, int position);
+	void onFormSectionRemoved(List<FormSection> sectionList, FormSection formSection);
 
 }

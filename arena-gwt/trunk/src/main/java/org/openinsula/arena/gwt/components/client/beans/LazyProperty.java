@@ -9,7 +9,7 @@ package org.openinsula.arena.gwt.components.client.beans;
  */
 public abstract class LazyProperty<T> {
 
-	private T property;
+	protected T property;
 
 	protected abstract T createProperty();
 

@@ -8,20 +8,19 @@ public abstract class AbstractUIModel<T extends UIModelRenderer> implements UIMo
 
 	private final PropertyChangeSupport model;
 
-	private T renderer;
+	private final T renderer;
 
 	private Widget renderedModelCache;
 
-	public AbstractUIModel() {
-		model = new PropertyChangeSupport();
-	}
-
-	public final void setRenderer(final T renderer) {
+	public AbstractUIModel(final T renderer) {
 		if (renderer == null) {
-			throw new IllegalArgumentException("Renderer required!");
+			throw new IllegalArgumentException("UIModelRenderer is required!");
 		}
-		attachRenderer(renderer, model);
+		
 		this.renderer = renderer;
+		model = new PropertyChangeSupport();
+		
+		attachRenderer(renderer, model);
 	}
 
 	public final T getRenderer() {
@@ -35,8 +34,9 @@ public abstract class AbstractUIModel<T extends UIModelRenderer> implements UIMo
 		model.changeProperty(propertyName, propertyValue);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected final <E> E getProperty(final String propertyName) {
-		return model.getProperty(propertyName);
+		return (E) model.getProperty(propertyName);
 	}
 
 	public Widget toWidget() {

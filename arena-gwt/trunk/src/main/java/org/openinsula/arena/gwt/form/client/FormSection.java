@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.form.client;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class FormSection extends AbstractUIModel<FormSectionRenderer> {
 
 	private List<FormItem> itemList;
 
-	FormSection(final FormSectionRenderer renderer) {
-		setRenderer(renderer);
+	public FormSection() {
+		super(UIModelRendererProvider.get().createFormSectionRenderer());
 	}
 
 	@Override
@@ -74,16 +75,22 @@ public class FormSection extends AbstractUIModel<FormSectionRenderer> {
 	}
 
 	private void addFormItem(final FormItem formItem, final Position position) {
-		if (itemList.add(formItem)) {
-			getRenderer().onFormItemAdded(formItem, itemList.indexOf(formItem), position);
+		if (formItem != null) {
+			if (itemList == null) {
+				itemList = new ArrayList<FormItem>();
+			}
+
+			if (itemList.add(formItem)) {
+				getRenderer().onFormItemAdded(formItems(), formItem, position);
+			}
 		}
 	}
 
 	public FormSection remove(final FormItem formItem) {
-		int idx = itemList.indexOf(formItem);
-
-		if (itemList.remove(formItem)) {
-			getRenderer().onFormItemRemoved(formItem, idx);
+		if (formItem != null && itemList != null && !itemList.isEmpty()) {
+			if (itemList.remove(formItem)) {
+				getRenderer().onFormItemRemoved(formItems(), formItem);
+			}
 		}
 
 		return this;

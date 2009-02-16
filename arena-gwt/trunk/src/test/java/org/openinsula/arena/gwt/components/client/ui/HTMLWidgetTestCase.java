@@ -1,12 +1,31 @@
 package org.openinsula.arena.gwt.components.client.ui;
 
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.user.client.ui.TextBox;
 
 // TODO
 public class HTMLWidgetTestCase extends GWTTestCase {
 
 	public void testClear() {
-		fail("Not yet implemented");
+		HTMLWidget<DivElement> div = new HTMLWidget<DivElement>() {
+		
+			@Override
+			protected DivElement createHTMLElement(final Document document) {
+				return document.createDivElement();
+			}
+		};
+
+		assertTrue(div.getWidgetCount() == 0);
+		div.clear();
+		assertTrue(div.getWidgetCount() == 0);
+		
+		div.add(new TextBox());
+		assertTrue(div.getWidgetCount() == 1);
+		
+		div.clear();
+		assertTrue(div.getWidgetCount() == 0);
 	}
 
 	public void testHTMLWidget() {

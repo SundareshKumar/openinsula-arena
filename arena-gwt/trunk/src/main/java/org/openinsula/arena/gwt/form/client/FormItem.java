@@ -31,8 +31,8 @@ public class FormItem extends AbstractUIModel<FormItemRenderer> {
 
 	private FormSection parentSection;
 
-	FormItem(final FormItemRenderer renderer) {
-		setRenderer(renderer);
+	public FormItem() {
+		super(UIModelRendererProvider.get().createFormItemRenderer());
 		size(Size.SMALL);
 	}
 
@@ -49,6 +49,38 @@ public class FormItem extends AbstractUIModel<FormItemRenderer> {
 				renderer.onRequiredChange(oldValue, newValue);
 			}
 		});
+		
+		model.addPropertyChangeCallback(TIP_PROPERTY, new PropertyChangeCallback<String>() {
+			public void onChange(final String oldValue, final String newValue) {
+				renderer.onTipChange(oldValue, newValue);
+			}
+		});
+		
+		model.addPropertyChangeCallback(WIDGET_PROPERTY, new PropertyChangeCallback<Widget> () {
+			public void onChange(final Widget oldValue, final Widget newValue) {
+				renderer.onWidgetChange(oldValue, newValue);
+			}
+		});
+		
+		model.addPropertyChangeCallback(SIZE_PROPERTY, new PropertyChangeCallback<Size> () {
+			public void onChange(final Size oldValue, final Size newValue) {
+				renderer.onSizeChange(oldValue, newValue);
+			}
+		});
+		
+		model.addPropertyChangeCallback(VALID_PROPERTY, new PropertyChangeCallback<Boolean>() {
+			public void onChange(final Boolean oldValue, final Boolean newValue) {
+				renderer.onValidChange(oldValue, newValue);
+			}
+		});
+		
+		model.addPropertyChangeCallback(VALIDATION_MESSAGE_PROPERTY, new PropertyChangeCallback<String>() {
+			public void onChange(final String oldValue, final String newValue) {
+				renderer.onValidationMessageChange(oldValue, newValue);
+			}
+		});
+		
+		
 	}
 
 	public FormItem label(final String label) {

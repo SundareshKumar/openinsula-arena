@@ -9,8 +9,8 @@ public class Window extends AbstractUIModel<WindowRenderer> {
 
 	private static final String BODY_PROPERTY = "body";
 
-	Window(final WindowRenderer renderer) {
-		setRenderer(renderer);
+	public Window() {
+		super(UIModelRendererProvider.get().createWindowRenderer());
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public interface FormItemRenderer extends UIModelRenderer {
 
 	void onLabelChange(String oldValue, String newValue);
 
-	void onRequiredChange(boolean oldValue, boolean newValue);
+	void onRequiredChange(Boolean oldValue, Boolean newValue);
 
 	void onTipChange(String oldValue, String newValue);
 
@@ -16,7 +16,7 @@ public interface FormItemRenderer extends UIModelRenderer {
 
 	void onSizeChange(Size oldValue, Size newValue);
 
-	void onValidChange(boolean oldValue, boolean newValue);
+	void onValidChange(Boolean oldValue, Boolean newValue);
 
 	void onValidationMessageChange(String oldValue, String newValue);
 

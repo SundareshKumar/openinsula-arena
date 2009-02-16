@@ -25,13 +25,14 @@ public abstract class StringUtils {
 	 * greater than 0, and it does not contain whitespace only
 	 * @see #hasText(String)
 	 */
+	@SuppressWarnings("deprecation")
 	public static boolean hasText(final String str) {
 		if (!hasLength(str)) {
 			return false;
 		}
 		int strLen = str.length();
 		for (int i = 0; i < strLen; i++) {
-			if (!Character.isWhitespace(str.charAt(i))) {
+			if (!Character.isSpace(str.charAt(i))) {
 				return true;
 			}
 		}
