@@ -6,6 +6,8 @@ import org.openinsula.arena.gwt.client.ui.form.validator.ValidatorChain;
 
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HasFocus;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SourcesFocusEvents;
@@ -151,5 +153,13 @@ public class GroupFormItem<T extends Widget> extends FormItem<T> {
 		} else {
 			super.setTabIndex(index);
 		}
+	}
+
+	public void setHorizontalAlign(HasHorizontalAlignment.HorizontalAlignmentConstant horizontalAlign) {
+		this.setHorizontalAlign(horizontalAlign);
+	}
+
+	public void setVerticalAlign(HasVerticalAlignment.VerticalAlignmentConstant verticalAlign) {
+		this.setVerticalAlign(verticalAlign);
 	}
 }
