@@ -81,11 +81,14 @@ public class Form extends AbstractUIModel<FormRenderer> {
 	}
 
 	public List<FormSection> sections() {
+		if (sectionList == null) {
+			return Collections.emptyList();
+		}
 		return Collections.unmodifiableList(sectionList);
 	}
 
 	public Form primaryAction(final Action action) {
-		Command validatedAction = new Command() {
+		Command validationCommand = new Command() {
 			public void execute() {
 				CompositeFormItemValidator validator = new CompositeFormItemValidator();
 
@@ -110,6 +113,9 @@ public class Form extends AbstractUIModel<FormRenderer> {
 				});
 			}
 		};
+		
+		Action validatedAction = action.clone();
+		validatedAction.command(validationCommand);
 
 		setProperty(PRIMARY_ACTION_PROPERTY, validatedAction);
 		return this;

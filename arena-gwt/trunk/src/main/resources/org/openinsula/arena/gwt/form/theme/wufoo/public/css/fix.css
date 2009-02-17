@@ -1,3 +1,14 @@
+/* Logo */
+h1 a {
+	background-image:url('../images/logo.png'); 
+	min-height:0;
+	height:40px;
+}
+* html h1 a {/* IE6 png Support */
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/logo.png", sizingMethod="crop");
+}
+
 button.btTxt {
 	padding: 0 7px;
 	width: auto;

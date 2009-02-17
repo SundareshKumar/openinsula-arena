@@ -13,6 +13,10 @@ public class Label extends ComplexPanel implements HasText {
 
 	private static final String FOR_ATTRIBUTE = "for";
 
+	
+	/**
+	 * @deprecated Use {@link HTMLWidgetFactory#label()} instead.
+	 */
 	public Label(final String label, final String id) {
 		setElement(DOM.createLabel());
 

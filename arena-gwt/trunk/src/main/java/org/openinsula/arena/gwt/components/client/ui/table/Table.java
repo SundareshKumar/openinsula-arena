@@ -1,5 +1,7 @@
 package org.openinsula.arena.gwt.components.client.ui.table;
 
+import org.openinsula.arena.gwt.components.client.util.ObjectUtils;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLTable;
 
@@ -49,7 +51,7 @@ public abstract class Table<T extends HTMLTable> extends Composite implements Ta
 
 		final TableModel oldTableModel = this.model;
 
-		if (EqualsUtils.isDifferent(oldTableModel, tableModel)) {
+		if (ObjectUtils.nullSafeEquals(oldTableModel, tableModel)) {
 			this.model = tableModel;
 
 			if (oldTableModel != null) {

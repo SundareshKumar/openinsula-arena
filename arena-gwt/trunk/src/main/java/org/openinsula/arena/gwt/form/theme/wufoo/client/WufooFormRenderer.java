@@ -10,7 +10,6 @@ import org.openinsula.arena.gwt.form.client.Action;
 import org.openinsula.arena.gwt.form.client.FormRenderer;
 import org.openinsula.arena.gwt.form.client.FormSection;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.FormElement;
@@ -32,9 +31,7 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 
 	private LazyChildWidget<DivElement> headerSubtitleElement;
 
-	private LazyChildWidget<HTMLWidget<UListElement>> itensWidget;
-
-	private LazyChildWidget<HTMLWidget<LIElement>> buttonBarWidget;
+	private ButtonBarWidget buttonBarWidget;
 
 	private LazyProperty<Button> primaryActionButton;
 
@@ -43,6 +40,8 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 		formWidget = HTMLWidgetFactory.form();
 		formWidget.setStyleName("wufoo");
 		formWidget.getHTMLElement().setMethod("POST");
+		
+		buttonBarWidget = new ButtonBarWidget();
 
 		return formWidget;
 	}
@@ -112,40 +111,11 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 				return div;
 			}
 		};
-
-		itensWidget = new LazyChildWidget<HTMLWidget<UListElement>>() {
-			@Override
-			protected void beforeRemove(final HTMLWidget<UListElement> widget) {
-				formWidget.remove(widget);
-			}
-
-			@Override
-			protected HTMLWidget<UListElement> createProperty(final Document document) {
-				final HTMLWidget<UListElement> ul = HTMLWidgetFactory.ul();
-				formWidget.add(ul);
-				return ul;
-			}
-		};
-
-		buttonBarWidget = new LazyChildWidget<HTMLWidget<LIElement>>() {
-			@Override
-			protected void beforeRemove(final HTMLWidget<LIElement> widget) {
-				itensWidget.get().remove(widget);
-			}
-
-			@Override
-			protected HTMLWidget<LIElement> createProperty(final Document document) {
-				final HTMLWidget<LIElement> li = HTMLWidgetFactory.li();
-				li.getHTMLElement().setClassName("buttons");
-				itensWidget.get().add(li);
-				return li;
-			}
-		};
-
+		
 		primaryActionButton = new LazyProperty<Button>() {
 			@Override
 			protected void beforeRemove(final Button property) {
-				buttonBarWidget.get().remove(property);
+				buttonBarWidget.removeButton(property);
 				buttonBarWidget.removeIfLeaf();
 			}
 
@@ -153,58 +123,30 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 			protected Button createProperty() {
 				final Button button = new Button();
 				button.setStyleName("btTxt");
-				buttonBarWidget.get().add(button);
+				buttonBarWidget.addButton(button, true);
 				return button;
 			}
 		};
 	}
 
 	public void onFormSectionAdded(final List<FormSection> sectionList, final FormSection formSection) {
-		WufooFormSectionRenderer sectionRenderer = (WufooFormSectionRenderer) formSection.getRenderer();
-		
-		if (buttonBarWidget.get(false) == null) {
-			mergeSectionItens(sectionRenderer.mainElement);
-		}
-		else {
-			itensWidget.get().remove(buttonBarWidget.get());
-			mergeSectionItens(sectionRenderer.mainElement);
-			itensWidget.get().add(buttonBarWidget.get());
-		}
-	}
-	
-	private void mergeSectionItens(final HTMLWidget<UListElement> section) {
-		if (!GWT.isScript()) {
-			GWT.log(section.getHTMLElement().getInnerHTML(), null);
-		}
-		
-		for (int i = 0, n = section.getWidgetCount(); i < n; i++) {
-			if (!GWT.isScript()) {
-				GWT.log("i = " + i + ", n = " + n, null);
-			}
-			
-			Widget widget = section.getWidget(i);
-			
-			if (!GWT.isScript()) {
-				GWT.log("widget = " + widget, null);
-			}
-			
-			itensWidget.get().add(widget);
+		formWidget.add(formSection.toWidget());
+		HTMLWidget<UListElement> buttonBar = buttonBarWidget.get(false);
+
+		if (buttonBar != null) {
+			formWidget.remove(buttonBar);
+			formWidget.add(buttonBar);
 		}
 	}
 
 	public void onFormSectionRemoved(final List<FormSection> sectionList, final FormSection formSection) {
-		WufooFormSectionRenderer sectionRenderer = (WufooFormSectionRenderer) formSection.getRenderer();
-		
-		for (int i = 0, n = sectionRenderer.mainElement.getWidgetCount(); i < n; i++) {
-			itensWidget.get().remove(sectionRenderer.mainElement.getWidget(i));
-		}
+		formWidget.remove(formSection.toWidget());
 	}
 
 	public void onPrimaryActionChange(final Action oldValue, final Action newValue) {
-		if (newValue == null) {
-			primaryActionButton.remove();
-		}
-		else {
+		primaryActionButton.remove();
+
+		if (newValue != null) {
 			Button button = primaryActionButton.get();
 			button.setText(newValue.label());
 			button.addClickListener(new ClickListener() {
@@ -224,7 +166,45 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 			}
 		});
 
-		buttonBarWidget.get().add(link);
+		buttonBarWidget.addButton(link, false);
+	}
+
+	private class ButtonBarWidget extends LazyChildWidget<HTMLWidget<UListElement>> {
+
+		private HTMLWidget<LIElement> li;
+
+		@Override
+		protected void beforeRemove(final HTMLWidget<UListElement> widget) {
+			formWidget.remove(widget);
+		}
+
+		@Override
+		protected HTMLWidget<UListElement> createProperty(final Document document) {
+			li = HTMLWidgetFactory.li();
+			li.getHTMLElement().setClassName("buttons");
+
+			HTMLWidget<UListElement> ul = HTMLWidgetFactory.ul();
+			ul.add(li);
+			formWidget.add(ul);
+			
+			return ul;
+		}
+		
+		public void addButton(final Widget widget, final boolean first) {
+			get();
+			
+			if (first) {
+				li.addFirst(widget);
+			} else {
+				li.add(widget);
+			}
+		}
+		
+		public void removeButton(final Widget widget) {
+			get();
+			li.remove(widget);
+		}
+
 	}
 
 }

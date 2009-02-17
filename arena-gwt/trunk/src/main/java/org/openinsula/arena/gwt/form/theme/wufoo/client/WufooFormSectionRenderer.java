@@ -24,9 +24,9 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 
 	private static final String SINGLE_LINE_STYLENAME = "";
 
-	HTMLWidget<UListElement> mainElement;
+	private HTMLWidget<UListElement> mainElement;
 
-	private LazyChildWidget<HTMLWidget<LIElement>> headerWidget;
+	private HTMLWidget<LIElement> headerWidget;
 
 	private LazyChildWidget<HeadingElement> headerTitleElement;
 
@@ -36,10 +36,15 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 
 	@Override
 	Widget createRequiredWidgets() {
+		headerWidget =  HTMLWidgetFactory.li();
+		headerWidget.setStyleName("section");
+		
 		mainElement = HTMLWidgetFactory.ul();
+		mainElement.addFirst(headerWidget);
+		
 		return mainElement;
 	}
-
+	
 	public void onTitleChange(final String oldValue, final String newValue) {
 		if (newValue == null) {
 			headerTitleElement.remove();
@@ -60,32 +65,16 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 
 	@Override
 	protected void initLazyWidgets() {
-		headerWidget = new LazyChildWidget<HTMLWidget<LIElement>>() {
-			@Override
-			protected void beforeRemove(final HTMLWidget<LIElement> widget) {
-				mainElement.remove(widget);
-			}
-
-			@Override
-			protected HTMLWidget<LIElement> createProperty() {
-				final HTMLWidget<LIElement> li = HTMLWidgetFactory.li();
-				li.setStyleName("section");
-				mainElement.addFirst(li);
-				return li;
-			}
-		};
-
 		headerTitleElement = new LazyChildWidget<HeadingElement>() {
 			@Override
 			protected void beforeRemove(final HeadingElement widget) {
-				headerWidget.get().remove(widget);
-				headerWidget.removeIfLeaf();
+				headerWidget.remove(widget);
 			}
 
 			@Override
 			protected HeadingElement createProperty(final Document document) {
 				final HeadingElement h3 = document.createHElement(3);
-				headerWidget.get().addFirst(h3);
+				headerWidget.addFirst(h3);
 				return h3;
 			}
 		};
@@ -93,14 +82,13 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 		headerSubtitleElement = new LazyChildWidget<DivElement>() {
 			@Override
 			protected void beforeRemove(final DivElement widget) {
-				headerWidget.get().remove(widget);
-				headerWidget.removeIfLeaf();
+				headerWidget.remove(widget);
 			}
 
 			@Override
 			protected DivElement createProperty(final Document document) {
 				final DivElement div = document.createDivElement();
-				headerWidget.get().add(div);
+				headerWidget.add(div);
 				return div;
 			}
 		};
@@ -152,5 +140,5 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 		// TODO terminar
 		mainElement.remove(formItem.toWidget());
 	}
-
+	
 }

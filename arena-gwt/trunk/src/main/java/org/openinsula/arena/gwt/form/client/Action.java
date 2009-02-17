@@ -46,5 +46,14 @@ public class Action implements Command {
 			command.execute();
 		}
 	}
+	
+	public Action clone() {
+		Action action = new Action();
+		action.label = label;
+		action.tip = tip;
+		action.command = command;
+		
+		return action;
+	}
 
 }

@@ -35,7 +35,9 @@ public abstract class HTMLWidget<T extends Element> extends ComplexPanel impleme
 	// Widget enhancements
 
 	public void insert(final Widget child, final int beforeIndex) {
-		super.insert(child, getElement(), beforeIndex, true);
+		if (child != null && beforeIndex > -1) {
+			super.insert(child, getElement(), beforeIndex, true);
+		}
 	}
 
 	public void insert(final Element element, final int beforeIndex) {
@@ -105,7 +107,9 @@ public abstract class HTMLWidget<T extends Element> extends ComplexPanel impleme
 
 	@Override
 	public void add(final Widget child) {
-		super.add(child, getElement());
+		if (child != null) {
+			super.add(child, getElement());
+		}
 	}
 
 	// WidgetBuilder Impl
@@ -113,5 +117,5 @@ public abstract class HTMLWidget<T extends Element> extends ComplexPanel impleme
 	public Widget toWidget() {
 		return this;
 	}
-	
+
 }
