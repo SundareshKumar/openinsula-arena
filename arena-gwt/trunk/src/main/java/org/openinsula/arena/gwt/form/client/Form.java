@@ -25,7 +25,7 @@ public class Form extends AbstractUIModel<FormRenderer> {
 	private List<Action> secondaryActionList;
 
 	public Form() {
-		super(UIModelRendererProvider.get().createFormRenderer());
+		setRenderer(UIModelRendererProvider.get().createFormRenderer());
 	}
 	
 	@Override

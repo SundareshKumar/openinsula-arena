@@ -6,4 +6,6 @@ public interface UIModel<T extends UIModelRenderer> extends WidgetBuilder {
 	
 	T getRenderer();
 	
+	void setRenderer(T renderer);
+	
 }

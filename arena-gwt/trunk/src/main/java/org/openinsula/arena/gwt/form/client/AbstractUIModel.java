@@ -8,21 +8,19 @@ public abstract class AbstractUIModel<T extends UIModelRenderer> implements UIMo
 
 	private final PropertyChangeSupport model;
 
-	private final T renderer;
+	private T renderer;
 
 	private Widget renderedModelCache;
 
-	public AbstractUIModel(final T renderer) {
-		if (renderer == null) {
-			throw new IllegalArgumentException("UIModelRenderer is required!");
-		}
-		
-		this.renderer = renderer;
+	public AbstractUIModel() {
 		model = new PropertyChangeSupport();
-		
-		attachRenderer(renderer, model);
 	}
 
+	public void setRenderer(final T renderer) {
+		this.renderer = renderer;
+		attachRenderer(renderer, model);
+	}
+	
 	public final T getRenderer() {
 		return renderer;
 	}

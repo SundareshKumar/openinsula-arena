@@ -20,7 +20,7 @@ public class FormSection extends AbstractUIModel<FormSectionRenderer> {
 	private List<FormItem> itemList;
 
 	public FormSection() {
-		super(UIModelRendererProvider.get().createFormSectionRenderer());
+		setRenderer(UIModelRendererProvider.get().createFormSectionRenderer());
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class FormItem extends AbstractUIModel<FormItemRenderer> {
 	private FormSection parentSection;
 
 	public FormItem() {
-		super(UIModelRendererProvider.get().createFormItemRenderer());
+		setRenderer(UIModelRendererProvider.get().createFormItemRenderer());
 		size(Size.SMALL);
 	}
 
