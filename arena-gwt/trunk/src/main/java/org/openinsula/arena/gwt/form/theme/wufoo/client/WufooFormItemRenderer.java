@@ -1,6 +1,5 @@
 package org.openinsula.arena.gwt.form.theme.wufoo.client;
 
-import org.openinsula.arena.gwt.components.client.ui.CssBuilder;
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidget;
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidgetFactory;
 import org.openinsula.arena.gwt.components.client.ui.LazyChildWidget;
@@ -8,7 +7,6 @@ import org.openinsula.arena.gwt.components.client.util.StringUtils;
 import org.openinsula.arena.gwt.form.client.FormItemRenderer;
 import org.openinsula.arena.gwt.form.client.FormItem.Size;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.LIElement;
@@ -24,7 +22,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class WufooFormItemRenderer extends WufooWidget implements FormItemRenderer, FocusListener {
 
-	HTMLWidget<LIElement> itemWidget;
+	private HTMLWidget<LIElement> itemWidget;
 
 	private LazyChildWidget<LabelElement> labelElement;
 
@@ -33,18 +31,15 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 	private LazyChildWidget<ParagraphElement> hintElement;
 
 	private LazyChildWidget<HTMLWidget<DivElement>> widgetWrapperElement;
-	
+
 	private LazyChildWidget<ParagraphElement> errorMessageElement;
 
 	private Widget widget;
-	
-	private CssBuilder cssBuilder;
+
+	private String size;
 
 	@Override
 	Widget createRequiredWidgets() {
-		cssBuilder = new CssBuilder();
-		cssBuilder.addClassname("field");
-		
 		itemWidget = HTMLWidgetFactory.li();
 		return itemWidget;
 	}
@@ -57,7 +52,7 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 			labelElement.get().setInnerHTML(newValue);
 		}
 	}
-	
+
 	public void onRequiredChange(final Boolean oldValue, final Boolean newValue) {
 		if (newValue) {
 			requiredElement.get();
@@ -66,19 +61,12 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 			requiredElement.remove();
 		}
 	}
-	
+
 	public void onSizeChange(final Size oldValue, final Size newValue) {
-		if (oldValue != null) {
-			cssBuilder.removeClassname(oldValue.name().toLowerCase());
-		}
-		
-		if (newValue != null) {
-			cssBuilder.addClassname(newValue.name().toLowerCase());
-		}
-		
-		applyClassname();
+		this.size = newValue == null ? "" : newValue.name().toLowerCase();
+		resolveWufooWidgetCSSClass();
 	}
-	
+
 	public void onTipChange(final String oldValue, final String newValue) {
 		if (newValue == null) {
 			hintElement.remove();
@@ -87,43 +75,40 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 			hintElement.get().setInnerHTML(newValue);
 		}
 	}
-	
+
 	public void onValidChange(final Boolean oldValue, final Boolean newValue) {
-		itemWidget.getHTMLElement().setClassName(newValue ? "": "error");
+		itemWidget.getHTMLElement().setClassName(newValue ? "" : "error");
 	}
-	
+
 	public void onValidationMessageChange(final String oldValue, final String newValue) {
 		if (!StringUtils.hasText(newValue)) {
 			errorMessageElement.get().setInnerHTML(newValue);
-		} else {
+		}
+		else {
 			errorMessageElement.remove();
 		}
 	}
-	
+
 	public void onWidgetChange(final Widget oldValue, final Widget newValue) {
 		if (newValue == null) {
 			widgetWrapperElement.remove();
-			
-		} else {
-			
+		}
+		else {
 			if (oldValue != null) {
 				widgetWrapperElement.get().remove(oldValue);
-				cssBuilder.removeClassname(getClassnameFor(oldValue));
 			}
-			
+
 			widgetWrapperElement.get().add(newValue);
 			this.widget = newValue;
-			
+
 			if (newValue instanceof HasFocus) {
 				((HasFocus) newValue).addFocusListener(WufooFormItemRenderer.this);
 			}
-			
-			cssBuilder.addClassname(getClassnameFor(newValue));
-			
-			applyClassname();
+
+			resolveWufooWidgetCSSClass();
 		}
 	}
-	
+
 	@Override
 	protected void initLazyWidgets() {
 		labelElement = new LazyChildWidget<LabelElement>() {
@@ -194,14 +179,14 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 				return div;
 			}
 		};
-		
+
 		errorMessageElement = new LazyChildWidget<ParagraphElement>() {
-		
+
 			@Override
 			protected void beforeRemove(final ParagraphElement widget) {
 				itemWidget.remove(widget);
 			}
-		
+
 			@Override
 			protected ParagraphElement createProperty(final Document document) {
 				ParagraphElement p = document.createPElement();
@@ -211,31 +196,19 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 			}
 		};
 	}
-	
-	private void applyClassname() {
+
+	private void resolveWufooWidgetCSSClass() {
 		if (widget != null) {
-			String css = cssBuilder.buildClassname();
-			
-			if (!GWT.isScript()) {
-				GWT.log("Css: " + css, null);
+			if (widget instanceof TextBox) {
+				widget.setStyleName(size + " field text");
 			}
-			
-			widget.setStyleName(css);
+			else if (widget instanceof TextArea) {
+				widget.setStyleName(size + " field textarea");
+			}
+			else if (widget instanceof ListBox) {
+				widget.setStyleName(size + " field select");
+			}
 		}
-	}
-	
-	private String getClassnameFor(final Widget widget) {
-		if (widget instanceof TextBox) {
-			return "text";
-		}
-		if (widget instanceof TextArea) {
-			return "textarea";
-		}
-		if (widget instanceof ListBox) {
-			return "select";
-		}
-		
-		return null;
 	}
 
 	// FocusListener impl
@@ -247,5 +220,5 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 	public void onLostFocus(final Widget sender) {
 		itemWidget.getHTMLElement().setClassName("");
 	}
-	
+
 }
