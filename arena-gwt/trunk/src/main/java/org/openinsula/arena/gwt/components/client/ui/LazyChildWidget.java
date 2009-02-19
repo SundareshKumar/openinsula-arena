@@ -8,13 +8,11 @@ import com.google.gwt.dom.client.Node;
 public abstract class LazyChildWidget<T> extends LazyProperty<T> {
 
 	@Override
-	protected T createProperty() {
+	protected final T createProperty() {
 		return createProperty(Document.get());
 	}
 
-	protected T createProperty(final Document document) {
-		return null;
-	}
+	protected abstract T createProperty(final Document document);
 
 	public final void removeIfLeaf() {
 		boolean isLeaf = false;

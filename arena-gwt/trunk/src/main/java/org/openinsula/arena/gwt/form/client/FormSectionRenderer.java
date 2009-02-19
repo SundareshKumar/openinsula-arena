@@ -10,6 +10,8 @@ public interface FormSectionRenderer extends UIModelRenderer {
 
 	void onSubtitleChange(String oldValue, String newValue);
 
+	void onActionAdded(Action action, int position);
+	
 	void onFormItemAdded(List<FormItem> formItemList, final FormItem formItem, final Position position);
 
 	void onFormItemRemoved(List<FormItem> formItemList, final FormItem formItem);

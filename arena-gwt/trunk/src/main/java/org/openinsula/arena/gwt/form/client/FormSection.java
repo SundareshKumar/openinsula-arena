@@ -9,14 +9,16 @@ import org.openinsula.arena.gwt.components.client.beans.PropertyChangeSupport;
 
 public class FormSection extends AbstractUIModel<FormSectionRenderer> {
 
-	static final String TITLE_PROPERTY = "title";
-
-	static final String SUBTITLE_PROPERTY = "subtitle";
-
 	public enum Position {
 		INLINE, NEW_LINE
 	}
+	
+	private static final String TITLE_PROPERTY = "title";
 
+	private static final String SUBTITLE_PROPERTY = "subtitle";
+	
+	private List<Action> actionList;
+	
 	private List<FormItem> itemList;
 
 	public FormSection() {
@@ -55,7 +57,7 @@ public class FormSection extends AbstractUIModel<FormSectionRenderer> {
 	public String subtitle() {
 		return getProperty(SUBTITLE_PROPERTY);
 	}
-
+	
 	public List<FormItem> formItems() {
 		return Collections.unmodifiableList(itemList);
 	}
@@ -84,6 +86,19 @@ public class FormSection extends AbstractUIModel<FormSectionRenderer> {
 				getRenderer().onFormItemAdded(formItems(), formItem, position);
 			}
 		}
+	}
+	
+	public FormSection addAction(final Action action) {
+		if (action != null) {
+			if (actionList == null) {
+				actionList = new ArrayList<Action>();
+			}
+			
+			if (actionList.add(action)) {
+				getRenderer().onActionAdded(action, actionList.indexOf(action));
+			}
+		}
+		return this;
 	}
 
 	public FormSection remove(final FormItem formItem) {

@@ -74,7 +74,7 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 			}
 
 			@Override
-			protected HTMLWidget<DivElement> createProperty() {
+			protected HTMLWidget<DivElement> createProperty(final Document document) {
 				final HTMLWidget<DivElement> div = HTMLWidgetFactory.div();
 				div.setStyleName("info");
 				formWidget.addFirst(div);
