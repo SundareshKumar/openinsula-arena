@@ -2,9 +2,11 @@ package org.openinsula.arena.gwt.json.server;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import junit.framework.TestCase;
@@ -24,14 +26,49 @@ public class XStreamJsonSerializerTestCase extends TestCase {
 		MockJson expected = new MockJson();
 		MockJson actual = serializer.fromJson(json, new MockJson());
 		assertEquals(expected, actual);
+		
+//		json = "{\"mocklist\":{[{\"aBoolean\":false,\"aByte\":0,\"aShort\":0,\"anInt\":0,\"aFloat\":0,\"aDouble\":0,\"aChar\":\"\"},{\"aBoolean\":true,\"aByte\":1,\"aShort\":2,\"anInt\":3,\"aFloat\":5.0,\"aDouble\":0,\"aChar\":\"\"}]}}";
+//		System.out.println(serializer.fromJson(json, new MockJsonList()));
+		
 	}
 
 	public void testToJson() {
-		String actual = serializer.toJson(new MockJson());
-		String expected = "{\"mock\":{\"aBoolean\":false,\"aByte\":0,\"aShort\":0,\"anInt\":0,\"aFloat\":0,\"aDouble\":0,\"aChar\":\"\"}}";
-		assertEquals(expected, actual);
+		MockJsonList list = new MockJsonList();
+		list.list = new ArrayList<MockJson>();
+		list.list.add(new MockJson());
+		list.list.add(new MockJson());
+		
+		String actual = serializer.toJson(list);
+		System.out.println(actual);
+//		String expected = "{\"mock\":{\"aBoolean\":false,\"aByte\":0,\"aShort\":0,\"anInt\":0,\"aFloat\":0,\"aDouble\":0,\"aChar\":\"\"}}";
+//		assertEquals(expected, actual);
+	}
+	
+	public void testFromJsonCollection() {
+		MockJsonList list = new MockJsonList();
+		list.list = new ArrayList<MockJson>();
+		list.list.add(new MockJson());
+		list.list.add(new MockJson());
+		
+		String json = serializer.toJson(list);
+		MockJsonList list2 = serializer.fromJson(json, new MockJsonList());
+		
+		assertTrue(ObjectUtils.nullSafeEquals(list.list, list2.list));
 	}
 
+}
+
+@XStreamAlias("mock-list")
+class MockJsonList implements Serializable {
+	
+	@XStreamImplicit
+	List<MockJson> list;
+	
+	@Override
+	public String toString() {
+		return list == null ? "null" : list.toString();
+	}
+	
 }
 
 @XStreamAlias("mock")
