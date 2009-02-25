@@ -47,5 +47,22 @@ public class JsonVOTest extends TestCase {
 		assertEquals(expected, actual);
 		assertSame(actual, mock.castJson(actual));
 	}
+	
+	public void testRemoveNotCastedJson() {
+		JsonVO mock = new JsonVO("mock") {
+		};
+		
+		String json = "{\"mockField\":{}}";
+		assertSame(json, mock.removeJsonCast(json));
+	}
+	
+	public void testRemoveCastedJson() {
+		JsonVO mock = new JsonVO("mock") {
+		};
+		
+		String json = "{\"mock\":{\"mockField\":{}}}";
+		String expected = "{\"mockField\":{}}";
+		assertEquals(expected, mock.removeJsonCast(json));
+	}
 
 }

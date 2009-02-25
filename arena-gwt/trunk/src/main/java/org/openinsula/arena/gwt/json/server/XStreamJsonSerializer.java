@@ -45,7 +45,13 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 
 		registerTypeIfNecessary(jsonObject);
 
-		return xstream.toXML(jsonObject);
+		String castedJson = xstream.toXML(jsonObject);
+		
+		if (jsonObject instanceof JsonVO) {
+			return ((JsonVO) jsonObject).removeJsonCast(castedJson);
+		}
+		
+		return castedJson;
 	}
 
 	@SuppressWarnings("unchecked")

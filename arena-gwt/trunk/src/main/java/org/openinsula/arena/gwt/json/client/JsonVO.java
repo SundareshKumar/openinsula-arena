@@ -31,4 +31,11 @@ public abstract class JsonVO implements Serializable {
 		return jsonPrefix + json + "}";
 	}
 	
+	public final String removeJsonCast(final String json) {
+		if (json.startsWith(jsonPrefix)) {
+			return json.substring(jsonPrefix.length(), json.length() - 1);
+		}
+		return json;
+	}
+	
 }
