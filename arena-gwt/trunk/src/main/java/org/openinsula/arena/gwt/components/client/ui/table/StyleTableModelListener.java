@@ -3,21 +3,36 @@ package org.openinsula.arena.gwt.components.client.ui.table;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 
-
 /**
  * Table with style options.
  * 
  * @author Lucas K Mogari
+ * @author Eduardo Rebola
  */
 public class StyleTableModelListener implements TableModelListener {
 
-	private static final String LIST_GRID_CELL = "listGridCell";
+	public static enum Styles {
+		CELL("listGridCell"), 
+		EVEN_ROW("listGridEvenRow"), 
+		ODD_ROW("listGridOddRow"), 
+		HEADER("listGridHeaderRow"), 
+		TABLE("StyleTable");
 
-	private static final String LIST_GRID_EVEN_ROW = "listGridEvenRow";
+		public final String styleName;
 
-	private static final String LIST_GRID_ODD_ROW = "listGridOddRow";
+		private Styles(final String styleName) {
+			this.styleName = styleName;
+		}
 
-	private static final String LIST_GRID_HEADER_ROW = "listGridHeaderRow";
+		public static Styles rowStyleFor(final int row) {
+			return row % 2 == 0 ? EVEN_ROW : ODD_ROW;
+		}
+
+		@Override
+		public String toString() {
+			return styleName;
+		}
+	}
 
 	private final Table<? extends HTMLTable> table;
 
@@ -43,16 +58,16 @@ public class StyleTableModelListener implements TableModelListener {
 	}
 
 	private void setTableStyle() {
-		final HTMLTable htmlTable = table.getWidget();
+		final HTMLTable htmlTable = table.getTable();
 		final TableModel tableModel = table.getModel();
 		final CellFormatter cellFormatter = htmlTable.getCellFormatter();
 
-		htmlTable.setStyleName("StyleTable");
-		
-		htmlTable.getRowFormatter().setStyleName(0, LIST_GRID_HEADER_ROW);
+		htmlTable.setStyleName(Styles.TABLE.styleName);
+
+		htmlTable.getRowFormatter().setStyleName(0, Styles.HEADER.styleName);
 
 		for (int i = 0; i < tableModel.getColumnCount(); i++) {
-			cellFormatter.setStyleName(0, i, LIST_GRID_CELL);
+			cellFormatter.setStyleName(0, i, Styles.CELL.styleName);
 		}
 
 		for (int i = 1; i <= tableModel.getRowCount(); i++) {
@@ -61,15 +76,14 @@ public class StyleTableModelListener implements TableModelListener {
 	}
 
 	private void setRowStyle(final int row) {
-		final HTMLTable htmlTable = table.getWidget();
-		final boolean odd = row % 2 == 0;
+		final HTMLTable htmlTable = table.getTable();
 		final CellFormatter cellFormatter = htmlTable.getCellFormatter();
 		final int columnCount = table.getModel().getColumnCount();
 
-		htmlTable.getRowFormatter().setStyleName(row, odd ? LIST_GRID_ODD_ROW : LIST_GRID_EVEN_ROW);
+		htmlTable.getRowFormatter().setStyleName(row, Styles.rowStyleFor(row).styleName);
 
 		for (int i = 0; i < columnCount; i++) {
-			cellFormatter.setStyleName(row, i, LIST_GRID_CELL);
+			cellFormatter.setStyleName(row, i, Styles.CELL.styleName);
 		}
 	}
 

@@ -1,0 +1,33 @@
+.StyleTable {
+	background-color: #AACCAA;
+	border-collapse: collapse;
+}
+
+.StyleTable .listGridHeaderRow {
+	background-color: #AACCAA;
+	text-align: center;
+	font-size: 90%;
+	letter-spacing: 2px;
+}
+
+.StyleTable .listGridEvenRow td,.StyleTable .listGridOddRow td {
+	border: 1px solid #AACCAA;
+}
+
+.listGridEvenRow {
+	background-color: white;
+}
+
+.listGridOddRow {
+	background-color: #EEEEEE;
+}
+
+.listGridCell {
+	padding: 2px 4px;
+}
+
+/*
+.validatedRow {
+	background-color: #CFC;
+}
+*/

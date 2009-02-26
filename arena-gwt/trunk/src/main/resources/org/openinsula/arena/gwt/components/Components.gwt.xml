@@ -1,3 +1,6 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
+	
+	<stylesheet src="css/Table.css" />
+	
 </module>

@@ -1,5 +1,6 @@
 package org.openinsula.arena.gwt.components.client.ui.table;
 
+import org.openinsula.arena.gwt.components.client.util.Assert;
 import org.openinsula.arena.gwt.components.client.util.ObjectUtils;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -7,6 +8,7 @@ import com.google.gwt.user.client.ui.HTMLTable;
 
 /**
  * @author Lucas K Mogari
+ * @author Eduardo Rebola
  */
 public abstract class Table<T extends HTMLTable> extends Composite implements TableModelListener {
 
@@ -17,37 +19,35 @@ public abstract class Table<T extends HTMLTable> extends Composite implements Ta
 	private boolean useTheme = true;
 
 	public Table() {
-	}
-
-	public Table(final TableModel tableModel) {
-		setModel(tableModel);
-	}
-
-	{
 		table = createNewTable();
 		initWidget(table);
 	}
 
+	public Table(final TableModel tableModel) {
+		this();
+		setModel(tableModel);
+	}
+
 	protected abstract T createNewTable();
 
-	public T getTable() {
+	public final T getTable() {
 		return table;
 	}
 
-	@SuppressWarnings("unchecked")
+	/** 
+	 * @deprecated In favor of {@link #getTable()}.
+	 */
 	@Override
 	public T getWidget() {
-		return (T) super.getWidget();
+		return getTable();
 	}
 
-	public TableModel getModel() {
+	public final TableModel getModel() {
 		return model;
 	}
 
 	public void setModel(final TableModel tableModel) {
-		if (tableModel == null) {
-			throw new IllegalArgumentException("'tableModel' must not be null.");
-		}
+		Assert.notNull(tableModel, "TableModel is required!");
 
 		final TableModel oldTableModel = this.model;
 
