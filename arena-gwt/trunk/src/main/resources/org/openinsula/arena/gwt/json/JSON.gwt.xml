@@ -3,6 +3,8 @@
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name="com.thoughtworks.xstream.XStream" />
 	
+	<inherits name="org.openinsula.arena.gwt.http.HTTP" />
+	
 	<servlet path="/JsonRemoteSerializer" class="org.openinsula.arena.gwt.json.server.JsonRemoteSerializerServlet" />
 	
 </module>
