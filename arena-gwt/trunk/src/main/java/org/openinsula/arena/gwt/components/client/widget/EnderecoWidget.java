@@ -31,8 +31,84 @@ public class EnderecoWidget extends AbstractWidget {
 		createTextBox("U.F.", null, ufTextBox, 2);
 	}
 
+	@Override
 	public void setFocus(final boolean focused) {
 		cepTextBox.setFocus(focused);
+	}
+
+	public EnderecoVO getEnderecoVO() {
+
+		final EnderecoVO enderecoVO = new EnderecoVO();
+		enderecoVO.setBairro(bairroTextBox.getText());
+		enderecoVO.setCep(cepTextBox.getText());
+		enderecoVO.setComplemento(complementoTextBox.getText());
+		enderecoVO.setLocalidade(localidadeTextBox.getText());
+		enderecoVO.setLogradouro(logradouroTextBox.getText());
+		enderecoVO.setNumero(numeroTextBox.getText());
+		enderecoVO.setUf(ufTextBox.getText());
+
+		return enderecoVO;
+	}
+
+	public static class EnderecoVO {
+
+		private String cep;
+		private String logradouro;
+		private String numero;
+		private String complemento;
+		private String bairro;
+		private String localidade;
+		private String uf;
+
+		public String getCep() {
+			return cep;
+		}
+		public void setCep(final String cep) {
+			this.cep = cep;
+		}
+
+		public String getLogradouro() {
+			return logradouro;
+		}
+		public void setLogradouro(final String logradouro) {
+			this.logradouro = logradouro;
+		}
+
+		public String getNumero() {
+			return numero;
+		}
+		public void setNumero(final String numero) {
+			this.numero = numero;
+		}
+
+		public String getComplemento() {
+			return complemento;
+		}
+		public void setComplemento(final String complemento) {
+			this.complemento = complemento;
+		}
+
+		public String getBairro() {
+			return bairro;
+		}
+		public void setBairro(final String bairro) {
+			this.bairro = bairro;
+		}
+
+		public String getLocalidade() {
+			return localidade;
+		}
+		public void setLocalidade(final String localidade) {
+			this.localidade = localidade;
+		}
+
+		public String getUf() {
+			return uf;
+		}
+		public void setUf(final String uf) {
+			this.uf = uf;
+		}
+
 	}
 
 }
