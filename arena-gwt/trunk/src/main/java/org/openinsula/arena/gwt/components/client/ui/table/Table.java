@@ -51,7 +51,7 @@ public abstract class Table<T extends HTMLTable> extends Composite implements Ta
 
 		final TableModel oldTableModel = this.model;
 
-		if (ObjectUtils.nullSafeEquals(oldTableModel, tableModel)) {
+		if (!ObjectUtils.nullSafeEquals(oldTableModel, tableModel)) {
 			this.model = tableModel;
 
 			if (oldTableModel != null) {

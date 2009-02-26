@@ -1,17 +1,18 @@
 .StyleTable {
-	background-color: #AACCAA;
 	border-collapse: collapse;
 }
 
-.StyleTable .listGridHeaderRow {
-	background-color: #AACCAA;
+.listGridHeaderRow {
 	text-align: center;
-	font-size: 90%;
-	letter-spacing: 2px;
+	font-weight: bold;
 }
 
-.StyleTable .listGridEvenRow td,.StyleTable .listGridOddRow td {
-	border: 1px solid #AACCAA;
+.listGridCell, .listGridHeaderRow {
+	padding: 2px 4px;
+}
+
+.listGridEvenRow td, .listGridOddRow td {
+	border: 1px solid;
 }
 
 .listGridEvenRow {
@@ -20,10 +21,6 @@
 
 .listGridOddRow {
 	background-color: #EEEEEE;
-}
-
-.listGridCell {
-	padding: 2px 4px;
 }
 
 /*

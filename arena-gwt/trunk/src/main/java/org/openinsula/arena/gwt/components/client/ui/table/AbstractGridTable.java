@@ -11,14 +11,14 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 	public AbstractGridTable() {
 	}
 
-	public AbstractGridTable(TableModel tableModel) {
+	public AbstractGridTable(final TableModel tableModel) {
 		super(tableModel);
 	}
 
-	public void tableChanged(TableModelEvent e) {
+	public void tableChanged(final TableModelEvent e) {
 		final int firstRow = e.getFirstRow();
 		final int tableModelRowCount = getModel().getRowCount();
-		final int gridRowCount = getWidget().getRowCount();
+		final int gridRowCount = getTable().getRowCount();
 		final int column = e.getColumn();
 		int lastRow = e.getLastRow();
 
@@ -60,7 +60,7 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 				resizeToDelete(firstRow, lastRow);
 			}
 			else {
-				final int newLastRow = getWidget().getRowCount() - (lastRow - firstRow) - 2;
+				final int newLastRow = getTable().getRowCount() - (lastRow - firstRow) - 2;
 
 				for (int i = firstRow; i < newLastRow; i++) {
 					updateRow(i, column);
@@ -71,7 +71,7 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		}
 	}
 
-	void appendRows(int firstRow, int lastRow, int column) {
+	void appendRows(final int firstRow, final int lastRow, final int column) {
 		resizeToInsert(firstRow, lastRow);
 
 		for (int i = firstRow; i <= lastRow; i++) {
@@ -79,7 +79,7 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		}
 	}
 
-	void insertRows(int firstRow, int lastRow, int column) {
+	void insertRows(final int firstRow, final int lastRow, final int column) {
 		final int newRowSize = resizeToInsert(firstRow, lastRow);
 
 		for (int i = firstRow; i <= newRowSize; i++) {
@@ -87,8 +87,8 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		}
 	}
 
-	private int resizeToDelete(int firstRow, int lastRow) {
-		final Grid table = getWidget();
+	private int resizeToDelete(final int firstRow, final int lastRow) {
+		final Grid table = getTable();
 		final int newRowSize = table.getRowCount() - (lastRow - firstRow) - 1;
 
 		table.resizeRows(newRowSize);
@@ -98,8 +98,8 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		return newRowSize;
 	}
 
-	private int resizeToInsert(int firstRow, int lastRow) {
-		final Grid table = getWidget();
+	private int resizeToInsert(final int firstRow, final int lastRow) {
+		final Grid table = getTable();
 		final int newRowSize = table.getRowCount() + lastRow - firstRow + 1;
 
 		table.resizeRows(newRowSize);
@@ -110,7 +110,7 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 	}
 
 	private void resizeColumnsIfNecessary() {
-		final Grid table = getWidget();
+		final Grid table = getTable();
 		final int tableModelColumnCount = getModel().getColumnCount();
 
 		if (table.getColumnCount() != tableModelColumnCount) {
@@ -118,7 +118,7 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		}
 	}
 
-	private void updateRows(int firstRow, int lastRow) {
+	private void updateRows(final int firstRow, final int lastRow) {
 		for (int i = firstRow; i <= lastRow; i++) {
 			updateRow(i, TableModelEvent.ALL_COLUMNS);
 		}
@@ -128,14 +128,14 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		final int columnCount = getModel().getColumnCount();
 		final int rowCount = getModel().getRowCount();
 
-		getWidget().clear();
-		getWidget().resize(rowCount + 1, columnCount);
+		getTable().clear();
+		getTable().resize(rowCount + 1, columnCount);
 
 		updateHeader(TableModelEvent.ALL_COLUMNS);
 		updateRows(0, rowCount - 1);
 	}
 
-	private void updateHeader(int column) {
+	private void updateHeader(final int column) {
 		switch (column) {
 		case TableModelEvent.ALL_COLUMNS:
 			final int columnCount = getModel().getColumnCount();
@@ -155,7 +155,7 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		}
 	}
 
-	private void updateRow(int rowIndex, int column) {
+	private void updateRow(final int rowIndex, final int column) {
 		final TableModel model = getModel();
 
 		switch (column) {
@@ -177,16 +177,16 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		}
 	}
 
-	private void setValue(int rowIndex, int column, Object obj) {
+	private void setValue(final int rowIndex, final int column, final Object obj) {
 		if (obj == null) {
 			return;
 		}
 
 		if (obj instanceof Widget) {
-			getWidget().setWidget(rowIndex, column, (Widget) obj);
+			getTable().setWidget(rowIndex, column, (Widget) obj);
 		}
 		else if (obj instanceof String) {
-			getWidget().setText(rowIndex, column, obj.toString());
+			getTable().setText(rowIndex, column, obj.toString());
 		}
 	}
 
