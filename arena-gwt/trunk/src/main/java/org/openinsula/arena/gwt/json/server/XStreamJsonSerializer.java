@@ -18,8 +18,8 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 	private final Set<Class<? extends Serializable>> processedTypesCache;
 
 	public XStreamJsonSerializer() {
-		xstream = new XStream(new JettisonMappedXmlDriver());
-		processedTypesCache = new HashSet<Class<? extends Serializable>>();
+		this.xstream = new XStream(new JettisonMappedXmlDriver());
+		this.processedTypesCache = new HashSet<Class<? extends Serializable>>();
 
 		registerBundledTypes();
 	}
@@ -31,8 +31,8 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 	private Class<? extends Serializable> registerTypeIfNecessary(final Serializable template) {
 		Class<? extends Serializable> typeClass = template.getClass();
 
-		if (processedTypesCache.add(typeClass)) {
-			xstream.processAnnotations(typeClass);
+		if (this.processedTypesCache.add(typeClass)) {
+			this.xstream.processAnnotations(typeClass);
 		}
 
 		return typeClass;
@@ -45,37 +45,37 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 
 		registerTypeIfNecessary(jsonObject);
 
-		String castedJson = xstream.toXML(jsonObject);
-		
+		String castedJson = this.xstream.toXML(jsonObject);
+
 		if (jsonObject instanceof JsonVO) {
 			return ((JsonVO) jsonObject).removeJsonCast(castedJson);
 		}
-		
+
 		return castedJson;
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable> T fromJson(final String json, final T template) {
 		String finalJson = json;
-		
+
 		if (template instanceof JsonVO) {
 			finalJson = ((JsonVO) template).castJson(json);
 		}
-		
+
 		if (template instanceof JsonListWrapper) {
 			Serializable wrappedTemplate = ((JsonListWrapper<Serializable>) template).getTemplate();
 			registerTypeIfNecessary(wrappedTemplate);
-			JsonListWrapper result = (JsonListWrapper) xstream.fromXML(finalJson);
-			
+			JsonListWrapper result = (JsonListWrapper) this.xstream.fromXML(finalJson);
+
 			if (result != null) {
 				result.setTemplate(wrappedTemplate);
 			}
-			
+
 			return (T) result;
 		}
-		
+
 		registerTypeIfNecessary(template);
-		return (T) xstream.fromXML(finalJson);
+		return (T) this.xstream.fromXML(finalJson);
 	}
 
 }

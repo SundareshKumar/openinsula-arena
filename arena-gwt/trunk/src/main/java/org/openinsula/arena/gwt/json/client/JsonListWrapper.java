@@ -11,6 +11,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 @XStreamAlias("json-list")
 public class JsonListWrapper<T extends Serializable> extends JsonVO {
 
+	private static final long serialVersionUID = 1L;
+
 	@XStreamImplicit
 	private List<T> wrappedList;
 
@@ -18,12 +20,15 @@ public class JsonListWrapper<T extends Serializable> extends JsonVO {
 	private T template;
 
 	public JsonListWrapper() {
-		super("json-list");
 	}
 
 	public JsonListWrapper(final T template) {
-		super("json-list");
 		setTemplate(template);
+	}
+
+	@Override
+	protected String getJsonPrefix() {
+		return "json-list";
 	}
 
 	public void setTemplate(final T template) {
@@ -35,14 +40,14 @@ public class JsonListWrapper<T extends Serializable> extends JsonVO {
 	}
 
 	public T getTemplate() {
-		return template;
+		return this.template;
 	}
 
 	public final List<T> getList() {
-		if (wrappedList == null) {
+		if (this.wrappedList == null) {
 			return Collections.emptyList();
 		}
-		return Collections.unmodifiableList(wrappedList);
+		return Collections.unmodifiableList(this.wrappedList);
 	}
 
 }
