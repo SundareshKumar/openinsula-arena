@@ -40,25 +40,25 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	@Override
 	Widget createRequiredWidgets() {
-		itemWidget = HTMLWidgetFactory.li();
-		return itemWidget;
+		this.itemWidget = HTMLWidgetFactory.li();
+		return this.itemWidget;
 	}
 
 	public void onLabelChange(final String oldValue, final String newValue) {
 		if (newValue == null) {
-			labelElement.remove();
+			this.labelElement.remove();
 		}
 		else {
-			labelElement.get().setInnerHTML(newValue);
+			this.labelElement.get().setInnerHTML(newValue);
 		}
 	}
 
 	public void onRequiredChange(final Boolean oldValue, final Boolean newValue) {
 		if (newValue) {
-			requiredElement.get();
+			this.requiredElement.get();
 		}
 		else {
-			requiredElement.remove();
+			this.requiredElement.remove();
 		}
 	}
 
@@ -69,36 +69,39 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	public void onTipChange(final String oldValue, final String newValue) {
 		if (newValue == null) {
-			hintElement.remove();
+			this.hintElement.remove();
 		}
 		else {
-			hintElement.get().setInnerHTML(newValue);
+			this.hintElement.get().setInnerHTML(newValue);
 		}
 	}
 
 	public void onValidChange(final Boolean oldValue, final Boolean newValue) {
-		itemWidget.getHTMLElement().setClassName(newValue ? "" : "error");
+		this.itemWidget.getHTMLElement().setClassName(newValue ? "" : "error");
+		if (newValue) {
+			this.errorMessageElement.remove();
+		}
 	}
 
 	public void onValidationMessageChange(final String oldValue, final String newValue) {
-		if (!StringUtils.hasText(newValue)) {
-			errorMessageElement.get().setInnerHTML(newValue);
+		if (StringUtils.hasText(newValue)) {
+			this.errorMessageElement.get().setInnerHTML(newValue);
 		}
 		else {
-			errorMessageElement.remove();
+			this.errorMessageElement.remove();
 		}
 	}
 
 	public void onWidgetChange(final Widget oldValue, final Widget newValue) {
 		if (newValue == null) {
-			widgetWrapperElement.remove();
+			this.widgetWrapperElement.remove();
 		}
 		else {
 			if (oldValue != null) {
-				widgetWrapperElement.get().remove(oldValue);
+				this.widgetWrapperElement.get().remove(oldValue);
 			}
 
-			widgetWrapperElement.get().add(newValue);
+			this.widgetWrapperElement.get().add(newValue);
 			this.widget = newValue;
 
 			if (newValue instanceof HasFocus) {
@@ -111,25 +114,25 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	@Override
 	protected void initLazyWidgets() {
-		labelElement = new LazyChildWidget<LabelElement>() {
+		this.labelElement = new LazyChildWidget<LabelElement>() {
 			@Override
 			protected void beforeRemove(final LabelElement property) {
-				itemWidget.remove(property);
+				WufooFormItemRenderer.this.itemWidget.remove(property);
 			}
 
 			@Override
 			protected LabelElement createProperty(final Document document) {
 				final LabelElement label = document.createLabelElement();
 				label.setClassName("desc");
-				itemWidget.addFirst(label);
+				WufooFormItemRenderer.this.itemWidget.addFirst(label);
 				return label;
 			}
 		};
 
-		requiredElement = new LazyChildWidget<SpanElement>() {
+		this.requiredElement = new LazyChildWidget<SpanElement>() {
 			@Override
 			protected void beforeRemove(final SpanElement widget) {
-				labelElement.get().removeChild(widget);
+				WufooFormItemRenderer.this.labelElement.get().removeChild(widget);
 			}
 
 			@Override
@@ -137,88 +140,91 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 				final SpanElement span = document.createSpanElement();
 				span.setClassName("req");
 				span.setInnerText("  *");
-				labelElement.get().appendChild(span);
+				WufooFormItemRenderer.this.labelElement.get().appendChild(span);
 				return span;
 			}
 		};
 
-		hintElement = new LazyChildWidget<ParagraphElement>() {
+		this.hintElement = new LazyChildWidget<ParagraphElement>() {
 			@Override
 			protected void beforeRemove(final ParagraphElement widget) {
-				itemWidget.remove(widget);
+				WufooFormItemRenderer.this.itemWidget.remove(widget);
 			}
 
 			@Override
 			protected ParagraphElement createProperty(final Document document) {
 				final ParagraphElement hint = document.createPElement();
 				hint.setClassName("instruct");
-				itemWidget.add(hint);
+				WufooFormItemRenderer.this.itemWidget.add(hint);
 				return hint;
 			}
 		};
 
-		widgetWrapperElement = new LazyChildWidget<HTMLWidget<DivElement>>() {
+		this.widgetWrapperElement = new LazyChildWidget<HTMLWidget<DivElement>>() {
 			@Override
 			protected void beforeRemove(final HTMLWidget<DivElement> widget) {
-				itemWidget.remove(widget);
+				WufooFormItemRenderer.this.itemWidget.remove(widget);
 			}
 
 			@Override
 			protected HTMLWidget<DivElement> createProperty(final Document document) {
 				final HTMLWidget<DivElement> div = HTMLWidgetFactory.div();
 
-				final int pos = itemWidget.getWidgetIndex(hintElement.get(false));
+				final int pos = WufooFormItemRenderer.this.itemWidget.getWidgetIndex(WufooFormItemRenderer.this.hintElement.get(false));
 
 				if (pos == -1) {
-					itemWidget.add(div);
+					WufooFormItemRenderer.this.itemWidget.add(div);
 				}
 				else {
-					itemWidget.insert(div, pos);
+					WufooFormItemRenderer.this.itemWidget.insert(div, pos);
 				}
 
 				return div;
 			}
 		};
 
-		errorMessageElement = new LazyChildWidget<ParagraphElement>() {
+		this.errorMessageElement = new LazyChildWidget<ParagraphElement>() {
 
 			@Override
 			protected void beforeRemove(final ParagraphElement widget) {
-				itemWidget.remove(widget);
+				WufooFormItemRenderer.this.itemWidget.remove(widget);
 			}
 
 			@Override
 			protected ParagraphElement createProperty(final Document document) {
 				ParagraphElement p = document.createPElement();
 				p.setClassName("error");
-				itemWidget.add(p);
+				WufooFormItemRenderer.this.itemWidget.add(p);
 				return p;
 			}
 		};
 	}
 
 	private void resolveWufooWidgetCSSClass() {
-		if (widget != null) {
-			if (widget instanceof TextBox) {
-				widget.setStyleName(size + " field text");
+		if (this.widget != null) {
+			if (this.widget instanceof TextBox) {
+				this.widget.setStyleName(this.size + " field text");
 			}
-			else if (widget instanceof TextArea) {
-				widget.setStyleName(size + " field textarea");
+			else if (this.widget instanceof TextArea) {
+				this.widget.setStyleName(this.size + " field textarea");
 			}
-			else if (widget instanceof ListBox) {
-				widget.setStyleName(size + " field select");
+			else if (this.widget instanceof ListBox) {
+				this.widget.setStyleName(this.size + " field select");
 			}
 		}
 	}
 
 	// FocusListener impl
 
+	private String previousStyle;
+
 	public void onFocus(final Widget sender) {
-		itemWidget.getHTMLElement().setClassName("focused");
+		this.previousStyle = this.itemWidget.getHTMLElement().getClassName();
+		this.itemWidget.getHTMLElement().setClassName("focused");
 	}
 
 	public void onLostFocus(final Widget sender) {
-		itemWidget.getHTMLElement().setClassName("");
+		this.itemWidget.getHTMLElement().setClassName(this.previousStyle);
 	}
 
 }
