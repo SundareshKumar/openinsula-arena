@@ -79,8 +79,9 @@ public class EnderecoWidget extends AbstractWidget {
 		private String localidade;
 		private String uf;
 
-		public EnderecoVO() {
-			super("endereco");
+		@Override
+		protected String getJsonPrefix() {
+			return "endereco";
 		}
 
 		public String getCep() {
