@@ -1,6 +1,9 @@
 package org.openinsula.arena.gwt.components.client.widget;
 
+import org.openinsula.arena.gwt.json.client.JsonVO;
+
 import com.google.gwt.user.client.ui.TextBox;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 public class EnderecoWidget extends AbstractWidget {
 
@@ -48,9 +51,25 @@ public class EnderecoWidget extends AbstractWidget {
 		enderecoVO.setUf(ufTextBox.getText());
 
 		return enderecoVO;
+
 	}
 
-	public static class EnderecoVO {
+	public void populateWidget(final EnderecoVO enderecoVO) {
+
+		bairroTextBox.setText(enderecoVO.getBairro());
+		cepTextBox.setText(enderecoVO.getCep());
+		complementoTextBox.setText(enderecoVO.getComplemento());
+		localidadeTextBox.setText(enderecoVO.getLocalidade());
+		logradouroTextBox.setText(enderecoVO.getLogradouro());
+		numeroTextBox.setText(enderecoVO.getNumero());
+		ufTextBox.setText(enderecoVO.getUf());
+
+	}
+
+	@XStreamAlias("endereco")
+	public static class EnderecoVO extends JsonVO {
+
+		private static final long serialVersionUID = 1L;
 
 		private String cep;
 		private String logradouro;
@@ -59,6 +78,10 @@ public class EnderecoWidget extends AbstractWidget {
 		private String bairro;
 		private String localidade;
 		private String uf;
+
+		public EnderecoVO() {
+			super("endereco");
+		}
 
 		public String getCep() {
 			return cep;
