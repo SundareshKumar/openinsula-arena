@@ -1,12 +1,11 @@
 package org.openinsula.arena.gwt.json.server;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openinsula.arena.gwt.json.client.JsonListWrapper;
 import org.openinsula.arena.gwt.json.client.JsonRemoteSerializer;
-import org.openinsula.arena.gwt.json.client.JsonVO;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
@@ -15,11 +14,11 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 
 	private final XStream xstream;
 
-	private final Set<Class<? extends Serializable>> processedTypesCache;
+	private final Map<Class<? extends Serializable>, String> processedTypesCacheMap;
 
 	public XStreamJsonSerializer() {
-		this.xstream = new XStream(new JettisonMappedXmlDriver());
-		this.processedTypesCache = new HashSet<Class<? extends Serializable>>();
+		xstream = new XStream(new JettisonMappedXmlDriver());
+		processedTypesCacheMap = new HashMap<Class<? extends Serializable>, String>();
 
 		registerBundledTypes();
 	}
@@ -28,14 +27,19 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 		registerTypeIfNecessary(new JsonListWrapper<Serializable>());
 	}
 
-	private Class<? extends Serializable> registerTypeIfNecessary(final Serializable template) {
+	/**
+	 * @return JSON type prefix (e.g: {"person":) 
+	 */
+	private String registerTypeIfNecessary(final Serializable template) {
 		Class<? extends Serializable> typeClass = template.getClass();
-
-		if (this.processedTypesCache.add(typeClass)) {
-			this.xstream.processAnnotations(typeClass);
+		
+		if (!processedTypesCacheMap.containsKey(typeClass)) {
+			xstream.processAnnotations(typeClass);
+			String jsonTypeAlias = xstream.getMapper().serializedClass(typeClass);
+			processedTypesCacheMap.put(typeClass, "{\"" + jsonTypeAlias + "\":");
 		}
-
-		return typeClass;
+		
+		return processedTypesCacheMap.get(typeClass);
 	}
 
 	public String toJson(final Serializable jsonObject) {
@@ -43,39 +47,42 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 			return null;
 		}
 
-		registerTypeIfNecessary(jsonObject);
+		String jsonTypePrefix = registerTypeIfNecessary(jsonObject);
+		String castedJson = xstream.toXML(jsonObject);
 
-		String castedJson = this.xstream.toXML(jsonObject);
-
-		if (jsonObject instanceof JsonVO) {
-			return ((JsonVO) jsonObject).removeJsonCast(castedJson);
-		}
-
-		return castedJson;
+		return removeJsonCast(jsonTypePrefix, castedJson);
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable> T fromJson(final String json, final T template) {
-		String finalJson = json;
+		String jsonType = registerTypeIfNecessary(template);
+		
+		String finalJson = castJson(jsonType, json);
 
-		if (template instanceof JsonVO) {
-			finalJson = ((JsonVO) template).castJson(json);
+		Object obj = xstream.fromXML(finalJson);
+		
+		if (obj instanceof JsonListWrapper) {
+			JsonListWrapper<T> jsonList = (JsonListWrapper<T>) obj;
+			T wrappedTemplate = ((JsonListWrapper<T>) template).getTemplate();
+			jsonList.setTemplate(wrappedTemplate);
 		}
 
-		if (template instanceof JsonListWrapper) {
-			Serializable wrappedTemplate = ((JsonListWrapper<Serializable>) template).getTemplate();
-			registerTypeIfNecessary(wrappedTemplate);
-			JsonListWrapper result = (JsonListWrapper) this.xstream.fromXML(finalJson);
-
-			if (result != null) {
-				result.setTemplate(wrappedTemplate);
-			}
-
-			return (T) result;
+		return (T) obj;
+	}
+	
+	String castJson(final String jsonTypePrefix, final String jsonString) {
+		if (jsonString.startsWith(jsonTypePrefix)) {
+			return jsonString;
 		}
 
-		registerTypeIfNecessary(template);
-		return (T) this.xstream.fromXML(finalJson);
+		return jsonTypePrefix + jsonString + "}";
+	}
+	
+	String removeJsonCast(final String jsonTypePrefix, final String jsonString) {
+		if (jsonString.startsWith(jsonTypePrefix)) {
+			return jsonString.substring(jsonTypePrefix.length(), jsonString.length() - 1);
+		}
+		return jsonString;
 	}
 
 }

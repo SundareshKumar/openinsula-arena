@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias("json-list")
-public class JsonListWrapper<T extends Serializable> extends JsonVO {
+public class JsonListWrapper<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,11 +24,6 @@ public class JsonListWrapper<T extends Serializable> extends JsonVO {
 
 	public JsonListWrapper(final T template) {
 		setTemplate(template);
-	}
-
-	@Override
-	protected String getJsonPrefix() {
-		return "json-list";
 	}
 
 	public void setTemplate(final T template) {

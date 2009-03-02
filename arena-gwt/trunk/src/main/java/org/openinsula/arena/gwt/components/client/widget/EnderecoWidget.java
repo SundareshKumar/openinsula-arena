@@ -1,7 +1,5 @@
 package org.openinsula.arena.gwt.components.client.widget;
 
-import org.openinsula.arena.gwt.json.client.JsonVO;
-
 import com.google.gwt.user.client.ui.TextBox;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -67,7 +65,7 @@ public class EnderecoWidget extends AbstractWidget {
 	}
 
 	@XStreamAlias("endereco")
-	public static class EnderecoVO extends JsonVO {
+	public static class EnderecoVO {
 
 		private static final long serialVersionUID = 1L;
 
@@ -78,11 +76,6 @@ public class EnderecoWidget extends AbstractWidget {
 		private String bairro;
 		private String localidade;
 		private String uf;
-
-		@Override
-		protected String getJsonPrefix() {
-			return "endereco";
-		}
 
 		public String getCep() {
 			return cep;
