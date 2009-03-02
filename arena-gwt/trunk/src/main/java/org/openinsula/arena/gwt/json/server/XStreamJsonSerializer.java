@@ -28,17 +28,17 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 	}
 
 	/**
-	 * @return JSON type prefix (e.g: {"person":) 
+	 * @return JSON type prefix (e.g: {"person":)
 	 */
 	private String registerTypeIfNecessary(final Serializable template) {
 		Class<? extends Serializable> typeClass = template.getClass();
-		
+
 		if (!processedTypesCacheMap.containsKey(typeClass)) {
 			xstream.processAnnotations(typeClass);
 			String jsonTypeAlias = xstream.getMapper().serializedClass(typeClass);
 			processedTypesCacheMap.put(typeClass, "{\"" + jsonTypeAlias + "\":");
 		}
-		
+
 		return processedTypesCacheMap.get(typeClass);
 	}
 
@@ -56,20 +56,26 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable> T fromJson(final String json, final T template) {
 		String jsonType = registerTypeIfNecessary(template);
-		
+
 		String finalJson = castJson(jsonType, json);
 
+		if (template instanceof JsonListWrapper) {
+			JsonListWrapper<T> jsonList = (JsonListWrapper<T>) template;
+			registerTypeIfNecessary(jsonList.getTemplate());
+		}
+
 		Object obj = xstream.fromXML(finalJson);
-		
+
 		if (obj instanceof JsonListWrapper) {
 			JsonListWrapper<T> jsonList = (JsonListWrapper<T>) obj;
+
 			T wrappedTemplate = ((JsonListWrapper<T>) template).getTemplate();
 			jsonList.setTemplate(wrappedTemplate);
 		}
 
 		return (T) obj;
 	}
-	
+
 	String castJson(final String jsonTypePrefix, final String jsonString) {
 		if (jsonString.startsWith(jsonTypePrefix)) {
 			return jsonString;
@@ -77,7 +83,7 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 
 		return jsonTypePrefix + jsonString + "}";
 	}
-	
+
 	String removeJsonCast(final String jsonTypePrefix, final String jsonString) {
 		if (jsonString.startsWith(jsonTypePrefix)) {
 			return jsonString.substring(jsonTypePrefix.length(), jsonString.length() - 1);
