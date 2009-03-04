@@ -27,7 +27,7 @@ public abstract class HTTPRequestCallback implements RequestCallback {
 		return errorCause;
 	}
 
-	private void setValues(final Request request, final Response response, final Throwable exception) {
+	protected void setValues(final Request request, final Response response, final Throwable exception) {
 		this.request = request;
 		this.response = response;
 		this.errorCause = exception;
@@ -55,6 +55,7 @@ public abstract class HTTPRequestCallback implements RequestCallback {
 		if (statusCode == 200 || statusCode == 201) {
 			onSuccess();
 		} else {
+			errorCause = new RuntimeException("[" + statusCode + " - " + response.getStatusText() + "]");
 			onError();
 		}
 	}

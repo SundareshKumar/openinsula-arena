@@ -62,4 +62,14 @@ public abstract class ObjectUtils {
 		return false;
 	}
 	
+	/**
+	 * Return whether the given array is empty: that is, <code>null</code>
+	 * or of zero length.
+	 * @param array the array to check
+	 * @return whether the given array is empty
+	 */
+	public static boolean isEmpty(final Object[] array) {
+		return (array == null || array.length == 0);
+	}
+	
 }
