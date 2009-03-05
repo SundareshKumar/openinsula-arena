@@ -220,7 +220,7 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	public void onFocus(final Widget sender) {
 		this.previousStyle = this.itemWidget.getHTMLElement().getClassName();
-		this.itemWidget.getHTMLElement().setClassName("focused");
+		this.itemWidget.getHTMLElement().setClassName(this.previousStyle + " focused");
 	}
 
 	public void onLostFocus(final Widget sender) {
