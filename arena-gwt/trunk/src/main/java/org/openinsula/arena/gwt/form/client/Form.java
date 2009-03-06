@@ -79,6 +79,15 @@ public class Form extends AbstractUIModel<FormRenderer> {
 		}
 		return this;
 	}
+	
+	public Form removeSection(final FormSection section) {
+		if (section != null) {
+			if (sectionList != null && sectionList.remove(section)) {
+				getRenderer().onFormSectionRemoved(sectionList, section);
+			}
+		}
+		return this;
+	}
 
 	public List<FormSection> sections() {
 		if (sectionList == null) {

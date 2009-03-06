@@ -1,5 +1,8 @@
 package org.openinsula.arena.gwt.components.client.util;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 /**
  * Borrowed from Spring Framework
  * @author Eduardo Rebola
@@ -37,6 +40,41 @@ public abstract class StringUtils {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Convenience method to return a Collection as a delimited (e.g. CSV)
+	 * String. E.g. useful for <code>toString()</code> implementations.
+	 * @param coll the Collection to display
+	 * @param delim the delimiter to use (probably a ",")
+	 * @return the delimited String
+	 */
+	public static String collectionToDelimitedString(final Collection<?> coll, final String delim) {
+		return collectionToDelimitedString(coll, delim, "", "");
+	}
+	
+	/**
+	 * Convenience method to return a Collection as a delimited (e.g. CSV)
+	 * String. E.g. useful for <code>toString()</code> implementations.
+	 * @param coll the Collection to display
+	 * @param delim the delimiter to use (probably a ",")
+	 * @param prefix the String to start each element with
+	 * @param suffix the String to end each element with
+	 * @return the delimited String
+	 */
+	public static String collectionToDelimitedString(final Collection<?> coll, final String delim, final String prefix, final String suffix) {
+		if (CollectionUtils.isEmpty(coll)) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder();
+		Iterator<?> it = coll.iterator();
+		while (it.hasNext()) {
+			sb.append(prefix).append(it.next()).append(suffix);
+			if (it.hasNext()) {
+				sb.append(delim);
+			}
+		}
+		return sb.toString();
 	}
 	
 }

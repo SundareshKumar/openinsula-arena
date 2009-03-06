@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openinsula.arena.gwt.json.client.HasJsonTypes;
 import org.openinsula.arena.gwt.json.client.JsonListWrapper;
 import org.openinsula.arena.gwt.json.client.JsonRemoteSerializer;
 
@@ -14,11 +15,11 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 
 	private final XStream xstream;
 
-	private final Map<Class<? extends Serializable>, String> processedTypesCacheMap;
+	private final Map<Class<?>, String> processedTypesCacheMap;
 
 	public XStreamJsonSerializer() {
 		xstream = new XStream(new JettisonMappedXmlDriver());
-		processedTypesCacheMap = new HashMap<Class<? extends Serializable>, String>();
+		processedTypesCacheMap = new HashMap<Class<?>, String>();
 
 		registerBundledTypes();
 	}
@@ -30,16 +31,18 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 	/**
 	 * @return JSON type prefix (e.g: {"person":)
 	 */
-	private String registerTypeIfNecessary(final Serializable template) {
-		Class<? extends Serializable> typeClass = template.getClass();
-
-		if (!processedTypesCacheMap.containsKey(typeClass)) {
-			xstream.processAnnotations(typeClass);
-			String jsonTypeAlias = xstream.getMapper().serializedClass(typeClass);
-			processedTypesCacheMap.put(typeClass, "{\"" + jsonTypeAlias + "\":");
+	private String registerTypeIfNecessary(final Object template) {
+		return registerTypeIfNecessary(template.getClass());
+	}
+	
+	private String registerTypeIfNecessary(final Class<?> templateType) {
+		if (!processedTypesCacheMap.containsKey(templateType)) {
+			xstream.processAnnotations(templateType);
+			String jsonTypeAlias = xstream.getMapper().serializedClass(templateType);
+			processedTypesCacheMap.put(templateType, "{\"" + jsonTypeAlias + "\":");
 		}
 
-		return processedTypesCacheMap.get(typeClass);
+		return processedTypesCacheMap.get(templateType);
 	}
 
 	public String toJson(final Serializable jsonObject) {
@@ -59,6 +62,14 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 
 		String finalJson = castJson(jsonType, json);
 
+		if (template instanceof HasJsonTypes) {
+			HasJsonTypes hasJonTypes = (HasJsonTypes) template;
+			
+			for (Class<?> t : hasJonTypes.getTypes()) {
+				registerTypeIfNecessary(t);
+			}
+		}
+		
 		if (template instanceof JsonListWrapper) {
 			JsonListWrapper<T> jsonList = (JsonListWrapper<T>) template;
 			registerTypeIfNecessary(jsonList.getTemplate());

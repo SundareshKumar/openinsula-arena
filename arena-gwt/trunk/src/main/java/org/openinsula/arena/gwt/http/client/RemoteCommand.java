@@ -9,13 +9,11 @@ import com.google.gwt.user.client.Command;
  */
 public abstract class RemoteCommand implements Command {
 	
-	private EnhancedRequestBuilder requestBuilder;
-	
+	/**
+	 * @deprecated In favor of {@link #createRequestBuilder()}.
+	 */
 	protected final EnhancedRequestBuilder requestBuilder() {
-		if (requestBuilder == null) {
-			requestBuilder = createRequestBuilder();
-		}
-		return requestBuilder;
+		return createRequestBuilder();
 	}
 	
 	protected abstract EnhancedRequestBuilder createRequestBuilder();
