@@ -77,7 +77,16 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 	}
 
 	public void onValidChange(final Boolean oldValue, final Boolean newValue) {
-		this.itemWidget.getHTMLElement().setClassName(newValue ? "" : "error");
+		String css = itemWidget.getHTMLElement().getClassName();
+		
+		if (newValue && css.contains(" error ")) {
+			css = css.replace(" error ", "");
+		} else if (!newValue) {
+			css = css + " error ";
+		}
+		
+		this.itemWidget.getHTMLElement().setClassName(css);
+		
 		if (newValue) {
 			this.errorMessageElement.remove();
 		}

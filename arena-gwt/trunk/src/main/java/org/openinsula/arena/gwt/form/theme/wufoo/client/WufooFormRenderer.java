@@ -149,6 +149,7 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 		if (newValue != null) {
 			Button button = primaryActionButton.get();
 			button.setText(newValue.label());
+			button.setEnabled(newValue.enabled());
 			button.addClickListener(new ClickListener() {
 				public void onClick(final Widget sender) {
 					newValue.execute();

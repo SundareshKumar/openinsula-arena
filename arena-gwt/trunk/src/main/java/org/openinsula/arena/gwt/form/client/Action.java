@@ -10,6 +10,8 @@ public class Action implements Command {
 	private String tip;
 
 	private Command command;
+	
+	private boolean enabled = true;
 
 	public Action label(final String label) {
 		this.label = label;
@@ -27,6 +29,15 @@ public class Action implements Command {
 
 	public String tip() {
 		return tip;
+	}
+	
+	public Action enabled(final boolean value) {
+		this.enabled = value;
+		return this;
+	}
+	
+	public boolean enabled() {
+		return enabled;
 	}
 
 	public Action command(final Command command) {

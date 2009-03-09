@@ -27,7 +27,7 @@ public class Form extends AbstractUIModel<FormRenderer> {
 	public Form() {
 		setRenderer(UIModelRendererProvider.get().createFormRenderer());
 	}
-	
+
 	@Override
 	protected void attachRenderer(final FormRenderer renderer, final PropertyChangeSupport model) {
 		model.addPropertyChangeCallback(TITLE_PROPERTY, new PropertyChangeCallback<String>() {
@@ -79,7 +79,7 @@ public class Form extends AbstractUIModel<FormRenderer> {
 		}
 		return this;
 	}
-	
+
 	public Form removeSection(final FormSection section) {
 		if (section != null) {
 			if (sectionList != null && sectionList.remove(section)) {
@@ -97,35 +97,38 @@ public class Form extends AbstractUIModel<FormRenderer> {
 	}
 
 	public Form primaryAction(final Action action) {
-		Command validationCommand = new Command() {
-			public void execute() {
-				CompositeFormItemValidator validator = new CompositeFormItemValidator();
+		Action validatedAction = null;
+		
+		if (action != null) {
+			Command validationCommand = new Command() {
+				public void execute() {
+					CompositeFormItemValidator validator = new CompositeFormItemValidator();
 
-				for (FormSection section : sections()) {
-					List<FormItem> formItems = section.formItems();
-					for (FormItem item : formItems) {
-						validator.addFormItemWithValidator(item);
-					}
-				}
-
-				validator.validate(null, new ValidationCallback() {
-
-					public void onSuccess(final String message) {
-						action.execute();
-					}
-
-					public void onFail(final String message, final Throwable error) {
-						if (!GWT.isScript()) {
-							GWT.log(message, error);
+					for (FormSection section : sections()) {
+						List<FormItem> formItems = section.formItems();
+						for (FormItem item : formItems) {
+							validator.addFormItemWithValidator(item);
 						}
 					}
-				});
-			}
-		};
-		
-		Action validatedAction = action.clone();
-		validatedAction.command(validationCommand);
 
+					validator.validate(null, new ValidationCallback() {
+
+						public void onSuccess(final String message) {
+							action.execute();
+						}
+
+						public void onFail(final String message, final Throwable error) {
+							if (!GWT.isScript()) {
+								GWT.log(message, error);
+							}
+						}
+					});
+				}
+			};
+
+			validatedAction = action.clone();
+			validatedAction.command(validationCommand);
+		}
 		setProperty(PRIMARY_ACTION_PROPERTY, validatedAction);
 		return this;
 	}
