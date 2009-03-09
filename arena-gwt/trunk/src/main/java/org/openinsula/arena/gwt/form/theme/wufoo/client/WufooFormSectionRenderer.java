@@ -10,6 +10,7 @@ import org.openinsula.arena.gwt.form.client.FormItem;
 import org.openinsula.arena.gwt.form.client.FormSectionRenderer;
 import org.openinsula.arena.gwt.form.client.FormSection.Position;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.HeadingElement;
@@ -34,22 +35,20 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 	private LazyChildWidget<HeadingElement> headerTitleElement;
 
 	private LazyChildWidget<DivElement> headerSubtitleElement;
-	
-	private LazyChildWidget<HTMLWidget<LIElement>> buttonBarWidget;
 
-	private boolean singleLineOnly = true;
+	private LazyChildWidget<HTMLWidget<LIElement>> buttonBarWidget;
 
 	@Override
 	Widget createRequiredWidgets() {
-		headerWidget =  HTMLWidgetFactory.li();
+		headerWidget = HTMLWidgetFactory.li();
 		headerWidget.setStyleName("section");
-		
+
 		mainElement = HTMLWidgetFactory.ul();
 		mainElement.addFirst(headerWidget);
-		
+
 		return mainElement;
 	}
-	
+
 	public void onTitleChange(final String oldValue, final String newValue) {
 		if (newValue == null) {
 			headerTitleElement.remove();
@@ -97,7 +96,7 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 				return div;
 			}
 		};
-		
+
 		buttonBarWidget = new LazyChildWidget<HTMLWidget<LIElement>>() {
 			@Override
 			protected void beforeRemove(final HTMLWidget<LIElement> property) {
@@ -126,31 +125,19 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 				previousItem = formItemList.get(idx - 1).toWidget();
 
 				if (RIGHT_HALF_STYLENAME.equals(previousItem.getStyleName())) {
-					throw new IllegalStateException("Only 2 items per line allowed!");
-				}
-
-				previousItem.setStyleName(LEFT_HALF_STYLENAME);
-				nextItem.setStyleName(RIGHT_HALF_STYLENAME);
-
-				if (singleLineOnly) {
-					singleLineOnly = false;
-
-					for (final FormItem item : formItemList) {
-						Widget widget = item.toWidget();
-						String oldCss = widget.getStyleName();
-
-						if (SINGLE_LINE_STYLENAME.equals(oldCss)) {
-							widget.setStyleName(LEFT_HALF_STYLENAME);
-						}
+					if (!GWT.isScript()) {
+						GWT.log("Only 2 items per line is allowed. Putting in a new line", null);
 					}
+					nextItem.setStyleName(SINGLE_LINE_STYLENAME);
 				}
-			}
-			else {
-				nextItem.setStyleName(LEFT_HALF_STYLENAME);
+				else {
+					previousItem.setStyleName(LEFT_HALF_STYLENAME);
+					nextItem.setStyleName(RIGHT_HALF_STYLENAME);
+				}
 			}
 		}
 		else if (position == Position.NEW_LINE) {
-			nextItem.setStyleName(singleLineOnly ? SINGLE_LINE_STYLENAME : LEFT_HALF_STYLENAME);
+			nextItem.setStyleName(SINGLE_LINE_STYLENAME);
 		}
 
 		if (buttonBarWidget.get(false) != null) {
@@ -158,7 +145,7 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 			mainElement.add(nextItem);
 			mainElement.add(buttonBarWidget.get());
 		}
-		
+
 		mainElement.add(nextItem);
 	}
 
@@ -166,7 +153,7 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 		// TODO terminar
 		mainElement.remove(formItem.toWidget());
 	}
-	
+
 	public void onActionAdded(final Action action, final int position) {
 		Hyperlink link = new Hyperlink(action.label(), null);
 		link.setStyleName("FormSecondaryAction");
@@ -175,8 +162,8 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 				action.execute();
 			}
 		});
-		
+
 		buttonBarWidget.get().add(link);
 	}
-	
+
 }

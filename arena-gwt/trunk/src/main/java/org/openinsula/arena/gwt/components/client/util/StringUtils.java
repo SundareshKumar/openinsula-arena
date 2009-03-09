@@ -9,6 +9,10 @@ import java.util.Iterator;
  */
 public abstract class StringUtils {
 
+	public static String nullSafeText(final String str, final String defaultValue) {
+		return hasText(str) ? str : defaultValue; 
+	}
+	
 	/**
 	 * Check that the given String is neither <code>null</code> nor of length 0.
 	 * Note: Will return <code>true</code> for a String that purely consists of whitespace.
