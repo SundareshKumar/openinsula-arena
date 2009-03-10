@@ -1,0 +1,4 @@
+<module>
+	<source path="annotations" 
+		excludes="Annotation*.java XStreamContainedType.java XStreamImplicitCollection.java XStreamConverter*.java" />
+</module>
