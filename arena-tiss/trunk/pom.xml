@@ -106,11 +106,29 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/META-INF/xsd</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/xsd</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
-					<goals>
-						source:jar javadoc:jar deploy
-					</goals>
+					<goals> source:jar javadoc:jar deploy </goals>
 				</configuration>
 			</plugin>
 		</plugins>
