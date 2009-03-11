@@ -38,8 +38,8 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 		this.rowSorter = rowSorter;
 	}
 
-	public void add(T item) {
-		values().add(item);
+	public void add(final T item) {
+		getValues().add(item);
 		fireTableDataChanged();
 	}
 
@@ -49,7 +49,7 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 	}
 
 	public void fireTableDataChanged() {
-		for (TableModelListener listener : listeners) {
+		for (final TableModelListener listener : listeners) {
 			listener.onTableDataChange();
 		}
 	}
@@ -66,7 +66,7 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 	}
 
 	public T getEntityAt(final int rowIndex) {
-		return values().get(rowIndex);
+		return getValues().get(rowIndex);
 	}
 
 	public String[] getHeader() {
@@ -74,14 +74,14 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 	}
 
 	public int getRowCount() {
-		return values().size();
+		return getValues().size();
 	}
 
 	public final void sortValues(final int columnIndex) {
-		Comparator<T> comparator = (rowSorter == null) ? null : rowSorter.getComparator(columnIndex);
+		final Comparator<T> comparator = (rowSorter == null) ? null : rowSorter.getComparator(columnIndex);
 
 		if (comparator != null) {
-			Collections.sort(values(), comparator);
+			Collections.sort(getValues(), comparator);
 			fireTableDataChanged();
 		}
 	}
@@ -90,7 +90,7 @@ public abstract class AbstractTableModel<T> implements TableModel<T> {
 		return rowSorter != null;
 	}
 
-	private List<T> values() {
+	public List<T> getValues() {
 		if (values == null) {
 			values = new ArrayList<T>();
 		}
