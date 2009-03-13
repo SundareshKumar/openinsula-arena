@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.openinsula.arena</groupId>
-	<artifactId>arena-gwt</artifactId>
+	<artifactId>arena-gwt-project</artifactId>
 	<version>2.2-SNAPSHOT</version>
-
 	<name>Arena GWT</name>
 	<description>Common GWT components and tools</description>
-	<packaging>jar</packaging>
+	<url>http://www.openinsula.org/arena/gwt</url>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>arena-gwt</module>
+		<module>arena-gwt-test</module>
+	</modules>
 
 	<organization>
 		<name>openinsula.org</name>
 		<url>http://www.openinsula.org</url>
 	</organization>
+
+	<developers>
+		<developer>
+			<id>rebola</id>
+			<name>Eduardo Rebola</name>
+			<email>erdanielli@insula.com.br</email>
+			<url>http://eduardorebola.blogspot.com</url>
+			<organization>Insula Tecnologia da Informacao</organization>
+			<organizationUrl>http://www.insula.com.br</organizationUrl>
+			<timezone>-3</timezone>
+			<roles>
+				<role>Lead Developer</role>
+			</roles>
+		</developer>
+	</developers>
 
 	<scm>
 		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/trunk</connection>
@@ -28,17 +49,10 @@
 		</repository>
 	</repositories>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>gwt-maven</id>
-			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<properties>
 		<gwt.version>1.5.3</gwt.version>
-		<platform>linux</platform>
 		<gwt-math.version>2.0.1</gwt-math.version>
+		<xstream.version>1.3.1</xstream.version>
 	</properties>
 
 	<distributionManagement>
@@ -56,6 +70,12 @@
 
 		<!-- GWT native dependencies -->
 
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -79,10 +99,12 @@
 		</dependency>
 
 		<!-- GWT Extra Components -->
+
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-math-user</artifactId>
 			<version>${gwt-math.version}</version>
+			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -92,34 +114,60 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- REST Cross Domain Proxy -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.6</version>
+			<optional>true</optional>
+		</dependency>
+
 		<!-- JSON Module -->
+
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.3.1</version>
+			<version>${xstream.version}</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.3.1</version>
+			<version>${xstream.version}</version>
 			<classifier>sources</classifier>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jettison</groupId>
 			<artifactId>jettison</artifactId>
 			<version>1.0.1</version>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Test dependencies -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>2.5.6</version>
-		</dependency>
-
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.2</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -134,6 +182,40 @@
 					<target>1.5</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/*GwtTest*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.google.gwt</groupId>
+									<artifactId>gwt-dev</artifactId>
+									<version>${gwt.version}</version>
+									<classifier>${platform}-libs</classifier>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwt.version}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -158,7 +240,7 @@
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-2</version>
+				<version>1.0-beta-5</version>
 			</extension>
 		</extensions>
 	</build>

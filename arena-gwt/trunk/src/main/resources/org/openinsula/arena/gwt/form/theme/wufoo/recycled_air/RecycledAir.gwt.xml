@@ -1,9 +1,0 @@
-<module>
-	<stylesheet src="css/form.css" />
-	<stylesheet src="css/structure.css" />
-	<stylesheet src="css/theme.css" />
-
-	<script src="scripts/wufoo.js"></script>
-
-	<inherits name="org.openinsula.arena.gwt.form.theme.wufoo.Wufoo" />
-</module>
