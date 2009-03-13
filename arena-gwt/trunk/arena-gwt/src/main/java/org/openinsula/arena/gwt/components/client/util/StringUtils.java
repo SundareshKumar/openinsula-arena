@@ -6,6 +6,7 @@ import java.util.Iterator;
 /**
  * Borrowed from Spring Framework
  * @author Eduardo Rebola
+ * @deprecated moved to {@link org.openinsula.arena.gwt.util.client.StringUtils}
  */
 public abstract class StringUtils {
 

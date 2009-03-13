@@ -6,7 +6,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 
 /**
- * @author Jo�o Galli
+ * @author João Galli
  * 
  */
 public class JSONObjectBuilder {

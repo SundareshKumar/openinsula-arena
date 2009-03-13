@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * Borrowed from Spring Framework
  * @author Eduardo Rebola
+ * @deprecated moved to {@link org.openinsula.arena.gwt.util.client.Assert}
  */
 public abstract class Assert {
 

@@ -5,6 +5,7 @@ import java.util.Arrays;
 /**
  * Borrowed from Spring Framework
  * @author Eduardo Rebola
+ * @deprecated moved to {@link org.openinsula.arena.gwt.util.client.ObjectUtils}
  */
 public abstract class ObjectUtils {
 
