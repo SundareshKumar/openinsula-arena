@@ -1,0 +1,4 @@
+<module>
+	<inherits name="org.openinsula.arena.gwt.util.Util" />
+	<entry-point class="org.openinsula.arena.gwt.test.client.EmptyEntryPoint" />
+</module>
