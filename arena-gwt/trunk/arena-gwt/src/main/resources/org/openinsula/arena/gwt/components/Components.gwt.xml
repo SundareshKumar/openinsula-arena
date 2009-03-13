@@ -1,0 +1,7 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="org.openinsula.arena.gwt.util.Util" />
+	
+	<stylesheet src="css/Table.css" />
+	
+</module>
