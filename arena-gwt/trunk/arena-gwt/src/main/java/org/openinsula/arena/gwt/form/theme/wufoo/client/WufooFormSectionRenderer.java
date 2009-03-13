@@ -29,15 +29,15 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 
 	private static final String INLINE_STYLENAME = "I";
 
-	private HTMLWidget<UListElement> mainElement;
+	HTMLWidget<UListElement> mainElement;
 
-	private HTMLWidget<LIElement> headerWidget;
+	HTMLWidget<LIElement> headerWidget;
 
-	private LazyChildWidget<HeadingElement> headerTitleElement;
+	LazyChildWidget<HeadingElement> headerTitleElement;
 
-	private LazyChildWidget<DivElement> headerSubtitleElement;
+	LazyChildWidget<DivElement> headerSubtitleElement;
 
-	private LazyChildWidget<HTMLWidget<LIElement>> buttonBarWidget;
+	LazyChildWidget<HTMLWidget<LIElement>> buttonBarWidget;
 
 	@Override
 	Widget createRequiredWidgets() {

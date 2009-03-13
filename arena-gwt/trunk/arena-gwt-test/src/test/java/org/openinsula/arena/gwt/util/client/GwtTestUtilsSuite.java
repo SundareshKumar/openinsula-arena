@@ -9,6 +9,7 @@ public class GwtTestUtilsSuite extends GWTTestSuite {
 	
 	public static Test suite() {
 		TestSuite suite = new TestSuite("arena-gwt utils TEST SUITE");
+		suite.addTestSuite(AssertGwtTestCase.class);
 		suite.addTestSuite(StringUtilsGwtTestCase.class);
 		return suite;
 	}
