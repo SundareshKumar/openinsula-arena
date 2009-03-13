@@ -1,4 +1,6 @@
 <module>
 	<inherits name="org.openinsula.arena.gwt.util.Util" />
+	<inherits name="org.openinsula.arena.gwt.form.Form" />
+	
 	<entry-point class="org.openinsula.arena.gwt.test.client.EmptyEntryPoint" />
 </module>
