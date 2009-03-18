@@ -9,6 +9,7 @@ import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.FocusListenerCollection;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.TextBox;
@@ -30,13 +31,13 @@ public abstract class AbstractWidget extends Composite implements HasFocus, Focu
 
 	protected abstract void initComponents();
 
-	protected void createTextBox(final String label, final String position, final TextBox textBox, final int size) {
-		textBox.addFocusListener(this);
+	protected void createWidget(final String label, final String position, final FocusWidget focusWidget, final int size) {
+		focusWidget.addFocusListener(this);
 
 		if (size != 0) {
-			textBox.getElement().setPropertyString("size", String.valueOf(size));
+			focusWidget.getElement().setPropertyString("size", String.valueOf(size));
 		}
-		textBox.setStyleName("field text");
+		focusWidget.setStyleName("field text");
 
 		final HTMLWidget<LabelElement> labelElement = HTMLWidgetFactory.label();
 		labelElement.getHTMLElement().setInnerHTML(label);
@@ -47,10 +48,15 @@ public abstract class AbstractWidget extends Composite implements HasFocus, Focu
 			span.setStyleName(position);
 		}
 
-		span.add(textBox);
+		span.add(focusWidget);
 		span.add(labelElement);
 
 		mainElement.add(span);
+	}
+
+	@Deprecated
+	protected void createTextBox(final String label, final String position, final TextBox textBox, final int size) {
+		createWidget(label, position, textBox, size);
 	}
 
 	public void onFocus(final Widget sender) {
