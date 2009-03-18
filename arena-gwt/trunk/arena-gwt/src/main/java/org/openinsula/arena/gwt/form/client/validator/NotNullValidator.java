@@ -3,8 +3,8 @@ package org.openinsula.arena.gwt.form.client.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openinsula.arena.gwt.components.client.util.StringUtils;
 import org.openinsula.arena.gwt.form.client.FormItem;
+import org.openinsula.arena.gwt.util.client.StringUtils;
 
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
@@ -57,7 +57,7 @@ public class NotNullValidator extends FormItemValidator {
 
 		validatorList.add(new WidgetValidator<TextBoxBase>(TextBoxBase.class) {
 			public void validate(final TextBoxBase widget, final ValidationCallback callback) {
-				if (StringUtils.hasText(widget.getText())) {
+				if (!StringUtils.hasText(widget.getText())) {
 					callback.onFail(errorMessage, null);
 				}
 				else {
