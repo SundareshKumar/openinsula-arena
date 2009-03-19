@@ -1,3 +1,16 @@
+/* Suggest */
+
+.gwt-SuggestBoxPopup .item-selected {
+	background: #A9D0F5;
+}
+
+.gwt-SuggestBoxPopup .suggestPopupContent {
+	background: white;
+	border-color: #58ACFA;
+}
+
+/* FIM Suggest */
+
 /* - - - Custom Theme - - - */
 
 /* Logo */

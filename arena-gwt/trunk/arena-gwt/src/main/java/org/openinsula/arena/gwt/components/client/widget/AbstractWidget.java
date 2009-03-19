@@ -9,10 +9,11 @@ import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.FocusListenerCollection;
-import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.KeyboardListener;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.SourcesFocusEvents;
+import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AbstractWidget extends Composite implements HasFocus, FocusListener {
@@ -31,13 +32,17 @@ public abstract class AbstractWidget extends Composite implements HasFocus, Focu
 
 	protected abstract void initComponents();
 
-	protected void createWidget(final String label, final String position, final FocusWidget focusWidget, final int size) {
-		focusWidget.addFocusListener(this);
-
-		if (size != 0) {
-			focusWidget.getElement().setPropertyString("size", String.valueOf(size));
+	protected void createWidget(final String label, final String position, final Widget widget, final int size) {
+		if (widget instanceof SourcesFocusEvents) {
+			((SourcesFocusEvents) widget).addFocusListener(this);
 		}
-		focusWidget.setStyleName("field text");
+
+		if (widget instanceof TextBoxBase || widget instanceof SuggestBox) {
+			if (size != 0) {
+				widget.getElement().setPropertyString("size", String.valueOf(size));
+			}
+			widget.setStyleName("field text");
+		}
 
 		final HTMLWidget<LabelElement> labelElement = HTMLWidgetFactory.label();
 		labelElement.getHTMLElement().setInnerHTML(label);
@@ -48,14 +53,14 @@ public abstract class AbstractWidget extends Composite implements HasFocus, Focu
 			span.setStyleName(position);
 		}
 
-		span.add(focusWidget);
+		span.add(widget);
 		span.add(labelElement);
 
 		mainElement.add(span);
 	}
 
 	@Deprecated
-	protected void createTextBox(final String label, final String position, final TextBox textBox, final int size) {
+	protected void createTextBox(final String label, final String position, final TextBoxBase textBox, final int size) {
 		createWidget(label, position, textBox, size);
 	}
 

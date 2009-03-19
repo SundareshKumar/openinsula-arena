@@ -3,9 +3,9 @@ package org.openinsula.arena.gwt.form.theme.wufoo.client;
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidget;
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidgetFactory;
 import org.openinsula.arena.gwt.components.client.ui.LazyChildWidget;
-import org.openinsula.arena.gwt.components.client.util.StringUtils;
 import org.openinsula.arena.gwt.form.client.FormItemRenderer;
 import org.openinsula.arena.gwt.form.client.FormItem.Size;
+import org.openinsula.arena.gwt.util.client.StringUtils;
 
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
@@ -16,6 +16,7 @@ import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -211,7 +212,7 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	private void resolveWufooWidgetCSSClass() {
 		if (this.widget != null) {
-			if (this.widget instanceof TextBox) {
+			if (this.widget instanceof TextBox || this.widget instanceof SuggestBox) {
 				this.widget.setStyleName(this.size + " field text");
 			}
 			else if (this.widget instanceof TextArea) {
