@@ -80,9 +80,15 @@
 			<version>2.1.9</version>
 		</dependency>
 		<dependency>
+			<groupId>org.openinsula.arena</groupId>
+			<artifactId>arena-lang</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.4</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
