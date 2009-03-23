@@ -33,6 +33,19 @@ public enum TipoTabela {
 		this.codigo = codigo;
 	}
 	
+	public TipoTabela toEnum(int codigo) {
+		for (TipoTabela tipoTabela: values()) {
+			if (tipoTabela.codigo == codigo) {
+				return tipoTabela;
+			}
+		}
+		return null;
+	}
+	
+	public TipoTabela toEnum(String codigo) {
+		return toEnum(Integer.parseInt(codigo));
+	}
+	
 	@Override
 	public String toString() {
 		return new DecimalFormat("00").format(codigo);
