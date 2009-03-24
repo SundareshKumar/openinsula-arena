@@ -33,7 +33,7 @@ public enum TipoTabela {
 		this.codigo = codigo;
 	}
 	
-	public TipoTabela toEnum(int codigo) {
+	public static TipoTabela toEnum(int codigo) {
 		for (TipoTabela tipoTabela: values()) {
 			if (tipoTabela.codigo == codigo) {
 				return tipoTabela;
@@ -42,7 +42,7 @@ public enum TipoTabela {
 		return null;
 	}
 	
-	public TipoTabela toEnum(String codigo) {
+	public static TipoTabela toEnum(String codigo) {
 		return toEnum(Integer.parseInt(codigo));
 	}
 	
