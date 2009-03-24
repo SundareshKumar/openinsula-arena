@@ -1,5 +1,9 @@
 package org.openinsula.arena.gwt.form.theme.wufoo.client;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidget;
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidgetFactory;
 import org.openinsula.arena.gwt.components.client.ui.LazyChildWidget;
@@ -78,16 +82,19 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 	}
 
 	public void onValidChange(final Boolean oldValue, final Boolean newValue) {
-		String css = itemWidget.getHTMLElement().getClassName();
-		
-		if (newValue && css.contains(" error ")) {
-			css = css.replace(" error ", "");
-		} else if (!newValue) {
-			css = css + " error ";
+		final String css = itemWidget.getHTMLElement().getClassName();
+
+		final CssHandler cssHandler = new CssHandler(css);
+
+		if (newValue && cssHandler.hasRule("error")) {
+			cssHandler.dropRule("error");
 		}
-		
-		this.itemWidget.getHTMLElement().setClassName(css);
-		
+		else if (!newValue) {
+			cssHandler.addRule("error");
+		}
+
+		this.itemWidget.getHTMLElement().setClassName(cssHandler.toString());
+
 		if (newValue) {
 			this.errorMessageElement.remove();
 		}
@@ -180,7 +187,8 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 			protected HTMLWidget<DivElement> createProperty(final Document document) {
 				final HTMLWidget<DivElement> div = HTMLWidgetFactory.div();
 
-				final int pos = WufooFormItemRenderer.this.itemWidget.getWidgetIndex(WufooFormItemRenderer.this.hintElement.get(false));
+				final int pos = WufooFormItemRenderer.this.itemWidget
+				.getWidgetIndex(WufooFormItemRenderer.this.hintElement.get(false));
 
 				if (pos == -1) {
 					WufooFormItemRenderer.this.itemWidget.add(div);
@@ -202,7 +210,7 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 			@Override
 			protected ParagraphElement createProperty(final Document document) {
-				ParagraphElement p = document.createPElement();
+				final ParagraphElement p = document.createPElement();
 				p.setClassName("error");
 				WufooFormItemRenderer.this.itemWidget.add(p);
 				return p;
@@ -235,6 +243,38 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	public void onLostFocus(final Widget sender) {
 		this.itemWidget.getHTMLElement().setClassName(this.previousStyle);
+	}
+
+	// CSS handler
+
+	private static class CssHandler {
+		private final List<String> rules;
+
+		CssHandler(final String css) {
+			rules = new ArrayList<String>(Arrays.asList(css.split("\\s")));
+		}
+
+		void addRule(final String rule) {
+			if (!rules.contains(rule)) {
+				rules.add(rule);
+			}
+		}
+
+		void dropRule(final String rule) {
+			if (rules.contains(rule)) {
+				rules.remove(rule);
+			}
+		}
+
+		boolean hasRule(final String rule) {
+			return rules.contains(rule);
+		}
+
+		@Override
+		public String toString() {
+			return StringUtils.collectionToDelimitedString(rules, " ");
+		}
+
 	}
 
 }
