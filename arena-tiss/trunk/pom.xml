@@ -82,7 +82,7 @@
 		<dependency>
 			<groupId>org.openinsula.arena</groupId>
 			<artifactId>arena-lang</artifactId>
-			<version>1.0</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
