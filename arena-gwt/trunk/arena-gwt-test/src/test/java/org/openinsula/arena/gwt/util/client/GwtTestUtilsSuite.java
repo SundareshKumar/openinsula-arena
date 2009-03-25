@@ -11,6 +11,7 @@ public class GwtTestUtilsSuite extends GWTTestSuite {
 		TestSuite suite = new TestSuite("arena-gwt utils TEST SUITE");
 		suite.addTestSuite(AssertGwtTestCase.class);
 		suite.addTestSuite(StringUtilsGwtTestCase.class);
+		suite.addTestSuite(CssUtilsGwtTestCase.class);
 		return suite;
 	}
 	

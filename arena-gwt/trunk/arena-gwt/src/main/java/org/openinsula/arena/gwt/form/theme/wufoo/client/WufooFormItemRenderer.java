@@ -1,14 +1,11 @@
 package org.openinsula.arena.gwt.form.theme.wufoo.client;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidget;
 import org.openinsula.arena.gwt.components.client.ui.HTMLWidgetFactory;
 import org.openinsula.arena.gwt.components.client.ui.LazyChildWidget;
 import org.openinsula.arena.gwt.form.client.FormItemRenderer;
 import org.openinsula.arena.gwt.form.client.FormItem.Size;
+import org.openinsula.arena.gwt.util.client.CssUtils;
 import org.openinsula.arena.gwt.util.client.StringUtils;
 
 import com.google.gwt.dom.client.DivElement;
@@ -82,21 +79,19 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 	}
 
 	public void onValidChange(final Boolean oldValue, final Boolean newValue) {
-		final String css = itemWidget.getHTMLElement().getClassName();
+		final CssUtils css = new CssUtils(itemWidget.getHTMLElement().getClassName());
 
-		final CssHandler cssHandler = new CssHandler(css);
-
-		if (newValue && cssHandler.hasRule("error")) {
-			cssHandler.dropRule("error");
+		if (newValue && css.hasRule("error")) {
+			css.dropRule("error");
 		}
 		else if (!newValue) {
-			cssHandler.addRule("error");
+			css.addRule("error");
 		}
 
-		this.itemWidget.getHTMLElement().setClassName(cssHandler.toString());
+		itemWidget.getHTMLElement().setClassName(css.toString());
 
 		if (newValue) {
-			this.errorMessageElement.remove();
+			errorMessageElement.remove();
 		}
 	}
 
@@ -243,38 +238,6 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	public void onLostFocus(final Widget sender) {
 		this.itemWidget.getHTMLElement().setClassName(this.previousStyle);
-	}
-
-	// CSS handler
-
-	private static class CssHandler {
-		private final List<String> rules;
-
-		CssHandler(final String css) {
-			rules = new ArrayList<String>(Arrays.asList(css.split("\\s")));
-		}
-
-		void addRule(final String rule) {
-			if (!rules.contains(rule)) {
-				rules.add(rule);
-			}
-		}
-
-		void dropRule(final String rule) {
-			if (rules.contains(rule)) {
-				rules.remove(rule);
-			}
-		}
-
-		boolean hasRule(final String rule) {
-			return rules.contains(rule);
-		}
-
-		@Override
-		public String toString() {
-			return StringUtils.collectionToDelimitedString(rules, " ");
-		}
-
 	}
 
 }
