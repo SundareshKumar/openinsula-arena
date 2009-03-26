@@ -5,7 +5,4 @@
 	
 	<inherits name="org.openinsula.arena.gwt.util.Util" />
 	<inherits name="org.openinsula.arena.gwt.http.HTTP" />
-	
-	<servlet path="/JsonRemoteSerializer" class="org.openinsula.arena.gwt.json.server.JsonRemoteSerializerServlet" />
-	
 </module>
