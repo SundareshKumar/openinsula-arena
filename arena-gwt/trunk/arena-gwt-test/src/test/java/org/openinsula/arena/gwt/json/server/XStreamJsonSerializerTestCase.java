@@ -2,6 +2,7 @@ package org.openinsula.arena.gwt.json.server;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.openinsula.arena.gwt.json.client.JsonListWrapper;
 import org.openinsula.arena.gwt.json.client.VoFactory;
 import org.springframework.util.ObjectUtils;
 
@@ -61,7 +63,23 @@ public class XStreamJsonSerializerTestCase extends TestCase {
 	}
 
 	public void testFromJsonCollection() {
-		// TODO		
+		XStreamJsonSerializer serializer = new XStreamJsonSerializer(new VoFactory() {
+			public Class<?>[] getTypes() {
+				return new Class[] {
+						MockJsonList.class,
+						MockJson.class,
+						MockChild.class
+				};
+			}
+		});
+
+		MockJsonList jsonList = new MockJsonList();
+		jsonList.list = new ArrayList<MockJson>(Arrays.asList(new MockJson(), new MockJson()));
+
+		String jsonListString = serializer.toJson(jsonList);
+		
+		JsonListWrapper<MockJson> fromJson = serializer.fromJson(jsonListString, new JsonListWrapper<MockJson>());
+		assertTrue(fromJson.getList().size() == 2);
 	}
 
 }

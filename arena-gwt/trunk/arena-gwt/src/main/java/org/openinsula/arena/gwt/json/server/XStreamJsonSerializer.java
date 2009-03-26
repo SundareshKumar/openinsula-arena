@@ -53,13 +53,6 @@ public class XStreamJsonSerializer implements JsonRemoteSerializer {
 
 		Object obj = xstream.fromXML(finalJson);
 
-		if (obj instanceof JsonListWrapper) {
-			JsonListWrapper<T> jsonList = (JsonListWrapper<T>) obj;
-
-			T wrappedTemplate = ((JsonListWrapper<T>) template).getTemplate();
-			jsonList.setTemplate(wrappedTemplate);
-		}
-
 		return (T) obj;
 	}
 
