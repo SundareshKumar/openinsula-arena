@@ -11,6 +11,8 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 @MappedSuperclass
 public abstract class GwtEntity<T extends Number> extends LazyPojo implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	private T id;
@@ -42,7 +44,7 @@ public abstract class GwtEntity<T extends Number> extends LazyPojo implements Se
 			return false;
 		}
 
-		GwtEntity<?> that = (GwtEntity<?>) obj;
+		final GwtEntity<?> that = (GwtEntity<?>) obj;
 		return getId() == null ? that.getId() == null : getId().equals(that.getId());
 	}
 
