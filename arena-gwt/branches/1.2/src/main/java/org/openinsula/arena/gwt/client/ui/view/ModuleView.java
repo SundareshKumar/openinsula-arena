@@ -15,8 +15,8 @@ public abstract class ModuleView extends NavigationSupport {
 		mainPanel.setWidth("97%");
 		mainPanel.setStyleName("ModuleView");
 
-		configureViews();
-		pack();
+//		configureViews();
+//		pack();
 	}
 
 	protected abstract void configureViews();
@@ -24,7 +24,7 @@ public abstract class ModuleView extends NavigationSupport {
 	public void pack() {
 		super.pack();
 
-		Widget menuBar = createMenuBar();
+		final Widget menuBar = createMenuBar();
 		menuBar.setStyleName("ModuleViewMenuBar");
 
 		mainPanel.add(menuBar);
@@ -35,9 +35,9 @@ public abstract class ModuleView extends NavigationSupport {
 	}
 
 	protected Widget createMenuBar() {
-		FlowPanel menuPanel = new FlowPanel();
+		final FlowPanel menuPanel = new FlowPanel();
 
-		for (Hyperlink link : getLinks()) {
+		for (final Hyperlink link : getLinks()) {
 			menuPanel.add(link);
 		}
 
