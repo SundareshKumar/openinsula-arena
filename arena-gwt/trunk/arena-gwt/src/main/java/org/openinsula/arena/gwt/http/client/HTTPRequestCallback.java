@@ -1,6 +1,6 @@
 package org.openinsula.arena.gwt.http.client;
 
-import org.openinsula.arena.gwt.components.client.util.StringUtils;
+import org.openinsula.arena.gwt.util.client.StringUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
@@ -30,6 +30,10 @@ public abstract class HTTPRequestCallback implements RequestCallback {
 	protected void setValues(final Request request, final Response response, final Throwable exception) {
 		this.request = request;
 		this.response = response;
+		this.errorCause = exception;
+	}
+
+	protected final void updateError(final Throwable exception) {
 		this.errorCause = exception;
 	}
 
