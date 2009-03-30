@@ -52,20 +52,20 @@ public class EnhancedRequestBuilder {
 	}
 
 	public EnhancedRequestBuilder json() {
-		setHeader("Content-type", "application/json");
+		setHeader("Content-type", "application/json; charset=utf-8");
 		return this;
 	}
-	
+
 	public EnhancedRequestBuilder xml() {
-		setHeader("Content-type", "application/xml");
-		return this;
-	} 
-	
-	public EnhancedRequestBuilder form() {
-		setHeader("Content-type", "application/x-www-form-urlencoded");
+		setHeader("Content-type", "application/xml; charset=utf-8");
 		return this;
 	}
-	
+
+	public EnhancedRequestBuilder form() {
+		setHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+		return this;
+	}
+
 	public EnhancedRequestBuilder setHeader(final String key, final String value) {
 		header.put(key, value);
 		return this;
@@ -186,7 +186,7 @@ public class EnhancedRequestBuilder {
 		try {
 			requestBuilder.send();
 		}
-		catch (RequestException e) {
+		catch (final RequestException e) {
 			if (!GWT.isScript()) {
 				GWT.log("HTTP request failed!", e);
 			}
@@ -237,15 +237,15 @@ public class EnhancedRequestBuilder {
 			result = requestDataCache;
 		}
 
-//		if (!GWT.isScript()) {
-//			GWT.log("requestData: " + result, null);
-//		}
+		//		if (!GWT.isScript()) {
+		//			GWT.log("requestData: " + result, null);
+		//		}
 
 		return result;
 	}
 
 	private RequestBuilder buildRequestBuilder() {
-		RequestBuilder requestBuilder = new RequestBuilder(httpMethod, url) {
+		final RequestBuilder requestBuilder = new RequestBuilder(httpMethod, url) {
 		};
 
 		requestBuilder.setCallback(requestCallback);
@@ -260,7 +260,7 @@ public class EnhancedRequestBuilder {
 
 		requestBuilder.setTimeoutMillis(timeoutMillis);
 
-		for (Entry<String, String> entry : header.entrySet()) {
+		for (final Entry<String, String> entry : header.entrySet()) {
 			requestBuilder.setHeader(entry.getKey(), entry.getValue());
 		}
 
