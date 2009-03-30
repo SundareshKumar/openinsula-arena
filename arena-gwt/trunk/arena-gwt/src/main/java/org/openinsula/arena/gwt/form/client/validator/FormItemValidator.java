@@ -1,7 +1,9 @@
 package org.openinsula.arena.gwt.form.client.validator;
 
 import org.openinsula.arena.gwt.form.client.FormItem;
+import org.openinsula.arena.gwt.util.client.FocusUtils;
 
+import com.google.gwt.user.client.ui.HasFocus;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class FormItemValidator implements AsyncValidator<FormItem> {
@@ -25,6 +27,12 @@ public abstract class FormItemValidator implements AsyncValidator<FormItem> {
 			}
 
 			public void onFail(final String message, final Throwable error) {
+				Widget widget = formItem.widget();
+				
+				if (widget instanceof HasFocus) {
+					FocusUtils.setFocus((HasFocus) widget);
+				}
+				
 				formItem.valid(false, message);
 			}
 		});

@@ -11,6 +11,8 @@ import org.openinsula.arena.gwt.form.client.validator.ValidationCallback;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
+import com.google.gwt.user.client.ui.Widget;
 
 public class Form extends AbstractUIModel<FormRenderer> {
 
@@ -23,6 +25,8 @@ public class Form extends AbstractUIModel<FormRenderer> {
 	private List<FormSection> sectionList;
 
 	private List<Action> secondaryActionList;
+	
+	private Action primaryAction;
 
 	public Form() {
 		setRenderer(UIModelRendererProvider.get().createFormRenderer());
@@ -97,7 +101,7 @@ public class Form extends AbstractUIModel<FormRenderer> {
 	}
 
 	public Form primaryAction(final Action action) {
-		Action validatedAction = null;
+		primaryAction = null;
 		
 		if (action != null) {
 			Command validationCommand = new Command() {
@@ -126,13 +130,13 @@ public class Form extends AbstractUIModel<FormRenderer> {
 				}
 			};
 
-			validatedAction = action.clone();
-			validatedAction.command(validationCommand);
+			primaryAction = action.clone();
+			primaryAction.command(validationCommand);
 		}
-		setProperty(PRIMARY_ACTION_PROPERTY, validatedAction);
+		setProperty(PRIMARY_ACTION_PROPERTY, primaryAction);
 		return this;
 	}
-
+	
 	public Form addSecondaryAction(final Action action) {
 		if (action != null) {
 
@@ -145,6 +149,26 @@ public class Form extends AbstractUIModel<FormRenderer> {
 			}
 		}
 		return this;
+	}
+	
+	public final class PrimaryActionOnKeyPress extends KeyboardListenerAdapter {
+		
+		private final int keyCode;
+
+		public PrimaryActionOnKeyPress() {
+			this(KEY_ENTER);
+		}
+		
+		public PrimaryActionOnKeyPress(final int keyCode) {
+			this.keyCode = keyCode;
+		}
+		
+		@Override
+		public void onKeyPress(final Widget sender, final char keyCode, final int modifiers) {
+			if (keyCode == this.keyCode && primaryAction != null) {
+				primaryAction.execute();
+			}
+		}
 	}
 
 }
