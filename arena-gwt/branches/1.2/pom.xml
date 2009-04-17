@@ -24,7 +24,7 @@
 
 	<scm>
 		<connection>
-			scm:svn:http://svn.openinsula.org/arena/arena-gwt/tags/arena-gwt-1.2
+			scm:svn:https://svn.openinsula.org/arena/arena-gwt/tags/arena-gwt-1.2
 		</connection>
 		<developerConnection>
 			scm:svn:https://svn.openinsula.org/arena/arena-gwt/tags/arena-gwt-1.2
