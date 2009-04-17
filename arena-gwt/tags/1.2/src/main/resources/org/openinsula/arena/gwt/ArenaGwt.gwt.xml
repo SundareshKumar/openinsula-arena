@@ -1,0 +1,14 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name='com.googlecode.gwt.math.Math' />
+	<inherits name='net.sf.hibernate4gwt.Hibernate4Gwt15' />
+	<inherits name='net.sf.hibernate4gwt.emul.java5.ejb3.Ejb3'/>
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+
+	<stylesheet src='Default.css'/>
+	<stylesheet src='FormItem.css'/>
+	<stylesheet src='dataGrid-style.css'/>
+
+	<entry-point class='org.openinsula.arena.gwt.client.Main' />
+
+</module>
