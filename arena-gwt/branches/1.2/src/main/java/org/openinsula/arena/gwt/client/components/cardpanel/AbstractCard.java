@@ -9,9 +9,9 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class AbstractCard extends Composite implements Card {
 
 	private int index;
-	
+
 	private List<CardChangeListener> cardChangeListeners = new ArrayList<CardChangeListener>();
-	
+
 	{
 		addCardChangeListener(this);
 		initComponents();
@@ -19,12 +19,12 @@ public abstract class AbstractCard extends Composite implements Card {
 		initActions();
 		initWidget(createMainWidget());
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return index;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof AbstractCard) {
@@ -32,29 +32,29 @@ public abstract class AbstractCard extends Composite implements Card {
 		}
 		return false;
 	}
-	
+
 	protected abstract Widget createMainWidget();
-	
+
 	protected abstract void initActions();
 
 	protected abstract void customizeComponents();
 
 	protected abstract void initComponents();
-	
+
 	public String getNextLabel() {
-		return "Próximo";
+		return "Pr\u00f3ximo";
 	}
 
 	public String getPreviousLabel() {
 		return "Anterior";
 	}
-	
+
 	public boolean fireCardHided(CardChangeEvent event) {
 		boolean returnValue = true;
 		for (CardChangeListener listener : cardChangeListeners) {
 			returnValue = returnValue && listener.onHide(event);
 		}
-		
+
 		return returnValue;
 	}
 
@@ -63,14 +63,14 @@ public abstract class AbstractCard extends Composite implements Card {
 		for (CardChangeListener listener : cardChangeListeners) {
 			retorno = retorno && listener.onShow(event);
 		}
-		
+
 		return retorno;
 	}
 
 	public void addCardChangeListener(CardChangeListener listener) {
 		cardChangeListeners.add(listener);
 	}
-	
+
 	public void removeCardChangeListener(CardChangeListener listener) {
 		cardChangeListeners.remove(listener);
 	}
@@ -90,5 +90,5 @@ public abstract class AbstractCard extends Composite implements Card {
 	public boolean onShow(CardChangeEvent event) {
 		return true;
 	}
-	
+
 }

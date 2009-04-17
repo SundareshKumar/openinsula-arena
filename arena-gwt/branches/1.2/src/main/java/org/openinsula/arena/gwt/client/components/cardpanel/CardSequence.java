@@ -6,13 +6,13 @@ import java.util.List;
 public class CardSequence implements Sequence<Card> {
 
 	private List<Card> cards = new ArrayList<Card>();
-	
+
 	public Card next(Card baseCard) {
 		int baseIndex = cards.indexOf(baseCard);
 		if (++baseIndex < cards.size()) {
 			return cards.get(baseIndex);
 		}
-		return null; 
+		return null;
 	}
 
 	public Card previous(Card baseCard) {
@@ -25,9 +25,9 @@ public class CardSequence implements Sequence<Card> {
 
 	public void add(Card card) {
 		if (cards.contains(card)) {
-			throw new IllegalArgumentException("Card já inserido na sequencia.");
+			throw new IllegalArgumentException("Card j\u00e1 inserido na sequencia.");
 		}
 		cards.add(card);
 	}
-	
+
 }

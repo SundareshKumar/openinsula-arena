@@ -14,6 +14,16 @@
 		<url>http://www.openinsula.org</url>
 	</organization>
 
+	<licenses>
+		<license>
+			<name>
+				The GNU Lesser General Public License, Version 3.0
+			</name>
+			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 	<scm>
 		<connection>
 			scm:svn:http://svn.openinsula.org/arena/arena-gwt/branches/1.2
@@ -25,7 +35,6 @@
 			http://svn.openinsula.org/arena/arena-gwt/branches/1.2
 		</url>
 	</scm>
-
 
 	<repositories>
 		<repository>
@@ -61,6 +70,11 @@
 
 	<pluginRepositories>
 		<pluginRepository>
+			<id>atlassian-m2-repository</id>
+			<name>Atlassian Maven 2.x Repository</name>
+			<url>http://repository.atlassian.com/maven2</url>
+		</pluginRepository>
+		<pluginRepository>
 			<id>gwt-maven</id>
 			<url>
 				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
@@ -83,6 +97,12 @@
 			<id>openinsula.org</id>
 			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
+		<site>
+			<id>openinsula.org</id>
+			<url>
+				scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}
+			</url>
+		</site>
 	</distributionManagement>
 
 	<dependencies>
@@ -185,6 +205,7 @@
 
 	</dependencies>
 
+<!--
 	<build>
 		<plugins>
 			<plugin>
@@ -249,4 +270,147 @@
 			</extension>
 		</extensions>
 	</build>
+-->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<goals>source:jar javadoc:jar deploy</goals>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<linkXref>false</linkXref>
+					<targetJdk>1.5</targetJdk>
+					<excludes>
+						<exclude>**/clover/**</exclude>
+					</excludes>
+					<rulesets>
+						<ruleset>/rulesets/braces.xml</ruleset>
+						<ruleset>/rulesets/basic.xml</ruleset>
+						<ruleset>/rulesets/unusedcode.xml</ruleset>
+						<ruleset>/rulesets/strings.xml</ruleset>
+					</rulesets>
+				</configuration>
+				<executions>
+					<execution>
+						<id>main</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>site</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-clover-plugin</artifactId>
+				<configuration>
+					<includesTestSourceRoots>
+						false
+					</includesTestSourceRoots>
+					<source>1.5</source>
+					<licenseLocation>
+						${user.home}/.m2/clover.license
+					</licenseLocation>
+					<generatePdf>false</generatePdf>
+					<generateXml>true</generateXml>
+					<generateHtml>true</generateHtml>
+				</configuration>
+				<executions>
+					<execution>
+						<id>main</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>instrument</goal>
+							<goal>clover</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>site</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>instrument</goal>
+							<goal>clover</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-clover-plugin</artifactId>
+				<configuration>
+					<includesTestSourceRoots>
+						false
+					</includesTestSourceRoots>
+					<source>1.5</source>
+					<licenseLocation>
+						${user.home}/.m2/clover.license
+					</licenseLocation>
+					<generatePdf>false</generatePdf>
+					<generateXml>true</generateXml>
+					<generateHtml>true</generateHtml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
