@@ -208,7 +208,6 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		public SearchForm() {
 			suggestBox = new BeanSuggestBox<T>(getSuggestOracle(), this);
 			editLink = new Hyperlink("Editar", "");
-			editLink.setVisible(false);
 
 			HorizontalPanel panel = new HorizontalPanel();
 			panel.add(suggestBox);
@@ -240,7 +239,7 @@ public abstract class AbstractSearchFormTemplate<T> extends FocusComposite imple
 		public void onBeanSelect(final T result) {
 			editInstance = result;
 			fireModelSelected(result);
-			editLink.setVisible(isEditionAllowed());
+			modelToView();
 		}
 
 		public void onNewEntry(final String value) {
