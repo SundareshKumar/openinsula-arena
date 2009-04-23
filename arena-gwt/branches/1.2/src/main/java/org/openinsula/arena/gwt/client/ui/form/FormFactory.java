@@ -2,6 +2,7 @@ package org.openinsula.arena.gwt.client.ui.form;
 
 import org.openinsula.arena.gwt.client.StyleBuilder;
 import org.openinsula.arena.gwt.client.ui.form.util.DateFormItem;
+import org.openinsula.arena.gwt.client.ui.form.util.JSMaskedDateWidget;
 import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget;
 import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget.LabelAlignment;
 import org.openinsula.arena.gwt.client.ui.form.validator.DateFormItemValidator;
@@ -204,7 +205,7 @@ public abstract class FormFactory {
 		}
 
 		String noTokenAtAll = label.toLowerCase().replaceAll("\\s", "-").replaceAll("[\\W&&[^-]]", "").replaceAll("--",
-				"-");
+		"-");
 
 		noTokenAtAll += "-tk" + Math.random();
 
@@ -252,18 +253,11 @@ public abstract class FormFactory {
 	}
 
 	public static DateFormItem dateFormItem(final String label) {
-		return dateFormItem(label, null, false, true);
+		return dateFormItem(label, null, false);
 	}
 
-	public static DateFormItem dateFormItem(final String label, final String hint, final boolean optional, final boolean hasLabels) {
-		SimpleDateWidget widget;
-
-		if (hasLabels) {
-			widget = simpleDateWidget();
-		}
-		else {
-			widget = new SimpleDateWidget();
-		}
+	public static DateFormItem dateFormItem(final String label, final String hint, final boolean optional) {
+		JSMaskedDateWidget widget = new JSMaskedDateWidget();
 
 		final DateFormItem formItem = new DateFormItem(label, widget, hint, optional);
 
@@ -274,12 +268,28 @@ public abstract class FormFactory {
 		return formItem;
 	}
 
+	/**
+	 * Usar {@link JSMaskedDateWidget}
+	 *
+	 * @deprecated
+	 * @param ano
+	 * @param mes
+	 * @param dia
+	 * @return
+	 */
+	@Deprecated
 	public static SimpleDateWidget simpleDateWidget(final String ano, final String mes, final String dia) {
 		final SimpleDateWidget simpleDateWidget = new SimpleDateWidget(LabelAlignment.LEFT, "ano", "m\u00eas", "dia");
 		simpleDateWidget.setStyleName(styleBuilder.getRule(STYLE_FORM_SIMPLE_DATE_WIDGET));
 		return simpleDateWidget;
 	}
 
+	/**
+	 * Usar {@link JSMaskedDateWidget}
+	 *
+	 * @return
+	 */
+	@Deprecated
 	public static SimpleDateWidget simpleDateWidget() {
 		return simpleDateWidget("ano", "m\u00eas", "dia");
 	}

@@ -1,10 +1,10 @@
 package org.openinsula.arena.gwt.client.ui.form.validator;
 
-import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget;
+import org.openinsula.arena.gwt.client.ui.form.util.JSMaskedDateWidget;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 
-public class DateFormItemValidator extends SyncFormItemValidator<SimpleDateWidget> {
+public class DateFormItemValidator extends SyncFormItemValidator<JSMaskedDateWidget> {
 
 	private String dateMask = "dd/MM/yyyy";
 
@@ -12,11 +12,12 @@ public class DateFormItemValidator extends SyncFormItemValidator<SimpleDateWidge
 		super();
 	}
 
-	protected void evaluate(SimpleDateWidget widget, EvaluateCallback callback) {
+	@Override
+	protected void evaluate(JSMaskedDateWidget widget, EvaluateCallback callback) {
 		String text = widget.getText();
 
 		try {
-			DateTimeFormat.getFormat(dateMask).parse(text);
+			DateTimeFormat.getFormat(dateMask).parseStrict(text);
 		}
 		catch (Exception e) {
 			callback.fail();

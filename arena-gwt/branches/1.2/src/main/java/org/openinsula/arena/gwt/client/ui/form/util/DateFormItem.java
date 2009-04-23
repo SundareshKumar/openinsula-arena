@@ -4,17 +4,17 @@ import java.util.Date;
 
 import org.openinsula.arena.gwt.client.ui.form.FormItem;
 
-public class DateFormItem extends FormItem<SimpleDateWidget> {
+public class DateFormItem extends FormItem<JSMaskedDateWidget> {
 
 	public DateFormItem() {
 		this("Data");
 	}
 
 	public DateFormItem(String label) {
-		this(label, new SimpleDateWidget(), null, false);
+		this(label, new JSMaskedDateWidget(), null, false);
 	}
 
-	public DateFormItem(String label, SimpleDateWidget widget, String hint, boolean optional) {
+	public DateFormItem(String label, JSMaskedDateWidget widget, String hint, boolean optional) {
 		super(label, widget, hint, optional);
 	}
 
