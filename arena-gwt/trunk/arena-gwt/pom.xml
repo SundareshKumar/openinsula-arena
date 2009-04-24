@@ -8,6 +8,6 @@
 	<parent>
 		<groupId>org.openinsula.arena</groupId>
 		<artifactId>arena-gwt-project</artifactId>
-		<version>2.2.0</version>
+		<version>2.3-SNAPSHOT</version>
 	</parent>
 </project>

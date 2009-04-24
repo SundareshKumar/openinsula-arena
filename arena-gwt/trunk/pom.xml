@@ -4,7 +4,7 @@
 
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-gwt-project</artifactId>
-	<version>2.2.0</version>
+	<version>2.3-SNAPSHOT</version>
 	<name>Arena GWT</name>
 	<description>Common GWT components and tools</description>
 	<url>http://www.openinsula.org/arena/gwt</url>
@@ -36,9 +36,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/tags/arena-gwt-project-2.2.0</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-gwt/tags/arena-gwt-project-2.2.0</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-gwt/tags/arena-gwt-project-2.2.0</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-gwt/trunk</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-gwt/trunk</url>
 	</scm>
 
 	<repositories>
