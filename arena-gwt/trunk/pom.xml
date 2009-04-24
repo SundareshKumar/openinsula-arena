@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-gwt-project</artifactId>
-	<version>2.2</version>
+	<version>2.2-SNAPSHOT</version>
 	<name>Arena GWT</name>
 	<description>Common GWT components and tools</description>
 	<url>http://www.openinsula.org/arena/gwt</url>
@@ -36,9 +37,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/tags/2.2.0</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-gwt/tags/2.2.0</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-gwt/tags/2.2.0</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-gwt/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-gwt/trunk</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-gwt/trunk</url>
 	</scm>
 
 	<repositories>
@@ -68,14 +69,12 @@
 	<dependencies>
 
 		<!-- GWT native dependencies -->
-<!--
-		<dependency>
-			<groupId>com.google.gwt</groupId>
+		<!--
+			<dependency> <groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${gwt.version}</version>
-			<scope>runtime</scope>
-		</dependency>
- -->
+			<version>${gwt.version}</version> <scope>runtime</scope>
+			</dependency>
+		-->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -167,6 +166,11 @@
 					<target>1.5</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.0-beta-8</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
