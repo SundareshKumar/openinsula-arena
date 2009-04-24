@@ -61,7 +61,7 @@
 			<url>ftp://ftp.openinsula.org/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>openinsula.org</id>
+			<id>openinsula-snapshots.org</id>
 			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
@@ -69,13 +69,14 @@
 	<dependencies>
 
 		<!-- GWT native dependencies -->
-
+<!--
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
 			<version>${gwt.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+ -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -105,7 +106,6 @@
 			<artifactId>gwt-math-user</artifactId>
 			<version>${gwt-math.version}</version>
 			<scope>provided</scope>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -126,6 +126,7 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.5.6</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
