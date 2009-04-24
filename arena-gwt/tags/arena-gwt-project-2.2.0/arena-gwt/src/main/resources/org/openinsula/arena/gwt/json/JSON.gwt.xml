@@ -1,0 +1,8 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.json.JSON" />
+	<inherits name="com.thoughtworks.xstream.XStream" />
+	
+	<inherits name="org.openinsula.arena.gwt.util.Util" />
+	<inherits name="org.openinsula.arena.gwt.http.HTTP" />
+</module>

@@ -1,0 +1,3 @@
+<module>
+	<inherits name="org.openinsula.arena.gwt.components.Components" />
+</module>
