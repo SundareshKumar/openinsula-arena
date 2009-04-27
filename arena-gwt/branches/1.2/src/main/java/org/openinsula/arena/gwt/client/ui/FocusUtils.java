@@ -54,8 +54,19 @@ public abstract class FocusUtils {
 		});
 	}
 
+	public static void nextOnKeyPress(final int keyCode, final SourcesKeyboardEvents source, final HasFocus target) {
+		source.addKeyboardListener(new KeyboardListenerAdapter() {
+			public void onKeyPress(Widget sender, char key, int modifiers) {
+				if (key == keyCode) {
+					deferredFocus(target);
+				}
+			}
+		});
+	}
+
 	public static void nextOnEnter(final SourcesKeyboardEvents source, final HasFocus target) {
 		nextOnKeyUp(KeyboardListener.KEY_ENTER, source, target);
+		//nextOnKeyPress(KeyboardListener.KEY_ENTER, source, target)
 	}
 
 	public static void nextOnTab(final SourcesKeyboardEvents source, final HasFocus target) {
