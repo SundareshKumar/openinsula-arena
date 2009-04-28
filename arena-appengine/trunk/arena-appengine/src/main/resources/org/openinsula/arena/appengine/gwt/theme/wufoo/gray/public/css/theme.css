@@ -1,17 +1,21 @@
 /* - - - Custom Theme - - - */
 
 /* Logo */
+/*
 h1 a {
-	background-image:url('../images/wflogo.png'); 
+	background-image:url('../images/wflogo.png');
 	min-height:0;
 	height:40px;
 }
-* html h1 a {/* IE6 png Support */
+*/
+/* ---
+* html h1 a {
 	background-image: none;
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/wflogo.png", sizingMethod="crop");
 }
-
+*/
 /* Backgrounds */
+/*
 body{
 	background-image:none;
 	background-color:#eeeeee;
@@ -23,6 +27,7 @@ h1{
 #container, body.embed{
 	background-color:#FFFFFF;
 }
+*/
 .wufoo input.text, .wufoo textarea.textarea{
 	background:#FFFFFF url(../images/fieldbg.gif) repeat-x top;
 }
@@ -34,9 +39,11 @@ h1{
 }
 
 /* Borders */
+/*
 #container{
 	border:0 solid #ff9900;
 }
+*/
 .wufoo .info{
 	border-bottom:1px dotted #CCCCCC;
 }
@@ -211,7 +218,7 @@ h1{
 /* ----- Field Chart Border and Background Colors ----- */
 
 .fc table{
-	border-left:1px solid #dedede;	
+	border-left:1px solid #dedede;
 }
 .fc thead th{
 	background-color:#cccccc;
@@ -234,8 +241,8 @@ h1{
 .fc thead th{
 	color:#000000;
 }
-.fc tbody th div, 
-.fc tbody td.count, .fc .grid tbody td a, .fc td.percent var, 
+.fc tbody th div,
+.fc tbody td.count, .fc .grid tbody td a, .fc td.percent var,
 .fc .timestamp b, .fc .timestamp span{
 	color:#444444;
 }
@@ -264,6 +271,8 @@ h1{
 
 
 /* Drop Shadows */
+/*
 #top, #bottom{
 	visibility:visible;
 }
+*/

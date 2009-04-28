@@ -14,70 +14,70 @@ Last Updated : March 19, 2009
 .wufoo li{
 	width:62%;
 }
-form ul{
+.wufoo ul{
 	margin:0;
 	padding:0;
 	list-style-type:none;
 	width:100%;
 }
-form li{
+.wufoo li{
 	display: block;
 	margin:0;
 	padding:4px 5px 2px 9px;
 	clear:both;
 }
-form li:after, form li div:after{
-	content:"."; 
+.wufoo li:after, .wufoo li div:after{
+	content:".";
 	display:block;
-	height:0; 
-	clear:both; 
+	height:0;
+	clear:both;
 	visibility:hidden;
 }
-* html form li{height: 1%;}
-* html form li div{display:inline-block;}
-*+html form li div{display:inline-block;}
+* html .wufoo li{height: 1%;}
+* html .wufoo li div{display:inline-block;}
+*+html .wufoo li div{display:inline-block;}
 
-form li div, form li span{
+.wufoo li div, .wufoo li span{
 	margin:0 4px 0 0;
 	padding:0 0 8px 0;
 	color:#444;
 }
-form li span{
+.wufoo li span{
 	float:left;
 }
 
-form li div.col, form li div.block{
+.wufoo li div.col, .wufoo li div.block{
 	padding:0;
 }
-form li div.col span{
+.wufoo li div.col span{
 	display:block;
 	width:100%;
 	float:left;
 	padding:0;
 }
-li.twoColumns div.col span{
+.wufoo li.twoColumns div.col span{
 	width:48%;
 	margin:0 5px 0 0;
 }
-li.threeColumns div.col span{
+.wufoo li.threeColumns div.col span{
 	width:30%;
 	margin:0 5px 0 0;
 }
-li.notStacked div.col span{
+.wufoo li.notStacked div.col span{
 	width:auto;
 	margin:0 7px 0 0;
 }
 
-form li div span.left, form li div span.right{
+.wufoo li div span.left, .wufoo li div span.right{
 	width:47%;
 	margin:0;
 }
-form li div span.full input, 
-form li div span.full select, 
-form li div span.left input, 
-form li div span.right input,
-form li div span.left select,
-form li div span.right select{
+.wufoo li div span.full input,
+.wufoo li div span.full select,
+.wufoo li div span.left input,
+.wufoo li div span.right input,
+.wufoo li div span.left select,
+.wufoo li div span.right select{
 	width:100%;
 }
 
@@ -93,22 +93,22 @@ form li div span.right select{
 
 /* ----- INFO ----- */
 
-.info{
-	display:inline-block; 
+.wufoo .info{
+	display:inline-block;
 	clear:both;
 	border-bottom:1px dotted #ccc;
 	margin:0 0 1em 0;
 }
-.info[class]{
+.wufoo .info[class]{
 	display:block;
 }
-.info h2{
+.wufoo .info h2{
 	font-weight:normal;
 	font-size:160%;
 	margin:0 0 .2em 0;
 	clear:left;
 }
-.info div{
+.wufoo .info div{
 	font-size:95%;
 	line-height:135%;
 	margin:0 0 1em 0;
@@ -117,10 +117,10 @@ form li div span.right select{
 
 /* ----- SECTIONS ----- */
 
-form hr{
+.wufoo hr{
 	display:none;
 }
-form li.section{
+.wufoo li.section{
 	border-top:1px dotted #ccc;
 	padding-top:.9em;
 	padding-bottom:0px;
@@ -128,18 +128,18 @@ form li.section{
 	width:97% !important;
 	position:static;
 }
-form ul li.first{
+.wufoo ul li.first{
 	border-top:none !important;
 	margin-top:0px !important;
 	padding-top:0px !important;
 }
-form .section h3{
+.wufoo .section h3{
 	font-weight:normal;
 	font-size:110%;
 	line-height:135%;
 	margin:0 0 .2em 0;
 }
-form .section div{
+.wufoo .section div{
 	display:block;
 	font-size:85%;
 	margin:0 0 1.2em 0;
@@ -148,7 +148,7 @@ form .section div{
 
 /* ----- LIKERT SCALE ----- */
 
-form li.likert{
+.wufoo li.likert{
 	width:97% !important;
 }
 .likert table{
@@ -214,7 +214,7 @@ form li.likert{
 
 /* ----- Likert Classes ----- */
 
-.col1 td{width:30%;} 
+.col1 td{width:30%;}
 .col2 td{width:25%;}
 .col3 td{width:18%;}
 .col4 td{width:14.5%;}
@@ -229,7 +229,7 @@ form li.likert{
 
 /* ----- LABELS ----- */
 
-label.desc{
+.wufoo label.desc{
 	line-height:150%;
 	padding:0 0 1px 0;
 	border:none;
@@ -238,7 +238,7 @@ label.desc{
 	font-size:95%;
 	font-weight:bold;
 }
-form li div label, form li span label{
+.wufoo li div label, .wufoo li span label{
 	margin:0;
 	padding-top:6px;
 	clear:both;
@@ -247,7 +247,7 @@ form li div label, form li span label{
 	color:#444;
 	display:block;
 }
-label.choice{
+.wufoo label.choice{
 	font-size:100%;
 	display:block;
 	line-height:1.5em;
@@ -257,11 +257,11 @@ label.choice{
 	width:88%;
 }
 
-span.symbol{
+.wufoo span.symbol{
 	font-size:115%;
 	line-height:130%;
 }
-form li .datepicker{
+.wufoo li .datepicker{
 	float:left;
 	margin:.1em 5px 0 0;
 	padding:0;
@@ -272,52 +272,52 @@ form li .datepicker{
 
 /* ----- MIN/MAX COUNT ----- */
 
-form li div label var{
+.wufoo li div label var{
 	font-weight:bold;
 	font-style:normal;
 }
-form li div label .currently{
+.wufoo li div label .currently{
 	display:none;
 }
 
 /* ----- FIELDS ----- */
 
-input.text, input.file, textarea.textarea, select.select{
+.wufoo input.text, .wufoo input.file, .wufoo textarea.textarea, .wufoo select.select{
 	margin:0;
 	font-size:100%;
 	color:#333;
 }
-input.text, textarea.textarea, .firefox select.select{
+.wufoo input.text, .wufoo textarea.textarea, .firefox select.select{
 	border-top:1px solid #7c7c7c;
 	border-left:1px solid #c3c3c3;
 	border-right:1px solid #c3c3c3;
 	border-bottom:1px solid #ddd;
 	background:#fff url(../images/fieldbg.gif) repeat-x top;
 }
-input.text, input.file{
+.wufoo input.text, .wufoo input.file{
 	padding:2px 0 2px 0;
 }
-input.checkbox, input.radio{
+.wufoo input.checkbox, .wufoo input.radio{
 	display:block;
 	line-height:1.5em;
 	margin:.6em 0 0 3px;
 	width:13px;
 	height:13px;
 }
-input.other{
+.wufoo input.other{
 	margin:0 0 8px 25px;
 }
 
-textarea.textarea{
+.wufoo textarea.textarea{
 	font-family:"Lucida Grande", Tahoma, Arial, sans-serif;
 }
 
-select.select{
+.wufoo select.select{
 	font-family:"Lucida Grande", Tahoma, Arial, sans-serif;
 	margin:1px 0;
 	padding:1px 0 0 0;
 }
-select.select[class]{
+.wufoo select.select[class]{
 	margin:0;
 	padding:1px 0 1px 0;
 }
@@ -331,25 +331,25 @@ select.select[class]{
 
 /* ----- BUTTONS ----- */
 
-input.btTxt{
+.wufoo input.btTxt{
 	padding:0 7px;
 	width:auto;
 	overflow:visible;
 }
-.buttons{
+.wufoo .buttons{
 	clear:both;
 	margin-top:10px;
 }
-.buttons input{
+.wufoo .buttons input{
 	font-size:120%;
 	margin-right: 5px;
 }
 
 /* ----- TEXT DIRECTION ----- */
 
-.rtl .info h2, .rtl .info div, .rtl label.desc, .rtl label.choice, 
-.rtl div label, .rtl span label, .rtl input.text, 
-.rtl textarea.textarea, .rtl select.select, .rtl p.instruct, 
+.rtl .info h2, .rtl .info div, .rtl label.desc, .rtl label.choice,
+.rtl div label, .rtl span label, .rtl input.text,
+.rtl textarea.textarea, .rtl select.select, .rtl p.instruct,
 .rtl .section h3, .rtl .section div, .rtl input.btTxt{
 	direction:rtl;
 }
@@ -366,23 +366,23 @@ input.btTxt{
 	width:100% !important;
 }
 
-input.small, select.small{
+.wufoo input.small, .wufoo select.small{
 	width:25%;
 }
-input.medium, select.medium{
+.wufoo input.medium, .wufoo select.medium{
 	width:50%;
 }
-input.large, select.large, textarea.textarea{
+.wufoo input.large, .wufoo select.large, .wufoo textarea.textarea{
 	width:100%;
 }
 
-textarea.small{
+.wufoo textarea.small{
 	height:5.5em;
 }
-textarea.medium{
+.wufoo textarea.medium{
 	height:10em;
 }
-textarea.large{
+.wufoo textarea.large{
 	height:20em;
 }
 
@@ -415,16 +415,16 @@ textarea.large{
 	padding:2px 3px;
 	color:red;
 }
-form li.error{
+.wufoo li.error{
 	display:block !important;
 	border-bottom:1px solid #F9B9B2;
 	border-right:1px solid #F9B9B2;
 	background-color: #FFDFDF !important;
 }
-form li.error label{
+.wufoo li.error label{
 	color:#DF0000 !important;
 }
-form p.error{
+.wufoo p.error{
 	display:none;
 	color:red;
 	font-weight:bold;
@@ -432,7 +432,7 @@ form p.error{
 	margin:-2px 0 5px 0;
 	clear:both;
 }
-form li.error p.error{
+.wufoo li.error p.error{
 	display:block;
 }
 .leftLabel p.error, .rightLabel p.error{
@@ -446,7 +446,7 @@ form li.error p.error{
 
 /* ----- REQUIRED ----- */
 
-form span.req{
+.wufoo span.req{
 	display:inline;
 	float:none;
 	color:red !important;
@@ -457,13 +457,13 @@ form span.req{
 
 /* ----- INSTRUCTIONS ----- */
 
-form li.focused{
+.wufoo li.focused{
 	background-color:#fff7c0;
 }
-form li.focused, form li:hover{
+.wufoo li.focused, .wufoo li:hover{
 	position:relative; /* Makes Instructs z-index stay on top in IE. */
 }
-form .instruct{
+.wufoo .instruct{
 	position:absolute;
 	top:0;
 	left:0;
@@ -478,10 +478,10 @@ form .instruct{
 	color:#444;
 	visibility:hidden;
 }
-form .instruct small{
+.wufoo .instruct small{
 	font-size:105%;
 }
-form li.focused .instruct, form li:hover .instruct{
+.wufoo li.focused .instruct, .wufoo li:hover .instruct{
 	left:100%; /* Prevent scrollbars for IE Instruct fix */
 	visibility:visible;
 }
@@ -580,10 +580,10 @@ form li.focused .instruct, form li:hover .instruct{
 .noI .instruct{
 	display:none !important;
 }
-.noI form li, .noI form li.buttons, .altInstruct form li, .altInstruct form li.buttons{
+.noI .wufoo li, .noI .wufoo li.buttons, .altInstruct .wufoo li, .altInstruct .wufoo li.buttons{
 	width:97% !important;
 }
-.noI form li.section, .altInstruct form li.section{
+.noI .wufoo li.section, .altInstruct .wufoo li.section{
 	padding-left:9px !important;
 }
 
@@ -605,7 +605,7 @@ form li.focused .instruct, form li:hover .instruct{
 
 /* ----- FIELD FLOATING ----- */
 
-form li.leftHalf, form li.rightHalf{
+.wufoo li.leftHalf, .wufoo li.rightHalf{
 	width:46% !important;
 }
 li.leftHalf{

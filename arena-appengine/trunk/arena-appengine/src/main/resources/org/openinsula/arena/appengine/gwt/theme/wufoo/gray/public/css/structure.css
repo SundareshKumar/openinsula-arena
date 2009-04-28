@@ -8,6 +8,11 @@ Last Updated : September 30, 2008
 
 - - - - - - - - - - - - - - - - - - - - - */
 
+/*
+Modified by Eduardo Rebola for Arena AppEngine GWT theme support
+*/
+
+/*
 body{
 	background:#eee;
 	margin:7px 0 15px 0;
@@ -32,14 +37,14 @@ body{
 #top{
 	margin-top:10px;
 }
-
+*/
 form.wufoo{
 	margin:20px 20px 0 20px;
 	padding:0 0 20px 0;
 }
 
 /* ----- LOGO ----- */
-
+/*
 h1{
 	margin:0;
 	padding:0;
@@ -63,10 +68,11 @@ h1 a{
 img, a img{
 	border:none;
 }
-* html img { 
+* html img {
 	behavior: url(../images/iepngfix.htc);
 }
 
 .hide{
 	display:none !important;
 }
+*/

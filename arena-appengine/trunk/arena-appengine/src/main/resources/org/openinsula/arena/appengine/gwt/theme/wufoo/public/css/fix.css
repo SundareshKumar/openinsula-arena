@@ -1,38 +1,27 @@
-/* Logo */
-h1 a {
-	background-image:url('../images/logo.png'); 
-	min-height:0;
-	height:40px;
-}
-* html h1 a {/* IE6 png Support */
-	background-image: none;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/logo.png", sizingMethod="crop");
-}
-
-button.btTxt {
+form.wufoo button.btTxt {
 	padding: 0 7px;
 	width: auto;
 	overflow: visible;
 }
 
-.buttons button {
+form.wufoo .buttons button {
 	font-size: 120%;
 	margin-right: 0;
 }
 
-.wufoo .info {
+form.wufoo .info {
 	border-bottom: 0;
 }
 
-.info,.info div {
+form.wufoo .info, form.wufoo .info div {
 	margin-bottom: 0;
 }
 
-.info div {
+form.wufoo .info div {
 	margin-left: 1px;
 }
 
-form li.section {
+form.wufoo li.section {
 	margin-top: 10px;
 }
 
@@ -42,7 +31,7 @@ form.wufoo li p {
 	padding: 0;
 }
 
-.FormSecondaryAction {
+form.wufoo .FormSecondaryAction {
 	display: inline;
 	margin: 0 0 0 10px;
 	padding: 0;
@@ -53,7 +42,7 @@ form.wufoo li p {
 */
 
 .gwt-SuggestBoxPopup .item {
-	text-align: left; 
+	text-align: left;
 }
 
 .gwt-SuggestBoxPopup .suggestPopupContent {
