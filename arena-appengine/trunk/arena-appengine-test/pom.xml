@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>arena-appengine-test</artifactId>
+	<name>Arena Google App Engine for Java (Test Module)</name>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>org.openinsula.arena</groupId>
+		<artifactId>arena-appengine-project</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>${groupId}</groupId>
+			<artifactId>arena-appengine</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${groupId}</groupId>
+			<artifactId>arena-appengine</artifactId>
+			<version>${version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+
+		<!-- Test dependencies -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>arena-appengine-test</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.totsp.gwt</groupId>
+				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+				<version>2.0-beta26</version>
+				<configuration>
+					<logLevel>INFO</logLevel>
+					<runTarget>org.openinsula.arena.appengine.gwt.test.Test/index.html</runTarget>
+					<compileTargets>
+						<value>org.openinsula.arena.appengine.gwt.test.Test</value>
+					</compileTargets>
+					<noServer>false</noServer>
+					<extraJvmArgs>-Xmx256M -Xms64M</extraJvmArgs>
+					<gwtVersion>${gwt.version}</gwtVersion>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/*GwtTest*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

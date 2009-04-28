@@ -1,0 +1,88 @@
+/* Logo */
+h1 a {
+	background-image:url('../images/logo.png'); 
+	min-height:0;
+	height:40px;
+}
+* html h1 a {/* IE6 png Support */
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/logo.png", sizingMethod="crop");
+}
+
+button.btTxt {
+	padding: 0 7px;
+	width: auto;
+	overflow: visible;
+}
+
+.buttons button {
+	font-size: 120%;
+	margin-right: 0;
+}
+
+.wufoo .info {
+	border-bottom: 0;
+}
+
+.info,.info div {
+	margin-bottom: 0;
+}
+
+.info div {
+	margin-left: 1px;
+}
+
+form li.section {
+	margin-top: 10px;
+}
+
+form.wufoo li p {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.FormSecondaryAction {
+	display: inline;
+	margin: 0 0 0 10px;
+	padding: 0;
+}
+
+/*
+	SuggestBox
+*/
+
+.gwt-SuggestBoxPopup .item {
+	text-align: left; 
+}
+
+.gwt-SuggestBoxPopup .suggestPopupContent {
+	border-style: solid;
+	border-width: 4px;
+}
+
+/* Resolver nos temas
+
+.gwt-SuggestBoxPopup .item-selected {
+	background: #B9E19B;
+}
+
+.gwt-SuggestBoxPopup .suggestPopupContent {
+	background: white;
+	border-color: #AACCAA;
+}
+
+*/
+
+.gwt-SuggestBoxPopup .suggestPopupTopLeftInner, .gwt-SuggestBoxPopup .suggestPopupTopRightInner, .gwt-SuggestBoxPopup .suggestPopupBottomLeftInner, .gwt-SuggestBoxPopup .suggestPopupBottomRightInner {
+	width: 0;
+	height: 0;
+}
+* html .gwt-SuggestBoxPopup .suggestPopupTopLeftInner, * html .gwt-SuggestBoxPopup .suggestPopupTopRightInner, * html .gwt-SuggestBoxPopup .suggestPopupBottomLeftInner, * html .gwt-SuggestBoxPopup .suggestPopupBottomRightInner {
+	width: 0;
+	height: 0;
+	margin-top: 0;
+}
+/*
+	FIM SuggestBox
+*/

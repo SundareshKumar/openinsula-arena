@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.openinsula.arena</groupId>
+	<artifactId>arena-appengine-project</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>Arena Google App Engine for Java</name>
+	<url>http://www.openinsula.org/arena/arena-appengine</url>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>arena-appengine</module>
+		<module>arena-appengine-test</module>
+	</modules>
+
+	<organization>
+		<name>openinsula.org</name>
+		<url>http://www.openinsula.org</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>rebola</id>
+			<name>Eduardo Rebola</name>
+			<email>erdanielli@insula.com.br</email>
+			<url>http://eduardorebola.blogspot.com</url>
+			<organization>Insula Tecnologia da Informacao</organization>
+			<organizationUrl>http://www.insula.com.br</organizationUrl>
+			<timezone>-3</timezone>
+			<roles>
+				<role>Lead Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-appengine/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-appengine/trunk</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-appengine/trunk</url>
+	</scm>
+
+	<repositories>
+		<repository>
+			<id>gwt-maven</id>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<gwt.version>1.6.4</gwt.version>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>openinsula.org</id>
+			<url>ftp://ftp.openinsula.org/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>openinsula-snapshots.org</id>
+			<url>ftp://ftp.openinsula.org/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencies>
+
+		<!-- GWT native dependencies -->
+
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwt.version}</version>
+			<classifier>${platform}-libs</classifier>
+			<type>zip</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwt.version}</version>
+			<classifier>${platform}</classifier>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.0-beta-9</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.google.gwt</groupId>
+									<artifactId>gwt-dev</artifactId>
+									<version>${gwt.version}</version>
+									<classifier>${platform}-libs</classifier>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwt.version}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+					<finalName>${project.artifactId}</finalName>
+					<attach>true</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-5</version>
+			</extension>
+		</extensions>
+	</build>
+
+</project>

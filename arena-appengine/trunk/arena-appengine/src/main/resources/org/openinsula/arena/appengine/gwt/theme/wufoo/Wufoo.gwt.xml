@@ -1,0 +1,9 @@
+<module>
+	<inherits name="org.openinsula.arena.appengine.gwt.GWT" />
+
+	<stylesheet src="css/fix.css" />
+
+	<replace-with class="org.openinsula.arena.appengine.gwt.theme.wufoo.client.WufooUIModelRendererProvider">
+		<when-type-is class="org.openinsula.arena.appengine.gwt.client.forms.UIModelRendererProviderImpl" />
+	</replace-with>
+</module>
