@@ -7,17 +7,17 @@ import org.openinsula.arena.appengine.gwt.client.forms.UIModelRendererProviderIm
 
 public class WufooUIModelRendererProvider extends UIModelRendererProviderImpl {
 
-	@Override
+
 	public FormItemRenderer createFormItemRenderer() {
 		return new WufooFormItemRenderer();
 	}
 
-	@Override
+
 	public FormRenderer createFormRenderer() {
 		return new WufooFormRenderer();
 	}
 
-	@Override
+
 	public FormSectionRenderer createFormSectionRenderer() {
 		return new WufooFormSectionRenderer();
 	}

@@ -40,7 +40,7 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 
 	LazyChildWidget<HTMLWidget<LIElement>> buttonBarWidget;
 
-	@Override
+
 	Widget createRequiredWidgets() {
 		headerWidget = HTMLWidgetFactory.li();
 		headerWidget.setStyleName("section");
@@ -69,15 +69,15 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 		}
 	}
 
-	@Override
+
 	protected void initLazyWidgets() {
 		headerTitleElement = new LazyChildWidget<HeadingElement>() {
-			@Override
+
 			protected void beforeRemove(final HeadingElement widget) {
 				headerWidget.remove(widget);
 			}
 
-			@Override
+
 			protected HeadingElement createProperty(final Document document) {
 				final HeadingElement h3 = document.createHElement(3);
 				headerWidget.addFirst(h3);
@@ -86,12 +86,12 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 		};
 
 		headerSubtitleElement = new LazyChildWidget<DivElement>() {
-			@Override
+
 			protected void beforeRemove(final DivElement widget) {
 				headerWidget.remove(widget);
 			}
 
-			@Override
+
 			protected DivElement createProperty(final Document document) {
 				final DivElement div = document.createDivElement();
 				headerWidget.add(div);
@@ -100,12 +100,12 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 		};
 
 		buttonBarWidget = new LazyChildWidget<HTMLWidget<LIElement>>() {
-			@Override
+
 			protected void beforeRemove(final HTMLWidget<LIElement> property) {
 				mainElement.remove(property);
 			}
 
-			@Override
+
 			protected HTMLWidget<LIElement> createProperty(final Document document) {
 				HTMLWidget<LIElement> li = HTMLWidgetFactory.li();
 				li.getHTMLElement().setClassName("buttons");
@@ -191,7 +191,7 @@ class WufooFormSectionRenderer extends WufooWidget implements FormSectionRendere
 		Hyperlink link = new Hyperlink(action.label(), null);
 		link.setStyleName("FormSecondaryAction");
 		link.addClickHandler(new ClickHandler() {
-			@Override
+
 			public void onClick(final ClickEvent event) {
 				action.execute();
 			}

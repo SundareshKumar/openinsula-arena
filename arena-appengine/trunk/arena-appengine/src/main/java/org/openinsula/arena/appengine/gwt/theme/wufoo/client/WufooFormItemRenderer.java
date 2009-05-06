@@ -44,7 +44,6 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	private String size;
 
-	@Override
 	Widget createRequiredWidgets() {
 		this.itemWidget = HTMLWidgetFactory.li();
 		return this.itemWidget;
@@ -132,15 +131,13 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 		}
 	}
 
-	@Override
 	protected void initLazyWidgets() {
 		this.labelElement = new LazyChildWidget<LabelElement>() {
-			@Override
 			protected void beforeRemove(final LabelElement property) {
 				WufooFormItemRenderer.this.itemWidget.remove(property);
 			}
 
-			@Override
+
 			protected LabelElement createProperty(final Document document) {
 				final LabelElement label = document.createLabelElement();
 				label.setClassName("desc");
@@ -150,12 +147,12 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 		};
 
 		this.requiredElement = new LazyChildWidget<SpanElement>() {
-			@Override
+
 			protected void beforeRemove(final SpanElement widget) {
 				WufooFormItemRenderer.this.labelElement.get().removeChild(widget);
 			}
 
-			@Override
+
 			protected SpanElement createProperty(final Document document) {
 				final SpanElement span = document.createSpanElement();
 				span.setClassName("req");
@@ -166,12 +163,12 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 		};
 
 		this.hintElement = new LazyChildWidget<ParagraphElement>() {
-			@Override
+
 			protected void beforeRemove(final ParagraphElement widget) {
 				WufooFormItemRenderer.this.itemWidget.remove(widget);
 			}
 
-			@Override
+
 			protected ParagraphElement createProperty(final Document document) {
 				final ParagraphElement hint = document.createPElement();
 				hint.setClassName("instruct");
@@ -181,12 +178,12 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 		};
 
 		this.widgetWrapperElement = new LazyChildWidget<HTMLWidget<DivElement>>() {
-			@Override
+
 			protected void beforeRemove(final HTMLWidget<DivElement> widget) {
 				WufooFormItemRenderer.this.itemWidget.remove(widget);
 			}
 
-			@Override
+
 			protected HTMLWidget<DivElement> createProperty(final Document document) {
 				final HTMLWidget<DivElement> div = HTMLWidgetFactory.div();
 
@@ -206,12 +203,12 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 		this.errorMessageElement = new LazyChildWidget<ParagraphElement>() {
 
-			@Override
+
 			protected void beforeRemove(final ParagraphElement widget) {
 				WufooFormItemRenderer.this.itemWidget.remove(widget);
 			}
 
-			@Override
+
 			protected ParagraphElement createProperty(final Document document) {
 				final ParagraphElement p = document.createPElement();
 				p.setClassName("error");
@@ -238,13 +235,13 @@ public class WufooFormItemRenderer extends WufooWidget implements FormItemRender
 
 	private String previousStyle;
 
-	@Override
+
 	public void onFocus(final FocusEvent event) {
 		this.previousStyle = this.itemWidget.getHTMLElement().getClassName();
 		this.itemWidget.getHTMLElement().setClassName(this.previousStyle + " focused");
 	}
 
-	@Override
+
 	public void onBlur(final BlurEvent event) {
 		this.itemWidget.getHTMLElement().setClassName(this.previousStyle);
 	}

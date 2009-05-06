@@ -36,7 +36,7 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 
 	private LazyProperty<Button> primaryActionButton;
 
-	@Override
+
 	Widget createRequiredWidgets() {
 		formWidget = HTMLWidgetFactory.form();
 		formWidget.setStyleName("wufoo");
@@ -65,16 +65,16 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 		}
 	}
 
-	@Override
+
 	protected void initLazyWidgets() {
 		headerWidget = new LazyChildWidget<HTMLWidget<DivElement>>() {
 
-			@Override
+
 			protected void beforeRemove(final HTMLWidget<DivElement> property) {
 				formWidget.remove(property);
 			}
 
-			@Override
+
 			protected HTMLWidget<DivElement> createProperty(final Document document) {
 				final HTMLWidget<DivElement> div = HTMLWidgetFactory.div();
 				div.setStyleName("info");
@@ -84,13 +84,13 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 		};
 
 		headerTitleElement = new LazyChildWidget<HeadingElement>() {
-			@Override
+
 			protected void beforeRemove(final HeadingElement widget) {
 				headerWidget.get().remove(widget);
 				headerWidget.removeIfLeaf();
 			}
 
-			@Override
+
 			protected HeadingElement createProperty(final Document document) {
 				final HeadingElement h2 = document.createHElement(2);
 				headerWidget.get().addFirst(h2);
@@ -99,13 +99,13 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 		};
 
 		headerSubtitleElement = new LazyChildWidget<DivElement>() {
-			@Override
+
 			protected void beforeRemove(final DivElement widget) {
 				headerWidget.get().remove(widget);
 				headerWidget.removeIfLeaf();
 			}
 
-			@Override
+
 			protected DivElement createProperty(final Document document) {
 				final DivElement div = document.createDivElement();
 				headerWidget.get().add(div);
@@ -114,13 +114,13 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 		};
 
 		primaryActionButton = new LazyProperty<Button>() {
-			@Override
+
 			protected void beforeRemove(final Button property) {
 				buttonBarWidget.removeButton(property);
 				buttonBarWidget.removeIfLeaf();
 			}
 
-			@Override
+
 			protected Button createProperty() {
 				final Button button = new Button();
 				button.setStyleName("btTxt");
@@ -152,7 +152,7 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 			button.setText(newValue.label());
 			button.setEnabled(newValue.enabled());
 			button.addClickHandler(new ClickHandler() {
-				@Override
+
 				public void onClick(final ClickEvent event) {
 					newValue.execute();
 				}
@@ -164,7 +164,7 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 		final Hyperlink link = new Hyperlink(action.label(), action.label());
 		link.setStyleName("FormSecondaryAction");
 		link.addClickHandler(new ClickHandler() {
-			@Override
+
 			public void onClick(final ClickEvent event) {
 				action.execute();
 			}
@@ -177,12 +177,12 @@ class WufooFormRenderer extends WufooWidget implements FormRenderer {
 
 		private HTMLWidget<LIElement> li;
 
-		@Override
+
 		protected void beforeRemove(final HTMLWidget<UListElement> widget) {
 			formWidget.remove(widget);
 		}
 
-		@Override
+
 		protected HTMLWidget<UListElement> createProperty(final Document document) {
 			li = HTMLWidgetFactory.li();
 			li.getHTMLElement().setClassName("buttons");
