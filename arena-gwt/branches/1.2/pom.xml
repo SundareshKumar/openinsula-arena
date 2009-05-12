@@ -83,7 +83,7 @@
 	<properties>
 		<google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
 		<java.library.path>${google.webtoolkit.home}</java.library.path>
-		<gwt.version>1.5.3</gwt.version>
+		<gwt.version>1.5.2</gwt.version>
 	</properties>
 
 	<distributionManagement>
