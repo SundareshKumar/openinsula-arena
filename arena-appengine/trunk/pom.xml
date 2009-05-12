@@ -57,7 +57,7 @@
 			<url>ftp://ftp.openinsula.org/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>openinsula-snapshots.org</id>
+			<id>openinsula.org</id>
 			<url>ftp://ftp.openinsula.org/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
