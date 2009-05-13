@@ -52,12 +52,18 @@ public class OpenIdFilter implements Filter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-		Identifier identifier = null;
 		if (isAuthenticated(httpServletRequest)) {
 			chain.doFilter(request, response);
 		}
-		else if ((identifier = verify(httpServletRequest)) != null) {
-			httpServletRequest.getSession().setAttribute(IdentityUtils.IDENTITY_ATTRIBUTE, identifier);
+		else if (verify(httpServletRequest) != null) {
+			String id = request.getParameter("openid.claimed_id");
+			String email = request.getParameter("openid.ext1.value.email");
+
+			Identity identity = new Identity();
+			identity.setUserId(id);
+			identity.setEmail(email);
+
+			httpServletRequest.getSession().setAttribute(IdentityUtils.IDENTITY_ATTRIBUTE, identity);
 			chain.doFilter(request, response);
 		}
 		else {
@@ -68,7 +74,7 @@ public class OpenIdFilter implements Filter {
 	private void authenticate(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
 			throws ServletException {
 		logger.debug("Redirecting to Google OpenID authentication URL.");
-		
+
 		try {
 			DiscoveryInformation discovered = manager.associate(manager.discover(GOOGLE_ACCOUNT_OPENID_URL));
 
@@ -116,7 +122,7 @@ public class OpenIdFilter implements Filter {
 					String email = fetchResp.getAttributeValue("email");
 					Identity identity = new Identity();
 					identity.setEmail(email);
-					
+
 					IdentityUtils.setIdentity(httpServletRequest, identity);
 
 					if (logger.isDebugEnabled()) {
@@ -136,8 +142,8 @@ public class OpenIdFilter implements Filter {
 	private String buildUrlString(HttpServletRequest httpServletRequest) {
 		StringBuffer receivingURL = httpServletRequest.getRequestURL();
 		String queryString = httpServletRequest.getQueryString();
-		if (queryString != null && queryString.length() > 0) {
-			receivingURL.append("?").append(httpServletRequest.getQueryString());
+		if ((queryString != null) && (queryString.length() > 0)) {
+			receivingURL.append('?').append(httpServletRequest.getQueryString());
 		}
 		return receivingURL.toString();
 	}
