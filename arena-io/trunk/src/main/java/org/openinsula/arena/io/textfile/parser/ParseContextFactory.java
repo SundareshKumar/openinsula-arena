@@ -27,13 +27,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.io.textfile.line.Line;
 import org.openinsula.arena.io.textfile.line.LineFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ParseContextFactory {
-	protected static final Log logger = LogFactory.getLog(ParseContextFactory.class);
+	protected static final Logger logger = LoggerFactory.getLogger(ParseContextFactory.class);
 
 	protected static final Map<Class<?>, Map<Class<? extends LineFactory>, Method>> parseMapCache = new HashMap<Class<?>, Map<Class<? extends LineFactory>, Method>>();
 

@@ -26,13 +26,13 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.io.textfile.line.Line;
 import org.openinsula.arena.io.textfile.line.LineFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class InputStreamParseContext implements ParseContext {
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected int lineCount = 0;
 

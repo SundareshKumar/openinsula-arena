@@ -26,13 +26,13 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.io.textfile.line.Line;
 import org.openinsula.arena.io.textfile.parser.expression.Expression;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultFileTransformer implements FileTransformer {
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private Expression expression;
 

@@ -21,15 +21,15 @@ package org.openinsula.arena.io.textfile;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openinsula.arena.io.textfile.line.Line;
 import org.openinsula.arena.io.textfile.parser.ParseContext;
 import org.openinsula.arena.io.textfile.parser.ParseContextFactory;
 import org.openinsula.arena.io.textfile.parser.expression.Expression;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultFileParser implements FileParser {
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private Expression expression;
 
