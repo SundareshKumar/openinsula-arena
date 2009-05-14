@@ -4,13 +4,15 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openinsula.arena.appengine.gwt.client.util.CollectionUtils;
+
 /**
  * @author Lucas K Mogari
  */
 @SuppressWarnings("unchecked")
 public abstract class BeanTableModel implements TableModel {
 
-	private List beans = new LinkedList();
+	private final List beans = new LinkedList();
 
 	private final List<TableModelListener> listeners = new LinkedList<TableModelListener>();
 
@@ -129,7 +131,11 @@ public abstract class BeanTableModel implements TableModel {
 	}
 
 	public void setItems(final List items) {
-		beans = items;
+		beans.clear();
+
+		if (!CollectionUtils.isEmpty(items)) {
+			beans.addAll(items);
+		}
 
 		fireTableDataChanged();
 	}
