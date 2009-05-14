@@ -30,6 +30,7 @@ public class OpenIdFilterTest {
 		tester.stop();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testDiscover() throws Exception {
 		HttpTester request = new HttpTester();
