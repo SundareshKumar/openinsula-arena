@@ -156,6 +156,8 @@ public class FormItem extends AbstractUIModel<FormItemRenderer> {
 	public void validate(final ValidationCallback callback) {
 		if (validator != null) {
 			validator.validate(this, callback);
+		} else {
+			callback.onSuccess(null);
 		}
 	}
 
