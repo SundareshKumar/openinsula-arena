@@ -91,9 +91,10 @@ public class HTTPProxyServlet extends HttpServlet {
 	private void writeRequestProperties(final HttpURLConnection urlConnection, final Map<String, String[]> parameterMap) {
 		String[] param = parameterMap.remove(USER);
 		if (param != null && param[0] != null) {
-			urlConnection.addRequestProperty(USER, param[0]);
+			urlConnection.setRequestProperty("From", param[0]);
 		}
 
+		// Password não utilizado
 		param = parameterMap.remove(PASSWORD);
 		if (param != null && param[0] != null) {
 			urlConnection.addRequestProperty(PASSWORD, param[0]);

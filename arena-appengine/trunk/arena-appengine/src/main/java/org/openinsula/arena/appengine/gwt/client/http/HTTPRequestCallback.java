@@ -12,7 +12,9 @@ import com.google.gwt.http.client.Response;
  */
 public abstract class HTTPRequestCallback implements RequestCallback {
 	private Request request;
+
 	private Response response;
+
 	private Throwable errorCause;
 
 	public Request getRequest() {
@@ -58,7 +60,17 @@ public abstract class HTTPRequestCallback implements RequestCallback {
 
 		if (statusCode == 200 || statusCode == 201) {
 			onSuccess();
-		} else {
+		}
+		else if (statusCode == 403) {
+			if (StringUtils.hasText(response.getText())) {
+				errorCause = new RuntimeException(response.getText());
+			}
+			else {
+				errorCause = new RuntimeException("[" + statusCode + " - " + response.getStatusText() + "]");
+			}
+			onError();
+		}
+		else {
 			errorCause = new RuntimeException("[" + statusCode + " - " + response.getStatusText() + "]");
 			onError();
 		}
@@ -70,9 +82,7 @@ public abstract class HTTPRequestCallback implements RequestCallback {
 		}
 		String responseText = response.getText();
 
-		return responseText != null
-		&& StringUtils.hasText(responseText)
-		&& !"null".equals(responseText);
+		return responseText != null && StringUtils.hasText(responseText) && !"null".equals(responseText);
 	}
 
 	public abstract void onSuccess();
