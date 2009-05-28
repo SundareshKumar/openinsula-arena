@@ -10,10 +10,15 @@ public abstract class EqualsUtils {
 	}
 
 	public static boolean isIntegersDifferent(String int1, String int2) {
-		if (int1 != null && int1.trim().length() > 0 && int2 != null && int2.trim().length() > 0) {
-			return !Integer.valueOf(int1).equals(Integer.valueOf(int2));
+		try {
+			if (int1 != null && int1.trim().length() > 0 && int2 != null
+					&& int2.trim().length() > 0) {
+				return !Integer.valueOf(int1).equals(Integer.valueOf(int2));
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
-		return true;
 	}
 
 }
