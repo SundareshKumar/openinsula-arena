@@ -20,6 +20,7 @@ public class JSMaskedDateWidget extends FocusComposite {
 
 	private static final String dateMask = "dd/MM/yyyy";
 
+	@SuppressWarnings("deprecation")
 	public JSMaskedDateWidget() {
 		textBoxDate = FormFactory.textBoxDate();
 		initWidget(textBoxDate);

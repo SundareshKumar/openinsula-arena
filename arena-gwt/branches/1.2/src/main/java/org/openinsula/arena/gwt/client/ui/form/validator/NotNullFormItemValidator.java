@@ -1,6 +1,7 @@
 package org.openinsula.arena.gwt.client.ui.form.validator;
 
 import org.openinsula.arena.gwt.client.components.test.search.AbstractSearchFormTemplate;
+import org.openinsula.arena.gwt.client.ui.form.util.JSMaskedDateWidget;
 import org.openinsula.arena.gwt.client.ui.form.util.SimpleDateWidget;
 import org.openinsula.arena.gwt.client.ui.list.BeanListBox;
 import org.openinsula.arena.gwt.client.ui.suggest.BeanSuggestBox;
@@ -38,15 +39,17 @@ public class NotNullFormItemValidator extends SyncFormItemValidator<Widget> {
 			valid = ((BeanSuggestBox<?>) widget).getText().trim().length() > 0;
 		} else if (widget instanceof SimpleDateWidget) {
 			valid = ((SimpleDateWidget) widget).getDate() != null;
+		} else if (widget instanceof JSMaskedDateWidget) {
+			valid = ((JSMaskedDateWidget) widget).getDate() != null;
 		} else {
 			throw new IllegalArgumentException("Não é possível verificar conteúdo de componentes do tipo: " + widget.getClass().getName());
 		}
-		
+
 		if (valid) {
 			callback.success();
 		} else {
 			callback.fail();
 		}
 	}
-	
+
 }
