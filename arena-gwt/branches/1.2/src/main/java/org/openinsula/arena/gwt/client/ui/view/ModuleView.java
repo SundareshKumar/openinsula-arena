@@ -1,12 +1,17 @@
 package org.openinsula.arena.gwt.client.ui.view;
 
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class ModuleView extends NavigationSupport {
+
 	protected final HorizontalPanel mainPanel;
+
+	protected final String moduleLinkToken = getHistoryToken(null, this);;
 
 	public ModuleView() {
 		mainPanel = new HorizontalPanel();
@@ -15,12 +20,15 @@ public abstract class ModuleView extends NavigationSupport {
 		mainPanel.setWidth("97%");
 		mainPanel.setStyleName("ModuleView");
 
-//		configureViews();
-//		pack();
+		//		configureViews();
+		//		pack();
+
+		handleModuleHistory();
 	}
 
 	protected abstract void configureViews();
 
+	@Override
 	public void pack() {
 		super.pack();
 
@@ -42,6 +50,22 @@ public abstract class ModuleView extends NavigationSupport {
 		}
 
 		return menuPanel;
+	}
+
+
+	private void handleModuleHistory() {
+		History.addHistoryListener(new HistoryListener() {
+			public void onHistoryChanged(String token) {
+				if (moduleLinkToken.equals(token)) {
+					onHistoryChangedToThisModule(token);
+				}
+			}
+		});
+
+	}
+
+	protected void onHistoryChangedToThisModule(String token) {
+
 	}
 
 }
