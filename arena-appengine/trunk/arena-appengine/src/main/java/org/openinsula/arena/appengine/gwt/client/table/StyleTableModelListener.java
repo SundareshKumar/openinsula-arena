@@ -5,17 +5,17 @@ import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 
 /**
  * Table with style options.
- * 
+ *
  * @author Lucas K Mogari
  * @author Eduardo Rebola
  */
 public class StyleTableModelListener implements TableModelListener {
 
 	public static enum Styles {
-		CELL("listGridCell"), 
-		EVEN_ROW("listGridEvenRow"), 
-		ODD_ROW("listGridOddRow"), 
-		HEADER("listGridHeaderRow"), 
+		CELL("listGridCell"),
+		EVEN_ROW("listGridEvenRow"),
+		ODD_ROW("listGridOddRow"),
+		HEADER("listGridHeaderRow"),
 		TABLE("StyleTable");
 
 		public final String styleName;
@@ -79,13 +79,17 @@ public class StyleTableModelListener implements TableModelListener {
 		final HTMLTable htmlTable = table.getTable();
 		final CellFormatter cellFormatter = htmlTable.getCellFormatter();
 		final int columnCount = table.getModel().getColumnCount();
-		
+
 		htmlTable.getRowFormatter().setStyleName(row, Styles.rowStyleFor(row).styleName);
 
 		for (int i = 0; i < columnCount; i++) {
 			cellFormatter.getElement(row, i).setPropertyString("valign", "middle");
 			cellFormatter.setStyleName(row, i, Styles.CELL.styleName);
 		}
+	}
+
+	@Override
+	public void tableDataUpdated() {
 	}
 
 }

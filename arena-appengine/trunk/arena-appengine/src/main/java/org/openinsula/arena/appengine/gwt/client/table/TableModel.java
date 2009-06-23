@@ -13,6 +13,8 @@ public interface TableModel {
 
 	public Object getValueAt(int rowIndex, int columnIndex);
 
+	public void setValueAt(int rowIndex, int columnIndex, Object value);
+
 	public void addTableModelListener(TableModelListener listener);
 
 	public void removeTableModelListener(TableModelListener listener);

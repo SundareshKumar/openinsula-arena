@@ -148,4 +148,8 @@ public abstract class BeanTableModel implements TableModel {
 		return titles()[columnIndex];
 	}
 
+	@Override
+	public void setValueAt(int rowIndex, int intColumnIndex, Object value) {
+	}
+
 }

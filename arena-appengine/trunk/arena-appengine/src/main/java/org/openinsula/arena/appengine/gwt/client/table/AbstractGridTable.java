@@ -190,4 +190,8 @@ public abstract class AbstractGridTable<T extends Grid> extends Table<T> {
 		}
 	}
 
+	@Override
+	public void tableDataUpdated() {
+	}
+
 }

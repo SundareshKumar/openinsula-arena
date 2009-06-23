@@ -7,4 +7,6 @@ public interface TableModelListener {
 
 	public void tableChanged(TableModelEvent e);
 
+	public void tableDataUpdated();
+
 }
