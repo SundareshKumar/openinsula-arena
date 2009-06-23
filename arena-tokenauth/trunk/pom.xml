@@ -157,7 +157,7 @@
 			<extension>
 				<groupId>org.openinsula.maven.wagon</groupId>
 				<artifactId>wagon-s3</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
+				<version>1.0.0</version>
 			</extension>
 		</extensions>
 	</build>
