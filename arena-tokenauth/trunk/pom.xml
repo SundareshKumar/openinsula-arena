@@ -58,15 +58,15 @@
 	<distributionManagement>
 		<repository>
 			<id>openinsula.org</id>
-			<url>ftp://ftp.openinsula.org/releases</url>
+			<url>s3://maven.openinsula.org/</url>
 		</repository>
 		<snapshotRepository>
 			<id>openinsula.org</id>
-			<url>ftp://ftp.openinsula.org/snapshots</url>
+			<url>s3://maven-snapshots.openinsula.org/</url>
 		</snapshotRepository>
 		<site>
 			<id>openinsula.org</id>
-			<url>scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}</url>
+			<url>s3://sites.openinsula.org/${project.artifactId}</url>
 		</site>
 	</distributionManagement>
 	<dependencies>
@@ -155,9 +155,9 @@
 		</plugins>
 		<extensions>
 			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-2</version>
+				<groupId>org.openinsula.maven.wagon</groupId>
+				<artifactId>wagon-s3</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
 			</extension>
 		</extensions>
 	</build>
