@@ -1,0 +1,25 @@
+ -----
+ Maven Wagon S3 Provider
+ -----
+ Eric Redmond
+ Edson Yanaga
+ -----
+
+
+Maven Wagon S3
+
+ This project is an implementation of Wagon provider for Amazon S3 access. It uses jets3t as lower level layer.
+
+ It enables Maven to use remote repositories stored in an S3 bucket, and allows deployment of directories.
+
+Features
+
+ * Get files from the Amazon S3 server using SOAP or REST
+
+ * Deploy files to an Amazon S3 bucket using SOAP or REST
+
+ []
+
+ The protocol is <<<s3>>>, followed by the bucket name. For example:
+ 
+ * s3://bucketName
