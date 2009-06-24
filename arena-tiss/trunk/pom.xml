@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-tiss</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Project arena-tiss</name>
 	<description>JAXB Mapping Classes and Builders for ANS TISS V2.02.01.</description>
@@ -16,9 +16,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-tiss/tags/arena-tiss-1.0.0</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-tiss/tags/arena-tiss-1.0.0</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-tiss/tags/arena-tiss-1.0.0</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-tiss/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-tiss/trunk</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-tiss/trunk</url>
 	</scm>
 	<issueManagement>
 		<system>jira</system>
