@@ -148,16 +148,16 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<goals>
-						source:jar javadoc:jar deploy site site:deploy
+						source:jar javadoc:jar deploy site-deploy
 					</goals>
 				</configuration>
 			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
-				<groupId>org.openinsula.maven.wagon</groupId>
+				<groupId>org.openinsula.arena.maven.wagon</groupId>
 				<artifactId>wagon-s3</artifactId>
-				<version>1.0.0</version>
+				<version>1.0.2</version>
 			</extension>
 		</extensions>
 	</build>
