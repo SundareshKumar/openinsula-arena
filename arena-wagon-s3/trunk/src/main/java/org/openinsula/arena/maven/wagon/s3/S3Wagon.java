@@ -1,4 +1,4 @@
-package org.openinsula.maven.arena.wagon.s3;
+package org.openinsula.arena.maven.wagon.s3;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -137,7 +137,14 @@ public class S3Wagon extends AbstractWagon {
 		Resource resource = new Resource(destination);
 		resource.setContentLength(source.length());
 		resource.setLastModified(source.lastModified());
-		
+
+		firePutInitiated(resource, source);
+		doPut(resource, source, destination);
+		firePutCompleted(resource, source);
+	}
+
+	public void doPut(Resource resource, File source, String destination) throws TransferFailedException, ResourceDoesNotExistException,
+			AuthorizationException {
 		InputStream is;
 		try {
 			is = new FileInputStream(source);
@@ -160,6 +167,7 @@ public class S3Wagon extends AbstractWagon {
 			s3Service.putObject(bucket, s3Object);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			throw new TransferFailedException("Cannot put object to S3", e);
 		}
 	}
@@ -172,7 +180,6 @@ public class S3Wagon extends AbstractWagon {
 	@Override
 	public void putDirectory(File sourceDirectory, String destinationDirectory) throws TransferFailedException,
 			ResourceDoesNotExistException, AuthorizationException {
-
 		for (File file : sourceDirectory.listFiles()) {
 			String destinationName = String.format("%s/%s", destinationDirectory, file.getName());
 
@@ -191,12 +198,14 @@ public class S3Wagon extends AbstractWagon {
 				}
 
 				String filename = sb.toString();
-				
-				Resource resource = new Resource(sourceDirectory.getName());
+
+				Resource resource = new Resource(filename);
 				resource.setContentLength(file.length());
 				resource.setLastModified(file.lastModified());
 				
-				put(file, filename);
+				System.out.println(String.format("Uploading [%s]", resource.getName()));
+
+				doPut(resource, file, filename);
 			}
 		}
 	}

@@ -3,7 +3,7 @@
 		<component>
 			<role>org.apache.maven.wagon.Wagon</role>
 			<role-hint>s3</role-hint>
-			<implementation>org.openinsula.maven.wagon.s3.S3Wagon</implementation>
+			<implementation>org.openinsula.arena.maven.wagon.s3.S3Wagon</implementation>
 			<instantiation-strategy>per-lookup</instantiation-strategy>
 		</component>
 	</components>
