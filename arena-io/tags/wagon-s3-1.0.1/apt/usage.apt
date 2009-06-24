@@ -1,0 +1,30 @@
+ ------
+ Maven Wagon SCM
+ ------
+ Eric Redmond
+ Edson Yanaga
+ ------
+
+Maven Wagon S3 Usage
+
+ Add the following extensions to your pom, and set the <<<distributionManagement>>> <<<url>>> to <<<s3://>>> followed by the name of your S3 bucket.
+
+------
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.openinsula.maven.wagon.s3</groupId>
+        <artifactId>wagon-s3</artifactId>
+        <version>1.0.0</version>
+      </extension>
+    </extensions>
+  </build>
+  <distributionManagement>
+    <site>
+      <id>my.s3.bucket</id>
+      <url>s3://mybucket</url>
+    </site>
+  </distributionManagement>
+------
+
+ In your <<<settings.xml>>> enter your license information as a <<<server>>> of an <<<id>>> matching your <<<distributionManagement>>> element's <<<id>>>, the ID must have access to the bucket for upload and/or download. The <<<server>>> <<<username>>> should be your AWS access key, while the <<<password>>> should match your AWS secret key.
