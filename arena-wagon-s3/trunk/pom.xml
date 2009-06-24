@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena.maven.wagon</groupId>
 	<artifactId>wagon-s3</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Maven Wagon Amazon S3 Provider</name>
 	<description>Wagon that gets and puts artifacts using the Amazon
@@ -20,9 +20,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-io/tags/wagon-s3-1.0.1</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-io/tags/wagon-s3-1.0.1</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-io/tags/wagon-s3-1.0.1</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-io/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-io/trunk</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-io/trunk</url>
 	</scm>
 	<issueManagement>
 		<system>jira</system>
