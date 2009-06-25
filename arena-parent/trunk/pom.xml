@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-parent</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Project arena-parent</name>
 	<description>
@@ -18,9 +18,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-parent/tags/arena-parent-1.0.0</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-parent/tags/arena-parent-1.0.0</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-parent/tags/arena-parent-1.0.0</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-parent/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-parent/trunk</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-parent/trunk</url>
 	</scm>
 	<issueManagement>
 		<system>jira</system>
