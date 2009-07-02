@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.openinsula.arena</groupId>
 	<artifactId>arena-echo2</artifactId>
-	<version>0.5.1</version>
+	<version>0.5.2-SNAPSHOT</version>
 	<name>Project arena-echo2</name>
 	<description>Commom NextApp Echo2 components and tools.</description>
 	<url>http://www.openinsula.org/projects/arena-echo2</url>
@@ -21,9 +21,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://svn.openinsula.org/arena/arena-echo2/tags/arena-echo2-0.5.1</connection>
-		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-echo2/tags/arena-echo2-0.5.1</developerConnection>
-		<url>http://svn.openinsula.org/arena/arena-echo2/tags/arena-echo2-0.5.1</url>
+		<connection>scm:svn:http://svn.openinsula.org/arena/arena-echo2/trunk</connection>
+		<developerConnection>scm:svn:https://svn.openinsula.org/arena/arena-echo2/trunk</developerConnection>
+		<url>http://svn.openinsula.org/arena/arena-echo2/trunk</url>
 	</scm>
 	<issueManagement>
 		<system>jira</system>
