@@ -1,0 +1,70 @@
+## RIM Java Development Environment
+# RIM Project file
+#
+# This file is generated and managed by BlackBerry developer tools.
+# It SHOULD NOT BE modified manually.
+#
+AddOn=0
+AlwaysBuild=0
+[AlxImports
+]
+AutoRestart=0
+[ClassProtection
+]
+[CustomBuildFiles
+]
+[CustomBuildRules
+]
+[DefFiles
+]
+[DependsOn
+]
+Description=Projeto Open Source de utilidades para BlackBerry.
+ExcludeFromBuildAll=0
+[Files
+src\org\openinsula\blackberry\textdatabase\connection\AsyncCallback.java
+src\org\openinsula\blackberry\textdatabase\connection\Configuration.java
+src\org\openinsula\blackberry\textdatabase\connection\configuration\ConnectorConfiguration.java
+src\org\openinsula\blackberry\textdatabase\connection\configuration\FileConfiguration.java
+src\org\openinsula\blackberry\textdatabase\connection\configuration\HttpConfiguration.java
+src\org\openinsula\blackberry\textdatabase\connection\configuration\SystemOutConfiguration.java
+src\org\openinsula\blackberry\textdatabase\connection\ConnectionManager.java
+src\org\openinsula\blackberry\textdatabase\connection\ConnectionProvider.java
+src\org\openinsula\blackberry\textdatabase\connection\ConnectionProviderFactory.java
+src\org\openinsula\blackberry\textdatabase\connection\iterator\FileIteratorReader.java
+src\org\openinsula\blackberry\textdatabase\connection\provider\FileConnectionProvider.java
+src\org\openinsula\blackberry\textdatabase\connection\provider\HttpConnectionProvider.java
+src\org\openinsula\blackberry\textdatabase\connection\provider\SystemOutConnectionProvider.java
+src\org\openinsula\blackberry\textdatabase\persistence\filter\Filter.java
+src\org\openinsula\blackberry\textdatabase\persistence\filter\impl\FileFilter.java
+src\org\openinsula\blackberry\textdatabase\persistence\map\impl\SimpleMap.java
+src\org\openinsula\blackberry\textdatabase\persistence\map\Map.java
+src\org\openinsula\blackberry\textdatabase\persistence\PersistenceManager.java
+src\org\openinsula\blackberry\textdatabase\serialization\Builder.java
+src\org\openinsula\blackberry\textdatabase\serialization\Parser.java
+src\org\openinsula\blackberry\textdatabase\utils\StringUtils.java
+]
+HaveAlxImports=0
+HaveDefs=0
+HaveImports=0
+[Icons
+]
+[ImplicitRules
+]
+[Imports
+]
+Listing=0
+Options=-quiet
+OutputFileName=arena-blackberry
+[PackageProtection
+]
+RibbonPosition=0
+[RolloverIcons
+]
+RunOnStartup=0
+StartupTier=7
+SystemModule=0
+Title=Arena BlackBerry
+Type=2
+Vendor=Insula T.I.
+Version=1.0.1

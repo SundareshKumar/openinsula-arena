@@ -1,0 +1,31 @@
+<loader version="1.0">
+	<application id="arena-blackberry">
+		<name >
+			Arena BlackBerry
+		</name>
+		<description >
+			Projeto Open Source de utilidades para BlackBerry.
+		</description>
+		<version >
+			1.0.1
+		</version>
+		<vendor >
+			Insula T.I.
+		</vendor>
+		<copyright >
+			Copyright (c) 2009 Insula T.I.
+		</copyright>
+		<fileset Java="1.38">
+			<directory >
+				
+			</directory>
+			<files >
+				arena-blackberry.cod
+
+			</files>
+
+		</fileset>
+
+	</application>
+
+</loader>
