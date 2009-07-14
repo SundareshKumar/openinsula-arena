@@ -29,11 +29,11 @@
 	</scm>
 	<issueManagement>
 		<system>jira</system>
-		<url>http://jira.insula.com.br/browse/ARENAOPENID</url>
+		<url>http://jira.insula.com.br/browse/AID</url>
 	</issueManagement>
 	<ciManagement>
 		<system>bamboo</system>
-		<url>http://bamboo.insula.com.br/browse/ARENAOPENID-TRUNK</url>
+		<url>http://bamboo.insula.com.br/browse/AID-TRUNK</url>
 	</ciManagement>
 	<developers>
 		<developer>
@@ -59,29 +59,21 @@
 			<id>openinsula.org</id>
 			<url>http://maven.openinsula.org</url>
 		</repository>
-		<repository>
-			<id>openid4java repository</id>
-			<name>openid4java repository</name>
-			<url>http://openid4java.googlecode.com/svn/maven-repo</url>
-			<snapshots />
-		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
 			<id>openinsula.org</id>
-			<url>ftp://ftp.openinsula.org/releases</url>
+			<url>s3://maven.openinsula.org/</url>
 		</repository>
 		<snapshotRepository>
 			<id>openinsula.org</id>
-			<url>ftp://ftp.openinsula.org/snapshots</url>
+			<url>s3://maven-snapshots.openinsula.org/</url>
 		</snapshotRepository>
 		<site>
 			<id>openinsula.org</id>
-			<url>scp://openinsu@ftp.openinsula.org/home/openinsula.org/ftp/sites/${project.artifactId}</url>
+			<url>s3://sites.openinsula.org/${project.artifactId}</url>
 		</site>
 	</distributionManagement>
-	<dependencies>
-	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -119,16 +111,16 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<goals>
-						source:jar javadoc:jar deploy site site:deploy
+						source:jar javadoc:jar deploy site-deploy
 					</goals>
 				</configuration>
 			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-2</version>
+				<groupId>org.openinsula.arena.maven.wagon</groupId>
+				<artifactId>wagon-s3</artifactId>
+				<version>1.0.2</version>
 			</extension>
 		</extensions>
 	</build>
