@@ -142,7 +142,7 @@ public class OpenIdFilter implements Filter {
 	private String buildUrlString(HttpServletRequest httpServletRequest) {
 		StringBuffer receivingURL = httpServletRequest.getRequestURL();
 		String queryString = httpServletRequest.getQueryString();
-		if ((queryString != null) && (queryString.length() > 0)) {
+		if (queryString != null && queryString.length() > 0) {
 			receivingURL.append('?').append(httpServletRequest.getQueryString());
 		}
 		return receivingURL.toString();
