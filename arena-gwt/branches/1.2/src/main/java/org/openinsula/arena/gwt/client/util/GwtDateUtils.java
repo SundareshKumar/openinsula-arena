@@ -115,4 +115,18 @@ public class GwtDateUtils {
 		return Integer.valueOf(DateTimeFormat.getFormat("yyyy").format(date));
 	}
 
+	/**
+	 * Metodo para subtrair uma data dentro do client do GWT
+	 * @param data Recebe uma data
+	 * @return Retorna uma data subtraida
+	 * @author anderson
+	 */
+	public static Date subtractDays(Date data, int quantidadeDia) {
+		data = GwtDateUtils.lowerLimit(data);
+
+		long milisegundos = data.getTime() - (1000 * 60 * 60 * (24 * quantidadeDia));
+		data.setTime(milisegundos);
+
+		return data;
+	}
 }
