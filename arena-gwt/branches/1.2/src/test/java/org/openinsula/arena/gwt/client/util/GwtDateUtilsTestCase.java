@@ -71,5 +71,13 @@ public class GwtDateUtilsTestCase extends TestCase {
 		assertNotSame(dataExperada, GwtDateUtils.subtractDays(data, 2));
 	}
 
+	@Test
+	public void testAddDays() {
+		Date data = new GregorianCalendar(2009, Calendar.JULY, 10).getTime();
+		Date dataExperada = new GregorianCalendar(2009, Calendar.JULY, 15).getTime();
+
+		assertEquals(dataExperada, GwtDateUtils.addDays(data, 5));
+		assertNotSame(dataExperada, GwtDateUtils.addDays(data, 2));
+	}
 }
 

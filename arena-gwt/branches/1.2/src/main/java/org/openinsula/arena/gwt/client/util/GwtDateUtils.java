@@ -129,4 +129,19 @@ public class GwtDateUtils {
 
 		return data;
 	}
+
+	/**
+	 * Metodo para somar dias em uma data dentro do client do GWT
+	 * @param data Recebe uma data
+	 * @return Retorna uma data somada
+	 * @author anderson
+	 */
+	public static Date addDays(Date data, int quantidadeDia) {
+		data = GwtDateUtils.lowerLimit(data);
+
+		long milisegundos = data.getTime() + (1000 * 60 * 60 * (24 * quantidadeDia));
+		data.setTime(milisegundos);
+
+		return data;
+	}
 }
