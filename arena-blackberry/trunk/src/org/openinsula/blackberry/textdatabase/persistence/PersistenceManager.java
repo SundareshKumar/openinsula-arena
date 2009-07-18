@@ -11,7 +11,7 @@ public abstract class PersistenceManager {
 
 	public static Vector search(Filter filter, boolean newSearch) throws Throwable {
 		if (newSearch) {
-			if (fileIteratorReader == null) {
+			if (fileIteratorReader != null) {
 				fileIteratorReader.finish();
 			}
 			fileIteratorReader = null;
@@ -27,7 +27,7 @@ public abstract class PersistenceManager {
 			byte[][] next = null;
 
 			while ((next = fileIteratorReader.next()) != null) {
-				if (filter.matches(next[filter.getField()])) {
+				if (match(filter, next)) {
 					result.addElement(next);
 				}
 			}
@@ -36,7 +36,7 @@ public abstract class PersistenceManager {
 			int i = 0;
 			byte[][] next = null;
 			while ((i < filter.getLimit()) && ((next = fileIteratorReader.next()) != null)) {
-				if (filter.matches(next[filter.getField()])) {
+				if (match(filter, next)) {
 					i++;
 					result.addElement(next);
 				}
@@ -44,6 +44,20 @@ public abstract class PersistenceManager {
 		}
 
 		return result;
+	}
+
+	private static boolean match(Filter filter, byte[][] next) {
+		int[] fields = filter.getFields();
+
+		for (int k = 0; k < fields.length; k++) {
+			int j = fields[k];
+
+			if (!filter.matches(k, next[j])) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }

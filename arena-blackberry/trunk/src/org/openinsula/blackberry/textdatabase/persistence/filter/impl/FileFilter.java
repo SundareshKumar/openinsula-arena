@@ -5,7 +5,9 @@ import org.openinsula.blackberry.textdatabase.persistence.map.Map;
 
 public abstract class FileFilter implements Filter {
 
-	private int field;
+	private int[] fields;
+	
+	private String[] patterns;
 
 	private String filePath;
 
@@ -13,36 +15,29 @@ public abstract class FileFilter implements Filter {
 
 	private Map map;
 
-	private String pattern;
-
 	protected FileFilter() {
 	}
 
-	protected FileFilter(int field, String pattern) {
-		this.field = field;
-		this.pattern = pattern;
+	protected FileFilter(int[] fields, String[] patterns) {
+		super();
+		this.fields = fields;
+		this.patterns = patterns;
 	}
-
-	protected FileFilter(int field, String pattern, int limit) {
-		this.field = field;
-		this.pattern = pattern;
+	
+	protected FileFilter(int[] fields, String[] patterns, int limit) {
+		super();
+		this.fields = fields;
+		this.patterns = patterns;
 		this.limit = limit;
 	}
 
-	protected FileFilter(int field, String pattern, int limit, String filePath, Map map) {
-		this.field = field;
+	protected FileFilter(int[] fields, String[] patterns, int limit, String filePath, Map map) {
+		super();
+		this.fields = fields;
+		this.patterns = patterns;
+		this.limit = limit;
 		this.filePath = filePath;
-		this.limit = limit;
 		this.map = map;
-		this.pattern = pattern;
-	}
-
-	public int getField() {
-		return field;
-	}
-
-	public String getFilePath() {
-		return filePath;
 	}
 
 	public int getLimit() {
@@ -53,18 +48,6 @@ public abstract class FileFilter implements Filter {
 		return map;
 	}
 
-	public String getPattern() {
-		return pattern;
-	}
-
-	public void setField(int field) {
-		this.field = field;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
@@ -73,8 +56,27 @@ public abstract class FileFilter implements Filter {
 		this.map = map;
 	}
 
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
+	public int[] getFields() {
+		return fields;
 	}
 
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public String[] getPatterns() {
+		return patterns;
+	}
+
+	public void setFields(int[] fields) {
+		this.fields = fields;
+	}
+
+	public void setPatterns(String[] patterns) {
+		this.patterns = patterns;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 }

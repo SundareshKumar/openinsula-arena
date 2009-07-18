@@ -8,11 +8,11 @@ public interface Filter {
 	
 	public Map getMap();
 
-	public int getField();
+	public int[] getFields();
 	
-	public String getPattern();
+	public String[] getPatterns();
 
-	public boolean matches(byte[] bs);
+	public boolean matches(int index, byte[] bs);
 
 	public int getLimit();
 	
